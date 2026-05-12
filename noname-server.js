@@ -238,30 +238,30 @@ const callback = () => {
 // 	// todo: 解决sw注册问题
 // 	httpsServer.listen(argv.port, callback);
 // } else {
-// 	app.listen(argv.port, callback);
+	app.listen(argv.port, callback);
 // }
-const port = process.env.PORT || argv.port;
+// const port = process.env.PORT || argv.port;
 
-// Start the server and save it to a variable
-const server = app.listen(port, '0.0.0.0', () => {
-    console.log(`Server is running on port ${port}`);
-});
+// // Start the server and save it to a variable
+// const server = app.listen(port, '0.0.0.0', () => {
+//     console.log(`Server is running on port ${port}`);
+// });
 
-// Attach WebSocket logic for multiplayer
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ server });
+// // Attach WebSocket logic for multiplayer
+// const WebSocket = require('ws');
+// const wss = new WebSocket.Server({ server });
 
-wss.on('connection', (ws) => {
-    console.log('A player connected!');
-    ws.on('message', (message) => {
-        // Broadcast messages to all other players
-        wss.clients.forEach((client) => {
-            if (client !== ws && client.readyState === WebSocket.OPEN) {
-                client.send(message);
-            }
-        });
-    });
-});
+// wss.on('connection', (ws) => {
+//     console.log('A player connected!');
+//     ws.on('message', (message) => {
+//         // Broadcast messages to all other players
+//         wss.clients.forEach((client) => {
+//             if (client !== ws && client.readyState === WebSocket.OPEN) {
+//                 client.send(message);
+//             }
+//         });
+//     });
+// });
 // --------------------------------
 
 class ReturnData {

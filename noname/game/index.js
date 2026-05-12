@@ -1499,15 +1499,41 @@ export class Game extends GameCompatible {
 	 */
 	connect(ip, callback) {
 		if (game.online) return;
+		const trimmed = (ip || "").trim();
+		let body = trimmed;
+		let userScheme = null;
+		const lower = trimmed.toLowerCase();
+		if (lower.startsWith("wss://")) {
+			userScheme = "wss";
+			body = trimmed.slice(6);
+		} else if (lower.startsWith("ws://")) {
+			userScheme = "ws";
+			body = trimmed.slice(5);
+		}
 		let withport = false;
-		let index = ip.lastIndexOf(":");
-		if (index != -1) {
-			index = parseFloat(ip.slice(index + 1));
-			if (index && Math.floor(index) == index) {
-				withport = true;
+		const colonIdx = body.lastIndexOf(":");
+		if (colonIdx !== -1) {
+			const rest = body.slice(colonIdx + 1);
+			if (/^\d+$/.test(rest)) {
+				const p = parseInt(rest, 10);
+				if (p > 0 && p <= 65535) {
+					withport = true;
+				}
 			}
 		}
-		if (!withport) ip = ip + ":8080";
+		const httpsPage = typeof location !== "undefined" && location.protocol === "https:";
+		if (!withport && !httpsPage) {
+			body = body + ":8080";
+		}
+		let str = "";
+		if (userScheme === "wss") {
+			str = "wss://";
+		} else if (userScheme === "ws") {
+			str = httpsPage ? "wss://" : "ws://";
+		} else {
+			str = (get.config("wss_mode", "connect") || httpsPage) ? "wss://" : "ws://";
+		}
+		ip = str + body;
 		_status.connectCallback = callback;
 		try {
 			if (game.ws) {
@@ -1515,9 +1541,7 @@ export class Game extends GameCompatible {
 				game.ws.close();
 				delete game.ws;
 			}
-			let str = "";
-			if (!ip.startsWith("wss://") && !ip.startsWith("ws://")) str = get.config("wss_mode", "connect") ? "wss://" : "ws://";
-			game.ws = new WebSocket(str + ip + "");
+			game.ws = new WebSocket(ip);
 		} catch {
 			// 今天狂神龙尊来了这里也没有参数
 			alert("错误：无效联机地址");

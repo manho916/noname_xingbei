@@ -1,3 +1,4 @@
+const http = require("http");
 const express = require("express");
 // const https = require("https");
 const minimist = require("minimist");
@@ -223,46 +224,24 @@ app.use(function (err, req, res, next) {
 	return res.json(failedJson(400, String(err)));
 });
 
+const port = Number(process.env.PORT) || argv.port;
 const callback = () => {
-	console.log(`应用正在使用 ${argv.port} 端口以提供无名杀本地服务器功能!`);
-	// if (argv.platform == "unknow") require("child_process").exec(`start ${argv.https ? "https" : "http"}://localhost:${argv.port}/`);
+	console.log(`HTTP + WebSocket 正在使用 ${port} 端口 (无名杀本地 / Render)`);
 };
-// if (argv.https) {
-// 	const SSLOptions = {
-// 		key: fs.readFileSync(path.join(__dirname, "localhost.decrypted.key")),
-// 		cert: fs.readFileSync(path.join(__dirname, "localhost.crt")),
-// 	};
-// 	const httpsServer = https.createServer(SSLOptions, app);
-// 	// 会提示NET::ERR_CERT_AUTHORITY_INVALID
-// 	// 但浏览器还是可以访问的
-// 	// todo: 解决sw注册问题
-// 	httpsServer.listen(argv.port, callback);
-// } else {
-	app.listen(argv.port, callback);
-// }
-// const port = process.env.PORT || argv.port;
-
-// // Start the server and save it to a variable
-// const server = app.listen(port, '0.0.0.0', () => {
-//     console.log(`Server is running on port ${port}`);
-// });
-
-// // Attach WebSocket logic for multiplayer
-// const WebSocket = require('ws');
-// const wss = new WebSocket.Server({ server });
-
-// wss.on('connection', (ws) => {
-//     console.log('A player connected!');
-//     ws.on('message', (message) => {
-//         // Broadcast messages to all other players
-//         wss.clients.forEach((client) => {
-//             if (client !== ws && client.readyState === WebSocket.OPEN) {
-//                 client.send(message);
-//             }
-//         });
-//     });
-// });
-// --------------------------------
+// Do not pass WebSocket upgrade GETs into Express (otherwise GET / returns HTML and the handshake never upgrades).
+const httpServer = http.createServer((req, res) => {
+	if (String(req.headers.upgrade || "").toLowerCase() === "websocket") {
+		return;
+	}
+	app(req, res);
+});
+require("./game/server.js")(httpServer);
+if (typeof httpServer.listenerCount === "function" && httpServer.listenerCount("upgrade") < 1) {
+	console.warn("警告: 未检测到 WebSocket upgrade 监听器，联机大厅将无法使用。请确认 game/server.js 已随部署上传。");
+} else {
+	console.log("联机大厅 WebSocket 已挂载 (upgrade 监听就绪)");
+}
+httpServer.listen(port, callback);
 
 class ReturnData {
 	success;

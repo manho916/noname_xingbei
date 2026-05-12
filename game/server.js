@@ -1,6 +1,11 @@
-(function () {
+function attachLobbyWebSocket(httpServer) {
 	var WebSocketServer = require("ws").Server;
-	var wss = new WebSocketServer({ port: 8080 });
+	var wss = httpServer
+		? new WebSocketServer({ server: httpServer })
+		: new WebSocketServer({ port: 8080 });
+	if (httpServer) {
+		console.log("[lobby] WebSocketServer attached to shared HTTP server");
+	}
 	var bannedKeys = [];
 	var bannedIps = [];
 
@@ -399,4 +404,10 @@
 			else util.updateclients();
 		});
 	});
-})();
+}
+
+if (require.main === module) {
+	attachLobbyWebSocket(null);
+} else {
+	module.exports = attachLobbyWebSocket;
+}

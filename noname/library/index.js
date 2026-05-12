@@ -29,7 +29,7 @@ import { ErrorManager } from "../util/error.js";
 
 import { defaultSplashs } from "../init/onload/index.js";
 import dedent from "../../game/dedent.js"
-import { h } from "../../game/vue.esm-browser.js";
+import { h } from "../../game/vue.esm-browser.prod.js";
 
 export class Library {
 	// 数据库相关
@@ -11418,6 +11418,7 @@ export class Library {
 			},
 			createroom: function (index, config, mode) {
 				clearTimeout(_status.enteringroomTimeout);
+				delete _status._enteringRoomSince;
 				_status.enteringroom = false;
 				game.online = false;
 				game.onlineroom = true;
@@ -11435,8 +11436,9 @@ export class Library {
 			},
 			enterroomfailed: function () {
 				clearTimeout(_status.enteringroomTimeout);
-				alert("请稍后再试");
+				delete _status._enteringRoomSince;
 				_status.enteringroom = false;
+				alert("请稍后再试");
 				ui.create.connecting(true);
 			},
 			roomlist: function (list, events, clients, wsid) {
@@ -11798,6 +11800,7 @@ export class Library {
 				ui.pause.show();
 				game.clearConnect();
 				clearTimeout(_status.enteringroomTimeout);
+				delete _status._enteringRoomSince;
 				_status.enteringroom = false;
 				clearTimeout(_status.createNodeTimeout);
 				game.online = true;

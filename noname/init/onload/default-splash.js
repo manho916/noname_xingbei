@@ -1,5 +1,5 @@
 import { lib, game, ui } from "../../../noname.js";
-import { createApp } from "../../../game/vue.esm-browser.js";
+import { createApp } from "../../../game/vue.esm-browser.prod.js";
 
 import OnloadSplash from "./OnloadSplash.js";
 

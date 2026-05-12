@@ -1,5 +1,5 @@
 import { lib, get } from "../../../noname.js";
-import { ref, onMounted } from "../../../game/vue.esm-browser.js";
+import { ref, onMounted } from "../../../game/vue.esm-browser.prod.js";
 import { delay } from "../../util/index.js";
 
 const html = (strings, ...values) => String.raw({ raw: strings }, ...values);

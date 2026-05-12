@@ -135,7 +135,7 @@ window.noname_source_list = [
 	"game/source.js",
 	"game/typescript.js",
 	"game/update.js",
-	"game/vue.esm-browser.js",
+	"game/vue.esm-browser.prod.js",
 
 	"image/card/cardtempname_bg.png",
 

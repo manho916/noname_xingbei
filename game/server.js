@@ -204,7 +204,11 @@ function attachLobbyWebSocket(httpServer) {
 		send: function (id, message) {
 			if (clients[id] && clients[id].owner == this) {
 				try {
-					clients[id].send(message);
+					var payload =
+						Buffer.isBuffer(message) || typeof message === "string"
+							? message
+							: JSON.stringify(message);
+					clients[id].send(payload);
 				} catch (e) {
 					clients[id].close();
 				}

@@ -1,4 +1,4 @@
-import { createApp } from "../../../../game/vue.esm-browser.js";
+import { createApp } from "../../../../game/vue.esm-browser.prod.js";
 import { _status, game, get, lib, ui } from "../../../../noname.js";
 
 /**

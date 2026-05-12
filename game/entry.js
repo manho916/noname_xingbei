@@ -139,7 +139,7 @@ waitUpdate
 						);
 					})
 					.then(() => {
-						return game.promises.removeFile("noname.config.txt");
+						return game.promises.removeFile("noname.config.txt").catch(() => void 0);
 					})
 					.then(() => {
 						alert("数据导入成功, 即将自动重启");

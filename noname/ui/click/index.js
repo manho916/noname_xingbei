@@ -2887,8 +2887,13 @@ export class Click {
 			return;
 		}
 		if (_status.enteringroom) {
-			alert("正在加入房间，请稍候。若长时间无反应，请点击「退出房间」后重新进入联机。");
-			return;
+			const since = _status._enteringRoomSince || 0;
+			if (Date.now() - since < 10000) {
+				return;
+			}
+			clearTimeout(_status.enteringroomTimeout);
+			delete _status._enteringRoomSince;
+			_status.enteringroom = false;
 		}
 		if (this.roomfull) {
 			alert("房间已满");
@@ -2906,13 +2911,15 @@ export class Click {
 			}
 		} else {
 			_status.enteringroom = true;
+			_status._enteringRoomSince = Date.now();
 			_status.enteringroomserver = this.serving;
 			clearTimeout(_status.enteringroomTimeout);
 			_status.enteringroomTimeout = setTimeout(function () {
-				if (_status.enteringroom && game.onlinehall && !game.onlineroom) {
+				if (_status.enteringroom) {
 					_status.enteringroom = false;
+					delete _status._enteringRoomSince;
 				}
-			}, 15000);
+			}, 12000);
 			game.send("server", "enter", this.key, get.connectNickname(), lib.config.connect_avatar);
 		}
 	}

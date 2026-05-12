@@ -101,6 +101,7 @@ export function clickContainer(connectMenu) {
 	if (connectMenu) {
 		if (_status.enteringroom) {
 			clearTimeout(_status.enteringroomTimeout);
+			delete _status._enteringRoomSince;
 			_status.enteringroom = false;
 		}
 		if (_status.creatingroom) {

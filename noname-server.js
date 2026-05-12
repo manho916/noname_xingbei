@@ -240,7 +240,11 @@ const callback = () => {
 // } else {
 // 	app.listen(argv.port, callback);
 // }
-app.listen(argv.port, callback);
+const port = process.env.PORT || argv.port;
+
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on port ${port}`);
+});
 
 class ReturnData {
 	success;

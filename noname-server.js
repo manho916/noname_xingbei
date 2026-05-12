@@ -242,21 +242,19 @@ const callback = () => {
 // }
 const port = process.env.PORT || argv.port;
 
-app.listen(port, '0.0.0.0', () => {
+// Start the server and save it to a variable
+const server = app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on port ${port}`);
 });
 
-// ... keep all your existing code above ...
-
-const server = app.listen(process.env.PORT || argv.port, callback);
-
-// --- ADD THIS FOR MULTIPLAYER ---
+// Attach WebSocket logic for multiplayer
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', (ws) => {
+    console.log('A player connected!');
     ws.on('message', (message) => {
-        // Basic broadcast logic for multiplayer
+        // Broadcast messages to all other players
         wss.clients.forEach((client) => {
             if (client !== ws && client.readyState === WebSocket.OPEN) {
                 client.send(message);

@@ -11432,6 +11432,7 @@ export class Library {
 				ui.create.connecting(true);
 			},
 			enterroomfailed: function () {
+				clearTimeout(_status.enteringroomTimeout);
 				alert("请稍后再试");
 				_status.enteringroom = false;
 				ui.create.connecting(true);
@@ -11599,7 +11600,11 @@ export class Library {
 							var player = ui.roombase.add('<div class="popup text pointerdiv" style="width:calc(100% - 10px);display:inline-block;white-space:nowrap">空房间</div>');
 							player.roomindex = i;
 							player.initRoom = lib.element.Player.prototype.initRoom;
-							player.addEventListener(lib.config.touchscreen ? "touchend" : "click", ui.click.connectroom);
+							// Always listen for click so mouse works; touchend alone breaks rooms when「触屏模式」is on.
+							player.addEventListener("click", ui.click.connectroom);
+							if (lib.config.touchscreen) {
+								player.addEventListener("touchend", ui.click.connectroom);
+							}
 							player.initRoom(i);
 							ui.rooms.push(player);
 						}

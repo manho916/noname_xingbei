@@ -457,7 +457,10 @@ export class Create {
 			var player = ui.roombase.add('<div class="popup text pointerdiv" style="width:calc(100% - 10px);display:inline-block;white-space:nowrap">空房间</div>');
 			player.roomindex = i;
 			player.initRoom = lib.element.Player.prototype.initRoom;
-			player.addEventListener(lib.config.touchscreen ? "touchend" : "click", ui.click.connectroom);
+			player.addEventListener("click", ui.click.connectroom);
+			if (lib.config.touchscreen) {
+				player.addEventListener("touchend", ui.click.connectroom);
+			}
 			player.initRoom(list[i]);
 			ui.rooms.push(player);
 		}

@@ -40,31 +40,34 @@ function attachLobbyWebSocket(httpServer) {
 				this.sendl("enterroomfailed");
 				return;
 			}
+			if (!room.owner) {
+				this.sendl("enterroomfailed");
+				return;
+			}
 			this.room = room;
 			delete this.status;
-			if (room.owner) {
-				if (
-					room.servermode &&
-					!room.owner._onconfig &&
-					config &&
-					mode
-				) {
-					room.owner.sendl("createroom", index, config, mode);
-					room.owner._onconfig = this;
-					room.owner.nickname = util.getNickname(nickname);
-					room.owner.avatar = avatar;
-				} else if (
-					!room.config ||
-					(room.config.gameStarted &&
-						(!room.config.observe || !room.config.observeReady))
-				) {
-					this.sendl("enterroomfailed");
-				} else {
-					this.owner = room.owner;
-					this.owner.sendl("onconnection", this.wsid);
-				}
-				util.updaterooms();
+			if (
+				room.servermode &&
+				!room.owner._onconfig &&
+				config &&
+				mode
+			) {
+				room.owner.sendl("createroom", index, config, mode);
+				room.owner._onconfig = this;
+				room.owner.nickname = util.getNickname(nickname);
+				room.owner.avatar = avatar;
+			} else if (
+				!room.config ||
+				(room.config.gameStarted &&
+					(!room.config.observe || !room.config.observeReady))
+			) {
+				this.sendl("enterroomfailed");
+				this.room = void 0;
+			} else {
+				this.owner = room.owner;
+				this.owner.sendl("onconnection", this.wsid);
 			}
+			util.updaterooms();
 		},
 		changeAvatar: function (nickname, avatar) {
 			this.nickname = util.getNickname(nickname);

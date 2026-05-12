@@ -2871,6 +2871,18 @@ export class Click {
 		if (_status.dragged) return;
 		if (_status.clicked) return;
 		if (ui.intro) return;
+		if (!game.ws) {
+			alert("未连接到大厅，请返回后重新进入联机。");
+			return;
+		}
+		if (game.observe) {
+			alert("当前为旁观模式，无法加入房间。请重新进入联机。");
+			return;
+		}
+		if (_status.enteringroom) {
+			alert("正在加入房间，请稍候。若长时间无反应，请点击「退出房间」后重新进入联机。");
+			return;
+		}
 		if (this.roomfull) {
 			alert("房间已满");
 		} else if (this.roomgaming && !game.onlineID) {
@@ -2886,11 +2898,15 @@ export class Click {
 				alert("加入失败：房主的游戏版本过低");
 			}
 		} else {
-			if (!_status.enteringroom) {
-				_status.enteringroom = true;
-				_status.enteringroomserver = this.serving;
-				game.send("server", "enter", this.key, get.connectNickname(), lib.config.connect_avatar);
-			}
+			_status.enteringroom = true;
+			_status.enteringroomserver = this.serving;
+			clearTimeout(_status.enteringroomTimeout);
+			_status.enteringroomTimeout = setTimeout(function () {
+				if (_status.enteringroom && game.onlinehall && !game.onlineroom) {
+					_status.enteringroom = false;
+				}
+			}, 15000);
+			game.send("server", "enter", this.key, get.connectNickname(), lib.config.connect_avatar);
 		}
 	}
 	player() {

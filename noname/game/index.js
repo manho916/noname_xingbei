@@ -1525,8 +1525,16 @@ export class Game extends GameCompatible {
 		if (!withport && !httpsPage) {
 			body = body + ":8080";
 		}
+		const connectHost = withport ? body.slice(0, body.lastIndexOf(":")) : body;
+		const normalizedHost = connectHost.replace(/^\[|\]$/g, "");
+		const isLoopback =
+			normalizedHost === "127.0.0.1" ||
+			normalizedHost.toLowerCase() === "localhost" ||
+			normalizedHost === "::1";
 		let str = "";
-		if (userScheme === "wss") {
+		if (isLoopback) {
+			str = "ws://";
+		} else if (userScheme === "wss") {
 			str = "wss://";
 		} else if (userScheme === "ws") {
 			str = httpsPage ? "wss://" : "ws://";

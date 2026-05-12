@@ -135,6 +135,12 @@ export class LibInit {
 		ws.on("message", function (messagestr) {
 			var message;
 			try {
+				if (typeof messagestr !== "string") {
+					messagestr =
+						typeof messagestr === "object" && messagestr !== null
+							? JSON.stringify(messagestr)
+							: String(messagestr);
+				}
 				message = JSON.parse(messagestr);
 				if (!Array.isArray(message) || typeof lib.message.server[message[0]] !== "function") {
 					throw "err";

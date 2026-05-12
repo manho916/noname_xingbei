@@ -11393,7 +11393,8 @@ export class Library {
 			onconnection: id => lib.init.connection((lib.wsOL[id] = new lib.element.NodeWS(id))),
 			onmessage: function (id, message) {
 				if (lib.wsOL[id]) {
-					lib.wsOL[id].onmessage(message);
+					// Relay payload may already be parsed by get.parsedResult; NodeWS handler expects a JSON string.
+					lib.wsOL[id].onmessage(typeof message === "string" ? message : JSON.stringify(message));
 				}
 			},
 			onclose: function (id) {

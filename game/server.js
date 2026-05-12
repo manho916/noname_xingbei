@@ -365,14 +365,28 @@ function attachLobbyWebSocket(httpServer) {
 		}, 60000);
 		ws.on("message", function (message) {
 			if (!clients[this.wsid]) return;
-			if (message == "heartbeat") {
+			var text =
+				Buffer.isBuffer(message)
+					? message.toString("utf8")
+					: typeof message === "string"
+						? message
+						: message instanceof ArrayBuffer
+							? Buffer.from(message).toString("utf8")
+							: ArrayBuffer.isView(message)
+								? Buffer.from(
+										message.buffer,
+										message.byteOffset,
+										message.byteLength
+									).toString("utf8")
+								: String(message);
+			if (text === "heartbeat") {
 				this.beat = false;
 			} else if (this.owner) {
-				this.owner.sendl("onmessage", this.wsid, message);
+				this.owner.sendl("onmessage", this.wsid, text);
 			} else {
 				var arr;
 				try {
-					arr = JSON.parse(message);
+					arr = JSON.parse(text);
 					if (!Array.isArray(arr)) {
 						throw "err";
 					}

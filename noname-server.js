@@ -224,9 +224,18 @@ app.use(function (err, req, res, next) {
 	return res.json(failedJson(400, String(err)));
 });
 
-const port = Number(process.env.PORT) || argv.port;
+const rawPort = process.env.PORT;
+const envN = Number.parseInt(String(rawPort != null ? rawPort : ""), 10);
+const portFromEnv = Number.isFinite(envN) && envN > 0;
+const port = portFromEnv ? envN : Number(argv.port) || 8089;
 const callback = () => {
-	console.log(`HTTP + WebSocket 正在使用 ${port} 端口 (无名杀本地 / Render)`);
+	const src = portFromEnv ? "process.env.PORT" : "argv/fallback";
+	console.log(`HTTP + WebSocket 正在使用 ${port} 端口 (${src})`);
+	if (process.env.RENDER === "true" && !portFromEnv) {
+		console.warn(
+			"[render] 未使用 process.env.PORT，当前为回退端口。请确认未在 Start Command 里写死 --port，且实例类型为 Web Service。"
+		);
+	}
 };
 // Do not pass WebSocket upgrade GETs into Express (otherwise GET / returns HTML and the handshake never upgrades).
 const httpServer = http.createServer((req, res) => {

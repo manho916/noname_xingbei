@@ -1,7 +1,7 @@
 /**
- * 关于不同浏览器下对异步错误的处理方式
+ * 關於不同瀏覽器下對異步錯誤的處理方式
  *
- * 目前已实现的浏览器如下：
+ * 目前已實現的瀏覽器如下：
  *
  * - `Google Chrome`（包括`electron`、`cordova`以及`crosswalk`）
  * - `Mozilla Firefox`

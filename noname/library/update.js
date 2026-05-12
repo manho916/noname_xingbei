@@ -3,17 +3,17 @@ import { ui, game, lib } from "../../noname.js";
 // https://github.com/libnoname/noname/archive/refs/tags/v1.10.10.zip
 
 /**
- * HTTP响应头中的Rate Limit相关信息：
- * X-RateLimit-Limit: 请求总量限制
- * X-RateLimit-Remaining: 剩余请求次数
- * X-RateLimit-Reset: 限制重置时间（UTC时间戳）
+ * HTTP響應頭中的Rate Limit相關信息：
+ * X-RateLimit-Limit: 請求總量限制
+ * X-RateLimit-Remaining: 剩餘請求次數
+ * X-RateLimit-Reset: 限制重置時間（UTC時間戳）
  */
 
 /** @type { HeadersInit } */
 var defaultHeaders = {
 	Accept: "application/vnd.github.v3+json",
-	// 根据GitHub API的要求添加适当的认证头信息
-	// 如果公共仓库则无需认证，私有仓库需提供token
+	// 根據GitHub API的要求添加適當的認證頭信息
+	// 如果公共倉庫則無需認證，私有倉庫需提供token
 	// 'Authorization': `token ${YOUR_GITHUB_PERSONAL_ACCESS_TOKEN}`
 };
 
@@ -34,11 +34,11 @@ export async function defaultHeadersGitCode() {
 }
 
 /**
- * 获取github授权的token
+ * 獲取github授權的token
  */
 export async function gainAuthorizationGitHub() {
 	if (!localStorage.getItem("noname_authorizationGitHub") && !sessionStorage.getItem("noname_authorizationGitHub")) {
-		const result = await game.promises.prompt("请输入您github的token以解除访问每小时60次的限制(可不输入)");
+		const result = await game.promises.prompt("請輸入您github的token以解除訪問每小時60次的限制(可不輸入)");
 		if (typeof result == "string") {
 			localStorage.setItem("noname_authorizationGitHub", result);
 			defaultHeaders["Authorization"] = `token ${localStorage.getItem("noname_authorizationGitHub")}`;
@@ -49,7 +49,7 @@ export async function gainAuthorizationGitHub() {
 }
 export async function gainAuthorizationGitCode() {
 	if (!localStorage.getItem("noname_authorizationGitCode") && !sessionStorage.getItem("noname_authorizationGitCode")) {
-		const result = await game.promises.prompt("请输入您gitcode的token以解除访问每小时60次的限制(可不输入)");
+		const result = await game.promises.prompt("請輸入您gitcode的token以解除訪問每小時60次的限制(可不輸入)");
 		if (typeof result == "string") {
 			localStorage.setItem("noname_authorizationGitCode", result);
 			defaultHeaders["Authorization"] = `Bearer ${localStorage.getItem("noname_authorizationGitCode")}`;
@@ -63,11 +63,11 @@ const defaultResponseGitHub = async (/** @type {Response} */ response) => {
 	const limit = response.headers.get("X-RateLimit-Limit");
 	const remaining = response.headers.get("X-RateLimit-Remaining");
 	const reset = response.headers.get("X-RateLimit-Reset");
-	console.log(`请求总量限制`, limit);
-	console.log(`剩余请求次数`, remaining);
+	console.log(`請求總量限制`, limit);
+	console.log(`剩餘請求次數`, remaining);
 	// @ts-ignore
-	console.log(`限制重置时间`, new Date(reset * 1000).toLocaleString());
-	if ((Number(remaining) === 0 && !sessionStorage.getItem("noname_authorizationGitHub") && confirm(`您达到了每小时${limit}次的访问限制，是否输入您github账号的token以获取更高的请求总量限制`)) || (response.status === 401 && (localStorage.removeItem("noname_authorizationGitHub"), true) && (alert(`身份验证凭证错误，是否重新输入您github账号的token以获取更高的请求总量限制`), true))) {
+	console.log(`限制重置時間`, new Date(reset * 1000).toLocaleString());
+	if ((Number(remaining) === 0 && !sessionStorage.getItem("noname_authorizationGitHub") && confirm(`您達到了每小時${limit}次的訪問限制，是否輸入您github賬號的token以獲取更高的請求總量限制`)) || (response.status === 401 && (localStorage.removeItem("noname_authorizationGitHub"), true) && (alert(`身份驗證憑證錯誤，是否重新輸入您github賬號的token以獲取更高的請求總量限制`), true))) {
 		return gainAuthorizationGitHub();
 	}
 };
@@ -75,42 +75,42 @@ const defaultResponseGitCode = async (/** @type {Response} */ response) => {
 	const limit = response.headers.get("X-RateLimit-Limit");
 	const remaining = response.headers.get("X-RateLimit-Remaining");
 	const reset = response.headers.get("X-RateLimit-Reset");
-	console.log(`请求总量限制`, limit);
-	console.log(`剩余请求次数`, remaining);
+	console.log(`請求總量限制`, limit);
+	console.log(`剩餘請求次數`, remaining);
 	// @ts-ignore
-	console.log(`限制重置时间`, new Date(reset * 1000).toLocaleString());
-	if ((Number(remaining) === 0 && !sessionStorage.getItem("noname_authorizationGitCode") && confirm(`您达到了每小时${limit}次的访问限制，是否输入您gitcode账号的token以获取更高的请求总量限制`)) || (response.status === 401 && (localStorage.removeItem("noname_authorizationGitCode"), true) && (alert(`身份验证凭证错误，是否重新输入您gitcode账号的token以获取更高的请求总量限制`), true))) {
+	console.log(`限制重置時間`, new Date(reset * 1000).toLocaleString());
+	if ((Number(remaining) === 0 && !sessionStorage.getItem("noname_authorizationGitCode") && confirm(`您達到了每小時${limit}次的訪問限制，是否輸入您gitcode賬號的token以獲取更高的請求總量限制`)) || (response.status === 401 && (localStorage.removeItem("noname_authorizationGitCode"), true) && (alert(`身份驗證憑證錯誤，是否重新輸入您gitcode賬號的token以獲取更高的請求總量限制`), true))) {
 		return gainAuthorizationGitCode();
 	}
 };
 
 /**
- * 字节转换
+ * 字節轉換
  * @param { number } limit
  */
 export function parseSize(limit) {
 	let size = "";
 	if (limit < 1 * 1024) {
-		// 小于1KB，则转化成B
+		// 小於1KB，則轉化成B
 		size = limit.toFixed(2) + "B";
 	} else if (limit < 1 * 1024 * 1024) {
-		// 小于1MB，则转化成KB
+		// 小於1MB，則轉化成KB
 		size = (limit / 1024).toFixed(2) + "KB";
 	} else if (limit < 1 * 1024 * 1024 * 1024) {
-		// 小于1GB，则转化成MB
+		// 小於1GB，則轉化成MB
 		size = (limit / (1024 * 1024)).toFixed(2) + "MB";
 	} else {
-		// 其他转化成GB
+		// 其他轉化成GB
 		size = (limit / (1024 * 1024 * 1024)).toFixed(2) + "GB";
 	}
 
-	// 转成字符串
+	// 轉成字符串
 	let sizeStr = size + "";
-	// 获取小数点处的索引
+	// 獲取小數點處的索引
 	let index = sizeStr.indexOf(".");
-	// 获取小数点后两位的值
+	// 獲取小數點後兩位的值
 	let dou = sizeStr.slice(index + 1, 2);
-	// 判断后两位是否为00，如果是则删除00
+	// 判斷後兩位是否為00，如果是則刪除00
 	if (dou == "00") {
 		return sizeStr.slice(0, index) + sizeStr.slice(index + 3, 2);
 	}
@@ -118,21 +118,21 @@ export function parseSize(limit) {
 }
 
 /**
- * 对比版本号
- * @param { string } ver1 版本号1
- * @param { string } ver2 版本号2
- * @returns { -1 | 0 | 1 } -1为ver1 < ver2, 0为ver1 == ver2, 1为ver1 > ver2
+ * 對比版本號
+ * @param { string } ver1 版本號1
+ * @param { string } ver2 版本號2
+ * @returns { -1 | 0 | 1 } -1為ver1 < ver2, 0為ver1 == ver2, 1為ver1 > ver2
  * @throws {Error}
  */
 export function checkVersion(ver1, ver2) {
 	if (typeof ver1 !== "string") ver1 = String(ver1);
 	if (typeof ver2 !== "string") ver2 = String(ver2);
 
-	// 移除 'v' 开头
+	// 移除 'v' 開頭
 	if (ver1.startsWith("v")) ver1 = ver1.slice(1);
 	if (ver2.startsWith("v")) ver2 = ver2.slice(1);
 
-	// 验证版本号格式
+	// 驗證版本號格式
 	if (/[^0-9.-]/i.test(ver1) || /[^0-9.-]/i.test(ver2)) {
 		throw new Error("Invalid characters found in the version numbers");
 	}
@@ -160,7 +160,7 @@ export function checkVersion(ver1, ver2) {
 		let { value: item1 } = iter1;
 		let { value: item2 } = iter2;
 
-		// 如果任意一个迭代器已经没有剩余值，将该值视为0
+		// 如果任意一個迭代器已經沒有剩餘值，將該值視為0
 		item1 = item1 === undefined ? 0 : item1;
 		item2 = item2 === undefined ? 0 : item2;
 
@@ -175,16 +175,16 @@ export function checkVersion(ver1, ver2) {
 		}
 	}
 
-	// 若正常遍历结束，说明版本号相等
+	// 若正常遍歷結束，說明版本號相等
 	return 0;
 }
 
 /**
  *
- * 获取指定仓库的tags
+ * 獲取指定倉庫的tags
  * @param { Object } options
- * @param { string } [options.username = 'RancherJie'] 仓库拥有者
- * @param { string } [options.repository = 'noname_xingbei'] 仓库名称
+ * @param { string } [options.username = 'RancherJie'] 倉庫擁有者
+ * @param { string } [options.repository = 'noname_xingbei'] 倉庫名稱
  * @param { string } [options.accessToken] 身份令牌
  * @returns { Promise<{ commit: { sha: string, url: string }, name: string, node_id: string, tarball_url: string, zipball_url: string }[]> }
  *
@@ -192,7 +192,7 @@ export function checkVersion(ver1, ver2) {
  * ```js
  * getRepoTags().then(tags => {
  * 	console.log("All tags:", tags.map(tag => tag.name));
- * 	// 获取最新tag（假设按时间顺序排列，最新tag在数组首位）
+ * 	// 獲取最新tag（假設按時間順序排列，最新tag在數組首位）
  * 	const latestTag = tags[0].name;
  * 	console.log("Latest tag:", latestTag);
  * });
@@ -241,11 +241,11 @@ export async function getRepoTagsGitCode(options = { username: "RancherJie", rep
 }
 
 /**
- * 获取指定仓库的指定tags的描述
- * @param { string } tagName tag名称
+ * 獲取指定倉庫的指定tags的描述
+ * @param { string } tagName tag名稱
  * @param { Object } options
- * @param { string } [options.username = 'RancherJie'] 仓库拥有者
- * @param { string } [options.repository = 'noname_xingbei'] 仓库名称
+ * @param { string } [options.username = 'RancherJie'] 倉庫擁有者
+ * @param { string } [options.repository = 'noname_xingbei'] 倉庫名稱
  * @param { string } [options.accessToken] 身份令牌
  * @example
  * ```js
@@ -273,28 +273,28 @@ export async function getRepoTagDescriptionGitHub(tagName, options = { username:
 	}
 	const releaseData = await response.json();
 	// console.log(releaseData);
-	// 从json里拿我们需要的
+	// 從json裡拿我們需要的
 	return {
-		/** @type { { browser_download_url: string, content_type: string, name: string, size: number }[] } tag额外上传的素材包 */
+		/** @type { { browser_download_url: string, content_type: string, name: string, size: number }[] } tag額外上傳的素材包 */
 		assets: releaseData.assets,
 		author: {
-			/** @type { string } 用户名 */
+			/** @type { string } 用戶名 */
 			login: releaseData.author.login,
-			/** @type { string } 用户头像地址 */
+			/** @type { string } 用戶頭像地址 */
 			avatar_url: releaseData.author.avatar_url,
-			/** @type { string } 用户仓库地址 */
+			/** @type { string } 用戶倉庫地址 */
 			html_url: releaseData.author.html_url,
 		},
 		/** @type { string } tag描述 */
 		body: releaseData.body,
 		// created_at: (new Date(releaseData.created_at)).toLocaleString(),
-		/** @type { string } tag页面 */
+		/** @type { string } tag頁面 */
 		html_url: releaseData.html_url,
-		/** @type { string } tag名称 */
+		/** @type { string } tag名稱 */
 		name: releaseData.name,
-		/** 发布日期 */
+		/** 發佈日期 */
 		published_at: new Date(releaseData.published_at).toLocaleString(),
-		/** @type { string } 下载地址 */
+		/** @type { string } 下載地址 */
 		zipball_url: releaseData.zipball_url,
 	};
 }
@@ -317,40 +317,40 @@ export async function getRepoTagDescriptionGitCode(tagName, options = { username
 	}
 	const releaseData = await response.json();
 	// console.log(releaseData);
-	// 从json里拿我们需要的
+	// 從json裡拿我們需要的
 	return {
-		/** @type { { browser_download_url: string, content_type: string, name: string, size: number }[] } tag额外上传的素材包 */
+		/** @type { { browser_download_url: string, content_type: string, name: string, size: number }[] } tag額外上傳的素材包 */
 		assets: releaseData.assets,
 		author: {
-			/** @type { string } 用户名 */
+			/** @type { string } 用戶名 */
 			login: releaseData.author.login,
-			/** @type { string } 用户头像地址 */
+			/** @type { string } 用戶頭像地址 */
 			avatar_url: releaseData.author.avatar_url,
-			/** @type { string } 用户仓库地址 */
+			/** @type { string } 用戶倉庫地址 */
 			html_url: releaseData.author.html_url,
 		},
 		/** @type { string } tag描述 */
 		body: releaseData.body,
 		// created_at: (new Date(releaseData.created_at)).toLocaleString(),
-		/** @type { string } tag页面 */
+		/** @type { string } tag頁面 */
 		html_url: releaseData.html_url,
-		/** @type { string } tag名称 */
+		/** @type { string } tag名稱 */
 		name: releaseData.name,
-		/** 发布日期 */
+		/** 發佈日期 */
 		published_at: new Date(releaseData.published_at).toLocaleString(),
-		/** @type { string } 下载地址 */
+		/** @type { string } 下載地址 */
 		zipball_url: releaseData.assets.find(v => v.name == `${tagName}.zip`).browser_download_url,
 	};
 }
 
 /**
  *
- * 获取仓库指定分支和指定(单个)目录内的所有文件和目录
- * @param { string } [path = ''] 路径名称(可放参数)
- * @param { string } [branch = ''] 仓库分支名称
+ * 獲取倉庫指定分支和指定(單個)目錄內的所有文件和目錄
+ * @param { string } [path = ''] 路徑名稱(可放參數)
+ * @param { string } [branch = ''] 倉庫分支名稱
  * @param { Object } options
- * @param { string } [options.username = 'RancherJie'] 仓库拥有者
- * @param { string } [options.repository = 'noname_xingbei'] 仓库名称
+ * @param { string } [options.username = 'RancherJie'] 倉庫擁有者
+ * @param { string } [options.repository = 'noname_xingbei'] 倉庫名稱
  * @param { string } [options.accessToken] 身份令牌
  * @returns { Promise<({ download_url: string, name: string, path: string, sha: string, size: number, type: 'file' } | { download_url: null, name: string, path: string, sha: string, size: 0, type: 'dir' })[]> }
  * @example
@@ -379,7 +379,7 @@ export async function getRepoFilesListGitHub(
 		const pathURL = new URL(url);
 		const searchParams = new URLSearchParams(pathURL.search.slice(1));
 		if (searchParams.has("ref")) {
-			throw new TypeError(`设置了branch参数后，不应在path参数内拼接ref`);
+			throw new TypeError(`設置了branch參數後，不應在path參數內拼接ref`);
 		}
 		searchParams.append("ref", branch);
 		url = pathURL.origin + pathURL.pathname + "?" + searchParams.toString();
@@ -390,7 +390,7 @@ export async function getRepoFilesListGitHub(
 		throw new Error(`Request failed with status ${response.status}`);
 	}
 	const data = await response.json();
-	// 处理响应数据，返回文件列表
+	// 處理響應數據，返回文件列表
 	return data.map(({ download_url, name, path, sha, size, type }) => ({
 		download_url,
 		name,
@@ -420,7 +420,7 @@ export async function getRepoFilesListGitCode(
 		const pathURL = new URL(url);
 		const searchParams = new URLSearchParams(pathURL.search.slice(1));
 		if (searchParams.has("ref")) {
-			throw new TypeError(`设置了branch参数后，不应在path参数内拼接ref`);
+			throw new TypeError(`設置了branch參數後，不應在path參數內拼接ref`);
 		}
 		searchParams.append("ref", branch);
 		url = pathURL.origin + pathURL.pathname + "?" + searchParams.toString();
@@ -431,7 +431,7 @@ export async function getRepoFilesListGitCode(
 		throw new Error(`Request failed with status ${response.status}`);
 	}
 	const data = await response.json();
-	// 处理响应数据，返回文件列表
+	// 處理響應數據，返回文件列表
 	return data.map(({ download_url, name, path, sha, size, type }) => ({
 		download_url,
 		name,
@@ -444,15 +444,15 @@ export async function getRepoFilesListGitCode(
 
 /**
  *
- * 获取仓库指定分支和指定目录内的所有文件(包含子目录的文件)
+ * 獲取倉庫指定分支和指定目錄內的所有文件(包含子目錄的文件)
  *
- * **注意： 此api可能会大幅度消耗请求次数，请谨慎使用**
+ * **注意： 此api可能會大幅度消耗請求次數，請謹慎使用**
  *
- * @param { string } [path = ''] 路径名称(可放参数)
- * @param { string } [branch = ''] 仓库分支名称
+ * @param { string } [path = ''] 路徑名稱(可放參數)
+ * @param { string } [branch = ''] 倉庫分支名稱
  * @param { Object } options
- * @param { string } [options.username = 'libnoname'] 仓库拥有者
- * @param { string } [options.repository = 'noname'] 仓库名称
+ * @param { string } [options.username = 'libnoname'] 倉庫擁有者
+ * @param { string } [options.repository = 'noname'] 倉庫名稱
  * @param { string } [options.accessToken] 身份令牌
  * @returns { Promise<{ download_url: string, name: string, path: string, sha: string, size: number, type: 'file' }[]> }
  * @example
@@ -485,19 +485,19 @@ export async function flattenRepositoryFilesGitHub(
 			if (item.type === "file") {
 				flattenedFiles.push(item);
 			} else if (item.type === "dir") {
-				// 获取子目录下的文件列表
+				// 獲取子目錄下的文件列表
 				const subDirFiles = await getRepoFilesListGitHub(item.path, branch, options);
-				// 递归处理子目录中的文件和子目录
+				// 遞歸處理子目錄中的文件和子目錄
 				await traverseDirectory(subDirFiles);
 			}
 		}
 		return flattenedFiles;
 	}
 
-	// 开始遍历初始dir目录下的内容
+	// 開始遍歷初始dir目錄下的內容
 	const allFiles = await traverseDirectory(await getRepoFilesListGitHub(path, branch, options));
 
-	// 返回不含文件夹的扁平化文件列表
+	// 返回不含文件夾的扁平化文件列表
 	return allFiles;
 }
 export async function flattenRepositoryFilesGitCode(
@@ -523,24 +523,24 @@ export async function flattenRepositoryFilesGitCode(
 			if (item.type === "file") {
 				flattenedFiles.push(item);
 			} else if (item.type === "dir") {
-				// 获取子目录下的文件列表
+				// 獲取子目錄下的文件列表
 				const subDirFiles = await getRepoFilesListGitCode(item.path, branch, options);
-				// 递归处理子目录中的文件和子目录
+				// 遞歸處理子目錄中的文件和子目錄
 				await traverseDirectory(subDirFiles);
 			}
 		}
 		return flattenedFiles;
 	}
 
-	// 开始遍历初始dir目录下的内容
+	// 開始遍歷初始dir目錄下的內容
 	const allFiles = await traverseDirectory(await getRepoFilesListGitCode(path, branch, options));
 
-	// 返回不含文件夹的扁平化文件列表
+	// 返回不含文件夾的扁平化文件列表
 	return allFiles;
 }
 
 /**
- * 请求一个文件而不是直接储存为文件，这样可以省内存空间
+ * 請求一個文件而不是直接儲存為文件，這樣可以省內存空間
  * @param { string } url
  * @param { (receivedBytes: number, total?:number, filename?: string) => void } [onProgress]
  * @param { RequestInit } [options={}]
@@ -554,7 +554,7 @@ export async function request(url, onProgress, options = {}) {
 		url,
 		Object.assign(
 			{
-				// 告诉服务器我们期望得到范围请求的支持
+				// 告訴服務器我們期望得到範圍請求的支持
 				headers: { Range: "bytes=0-" },
 			},
 			options
@@ -568,7 +568,7 @@ export async function request(url, onProgress, options = {}) {
 
 	// @ts-ignore
 	let total = parseInt(response.headers.get("Content-Length"), 10);
-	// 如果服务器未返回Content-Length，则无法准确计算进度
+	// 如果服務器未返回Content-Length，則無法準確計算進度
 	// @ts-ignore
 	if (isNaN(total)) total = null;
 	// @ts-ignore
@@ -584,7 +584,7 @@ export async function request(url, onProgress, options = {}) {
 	let chunks = [];
 
 	while (true) {
-		// 使用ReadableStream来获取部分数据并计算进度
+		// 使用ReadableStream來獲取部分數據並計算進度
 		const { done, value } = await reader.read();
 
 		if (done) {
@@ -604,10 +604,10 @@ export async function request(url, onProgress, options = {}) {
 		}
 	}
 
-	// 合并chunks并转换为Blob
+	// 合併chunks並轉換為Blob
 	const blob = new Blob(chunks);
 
-	// 仅做演示，打印已合并的Blob大小
+	// 僅做演示，打印已合併的Blob大小
 	console.log(`Download completed. Total size: ${parseSize(blob.size)}.`);
 
 	return blob;
@@ -638,7 +638,7 @@ export function createProgress(title, max, fileName, value) {
 		overflow: "hidden scroll",
 	});
 
-	// 可拖动
+	// 可拖動
 	parent.className = "dialog";
 
 	const container = ui.create.div(parent, {
@@ -696,7 +696,7 @@ export function createProgress(title, max, fileName, value) {
 			parent.setFileName(
 				fileNameList
 					.slice(0, 2)
-					.concat(`......等${fileNameList.length - 2}个文件`)
+					.concat(`......等${fileNameList.length - 2}個文件`)
 					.join("<br/>")
 			);
 		} else if (fileNameList.length == 2) {
@@ -704,20 +704,20 @@ export function createProgress(title, max, fileName, value) {
 		} else if (fileNameList.length == 1) {
 			parent.setFileName(fileNameList[0]);
 		} else {
-			parent.setFileName("当前没有正在下载的文件");
+			parent.setFileName("當前沒有正在下載的文件");
 		}
 	};
 	return parent;
 }
 
 /**
- * 从GitHub存储库检索最新版本(tag)，不包括特定tag。
+ * 從GitHub存儲庫檢索最新版本(tag)，不包括特定tag。
  *
- * 此函数从GitHub存储库中获取由所有者和存储库名称指定的tags列表，然后返回不是“v1998”的最新tag名称。
- * @param {string} owner GitHub上拥有存储库的用户名或组织名称。
- * @param {string} repo 要从中提取tag的存储库的名称。
- * @returns {Promise<string>} 以最新版本tag的名称解析的promise，或者如果操作失败则以错误拒绝。
- * @throws {Error} 如果获取操作失败或找不到有效tag，将抛出错误。
+ * 此函數從GitHub存儲庫中獲取由所有者和存儲庫名稱指定的tags列表，然後返回不是“v1998”的最新tag名稱。
+ * @param {string} owner GitHub上擁有存儲庫的用戶名或組織名稱。
+ * @param {string} repo 要從中提取tag的存儲庫的名稱。
+ * @returns {Promise<string>} 以最新版本tag的名稱解析的promise，或者如果操作失敗則以錯誤拒絕。
+ * @throws {Error} 如果獲取操作失敗或找不到有效tag，將拋出錯誤。
  */
 export async function getLatestVersionFromGitHub(owner = "RancherJie", repo = "noname_xingbei") {
 	const tags = await getRepoTagsGitHub({
@@ -732,7 +732,7 @@ export async function getLatestVersionFromGitHub(owner = "RancherJie", repo = "n
 			checkVersion(tagName, lib.version);
 			return tagName;
 		} catch {
-			// 非标准版本号
+			// 非標準版本號
 		}
 	}
 
@@ -752,7 +752,7 @@ export async function getLatestVersionFromGitCode(owner = "RancherJie", repo = "
 			checkVersion(tagName, lib.version);
 			return tagName;
 		} catch {
-			// 非标准版本号
+			// 非標準版本號
 		}
 	}
 
@@ -760,11 +760,11 @@ export async function getLatestVersionFromGitCode(owner = "RancherJie", repo = "
 }
 
 /**
- * 从指定目录中的GitHub存储库中获取树
- * @param {string[]} directories 要从中获取树的目录列表
- * @param {string} version 从中获取树的版本或分支。
- * @param {string} [owner = 'libnoname'] GitHub上拥有存储库的用户名或组织名称。
- * @param {string} [repo = 'noname'] GitHub存储库的名称
+ * 從指定目錄中的GitHub存儲庫中獲取樹
+ * @param {string[]} directories 要從中獲取樹的目錄列表
+ * @param {string} version 從中獲取樹的版本或分支。
+ * @param {string} [owner = 'libnoname'] GitHub上擁有存儲庫的用戶名或組織名稱。
+ * @param {string} [repo = 'noname'] GitHub存儲庫的名稱
  * @returns {Promise<{
  * 	path: string;
  * 	mode: string;

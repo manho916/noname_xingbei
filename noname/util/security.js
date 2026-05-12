@@ -1,20 +1,20 @@
-// 声明：沙盒维护的是服务器秩序，让服务器秩序不会因为非房主的玩家以及旁观者的影响，并在此基础上维护玩家设备不受危险代码攻击
-// 但沙盒不会也没有办法维护恶意服务器/房主对于游戏规则的破坏，请玩家尽量选择官方或其他安全的服务器，同时选择一个受信任的玩家作为房主
+// 聲明：沙盒維護的是服務器秩序，讓服務器秩序不會因為非房主的玩家以及旁觀者的影響，並在此基礎上維護玩家設備不受危險代碼攻擊
+// 但沙盒不會也沒有辦法維護惡意服務器/房主對於遊戲規則的破壞，請玩家儘量選擇官方或其他安全的服務器，同時選擇一個受信任的玩家作為房主
 
-// 是否强制所有模式下使用沙盒
+// 是否強制所有模式下使用沙盒
 const SANDBOX_FORCED = false;
-// 是否启用自动测试
+// 是否啟用自動測試
 const SANDBOX_AUTOTEST = false;
-// 是否禁用自动测试延迟
-// 这将放弃渲染，在游戏结束前无响应
+// 是否禁用自動測試延遲
+// 這將放棄渲染，在遊戲結束前無響應
 const SANDBOX_AUTOTEST_NODELAY = false;
-// 沙盒开发模式
+// 沙盒開發模式
 const SANDBOX_DEV = false;
 
 const WSURL_FOR_IP = /ws:\/\/(\d+.\d+.\d+.\d+):\d+\//;
 const TRUSTED_IPS = Object.freeze([]);
 
-// 声明导入类
+// 聲明導入類
 /** @type {boolean} */
 let SANDBOX_ENABLED = true;
 /** @type {typeof import("./sandbox.js").AccessAction} */
@@ -45,11 +45,11 @@ let defaultSandbox;
 /** @type {Array<Sandbox>} */
 const sandboxStack = [];
 
-// 沙盒Function类型缓存
+// 沙盒Function類型緩存
 /** @type {WeakMap<Sandbox, Array<typeof Function>>} */
 const isolatedsMap = new WeakMap();
 
-// noname 顶级变量
+// noname 頂級變量
 /** @type {Object<string|symbol, any>} */
 const topVariables = {
 	lib: null,
@@ -64,24 +64,24 @@ const topVariables = {
 // eval保存
 const defaultEval = window.eval;
 
-// 对于 `lib.init.start` 的首次编译我们放宽
+// 對於 `lib.init.start` 的首次編譯我們放寬
 let initStartParsed = false;
-// 是否软启用沙盒
+// 是否軟啟用沙盒
 let sandBoxRequired = SANDBOX_FORCED;
 
-// 可能的垫片函数
-const pfPrototypes = ["Object", "Array", "String", "Map"]; // 传递的实例垫片
-const pfNamespaces = ["Object", "Array", "Reflect", "Math", "Promise"]; // 传递的静态垫片
-// 可能还要补充喵？
+// 可能的墊片函數
+const pfPrototypes = ["Object", "Array", "String", "Map"]; // 傳遞的實例墊片
+const pfNamespaces = ["Object", "Array", "Reflect", "Math", "Promise"]; // 傳遞的靜態墊片
+// 可能還要補充喵？
 const nativePattern = /\{ \[native code\] \}$/;
 
-// 垫片备份
+// 墊片備份
 const polyfills = {
 	prototypes: {},
 	namespaces: {},
 };
 
-// 被封装的Function类型
+// 被封裝的Function類型
 /** @type {typeof Function} */
 let ModFunction;
 /** @type {typeof Function} */
@@ -93,7 +93,7 @@ let ModAsyncGeneratorFunction;
 
 /**
  * ```plain
- * 将一个沙盒作为当前联网传输的运行沙盒
+ * 將一個沙盒作為當前聯網傳輸的運行沙盒
  * ```
  * 
  * @param {Sandbox} box 
@@ -102,17 +102,17 @@ function enterSandbox(box) {
 	if (!SANDBOX_ENABLED)
 		return;
 	if (!(box instanceof Sandbox))
-		throw new TypeError("无效的沙盒对象");
+		throw new TypeError("無效的沙盒對象");
 
 	if (!Domain.isBelievable(Domain.topDomain))
-		throw "无法在沙盒里面访问";
+		throw "無法在沙盒裡面訪問";
 
 	sandboxStack.push(box);
 }
 
 /**
  * ```plain
- * 退出当前联网传输的运行沙盒
+ * 退出當前聯網傳輸的運行沙盒
  * ```
  */
 function exitSandbox() {
@@ -120,20 +120,20 @@ function exitSandbox() {
 		return;
 
 	if (!Domain.isBelievable(Domain.topDomain))
-		throw "无法在沙盒里面访问";
+		throw "無法在沙盒裡面訪問";
 	if (!sandboxStack.length)
-		throw new ReferenceError("无法弹出更多的沙盒");
+		throw new ReferenceError("無法彈出更多的沙盒");
 
 	sandboxStack.pop();
 }
 
 /**
  * ```plain
- * 判断对象是否是安全对象
+ * 判斷對象是否是安全對象
  * ```
  * 
- * @param {Object?} obj 要检查的对象
- * @param {string?} prop 指定要检查的属性描述符
+ * @param {Object?} obj 要檢查的對象
+ * @param {string?} prop 指定要檢查的屬性描述符
  */
 function isUnsafeObject(obj, prop = null) {
 	if (!SANDBOX_ENABLED)
@@ -162,11 +162,11 @@ function isUnsafeObject(obj, prop = null) {
 
 /**
  * ```plain
- * 确保对象是安全对象
+ * 確保對象是安全對象
  * ```
  * 
- * @param {Object?} obj 要检查的对象
- * @param {string?} prop 指定要检查的属性描述符
+ * @param {Object?} obj 要檢查的對象
+ * @param {string?} prop 指定要檢查的屬性描述符
  */
 function assertSafeObject(obj, prop = null) {
 	if (isUnsafeObject(obj, prop))
@@ -182,7 +182,7 @@ function isPrimitive(obj) {
 
 /**
  * ```plain
- * 获取当前指定的联网传输运行沙盒
+ * 獲取當前指定的聯網傳輸運行沙盒
  * ```
  * 
  * @returns {Sandbox?} 
@@ -196,7 +196,7 @@ function currentSandbox() {
 
 /**
  * ```plain
- * 进入沙盒运行模式
+ * 進入沙盒運行模式
  * ```
  */
 function requireSandbox() {
@@ -205,7 +205,7 @@ function requireSandbox() {
 
 /**
  * ```plain
- * 进入沙盒运行模式
+ * 進入沙盒運行模式
  * ```
  * 
  * @param {string} ip 
@@ -228,7 +228,7 @@ function requireSandboxOn(ip) {
 
 /**
  * ```plain
- * 判断是否是沙盒运行模式
+ * 判斷是否是沙盒運行模式
  * ```
  * 
  * @returns {boolean} 
@@ -239,7 +239,7 @@ function isSandboxRequired() {
 
 /**
  * ```plain
- * 是否可以跳过沙盒进行编译
+ * 是否可以跳過沙盒進行編譯
  * ```
  * 
  * @param {any} item 
@@ -261,9 +261,9 @@ function canSkipSandbox(item) {
 
 /**
  * ```plain
- * 简单的、不带上下文的模拟eval函数
+ * 簡單的、不帶上下文的模擬eval函數
  * 
- * 自动根据沙盒的启用状态使用不同的实现
+ * 自動根據沙盒的啟用狀態使用不同的實現
  * ```
  * 
  * @param {any} x 
@@ -283,9 +283,9 @@ function _eval(x) {
 
 /**
  * ```plain
- * 携带简单上下文的eval函数
+ * 攜帶簡單上下文的eval函數
  * 
- * 自动根据沙盒的启用状态使用不同的实现
+ * 自動根據沙盒的啟用狀態使用不同的實現
  * ```
  * 
  * @param {any} x 
@@ -297,7 +297,7 @@ function _exec(x, scope = {}) {
 		scope = {};
 
 	if (!SANDBOX_ENABLED || !sandBoxRequired) {
-		// 如果没有沙盒，则进行简单模拟
+		// 如果沒有沙盒，則進行簡單模擬
 		new Function(x);
 		const topVars = Object.assign({}, topVariables);
 		const vars = "__vars_" + Math.random().toString(36).slice(2);
@@ -311,27 +311,27 @@ function _exec(x, scope = {}) {
 
 /**
  * ```plain
- * 携带简单上下文的eval函数，并返回scope
- * eval代码的返回值将覆盖 `scope.return` 这个属性
- * 另外任意因对未定义变量赋值导致全局变量赋值的行为将被转移到scope里面
- * （替代eval的对策函数，具体看下面的例子）
+ * 攜帶簡單上下文的eval函數，並返回scope
+ * eval代碼的返回值將覆蓋 `scope.return` 這個屬性
+ * 另外任意因對未定義變量賦值導致全局變量賦值的行為將被轉移到scope裡面
+ * （替代eval的對策函數，具體看下面的例子）
  * 
- * 自动根据沙盒的启用状态使用不同的实现
+ * 自動根據沙盒的啟用狀態使用不同的實現
  * 
  * 下面是 `security.exec2` 的使用示例:
  * ```
  * @example
  * ```javascript
- * // 执行一段代码并获取赋值的多个变量
+ * // 執行一段代碼並獲取賦值的多個變量
  * let { return: skill, filter, content } = security.exec2(`
  *     filter = (e, p) => e.source && e.source == p;
  *     content = async (e, t, p) => t.cancel();
  *     return { filter, content };
- * `, { content: () => {}, lib, game, ui, get, ai, _status, }); // 提供默认的content，提供六个变量
+ * `, { content: () => {}, lib, game, ui, get, ai, _status, }); // 提供默認的content，提供六個變量
  * ```
  * 
  * @param {any} x 
- * @param {Object|"window"} scope 传入一个对象作为上下文，或者传入 "window" 来生成一个包含指向自身的 `window` 属性的对象
+ * @param {Object|"window"} scope 傳入一個對象作為上下文，或者傳入 "window" 來生成一個包含指向自身的 `window` 屬性的對象
  * @returns {Object} 
  */
 function _exec2(x, scope = {}) {
@@ -342,11 +342,11 @@ function _exec2(x, scope = {}) {
 		scope = {};
 
 	if (!SANDBOX_ENABLED || !sandBoxRequired) {
-		// 如果没有沙盒，则进行简单模拟
-		// 进行语法检查
+		// 如果沒有沙盒，則進行簡單模擬
+		// 進行語法檢查
 		new Function(x);
 
-		// 构造拦截器
+		// 構造攔截器
 		const intercepter = new Proxy(scope, {
 			get(target, prop, receiver) {
 				if (prop === Symbol.unscopables)
@@ -377,7 +377,7 @@ function _exec2(x, scope = {}) {
 
 /**
  * ```plain
- * 初始化模块
+ * 初始化模塊
  * ```
  */
 async function initSecurity({
@@ -390,7 +390,7 @@ async function initSecurity({
 	gnc,
 }) {
 	if (initialized)
-		throw "security 已经被初始化过了";
+		throw "security 已經被初始化過了";
 
 	const sandbox = await import("./sandbox.js");
 	SANDBOX_ENABLED = sandbox.SANDBOX_ENABLED;
@@ -419,7 +419,7 @@ async function initSecurity({
 	initSerializeNeeded();
 	initIsolatedEnvironment();
 
-	// 不允许被远程代码访问的game函数
+	// 不允許被遠程代碼訪問的game函數
 	const ioFuncs = [
 		"download",
 		"readFile",
@@ -449,28 +449,28 @@ async function initSecurity({
 		window.define,
 	];
 
-	// 构造禁止函数调用的规则
+	// 構造禁止函數調用的規則
 	const callRule = new Rule();
-	callRule.canMarshal = false; // 禁止获取函数
-	callRule.setGranted(AccessAction.CALL, false); // 禁止函数调用
-	callRule.setGranted(AccessAction.NEW, false); // 禁止函数new调用
+	callRule.canMarshal = false; // 禁止獲取函數
+	callRule.setGranted(AccessAction.CALL, false); // 禁止函數調用
+	callRule.setGranted(AccessAction.NEW, false); // 禁止函數new調用
 
-	// 为禁止的函数设置规则
+	// 為禁止的函數設置規則
 	accessDenieds.filter(Boolean).forEach(o => {
 		Marshal.setRule(o, callRule);
 	});
 
-	// 构造禁止访问的规则
+	// 構造禁止訪問的規則
 	const bannedRule = new Rule();
-	bannedRule.canMarshal = false; // 禁止获取
-	bannedRule.setGranted(AccessAction.READ, false); // 禁止读取属性
-	bannedRule.setGranted(AccessAction.WRITE, false); // 禁止读取属性
-	bannedRule.setGranted(AccessAction.DEFINE, false); // 禁止定义属性
-	bannedRule.setGranted(AccessAction.DESCRIBE, false); // 禁止描述属性
-	bannedRule.setGranted(AccessAction.TRACE, false); // 禁止获取原型
-	bannedRule.setGranted(AccessAction.META, false); // 禁止设置原型
+	bannedRule.canMarshal = false; // 禁止獲取
+	bannedRule.setGranted(AccessAction.READ, false); // 禁止讀取屬性
+	bannedRule.setGranted(AccessAction.WRITE, false); // 禁止讀取屬性
+	bannedRule.setGranted(AccessAction.DEFINE, false); // 禁止定義屬性
+	bannedRule.setGranted(AccessAction.DESCRIBE, false); // 禁止描述屬性
+	bannedRule.setGranted(AccessAction.TRACE, false); // 禁止獲取原型
+	bannedRule.setGranted(AccessAction.META, false); // 禁止設置原型
 
-	// 禁止访问关键对象
+	// 禁止訪問關鍵對象
 	[
 		lib.cheat,
 		lib.node,
@@ -488,32 +488,32 @@ async function initSecurity({
 		.filter(Boolean)
 		.forEach(o => Marshal.setRule(o, bannedRule));
 
-	// 构造禁止修改的规则
+	// 構造禁止修改的規則
 	const writeRule = new Rule();
-	writeRule.setGranted(AccessAction.WRITE, false); // 禁止写入属性
-	writeRule.setGranted(AccessAction.DEFINE, false); // 禁止重定义属性
-	// 禁止修改 game.promises 的函数
+	writeRule.setGranted(AccessAction.WRITE, false); // 禁止寫入屬性
+	writeRule.setGranted(AccessAction.DEFINE, false); // 禁止重定義屬性
+	// 禁止修改 game.promises 的函數
 	Marshal.setRule(game.promises, writeRule);
 	// 禁止修改 localStorage
 	Marshal.setRule(localStorage, writeRule);
 
-	// 对于 game 当中访问特定函数我们通过 Monitor 进行拦截
+	// 對於 game 當中訪問特定函數我們通過 Monitor 進行攔截
 	new Monitor()
-		// 如果是写入或重定义属性
+		// 如果是寫入或重定義屬性
 		.action(AccessAction.WRITE)
 		.action(AccessAction.DEFINE)
-		// 如果目标是 game 的 ioFuncs 包含的所有函数
+		// 如果目標是 game 的 ioFuncs 包含的所有函數
 		.require("target", game)
 		.require("property", ...ioFuncs)
 		.require("property", "ws", "sandbox")
-		// 抛出异常
+		// 拋出異常
 		.then((access, nameds, control) => {
-			throw `有不信任的代码修改 \`game.${String(nameds.property)}\` 属性`;
+			throw `有不信任的代碼修改 \`game.${String(nameds.property)}\` 屬性`;
 		})
-		// 让 Monitor 开始工作
-		.start(); // 差点忘记启动了喵
+		// 讓 Monitor 開始工作
+		.start(); // 差點忘記啟動了喵
 
-	// 监听原型、toStringTag的更改
+	// 監聽原型、toStringTag的更改
 	const toStringTag = Symbol.toStringTag;
 	new Monitor()
 		.action(AccessAction.WRITE)
@@ -529,7 +529,7 @@ async function initSecurity({
 		.start();
 
 	if (SANDBOX_AUTOTEST) {
-		// 一个测试循环喵
+		// 一個測試循環喵
 		Reflect.defineProperty(lib.element.GameEvent.prototype, "animate", {
 			get: () => undefined,
 			set() { },
@@ -573,7 +573,7 @@ async function initSecurity({
 
 /**
  * ```plain
- * 创建一个新的沙盒
+ * 創建一個新的沙盒
  * ```
  * 
  * @returns {Sandbox?} 
@@ -587,13 +587,13 @@ function createSandbox() {
 	box.domAccess = true;
 	box.initBuiltins();
 
-	// 向沙盒提供顶级运行域的文档对象
-	// TODO: 仅提供必要的document函数(?)
+	// 向沙盒提供頂級運行域的文檔對象
+	// TODO: 僅提供必要的document函數(?)
 	box.document = document;
 
-	// 传递七个变量
+	// 傳遞七個變量
 	Object.assign(box.scope, topVariables);
-	// 复制垫片函数
+	// 複製墊片函數
 	setupPolyfills(box);
 
 	box.pushScope();
@@ -602,7 +602,7 @@ function createSandbox() {
 
 /**
  * ```plain
- * 导出当前沙盒的Function类型
+ * 導出當前沙盒的Function類型
  * ```
  * 
  * @param {Sandbox} sandbox 
@@ -614,7 +614,7 @@ function getIsolateds(sandbox) {
 	if (isolateds)
 		return isolateds.slice();
 
-	// 获取当前沙盒的Function类型
+	// 獲取當前沙盒的Function類型
 	isolateds = Array.from(sandbox.exec(`
 		return [
 			(function(){}).constructor,
@@ -630,7 +630,7 @@ function getIsolateds(sandbox) {
 
 /**
  * ```plain
- * 根据传入对象的运行域获取对应的Function类型
+ * 根據傳入對象的運行域獲取對應的Function類型
  * ```
  * 
  * @param {Object} item
@@ -648,12 +648,12 @@ function getIsolatedsFrom(item) {
 
 	const domain = Marshal.getMarshalledDomain(item) || Domain.caller;
 
-	// 非顶级域调用情况下我们替换掉Function类型
+	// 非頂級域調用情況下我們替換掉Function類型
 	if (domain && domain !== Domain.topDomain) {
 		const box = Sandbox.from(domain);
 
 		if (!box)
-			throw "意外的运行域: 运行域没有绑定沙盒";
+			throw "意外的運行域: 運行域沒有綁定沙盒";
 
 		return getIsolateds(box);
 	}
@@ -668,9 +668,9 @@ function getIsolatedsFrom(item) {
 
 /**
  * ```plain
- * 导入 `sandbox.js` 的相关类
+ * 導入 `sandbox.js` 的相關類
  * 
- * 请注意，这需要先判断 `security.isSandboxRequired()`
+ * 請注意，這需要先判斷 `security.isSandboxRequired()`
  * ```
  * 
  * @returns {{
@@ -684,7 +684,7 @@ function getIsolatedsFrom(item) {
  */
 function importSandbox() {
 	if (!AccessAction)
-		throw new ReferenceError("sandbox.js 还没有被载入");
+		throw new ReferenceError("sandbox.js 還沒有被載入");
 
 	return {
 		AccessAction,
@@ -696,7 +696,7 @@ function importSandbox() {
 	};
 }
 
-// 原本的Function类型记录
+// 原本的Function類型記錄
 /** @type {typeof Function} */
 // @ts-ignore
 const defaultFunction = function () { }.constructor;
@@ -712,18 +712,18 @@ const defaultAsyncGeneratorFunction = async function* () { }.constructor;
 
 /**
  * ```plain
- * 初始化顶级域的Funcion类型封装
+ * 初始化頂級域的Funcion類型封裝
  * ```
  */
 function initIsolatedEnvironment() {
 	// @ts-ignore
-	defaultSandbox = createSandbox(); // 所有 eval、parsex 代码全部丢进去喵
+	defaultSandbox = createSandbox(); // 所有 eval、parsex 代碼全部丟進去喵
 
 	// @ts-ignore
-	// 对于 defaultSandbox 我们要补充一些东西喵
+	// 對於 defaultSandbox 我們要補充一些東西喵
 	defaultSandbox.scope.localStorage = localStorage;
 
-	// 对Function类型进行包裹
+	// 對Function類型進行包裹
 	/** @type {Array<typeof Function>} */
 	const [
 		IsolatedFunction,
@@ -734,7 +734,7 @@ function initIsolatedEnvironment() {
 		// @ts-ignore
 		= getIsolateds(defaultSandbox);
 
-	// 封装Function类型
+	// 封裝Function類型
 
 	ModFunction = new Proxy(defaultFunction, {
 		apply(target, thisArg, argumentsList) {
@@ -802,12 +802,12 @@ function initIsolatedEnvironment() {
 	function rewriteCtor(prototype, newCtor) {
 		const descriptor = Object.getOwnPropertyDescriptor(prototype, 'constructor')
 			|| { configurable: true, writable: true, enumerable: false };
-		if (!descriptor.configurable) throw new TypeError("无法覆盖不可配置的构造函数");
+		if (!descriptor.configurable) throw new TypeError("無法覆蓋不可配置的構造函數");
 		descriptor.value = newCtor;
 		Reflect.defineProperty(prototype, 'constructor', descriptor);
 	}
 
-	// 覆盖所有的Function类型构造函数
+	// 覆蓋所有的Function類型構造函數
 	window.Function = ModFunction;
 	rewriteCtor(defaultFunction.prototype, ModFunction);
 	rewriteCtor(defaultGeneratorFunction.prototype, ModGeneratorFunction);
@@ -817,9 +817,9 @@ function initIsolatedEnvironment() {
 
 /**
  * ```plain
- * 初始化需要额外序列化的函数
+ * 初始化需要額外序列化的函數
  * 
- * 适配扩展，当在skillcontent里面调用皮切的playEffect时会报错
+ * 適配擴展，當在skillcontent裡面調用皮切的playEffect時會報錯
  * ```
  */
 function initSerializeNeeded() {
@@ -852,7 +852,7 @@ function initSerializeNeeded() {
 
 /**
  * ```plain
- * 加载当前的垫片函数
+ * 加載當前的墊片函數
  * ```
  */
 function loadPolyfills() {
@@ -886,7 +886,7 @@ function loadPolyfills() {
 		}
 	}
 
-	// 将垫片函数的描述器复制出来
+	// 將墊片函數的描述器複製出來
 
 	for (const key of pfPrototypes) {
 		const top = window[key];
@@ -909,7 +909,7 @@ function loadPolyfills() {
 
 /**
  * ```plain
- * 初始化沙盒的垫片
+ * 初始化沙盒的墊片
  * ```
  * 
  * @param {Sandbox} sandbox 
@@ -922,7 +922,7 @@ function setupPolyfills(sandbox) {
 		namespaces: polyfills.namespaces,
 	};
 
-	// 根据之前复制的垫片函数描述器定义垫片函数
+	// 根據之前複製的墊片函數描述器定義墊片函數
 	sandbox.exec(`
 	function definePolyfills(top, box) {
 		for (const key in top)
@@ -948,7 +948,7 @@ function setupPolyfills(sandbox) {
 	`, context);
 }
 
-// 测试暴露喵
+// 測試暴露喵
 if (SANDBOX_DEV) {
 	Reflect.defineProperty(window, "sandbox", {
 		get: () => defaultSandbox,

@@ -11,16 +11,16 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             }
         },
         character:{
-            jianZhiMoNv: ["jianZhiMoNv_name", "jiGroup", '3/4', ["jiZhiJianYi", "yiXiangJian", "mengXiangJian", "jianYingDuanNian"], ['des:最快的招式，就是最难以应付的招式。悟出此道的剑之魔女，剑招以快取胜，每一招都是进攻，不需要防守。因为只要够快，敌人就永远追不上她进攻的脚步。“在下一路走来，只有风伴我随行”当此句传入耳中时，你已中招倒地。']],
-            jieRiMoDao:["moFaShaoNv_name","yongGroup",3,["moDanZhangWo","moDanRongHe","jiRi_moBaoChongJie","faLiHuDun","huiMieFengBao"],['des:小范围的区域伤害是魔法少女的特长，她更可以把魔弹随意的使用和施放。在积累了一定的能量之后，强大的“毁灭风暴”更是可以让所有对手都品尝到何为魔法的洗礼和冲击']],
-            tanLanShaoNv: ["moFaShaoNv_name", "yongGroup", 3, ["tanYuHeiDong", "lianJinMoFa", "lianJinShu", "wangNvJinKu"], ['des:贪婪少女对于星石的贪婪可谓突破天际，无论是宝石还是水晶，都是她的涉猎目标。但是这还是比不上她以前金库的一厘一分。']],
+            jianZhiMoNv: ["jianZhiMoNv_name", "jiGroup", '3/4', ["jiZhiJianYi", "yiXiangJian", "mengXiangJian", "jianYingDuanNian"], ['des:最快的招式，就是最難以應付的招式。悟出此道的劍之魔女，劍招以快取勝，每一招都是進攻，不需要防守。因為只要夠快，敵人就永遠追不上她進攻的腳步。“在下一路走來，只有風伴我隨行”當此句傳入耳中時，你已中招倒地。']],
+            jieRiMoDao:["moFaShaoNv_name","yongGroup",3,["moDanZhangWo","moDanRongHe","jiRi_moBaoChongJie","faLiHuDun","huiMieFengBao"],['des:小範圍的區域傷害是魔法少女的特長，她更可以把魔彈隨意的使用和施放。在積累了一定的能量之後，強大的“毀滅風暴”更是可以讓所有對手都品嚐到何為魔法的洗禮和衝擊']],
+            tanLanShaoNv: ["moFaShaoNv_name", "yongGroup", 3, ["tanYuHeiDong", "lianJinMoFa", "lianJinShu", "wangNvJinKu"], ['des:貪婪少女對於星石的貪婪可謂突破天際，無論是寶石還是水晶，都是她的涉獵目標。但是這還是比不上她以前金庫的一釐一分。']],
             lingXiZhiChao: [
                 "lingXiZhiChao_name",
                 "huanGroup",
                 "3/4",
                 ["lingZhiZhiYi", "xieLingTuiSan", "banXiangHunLing", "boYongZhiLi", "nuChaoHuangTao", "haiShenYuWu", "lingYong"],
                 [
-                    `des:灵熙之潮对于基础效果有着很敏锐的感受，通过不断触发基础效果获得灵涌，让这个世界的人体验一下怒潮狂涛的威力吧`,
+                    `des:靈熙之潮對於基礎效果有著很敏銳的感受，通過不斷觸發基礎效果獲得靈湧，讓這個世界的人體驗一下怒潮狂濤的威力吧`,
                 ],
             ],
             youJiShi: [
@@ -29,7 +29,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 "3/4",
                 ["jingLingZengLi", "yuanSuSheJi*sora", "erChongJianYing", "fuMoZhiShu",  "jingLingDeJianWu","ziDan"],
                 [
-                    `des:精灵的赠礼对于索拉来说至关重要，“好的开始是成功的一半”这句名言在她的身上得到了最好的体现。`,
+                    `des:精靈的贈禮對於索拉來說至關重要，“好的開始是成功的一半”這句名言在她的身上得到了最好的體現。`,
                 ],
             ],
             nong_baoShiShaoNv: [
@@ -38,7 +38,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 3,
                 ["tianDianChongJi", "shiYuDeHeiDong", "meiWeiRongHe", "sanMiaoYuanZe", "meiShiFengBao"],
                 [
-                    "des:暴食少女除了能够像魔法少女一样肆意运用魔弹和毁灭风暴这样的强大法术以外；作为喜爱甜点的她更加为了满足自己的食欲而开发出了更加“食用”的魔法。<br>因机制问题，无法完全符合faq。",
+                    "des:暴食少女除了能夠像魔法少女一樣肆意運用魔彈和毀滅風暴這樣的強大法術以外；作為喜愛甜點的她更加為了滿足自己的食慾而開發出了更加“食用”的魔法。<br>因機制問題，無法完全符合faq。",
                 ],
             ],
             zhouFuShi: [
@@ -47,7 +47,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 4,
                 ["zhouFuHuoLi", "zhouFuDongTian", "zhouFu_nianZhou", "chiMeiWangLiang", "zhouLiChongSu", "zhouFu_yaoLi"],
                 [
-                    `des:狐神降神于风音身体，融合了风音的意识，自称“铃音”。由于狐神天性喜爱捉弄人，咒符师更倾向灵动的配合队友。“咒符不是用以伤害敌人，而是帮助队友解决困扰”，不要将胜负扛在肩上，更相信队友才是致胜之道`,
+                    `des:狐神降神於風音身體，融合了風音的意識，自稱“鈴音”。由於狐神天性喜愛捉弄人，咒符師更傾向靈動的配合隊友。“咒符不是用以傷害敵人，而是幫助隊友解決困擾”，不要將勝負扛在肩上，更相信隊友才是致勝之道`,
                 ],
             ],
             yuanChuZhiGong:[
@@ -56,7 +56,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 '4/5',
                 ['yuanChu_tianZhiGong','yuanChu_shengXieJuBao','yuanChu_shengHuangJiangLin','yuanChu_shengGuangBaoLie','yuanChu_liuXingShengDan','yuanChu_shengHuangHuiGuangPao','yuanChu_shengHuangYuHui','yuanChu_ziDongTianChong','yuanChu_xinYang'],
                 [
-                    `des:圣弓的最终形态，虽有一颗和平之心，但因遇见强敌而觉醒。其拥有强大的机动性，但因为消耗信仰作为能量且需要的能量巨大，所以一般需要队友支援。一旦能量充填完毕，原初之弓就会显现出最终武器的恐怖形态，无论多么劣势都能看到翻盘的希望`,
+                    `des:聖弓的最終形態，雖有一顆和平之心，但因遇見強敵而覺醒。其擁有強大的機動性，但因為消耗信仰作為能量且需要的能量巨大，所以一般需要隊友支援。一旦能量充填完畢，原初之弓就會顯現出最終武器的恐怖形態，無論多麼劣勢都能看到翻盤的希望`,
                 ],
             ],
             daoDanLuoLi: [
@@ -65,53 +65,53 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 4,
                 ["tianShi?", "panNiZhiQiang", "shenMiFuBi", "T-r-i-c-k-y!", "trickOrTreat", "suprise"],
                 [
-                    `des:既然如此了，就不用拿圣盾用来保护队友了，不如来大闹一场吧~连自己也不一定掌控的tricky，简直是太刺激了~ 到底是trick还是treat？一场盛大的surprise正在上演~`,
+                    `des:既然如此了，就不用拿聖盾用來保護隊友了，不如來大鬧一場吧~連自己也不一定掌控的tricky，簡直是太刺激了~ 到底是trick還是treat？一場盛大的surprise正在上演~`,
                 ],
             ],
             trick_shengGong:['shengGong_name','shengGroup','4/5',['trick_tianZhiGong','shengXieJuBao','trick_shengHuangJiangLin','trick_shengGuangBaoLie','liuXingShengDan','trick_shengHuangHuiGuangPao','trick_ziDongTianChong','xinYang','shengHuangHuiGuangPaoX'],['character:shengGong']],
             trick_maoXianJia:['maoXianJia_name','huanGroup','3/4',['trick_qiZha','qiangYun','diXiaFaZe','trick_maoXianJiaTianTang','touTianHuanRi'],['character:maoXianJia']],
-            luoLiFanZhang: ["luoLiFanZhang_name", "xueGroup", 3, ["xuanHuaShangDeng", "yeLuSiKu", "aiSiTianLiu", "mieChaKuCha"], [`des:暂无介绍`]],
+            luoLiFanZhang: ["luoLiFanZhang_name", "xueGroup", 3, ["xuanHuaShangDeng", "yeLuSiKu", "aiSiTianLiu", "mieChaKuCha"], [`des:暫無介紹`]],
             jianXiZhiPian: [
                 "jianXiZhiPian_name",
                 "yongGroup",
                 "3/4",
                 ["yuanZiXiShou", "yuanZiChongSu", "yuanSuXueTu", "leiJiBianYi", "yueYun", "yuanZi"],
-                ["des:暂无介绍"],
+                ["des:暫無介紹"],
             ],
             daiDuoShaoNv: [
                 "moFaShaoNv_name",
                 "shengGroup",
                 3,
                 ["bieFanWo", "rangWoTangPing", "xiangYongMoDan", "buXiangTiLian", "zaiShuiYiXia"],
-                ["des:暂无介绍"],
+                ["des:暫無介紹"],
             ],
             jiDuShaoNv: [
                 "moFaShaoNv_name",
                 "jiGroup",
                 3,
                 ["cuYiXiuXin", "xuRongZhangWo", "xiangSiBing", "jiDuZhuiFang"],
-                ["des:暂无介绍"],
+                ["des:暫無介紹"],
             ],
             jianZhiZi:[
                 "fengZhiJianSheng_name",
                 "jiGroup",
                 3,
                 ["qingMu", "fengZhiJian", "jianShouShiYan", "jianCanYing"],
-                ["des:暂无介绍"],
+                ["des:暫無介紹"],
             ],
             moGongEX:[
                 'moGong_name',
                 'jiGroup',
                 3,
                 ["shenFengShi", "jiFengZhuiShe", "gongShenHouBu", "juJi"],
-                ["des:其精准的射击总是能令对手防不胜防。作为本作命中数一数二的职业，往往是团队攻击链最后致命一击的缔造者。她的必杀技更是控场神技，总是能令对方的如意算盘全部落空"],
+                ["des:其精準的射擊總是能令對手防不勝防。作為本作命中數一數二的職業，往往是團隊攻擊鏈最後致命一擊的締造者。她的必殺技更是控場神技，總是能令對方的如意算盤全部落空"],
             ],
             sheng_zhongCaiZhe:[
                 'sheng_zhongCaiZhe_name',
                 'shengGroup',
                 '4/5',
                 ['shenZhiTianPing','shanEBiJi','tianPingQingDao','shenZhiShenPan','tianPing','tianZui','zuiChiBiDao','zui'],
-                ["des:新的裁判钟声已经敲响，不知道是新生的喜悦钟声，还是赴死的丧钟。咚，咚，咚。。。"],
+                ["des:新的裁判鐘聲已經敲響，不知道是新生的喜悅鐘聲，還是赴死的喪鐘。咚，咚，咚。。。"],
             ],
         },
 
@@ -126,7 +126,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             },
         },
         skill: {
-            //剑之魔女
+            //劍之魔女
             jiZhiJianYi:{
                 trigger:{player:"gongJiEnd"},
                 filter:function(event,player){
@@ -139,7 +139,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             if(get.mingGe(card)!='ji'||get.type(card)!='gongJi') return false;
                             return lib.filter.cardEnabled(card,player,'forceEnable');
                         },
-                        prompt:'技之剑意：技类[攻击行动]',
+                        prompt:'技之劍意：技類[攻擊行動]',
                     });
                 },
                 check:function(event,player){
@@ -174,7 +174,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 
                     if (get.type(discarded) == 'gongJi') {
                         var list=['是','否'];
-                        var control = await player.chooseControl(list).set('prompt','是否获得攻击牌')
+                        var control = await player.chooseControl(list).set('prompt','是否獲得攻擊牌')
                         .set('ai', function() {
                             var player = _status.event.player;
                             if(player.countCards('h', card => get.type(card) == 'gongJi') > 1)return '否';
@@ -235,7 +235,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 }
             },
 
-            //节日魔导
+            //節日魔導
             jiRi_moBaoChongJie:{
                 type:'faShu',
                 enable:'faShu',
@@ -257,7 +257,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 content:function(){
                     'step 0'
                     var name=get.colorName(player);
-                    target.chooseToDiscard(`弃置1张法术牌，否则${name}对你造成2点法术伤害③`,1,function(card){
+                    target.chooseToDiscard(`棄置1張法術牌，否則${name}對你造成2點法術傷害③`,1,function(card){
                         return get.type(card)=='faShu';
                     })
                     .set('showCards',true)
@@ -304,7 +304,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
             },
 
-            //贪婪少女
+            //貪婪少女
             tanYuHeiDong:{
                 type:'faShu',
                 enable:'faShu',
@@ -327,7 +327,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 content:function(){
                     'step 0'
                     var name=get.colorName(player);
-                    target.chooseToDiscard(`弃置1张法术牌，否则${name}对你造成2点法术伤害③`,1,function(card){
+                    target.chooseToDiscard(`棄置1張法術牌，否則${name}對你造成2點法術傷害③`,1,function(card){
                         return get.type(card)=='faShu';
                     })
                     .set('showCards',true)
@@ -396,7 +396,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     var zhanJi=get.zhanJi(player.side);
                     if(zhanJi.length>0){
                         var list=['是','否'];
-                        var control=await player.chooseControl(list).set('prompt','是否额外移除【战绩区】所有星石').set('ai', function(){
+                        var control=await player.chooseControl(list).set('prompt','是否額外移除【戰績區】所有星石').set('ai', function(){
                             var player= _status.event.player;
                             var zhanJi=get.zhanJi(player.side);
                             var shiQi=get.shiQi(!player.side);
@@ -440,7 +440,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 }
             },
 
-            // 灵熙之潮
+            // 靈熙之潮
             lingZhiZhiYi: {
                 mod: {
                     targetEnabled: function (card, player, target) {
@@ -456,7 +456,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     return game.jiChuXiaoGuo.all_xiaoGuo.includes(event.jiChuXiaoGuo);
                 },
                 async cost(event, trigger, player) {
-                    event.result= await player.chooseTarget("对目标对手造成1点法术伤害③", function (card, player, target) {
+                    event.result= await player.chooseTarget("對目標對手造成1點法術傷害③", function (card, player, target) {
                         return player.side != target.side;
                     })
                     .set("ai", function (target) {
@@ -514,7 +514,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 content: async function (event, trigger, player) {
                     await player.removeZhiShiWu("lingYong", 4);
                     var targets = await player
-                        .chooseTarget("对4名目标角色造成1点法术伤害③，<span class='tiaoJian'>(若目标角色拥有X个基础效果)</span>本次对他的法术伤害额外+X点", 4, true)
+                        .chooseTarget("對4名目標角色造成1點法術傷害③，<span class='tiaoJian'>(若目標角色擁有X個基礎效果)</span>本次對他的法術傷害額外+X點", 4, true)
                         .set("ai", function (target) {
                             var player = _status.event.player;
                             var length = target.jiChuXiaoGuoList().length;
@@ -626,7 +626,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             },
             lingYong: {
                 intro: {
-                    name: "灵涌",
+                    name: "靈湧",
                     markcount: "mark",
                     max: 4,
                     content: "mark",
@@ -635,7 +635,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 markimage: "image/card/zhiShiWu/hong.png",
             },
 
-            // 游击士
+            // 游擊士
             jingLingZengLi: {
                 trigger: { global: "gameStart" },
                 forced: true,
@@ -652,7 +652,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 async cost(event, trigger, player) {
                     var result = await player
-                        .chooseCardButton(player.getGaiPai("ziDan"), "是否发动【元素射击*SORA】移除一个【子弹】？")
+                        .chooseCardButton(player.getGaiPai("ziDan"), "是否發動【元素射擊*SORA】移除一個【子彈】？")
                         .set("ai", function () {
                             return 0.7 - Math.random();
                         })
@@ -667,11 +667,11 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     await player.discard(event.cost_data, "ziDan", "showHiddenCards");
                     var xiBie = get.xiBie(event.cost_data);
                     if (xiBie === "guang" || xiBie === "an") {
-                        var choiceList = ["火系：本次攻击伤害额外+1", "水系：<span class='tiaoJian'>(主动攻击命中时②)</span>目标角色+1[治疗]", "风系：<span class='tiaoJian'>([攻击行动]结束后)</span>额外+1[攻击行动]", "雷系：本次攻击无法应战", "地系：<span class='tiaoJian'>(主动攻击命中时②)</span>对目标角色造成1点法术伤害③"];
-                        var choices = ["火系", "水系", "风系", "雷系", "地系"];
+                        var choiceList = ["火系：本次攻擊傷害額外+1", "水系：<span class='tiaoJian'>(主動攻擊命中時②)</span>目標角色+1[治療]", "風系：<span class='tiaoJian'>([攻擊行動]結束後)</span>額外+1[攻擊行動]", "雷系：本次攻擊無法應戰", "地系：<span class='tiaoJian'>(主動攻擊命中時②)</span>對目標角色造成1點法術傷害③"];
+                        var choices = ["火系", "水系", "風系", "雷系", "地系"];
                         let next = player
                             .chooseControl(choices)
-                            .set("prompt", "元素射击：选择一项")
+                            .set("prompt", "元素射擊：選擇一項")
                             .set("choiceList", choiceList)
                             .set("ai", function () {
                                 return "雷系";
@@ -684,7 +684,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             case "水系":
                                 xiBie = "shui";
                                 break;
-                            case "风系":
+                            case "風系":
                                 xiBie = "feng";
                                 break;
                             case "雷系":
@@ -730,7 +730,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         },
                         async cost(event, trigger, player) {
                             event.result = await player
-                                .chooseTarget("水之弹：目标角色+1[治疗]", true)
+                                .chooseTarget("水之彈：目標角色+1[治療]", true)
                                 .set("ai", function (target) {
                                     var player = _status.event.player;
                                     return get.zhiLiaoEffect2(target, player, 1);
@@ -760,7 +760,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         },
                         async cost(event, trigger, player) {
                             event.result = await player
-                                .chooseTarget("地之弹：对目标角色造成1点法术伤害", true)
+                                .chooseTarget("地之彈：對目標角色造成1點法術傷害", true)
                                 .set("ai", function (target) {
                                     var player = _status.event.player;
                                     return get.damageEffect2(target, player, 1);
@@ -793,7 +793,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             if (get.xiBie(card) != _status.event.xiBie || get.type(card) != "gongJi") return false;
                             return lib.filter.cardEnabled(card, player, "forceEnable");
                         },
-                        prompt: `【二重剑影】:${name}系[攻击行动]`,
+                        prompt: `【二重劍影】:${name}系[攻擊行動]`,
                     });
                 },
             },
@@ -849,7 +849,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             },
             ziDan: {
                 intro: {
-                    name: "子弹",
+                    name: "子彈",
                     markcount: "gaiPai",
                     content: "gaiPai",
                 },
@@ -865,7 +865,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 content: function (event, trigger, player) {
                     "step 0";
                     var cards = player.getGaiPai("ziDan");
-                    player.chooseCardButton(cards, "舍弃" + (cards.length - 6) + "张【子弹】", true, cards.length - 6);
+                    player.chooseCardButton(cards, "捨棄" + (cards.length - 6) + "張【子彈】", true, cards.length - 6);
                     "step 1";
                     if (result.links) {
                         player.discard(result.links);
@@ -961,7 +961,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             for (var card of trigger.cards) {
                                 if (get.name(card) == "moDan" && ['h','x'].includes(card.original)&&!player.storage.sanMiaoYuanZe.includes(card)&&get.position(card)=='d') {
                                     player.storage.sanMiaoYuanZe.push(card);
-                                    //game.log(player, "将", "#g【魔弹】", "加入了", "#y【三妙原则】");
+                                    //game.log(player, "將", "#g【魔彈】", "加入了", "#y【三妙原則】");
                                 }
                             }
                             if(player.storage.sanMiaoYuanZe.length) game.cardsGotoOrdering(player.storage.sanMiaoYuanZe);
@@ -974,7 +974,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 inherit:'huiMieFengBao',
             },
             
-            //咒符师
+            //咒符師
             zhouFuHuoLi: {
                 type: "faShu",
                 enable: ["faShu"],
@@ -992,7 +992,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     await event.trigger("zhouFuStart");
                     var charNum=event.getParent().charNum || 1;
                     var baseNum= event.getParent().baseNum || 1;
-                    var targets=await player.chooseTarget(charNum, `对${charNum}名角色造成${baseNum}点法术伤害`, true)
+                    var targets=await player.chooseTarget(charNum, `對${charNum}名角色造成${baseNum}點法術傷害`, true)
                     .set("ai", function (target) {
                         var player = _status.event.player;
                         return get.damageEffect2(target, player, baseNum);
@@ -1027,7 +1027,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     await event.trigger("zhouFuStart");
                     var charNum=event.getParent().charNum || 1;
                     var baseNum= event.getParent().baseNum || 1;
-                    var targets=await player.chooseTarget(charNum, `选取${charNum}名角色弃${baseNum}张牌`, true)
+                    var targets=await player.chooseTarget(charNum, `選取${charNum}名角色棄${baseNum}張牌`, true)
                     .set("ai", function (target) {
                         var player = _status.event.player;
                         if(target.side!= player.side) return 0;
@@ -1036,7 +1036,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     for(var target of targets.sortBySeat(player)){
                         await target.chooseToDiscard(baseNum, "h", true);
                     }
-                    var targets = await player.chooseTarget(`选取${charNum}名角色，将他的1点[治疗]转移给你`, charNum, true,current=>current!=_status.event.player).set("ai", function (target) {
+                    var targets = await player.chooseTarget(`選取${charNum}名角色，將他的1點[治療]轉移給你`, charNum, true,current=>current!=_status.event.player).set("ai", function (target) {
                         var player = _status.event.player;
                         if(target.side== player.side) return 0;
                         return target.zhiLiao;
@@ -1093,7 +1093,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     var result = await player
                         .chooseCardButton(
                             player.getGaiPai("zhouFu_yaoLi"),
-                            "是否发动【魑魅魍魎】移除1个【妖力】<br>视为发动【咒符-火璃】或【咒符-冻天】"
+                            "是否發動【魑魅魍魎】移除1個【妖力】<br>視為發動【咒符-火璃】或【咒符-凍天】"
                         )
                         .set('ai', function (button) {
                             if(get.xiBie(button.link)=='di') return 1;
@@ -1110,7 +1110,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     await player.discard(card, "zhouFu_yaoLi");
                     var baseNum=1;
                     var bool = await player
-                        .chooseCardButton([card], `是否展示地系【妖力】，使得该次【咒符】的伤害或弃牌效果+1`, 1)
+                        .chooseCardButton([card], `是否展示地系【妖力】，使得該次【咒符】的傷害或棄牌效果+1`, 1)
                         .set("filterButton", function (button) {
                             return get.xiBie(button.link) == "di";
                         })
@@ -1123,13 +1123,13 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         baseNum++;
                     }
                     var choicesList = [
-                        `发动【咒符-火璃】，对1名目标角色造成${baseNum}点法术伤害,<br>你摸1张牌，弃1张牌`,
-                        `发动【咒符-冻天】，指定1名目标角色弃${baseNum}张牌，将除你外1名目标角色的1[治疗]转移给你`,
+                        `發動【咒符-火璃】，對1名目標角色造成${baseNum}點法術傷害,<br>你摸1張牌，棄1張牌`,
+                        `發動【咒符-凍天】，指定1名目標角色棄${baseNum}張牌，將除你外1名目標角色的1[治療]轉移給你`,
                     ];
                     var choices = ["zhouFuHuoLi", "zhouFuDongTian"];
                     let next = player
                         .chooseControl(choices)
-                        .set("prompt", "魑魅魍魎：选择一项")
+                        .set("prompt", "魑魅魍魎：選擇一項")
                         .set("choiceList", choicesList)
                         .set("ai", function () {
                             if (0.5 - Math.random() > 0) return "zhouFuHuoLi";
@@ -1232,10 +1232,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 chooseButton:{
                     dialog:function(event,player){
-						var dialog=ui.create.dialog(`圣煌降临：移除2点[治疗]或2点<span class='hong'>【信仰】</span>`,'hidden');
+						var dialog=ui.create.dialog(`聖煌降臨：移除2點[治療]或2點<span class='hong'>【信仰】</span>`,'hidden');
                         var list=[];
                         if(player.zhiLiao>=2){
-                            list.push('治疗');
+                            list.push('治療');
                         }
                         if(player.countZhiShiWu('yuanChu_xinYang')>=2){
                             list.push('信仰');
@@ -1250,7 +1250,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 							content:function(){
                                 'step 0'
 								event.links=lib.skill.yuanChu_shengHuangJiangLin_backup.links;
-                                if(event.links[0]=='治疗'){
+                                if(event.links[0]=='治療'){
                                     player.changeZhiLiao(-2);
                                 }else if(event.links[0]=='信仰'){
                                     player.removeZhiShiWu('yuanChu_xinYang',2);
@@ -1293,8 +1293,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 chooseButton:{
                     dialog:function(event,player){
-                        var dialog=ui.create.dialog('圣光爆裂','hidden');
-                        var list=[['1',"<span class='tiaoJian'>(移除你的1[治疗])</span>摸1张牌[强制]，对手牌数小于你的目标对手造成2点攻击伤害③，你+1<span class='hong'>【信仰】</span>"],['2',"<span class='tiaoJian'>(移除你的X[治疗]，选择最多X名手牌数不大于你手牌数-X的对手)</span>你弃X张牌，然后对他们各造成(Y+2)点攻击伤害，Y为目标数中拥有[治疗]的人数，你+X<span class='hong'>【信仰】</span>"]];
+                        var dialog=ui.create.dialog('聖光爆裂','hidden');
+                        var list=[['1',"<span class='tiaoJian'>(移除你的1[治療])</span>摸1張牌[強制]，對手牌數小於你的目標對手造成2點攻擊傷害③，你+1<span class='hong'>【信仰】</span>"],['2',"<span class='tiaoJian'>(移除你的X[治療]，選擇最多X名手牌數不大於你手牌數-X的對手)</span>你棄X張牌，然後對他們各造成(Y+2)點攻擊傷害，Y為目標數中擁有[治療]的人數，你+X<span class='hong'>【信仰】</span>"]];
 						dialog.add([list,'textbutton']);
 						return dialog;
                     },
@@ -1360,7 +1360,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             var targets=game.filterPlayer(function(current){
                                 return current.side!=player.side;
                             });
-                            //获取对手中手牌数最小的角色的手牌数
+                            //獲取對手中手牌數最小的角色的手牌數
                             var num=Infinity;
                             for(var i=0;i<targets.length;i++){
                                 if(targets[i].countCards('h')<num) num=targets[i].countCards('h');
@@ -1374,7 +1374,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 
                             var result=await player.chooseButtonTarget({
                                 createDialog:[
-                                    `<span class='tiaoJian'>(移除你的X[治疗]，选择最多X名手牌数不大于你手牌数-X的对手)</span>你弃X张牌，然后对他们各造成(Y+2)点攻击伤害， Y为目标数中拥有[治疗]的人数，你+X<span class='hong'>【信仰】</span>。`,
+                                    `<span class='tiaoJian'>(移除你的X[治療]，選擇最多X名手牌數不大於你手牌數-X的對手)</span>你棄X張牌，然後對他們各造成(Y+2)點攻擊傷害， Y為目標數中擁有[治療]的人數，你+X<span class='hong'>【信仰】</span>。`,
                                     [list,'tdnodes'],
                                 ],
                                 forced:true,
@@ -1398,7 +1398,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             var num=result.links[0];
                             var targets=result.targets.sortBySeat(player);
                             await player.changeZhiLiao(-num);
-                            game.log(player,'选择了',targets);
+                            game.log(player,'選擇了',targets);
                             await player.chooseToDiscard(true,'h',num);
 
                             var damageNum=2;
@@ -1445,7 +1445,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         return current.side==player.side&&current.zhiLiao<current.getZhiLiaoLimit();
                     });
 
-                    var control=await player.chooseControl(list).set('prompt',get.prompt('liuXingShengDan')).set('prompt2','移除1点[治疗]或1点<span class="hong">【信仰】</span>，我方目标角色+1[治疗]').set('ai',function(){
+                    var control=await player.chooseControl(list).set('prompt',get.prompt('liuXingShengDan')).set('prompt2','移除1點[治療]或1點<span class="hong">【信仰】</span>，我方目標角色+1[治療]').set('ai',function(){
                         var player=_status.event.player;
                         var bool=_status.event.bool;
                         if(player.hasZhiShiWu('shengHuangHuiGuangPaoX')){
@@ -1472,7 +1472,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     'step 1'
                     player.chooseTarget(true,function(card,player,target){
                         return target.side==player.side;
-                    }).set('prompt','我方目标角色+1[治疗]').set('ai',function(target){
+                    }).set('prompt','我方目標角色+1[治療]').set('ai',function(target){
                         return get.zhiLiaoEffect(target,1);
                     });
                     'step 2'
@@ -1482,7 +1482,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             yuanChu_shengHuangHuiGuangPao:{
                 markimage:'image/card/zhuanShu/yuanChu_shengHuangHuiGuangPao.png',
                 intro:{
-                    content:`<span class='tiaoJian'>(仅【圣煌形态】下可发动，移除4点</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，然后移除等同我方落后士气的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>数)</span>所有角色将手牌调整为4张，我方【星杯区】+1[星杯]，然后将一方[士气]调整与另一方相同,我方所有角色各+1[治疗]，你额外+1[攻击行动]或[法术行动]并将【圣煌辉光炮】翻面。`,
+                    content:`<span class='tiaoJian'>(僅【聖煌形態】下可發動，移除4點</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，然後移除等同我方落後士氣的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>數)</span>所有角色將手牌調整為4張，我方【星杯區】+1[星杯]，然後將一方[士氣]調整與另一方相同,我方所有角色各+1[治療]，你額外+1[攻擊行動]或[法術行動]並將【聖煌輝光炮】翻面。`,
                     nocount:true,
                 },
                 onremove:'storage',
@@ -1517,19 +1517,19 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 contentAfter:async function(event,trigger,player){
                     await player.changeXingBei(1);
-                    var choiceList=['红方士气设置为蓝方士气','蓝方士气设置为红方士气'];
+                    var choiceList=['紅方士氣設置為藍方士氣','藍方士氣設置為紅方士氣'];
                     var control=await player.chooseControl().set('choiceList',choiceList).set('ai',function(){
                         var player=_status.event.player;
                         if(player.side==true){
-                            if(game.hongShiQi<game.lanShiQi) return '选项一';
+                            if(game.hongShiQi<game.lanShiQi) return '選項一';
                         }else{
-                            if(game.lanShiQi<game.hongShiQi) return '选项二';
+                            if(game.lanShiQi<game.hongShiQi) return '選項二';
                         }
                         var num=Math.random();
-                        if(num<0.5) return '选项一';
-                        else return '选项二';
+                        if(num<0.5) return '選項一';
+                        else return '選項二';
                     }).forResultControl();
-                    if(control=='选项一'){
+                    if(control=='選項一'){
                         var num=game.lanShiQi-game.hongShiQi;
                         game.changeShiQi(num,true);
                     }else{
@@ -1562,7 +1562,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             yuanChu_shengHuangYuHui:{
                 markimage:'image/card/zhuanShu/yuanChu_shengHuangYuHui.png',
                 intro:{
-                    content:`<span class='tiaoJian'>(仅【圣煌形态】下可发动，移除4点</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，然后移除等同我方落后士气的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>数)</span>所有角色将手牌调整为4张，我方【星杯区】+1[星杯]，然后将一方[士气]调整与另一方相同，然后移除【圣煌余辉】。`,
+                    content:`<span class='tiaoJian'>(僅【聖煌形態】下可發動，移除4點</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，然後移除等同我方落後士氣的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>數)</span>所有角色將手牌調整為4張，我方【星杯區】+1[星杯]，然後將一方[士氣]調整與另一方相同，然後移除【聖煌餘輝】。`,
                     nocount:true,
                 },
                 onremove:'storage',
@@ -1597,19 +1597,19 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 contentAfter:async function(event,trigger,player){
                     await player.changeXingBei(1);
-                    var choiceList=['红方士气设置为蓝方士气','蓝方士气设置为红方士气'];
+                    var choiceList=['紅方士氣設置為藍方士氣','藍方士氣設置為紅方士氣'];
                     var control=await player.chooseControl().set('choiceList',choiceList).set('ai',function(){
                         var player=_status.event.player;
                         if(player.side==true){
-                            if(game.hongShiQi<game.lanShiQi) return '选项一';
+                            if(game.hongShiQi<game.lanShiQi) return '選項一';
                         }else{
-                            if(game.lanShiQi<game.hongShiQi) return '选项二';
+                            if(game.lanShiQi<game.hongShiQi) return '選項二';
                         }
                         var num=Math.random();
-                        if(num<0.5) return '选项一';
-                        else return '选项二';
+                        if(num<0.5) return '選項一';
+                        else return '選項二';
                     }).forResultControl();
-                    if(control=='选项一'){
+                    if(control=='選項一'){
                         var num=game.lanShiQi-game.hongShiQi;
                         game.changeShiQi(num,true);
                     }else{
@@ -1635,17 +1635,17 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             yuanChu_ziDongTianChong:{
                 inherit: 'ziDongTianChong',
                 content:async function(event,trigger,player){
-                    var choiceList=[`[水晶]你+1<span class='hong'>【信仰】</span>或+1[治疗]`,`[宝石]你+1[水晶]，+2<span class='hong'>【信仰】</span>或+2[治疗]`];
-                    var list=['选项一'];
+                    var choiceList=[`[水晶]你+1<span class='hong'>【信仰】</span>或+1[治療]`,`[寶石]你+1[水晶]，+2<span class='hong'>【信仰】</span>或+2[治療]`];
+                    var list=['選項一'];
                     if(player.canBiShaBaoShi()){
-                        list.push('选项二');
+                        list.push('選項二');
                     }
                     var control=await player.chooseControl(list).set('choiceList',choiceList).set('ai',function(){
                         var player=_status.event.player;
-                        if(player.canBiShaBaoShi()) return '选项二';
-                        return '选项一';
+                        if(player.canBiShaBaoShi()) return '選項二';
+                        return '選項一';
                     }).forResultControl();
-                    if(control=='选项一'){
+                    if(control=='選項一'){
                         await player.removeBiShaShuiJing();
                         var num=1;
                     }else{
@@ -1653,10 +1653,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         await player.addNengLiang('shuiJing',1);
                         var num=2;
                     }
-                    var list=['信仰','治疗'];
-                    control=await player.chooseControl(list).set('prompt','+'+num+"点<span class='hong'>【信仰】</span>或[治疗]").forResultControl();
+                    var list=['信仰','治療'];
+                    control=await player.chooseControl(list).set('prompt','+'+num+"點<span class='hong'>【信仰】</span>或[治療]").forResultControl();
                     'step 3'
-                    if(control=='治疗'){
+                    if(control=='治療'){
                         await player.changeZhiLiao(num);
                     }else if(control=='信仰'){
                         await player.addZhiShiWu('yuanChu_xinYang',num);
@@ -1667,7 +1667,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 inherit: 'xinYang',
             },
 
-            // 捣蛋萝莉
+            // 搗蛋蘿莉
             'tianShi?': {
                 inherit: "tianShiZhiQiang",
                 mod:{
@@ -1704,7 +1704,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         return;
                     }
                     if (list.includes("_shengDun")) {
-                        // 如果目标角色拥有【圣盾】，因为圣盾只能存在1个，只能选择【圣盾】
+                        // 如果目標角色擁有【聖盾】，因為聖盾只能存在1個，只能選擇【聖盾】
                         var control = "_shengDun";
                     }else if(list.length==1){
                         var control = list[0];
@@ -1712,7 +1712,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     else{
                         var control = await player
                         .chooseControl(list)
-                        .set("prompt", "选择要获得的基础效果")
+                        .set("prompt", "選擇要獲得的基礎效果")
                         .set("targetX", target)
                         .set("listX", list)
                         .set('ai', function () {
@@ -1731,7 +1731,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     
                     var card;
                     if (control == "_zhongDu" && target.getJiChuXiaoGuo("_zhongDu").length != 1) {
-                        var zhongDu = await player.chooseCardButton(target.getJiChuXiaoGuo("_zhongDu"), true, "选择要获得的中毒").forResultLinks();
+                        var zhongDu = await player.chooseCardButton(target.getJiChuXiaoGuo("_zhongDu"), true, "選擇要獲得的中毒").forResultLinks();
                         card = zhongDu[0];
                         var list = target.getJiChuXiaoGuo("_zhongDu");
                         var index = list.indexOf(card);
@@ -1743,7 +1743,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     await target.lose(card,ui.ordering);
                     //await game.cardsGotoOrdering(card);
                     await target.addJiChuXiaoGuo('_shengDun', player,event.cards);
-                    //game.log(player, "获得了", card);
+                    //game.log(player, "獲得了", card);
                     await player.gain(card,'gain2');
                     if (!game.jiChuXiaoGuo.pai_xiaoGuo.includes(control)) {
                         target.removeSkill(control);
@@ -1767,7 +1767,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         intro: {
                             content: "jiChuXiaoGuo",
                             mark:function (dialog, content, player) {
-                                dialog.addText("基础效果");
+                                dialog.addText("基礎效果");
                             },
                         },
                         onremove: function (player, skill) {
@@ -1790,7 +1790,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 content: async function (event, trigger, player) {
                     const targets = await player
-                        .chooseTarget("神秘伏笔：将牌库顶1-2张牌放置于X名目标角色旁，作为【Tricky】", true, [1, 2], function (card, player, target) {
+                        .chooseTarget("神秘伏筆：將牌庫頂1-2張牌放置於X名目標角色旁，作為【Tricky】", true, [1, 2], function (card, player, target) {
                             return lib.filter.targetEnabled({ name: "tricky" }, player, target);
                         })
                         .set('ai', function (target) {
@@ -1838,7 +1838,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         var cards = target.getJiChuXiaoGuo("tricky_xiaoGuo");
                         var card = cards[0];
                         var xiBie = get.xiBie(card);
-                        var dialog = ["T-r-i-c-k-y!：移除该【Tricky】[展示]并额外弃1张同系牌[展示]",[[card], "card"]];
+                        var dialog = ["T-r-i-c-k-y!：移除該【Tricky】[展示]並額外棄1張同系牌[展示]",[[card], "card"]];
 
                         var result = await player
                             .chooseCard(card=> get.xiBie(card) == _status.event.xiBie)
@@ -1884,7 +1884,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     for(var p of players){
                         var card= p.getJiChuXiaoGuo("tricky_xiaoGuo")[0];
                         var name=get.colorName(player);
-                        var dialog = [`弃1张与面前【Tricky】对应属性的牌[展示]<br>否则${name}对你造成2点法术伤害③`,[[card], "card"]];
+                        var dialog = [`棄1張與面前【Tricky】對應屬性的牌[展示]<br>否則${name}對你造成2點法術傷害③`,[[card], "card"]];
                         var result = await p.chooseToDiscard(1, "h",'showCards',card=> get.xiBie(card) == _status.event.xiBie)
                             .set("xiBie", get.xiBie(card))
                             .set('dialog', dialog)
@@ -1906,11 +1906,11 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     }
 
                     if (woFang > duiFang) {
-                        const choiceList = ["【战绩区】+1[水晶]，并且你+1[水晶]", "弃1张牌并额外获得一个回合"];
-                        const choices = ["选项一", "选项二"];
-                        let next = player.chooseControl(choices).set("prompt", "我方弃牌>对方：选择一项").set("choiceList", choiceList);
+                        const choiceList = ["【戰績區】+1[水晶]，並且你+1[水晶]", "棄1張牌並額外獲得一個回合"];
+                        const choices = ["選項一", "選項二"];
+                        let next = player.chooseControl(choices).set("prompt", "我方棄牌>對方：選擇一項").set("choiceList", choiceList);
                         var control = await next.forResultControl();
-                        if (control == "选项一") {
+                        if (control == "選項一") {
                             await player.changeZhanJi("shuiJing", 1);
                             await player.addNengLiang("shuiJing", 1);
                         } else {
@@ -1960,7 +1960,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                 filterTarget:function (card, player, target) {
                                     return lib.filter.targetEnabled({ name: "tricky" }, player, target);
                                 },
-                                prompt:"选择1名目标角色，将1张手牌作为基础效果【Tricky】放置",
+                                prompt:"選擇1名目標角色，將1張手牌作為基礎效果【Tricky】放置",
                                 ai1(card) {
                                     return 6- get.value(card);
                                 },
@@ -1997,7 +1997,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
             },
 
-            //trick圣弓
+            //trick聖弓
             trick_tianZhiGong:{
                 inherit: 'tianZhiGong',
                 content:function(){
@@ -2008,10 +2008,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 inherit:'shengHuangJiangLin',
                 chooseButton:{
                     dialog:function(event,player){
-						var dialog=ui.create.dialog(`圣煌降临：移除2点[治疗]或2点<span class='hong'>【信仰】</span>`,'hidden');
+						var dialog=ui.create.dialog(`聖煌降臨：移除2點[治療]或2點<span class='hong'>【信仰】</span>`,'hidden');
                         var list=[];
                         if(player.zhiLiao>=2){
-                            list.push('治疗');
+                            list.push('治療');
                         }
                         if(player.countZhiShiWu('xinYang')>=2){
                             list.push('信仰');
@@ -2026,7 +2026,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 							content:function(){
                                 'step 0'
 								event.links=lib.skill.trick_shengHuangJiangLin_backup.links;
-                                if(event.links[0]=='治疗'){
+                                if(event.links[0]=='治療'){
                                     player.changeZhiLiao(-2);
                                 }else if(event.links[0]=='信仰'){
                                     player.removeZhiShiWu('xinYang',2);
@@ -2065,8 +2065,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 inherit: 'shengGuangBaoLie',
                 chooseButton:{
                     dialog:function(event,player){
-                        var dialog=ui.create.dialog('圣光爆裂','hidden');
-                        var list=[['1',"移除你的1点[治疗]，摸1张牌[强制]，你+1<span class='hong'>【信仰】</span>，目标队友+1[治疗]"],['2',"<span class='tiaoJian'>(移除你的X[治疗]，选择最多X名手牌数不大于你手牌数-X的对手)</span>你弃X张牌，然后对他们各造成(Y+2)点攻击伤害。 Y为目标数中拥有[治疗]的人数"]];
+                        var dialog=ui.create.dialog('聖光爆裂','hidden');
+                        var list=[['1',"移除你的1點[治療]，摸1張牌[強制]，你+1<span class='hong'>【信仰】</span>，目標隊友+1[治療]"],['2',"<span class='tiaoJian'>(移除你的X[治療]，選擇最多X名手牌數不大於你手牌數-X的對手)</span>你棄X張牌，然後對他們各造成(Y+2)點攻擊傷害。 Y為目標數中擁有[治療]的人數"]];
 						dialog.add([list,'textbutton']);
 						return dialog;
                     },
@@ -2092,7 +2092,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 					},
                     prompt:function(links,player){
                         if(links[0]=='1'){
-                            return '目标队友+1[治疗]';
+                            return '目標隊友+1[治療]';
                         }else if(links[0]=='2'){
                             return;
                         }
@@ -2107,7 +2107,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             return target.side==player.side&&target!=player;
                         },
                         filterCard:true,
-                        selectCard:0,//让ai可以发动
+                        selectCard:0,//讓ai可以發動
                         content:function(){
                             'step 0'
                             if(player.zhiLiao>0){
@@ -2134,19 +2134,19 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 inherit: 'shengHuangHuiGuangPao',
                 contentAfter:async function(event,trigger,player){
                     await player.changeXingBei(1);
-                    var choiceList=['红方士气设置为蓝方士气','蓝方士气设置为红方士气'];
+                    var choiceList=['紅方士氣設置為藍方士氣','藍方士氣設置為紅方士氣'];
                     var control=await player.chooseControl().set('choiceList',choiceList).set('ai',function(){
                         var player=_status.event.player;
                         if(player.side==true){
-                            if(game.hongShiQi<game.lanShiQi) return '选项一';
+                            if(game.hongShiQi<game.lanShiQi) return '選項一';
                         }else{
-                            if(game.lanShiQi<game.hongShiQi) return '选项二';
+                            if(game.lanShiQi<game.hongShiQi) return '選項二';
                         }
                         var num=Math.random();
-                        if(num<0.5) return '选项一';
-                        else return '选项二';
+                        if(num<0.5) return '選項一';
+                        else return '選項二';
                     }).forResultControl();
-                    if(control=='选项一'){
+                    if(control=='選項一'){
                         var num=game.lanShiQi-game.hongShiQi;
                         game.changeShiQi(num,true);
                     }else{
@@ -2163,17 +2163,17 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             trick_ziDongTianChong:{
                 inherit: 'ziDongTianChong',
                 content:async function(event,trigger,player){
-                    var choiceList=[`[水晶]你+1<span class='hong'>【信仰】</span>或+1[治疗]，然后+1【圣煌辉光炮】`,`[宝石]你+2<span class='hong'>【信仰】</span>或目标角色+2[治疗]`];
-                    var list=['选项一'];
+                    var choiceList=[`[水晶]你+1<span class='hong'>【信仰】</span>或+1[治療]，然後+1【聖煌輝光炮】`,`[寶石]你+2<span class='hong'>【信仰】</span>或目標角色+2[治療]`];
+                    var list=['選項一'];
                     if(player.canBiShaBaoShi()){
-                        list.push('选项二');
+                        list.push('選項二');
                     }
                     var control=await player.chooseControl(list).set('choiceList',choiceList).set('ai',function(){
                         var player=_status.event.player;
-                        if(player.canBiShaBaoShi()) return '选项二';
-                        return '选项一';
+                        if(player.canBiShaBaoShi()) return '選項二';
+                        return '選項一';
                     }).forResultControl();
-                    if(control=='选项一'){
+                    if(control=='選項一'){
                         await player.removeBiShaShuiJing();
                         var num=1;
                     }else{
@@ -2181,12 +2181,12 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         //await player.addNengLiang('shuiJing',1);
                         var num=2;
                     }
-                    var list=['信仰','治疗'];
-                    var add=await player.chooseControl(list).set('prompt','+'+num+"点<span class='hong'>【信仰】</span>或[治疗]").forResultControl();
+                    var list=['信仰','治療'];
+                    var add=await player.chooseControl(list).set('prompt','+'+num+"點<span class='hong'>【信仰】</span>或[治療]").forResultControl();
 
-                    if(add=='治疗'){
-                        if(control=='选项二'){
-                            var targets=await player.chooseTarget(`选择目标角色+2[治疗]`).set('ai',function(target){
+                    if(add=='治療'){
+                        if(control=='選項二'){
+                            var targets=await player.chooseTarget(`選擇目標角色+2[治療]`).set('ai',function(target){
                                 var player=_status.event.player;
                                 return get.zhiLiaoEffect2(target,player,2);
                             }).forResultTargets();
@@ -2196,13 +2196,13 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     }else if(add=='信仰'){
                         await player.addZhiShiWu('xinYang',num);
                     }
-                    if(control=='选项一'){
+                    if(control=='選項一'){
                         await player.addZhiShiWu('shengHuangHuiGuangPaoX');
                     }
                 },
             },
 
-            //trick冒险家
+            //trick冒險家
             trick_qiZha:{
                 inherit: 'qiZha',
                 selectCard:2,
@@ -2213,7 +2213,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     if(length==2){
                         var list=['shui','huo','feng','lei','di'];
                         var random=list.randomGet();
-                        var control=await player.chooseControl(list).set('prompt','选择攻击系别').set('ai',function(){
+                        var control=await player.chooseControl(list).set('prompt','選擇攻擊系別').set('ai',function(){
                             return _status.event.random;
                         }).set('random',random).forResult('control');
                         xiBie=control;
@@ -2237,10 +2237,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 chooseButton:{
                     dialog: function(event, player) {
-                        var dialog=ui.create.dialog('冒险家天堂：移除自身X[能量]','hidden');
+                        var dialog=ui.create.dialog('冒險家天堂：移除自身X[能量]','hidden');
                         var list=[];
                         for(var i=0;i<player.countNengLiang('baoShi');i++){
-                            list.push('宝石');
+                            list.push('寶石');
                         }
                         for(var i=0;i<player.countNengLiang('shuiJing');i++){
                             list.push('水晶');
@@ -2258,7 +2258,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                 var tiLian=[];
                                 //移除能量
                                 var baoShi=links.filter(function(xingShi){
-                                    return xingShi=='宝石';
+                                    return xingShi=='寶石';
                                 }).length;
                                 var shuiJing=links.filter(function(xingShi){
                                     return xingShi=='水晶';
@@ -2269,14 +2269,14 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                 if(shuiJing>0){
                                     await player.removeNengLiang('shuiJing',shuiJing);
                                 }
-                                //提炼
+                                //提煉
                                 var zhanJi=get.zhanJi(player.side);
                                 var list=[];
                                 for(var i=0;i<zhanJi.length;i++){
                                     list.push([zhanJi[i],get.translation(zhanJi[i])]);
                                 };
                                 var next=player.chooseButton([
-                                    '选择提炼的星石',
+                                    '選擇提煉的星石',
                                     [list,'tdnodes'],
                                 ]);
                                 next.set('forced',true);
@@ -2300,7 +2300,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                 if(tiLianShuiJing>0){
                                     await player.removeZhanJi('shuiJing',tiLianShuiJing);
                                 }
-                                //额外提炼水晶
+                                //額外提煉水晶
                                 var zhanJi= get.zhanJi(player.side);
                                 var zhanJiShuiJing=zhanJi.filter(function(xingShi){
                                     return xingShi=='shuiJing';
@@ -2313,10 +2313,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                     tiLian.addArray(zhanJiShuiJing);
                                     await player.removeZhanJi('shuiJing',num);
                                 }
-                                //分配提炼结果
+                                //分配提煉結果
                                 var range=[0,2];
                                 if(tiLian.length==1) range=[0,1];
-                                var select=player.chooseTarget(`将提炼的星石分配给至多${range[1]}名目标队友`,true,range,function(card, player, target) {
+                                var select=player.chooseTarget(`將提煉的星石分配給至多${range[1]}名目標隊友`,true,range,function(card, player, target) {
                                     if(target==player) return false;
                                     return target.side==player.side;
                                 }).set('ai', function (target) {
@@ -2352,7 +2352,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                         list.push([tiLian[i],get.translation(tiLian[i])]);
                                     };
                                     tiLianTarget1= await player.chooseButton([
-                                        `选择分配给${name}的星石`,
+                                        `選擇分配給${name}的星石`,
                                         [list,'tdnodes'],
                                     ])
                                     .set('forced',true)
@@ -2429,7 +2429,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 }
             },
 
-            //萝莉番长
+            //蘿莉番長
             xuanHuaShangDeng: {
                 trigger: { player: "gongJiMingZhong" },
                 forced: true,
@@ -2482,10 +2482,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     return player.canBiShaShuiJing();
                 },
                 async cost(event, trigger, player) {
-                    var list = ["[宝石]本次攻击伤害额外+2。", "[水晶]本次攻击伤害额外+1。"];
-                    var choices = ["选项二",'取消'];
+                    var list = ["[寶石]本次攻擊傷害額外+2。", "[水晶]本次攻擊傷害額外+1。"];
+                    var choices = ["選項二",'取消'];
                     if (player.canBiShaBaoShi()) {
-                        choices.unshift("选项一");
+                        choices.unshift("選項一");
                     }
                     let next = player
                         .chooseControl(choices)
@@ -2503,17 +2503,17 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 content: async function (event, trigger, player) {
                     var control = event.cost_data;
-                    if (control == "选项一") {
+                    if (control == "選項一") {
                         await player.removeBiShaBaoShi();
                         trigger.changeDamageNum(2);
-                    } else if (control == "选项二") {
+                    } else if (control == "選項二") {
                         await player.removeBiShaShuiJing();
                         trigger.changeDamageNum(1);
                     }
                 },
             },
 
-            // 见习制片
+            // 見習製片
             yuanZiXiShou: {
                 inherit:'yuanSuXiShou',
                 content: function (event, trigger, player) {
@@ -2638,7 +2638,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     if(card){
                         await player.discard(card,event.target,'notBySelf');
                     }
-                    var targets=await event.target.chooseTarget('选择1名目标对手摸1张牌',true,function(card, player, target) {
+                    var targets=await event.target.chooseTarget('選擇1名目標對手摸1張牌',true,function(card, player, target) {
                         return target.side!=player.side;
                     }).set('ai', function (target) {
                         return target.countCards('h') + 0.5;
@@ -2650,7 +2650,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     await player.addZhanJi('shuiJing', 1);
 
                     var colorName= get.colorName(event.target);
-                    var result = await target.chooseToDiscard('h','showCards', 1, `弃1张法术牌[展示]，否则你摸1张牌、${colorName}加1[治疗]`,function(card) {
+                    var result = await target.chooseToDiscard('h','showCards', 1, `棄1張法術牌[展示]，否則你摸1張牌、${colorName}加1[治療]`,function(card) {
                         return get.type(card) == 'faShu';
                     }).set('ai',function(card) {
                         return 6-get.value(card);
@@ -2742,7 +2742,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             list.push([zhanJi[i],get.translation(zhanJi[i])]);
                         }
                         var next=player.chooseButton([
-                            `不想提炼：移除我方【战绩区】1星石`,
+                            `不想提煉：移除我方【戰績區】1星石`,
                             [list,'tdnodes'],
                         ]);
                         next.set('forced',true);
@@ -2763,7 +2763,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 content: async function(event, trigger, player) {
                     await player.removeBiShaBaoShi();
-                    await player.chooseToDiscard(1,true,'在睡一下：弃1张牌');
+                    await player.chooseToDiscard(1,true,'在睡一下：棄1張牌');
                     player.addSkill('zaiShuiYiXia_yiChu');
                     event.yiChu=false;
                     for(var current of game.players){
@@ -2812,7 +2812,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 content: async function(event, trigger, player) {
                     var target=event.targets[0];
                     var colorName=get.colorName(player);
-                    var result=await target.chooseToDiscard('h','showCards', 1, `弃1张法术牌[展示]，否则${colorName}对你造成2点法术伤害③、我方【战绩区】+1[水晶]`,function(card) {
+                    var result=await target.chooseToDiscard('h','showCards', 1, `棄1張法術牌[展示]，否則${colorName}對你造成2點法術傷害③、我方【戰績區】+1[水晶]`,function(card) {
                         return get.type(card) == 'faShu';
                     })
                     .set('ai',function(card) {
@@ -2850,7 +2850,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                 if(target==mubiao) return true;
                             }
                         },
-                        prompt:'虚荣掌握：魔弹[法术行动]',
+                        prompt:'虛榮掌握：魔彈[法術行動]',
                     });
                 },
                 group: ['xuRongZhangWo_zuoChuan'],
@@ -2920,7 +2920,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                 return target.side!=player.side&&target.countCards('h')>player.countCards('h');
                             }
                         },
-                        prompt:'嫉妒追访：攻击手牌数大于你的对手[攻击行动]',
+                        prompt:'嫉妒追訪：攻擊手牌數大於你的對手[攻擊行動]',
                     });
                 },
                 check:function(event,player){
@@ -2935,7 +2935,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             },
             
 
-            //剑之子
+            //劍之子
             qingMu:{
                 trigger: {global:'gameStart'},
                 forced: true,
@@ -2967,7 +2967,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         list.push([zhanJi[i],get.translation(zhanJi[i])]);
                     }
                     var next=player.chooseButton([
-                        `风之剑：是否移除我方【战绩区】1星石发动攻击牌上剑圣独有技`,
+                        `風之劍：是否移除我方【戰績區】1星石發動攻擊牌上劍聖獨有技`,
                         [list,'tdnodes'],
                     ]);
                     var result=await next.forResult();
@@ -2997,7 +2997,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     var num=get.xingBei(true)+ get.xingBei(false)+1;
                     var cards=get.cards(num);
                     await player.discard(cards,'showHiddenCards');
-                    var result=await player.chooseCardButton('剑守誓言：可以选择1张牌加入手牌',cards).set('ai',function(button){
+                    var result=await player.chooseCardButton('劍守誓言：可以選擇1張牌加入手牌',cards).set('ai',function(button){
                         var player=_status.event.player;
                         if(player.countCards('h')>=player.getHandcardLimit()) return 0;
                         var card=button.link;
@@ -3007,7 +3007,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         return value;
                     }).forResult();
                     if(result.bool){
-                        game.log(player,'获得了',result.links);
+                        game.log(player,'獲得了',result.links);
                         await player.gain(result.links);
                     }
                     var bool=false;
@@ -3073,13 +3073,13 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 content: async function(event, trigger, player) {
                     await player.removeBiShaShuiJing();
 
-                    var targets=await player.chooseTarget('剑残影：选择1名目标对手弃1张牌<br>你下次攻击只能攻击他',true,function(card, player, target) {
+                    var targets=await player.chooseTarget('劍殘影：選擇1名目標對手棄1張牌<br>你下次攻擊只能攻擊他',true,function(card, player, target) {
                         return target.side!=player.side;
                     }).set('ai', function (target) {
                         return target.countCards('h');
                     }).forResultTargets();
                     var target=targets[0];
-                    await target.chooseToDiscard('h',1,'剑残影：弃1张牌',true);
+                    await target.chooseToDiscard('h',1,'劍殘影：棄1張牌',true);
                     player.storage.extraXingDong.push({
                         xingDong:'gongJi',
                         target:target,
@@ -3120,7 +3120,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
             }, 
 
-            //圣仲裁者
+            //聖仲裁者
             shenZhiTianPing:{
                 trigger: {global:'gameStart'},
                 forced: true,
@@ -3157,7 +3157,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     else if(zuo_cards.length>=3&&you_cards.length<3) var position='you';
                     else if(zuo_cards.length<3&&you_cards.length>=3) var position='zuo';
                     else {
-                        let dialog=['善恶必计：选择1个位置将牌置于其上',[event.cards,'card']];
+                        let dialog=['善惡必計：選擇1個位置將牌置於其上',[event.cards,'card']];
                         let list=['tianPingZuo','tianPingYou'];
                         let control=await player.chooseControl(list).set('dialog',dialog).set('ai',function(){
                             var player=_status.event.player;
@@ -3203,7 +3203,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     }
                     var cards=get.cards(4);
                     await player.showHiddenCards(cards);
-                    var next=player.chooseCardButton(cards,2,true,'天平倾倒：选择2张牌加入手牌');
+                    var next=player.chooseCardButton(cards,2,true,'天平傾倒：選擇2張牌加入手牌');
                     next.set('ai', function (button) {
                         return get.value(button.link);
                     });
@@ -3212,7 +3212,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 
                     await player.addHong(1);
 
-                    var targets=await player.chooseTarget('天平倾倒：选择目标队友+2[治疗]',lib.filter.teammate,true).set('ai',function(target){
+                    var targets=await player.chooseTarget('天平傾倒：選擇目標隊友+2[治療]',lib.filter.teammate,true).set('ai',function(target){
                         return get.zhiLiaoEffect(target,2);
                     }).forResultTargets();
                     var target=targets[0];
@@ -3231,7 +3231,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     var you_cards=player.getExpansions('tianPing_you');
                     await player.discard(zuo_cards,'tianPing_zuo').set('sheQi',true);
                     await player.discard(you_cards,'tianPing_you').set('sheQi',true);
-                    var targets=await player.chooseTarget('神之审判：对2名目标对手各造成2点攻击伤害③',2,lib.filter.opponent,true).set('ai',function(target){
+                    var targets=await player.chooseTarget('神之審判：對2名目標對手各造成2點攻擊傷害③',2,lib.filter.opponent,true).set('ai',function(target){
                         return get.damageEffect2(target, _status.event.player, 2);
                     }).forResultTargets();
                     targets=targets.sortBySeat(player);
@@ -3247,7 +3247,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     //await player.lose(cards,ui.ordering);
                     //await player.showCards(cards);
                     var gaintag=['tianPing_'+position];
-                    game.log(player,'将',cards,'置于',`【${position=='zuo'?'天平·左':'天平·右'}】`,`上`);
+                    game.log(player,'將',cards,'置於',`【${position=='zuo'?'天平·左':'天平·右'}】`,`上`);
                     var next=player.addToExpansion(cards).set('gaintag',gaintag).set('log',false).set('position',position);
                     await next;
                 },
@@ -3262,9 +3262,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             mark:function(dialog,storage,player){
                                 var cards=player.getExpansions('tianPing_zuo');
                                 if(cards.length>0) dialog.addAuto(cards);
-                                return `<span class='greentext'>[被动]罪灭之左</span><br>
-                                    <span class='tiaoJian'>(每当本卡上的牌数增加，且增加后本卡上的牌数>1)</span>对(X-1)名目标对手造成1点攻击伤害③，X为本卡上的牌数。<br>
-                                    【天平·左】上的牌上限为3；达到上限则无法被再放置新牌。
+                                return `<span class='greentext'>[被動]罪滅之左</span><br>
+                                    <span class='tiaoJian'>(每當本卡上的牌數增加，且增加後本卡上的牌數>1)</span>對(X-1)名目標對手造成1點攻擊傷害③，X為本卡上的牌數。<br>
+                                    【天平·左】上的牌上限為3；達到上限則無法被再放置新牌。
                                     `;
                             },
                         },
@@ -3278,7 +3278,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         content: async function(event, trigger, player) {
                             var cards=player.getExpansions('tianPing_zuo');
                             var num=cards.length-1;
-                            var targets=await player.chooseTarget(`对${num}名目标对手造成1点攻击伤害③`,lib.filter.opponent,true,num).set('ai',function(target){
+                            var targets=await player.chooseTarget(`對${num}名目標對手造成1點攻擊傷害③`,lib.filter.opponent,true,num).set('ai',function(target){
                                 return get.damageEffect2(target, _status.event.player, 1);
                             }).forResultTargets();
                             targets=targets.sortBySeat(player);
@@ -3296,9 +3296,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             mark:function(dialog,storage,player){
                                 var cards=player.getExpansions('tianPing_you');
                                 if(cards.length>0) dialog.addAuto(cards);
-                                return `<span class='greentext'>[被动]圣方之右</span><br>
-                                    <span class='tiaoJian'>(每当本卡上的牌被弃掉且弃牌数>1)</span>你+1[治疗]。<br>
-                                    【天平·右】上的牌上限为3；达到上限则无法被再放置新牌。
+                                return `<span class='greentext'>[被動]聖方之右</span><br>
+                                    <span class='tiaoJian'>(每當本卡上的牌被棄掉且棄牌數>1)</span>你+1[治療]。<br>
+                                    【天平·右】上的牌上限為3；達到上限則無法被再放置新牌。
                                     `;
                             },
                         },
@@ -3387,10 +3387,10 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             var num=0;
                             if(zuo_cards.length<3) num++;
                             if(you_cards.length<3) num++;
-                            var str=`是否将手牌中${num}张基本牌面朝上`;
-                            if(num==2) str+='分别置于【天平·左】和【天平·右】上';
-                            else if(zuo_cards.length<3) str+='置于【天平·左】上';
-                            else if(you_cards.length<3) str+='置于【天平·右】上';
+                            var str=`是否將手牌中${num}張基本牌面朝上`;
+                            if(num==2) str+='分別置於【天平·左】和【天平·右】上';
+                            else if(zuo_cards.length<3) str+='置於【天平·左】上';
+                            else if(you_cards.length<3) str+='置於【天平·右】上';
 
                             var next= player.chooseCard('h',num,card=>lib.inpile.includes(card.name));
                             next.set('prompt',get.prompt('tianZui'));
@@ -3406,7 +3406,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             var zuo_cards=player.getExpansions('tianPing_zuo');
                             var you_cards=player.getExpansions('tianPing_you');
                             if(zuo_cards.length<3&&you_cards.length<3&&event.cards.length==2){
-                                var next=player.chooseToMove('天罪：安排2张牌在【天平·左】和【天平·右】上的位置');
+                                var next=player.chooseToMove('天罪：安排2張牌在【天平·左】和【天平·右】上的位置');
                                 next.set("list", [
                                     ["天平·左", [event.cards[0]]],
                                     ["天平·右", [event.cards[1]]],
@@ -3451,9 +3451,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     var you_cards=player.getExpansions('tianPing_you');
 
                     while((zuo_cards.length<3||you_cards.length<3)&&player.countCards('h',card=>lib.inpile.includes(card.name)>0)&&num>0){
-                        let str=`罪迟比到：是否将手牌中1张基本牌面朝上放置到`;
+                        let str=`罪遲比到：是否將手牌中1張基本牌面朝上放置到`;
                         str+='【天平·左】或【天平·右】上';
-                        str+=`，剩余${num}次`;
+                        str+=`，剩餘${num}次`;
 
                         let list=[];
                         if(zuo_cards.length<3) list.push(['zuo','天平·左']);
@@ -3529,307 +3529,307 @@ game.import('character',function(lib,game,ui,get,ai,_status){
         translate:{
             //角色名字
             trick: "trick",
-            shiTu: "师徒",
-			jianZhiMoNv:"剑之魔女",
-            jieRiMoDao:"节日魔导",
-            tanLanShaoNv:"贪婪少女",
-            lingXiZhiChao: "灵熙之潮",
-            youJiShi: "游击士",
-            nong_baoShiShaoNv: "农暴食少女",
-            nong_baoShiShaoNv_prefix: "农",
-            zhouFuShi: "咒符师",
+            shiTu: "師徒",
+			jianZhiMoNv:"劍之魔女",
+            jieRiMoDao:"節日魔導",
+            tanLanShaoNv:"貪婪少女",
+            lingXiZhiChao: "靈熙之潮",
+            youJiShi: "游擊士",
+            nong_baoShiShaoNv: "農暴食少女",
+            nong_baoShiShaoNv_prefix: "農",
+            zhouFuShi: "咒符師",
             yuanChuZhiGong: "原初之弓",
-            daoDanLuoLi: "捣蛋萝莉",
-            trick_shengGong:"trick圣弓",
+            daoDanLuoLi: "搗蛋蘿莉",
+            trick_shengGong:"trick聖弓",
             trick_shengGong_prefix: "trick",
-            trick_maoXianJia:"trick冒险家",
+            trick_maoXianJia:"trick冒險家",
             trick_maoXianJia_prefix: "trick",
-            luoLiFanZhang: "萝莉番长",
-            jianXiZhiPian: "见习制片",
+            luoLiFanZhang: "蘿莉番長",
+            jianXiZhiPian: "見習製片",
             daiDuoShaoNv: "怠惰少女",
             jiDuShaoNv: "嫉妒少女",
-            jianZhiZi:'剑之子',
+            jianZhiZi:'劍之子',
             moGongEX: "魔弓EX",
-            sheng_zhongCaiZhe:'圣仲裁者',
+            sheng_zhongCaiZhe:'聖仲裁者',
 
             jianZhiMoNv_name:"席拉",
             lingXiZhiChao_name: "濯香姬",
             youJiShi_name: "索拉",
-            zhouFuShi_name: "铃音",
-            daoDanLuoLi_name: "萝绮",
-            luoLiFanZhang_name: "柠歌",
+            zhouFuShi_name: "鈴音",
+            daoDanLuoLi_name: "蘿綺",
+            luoLiFanZhang_name: "檸歌",
             jianXiZhiPian_name: "惕惕子",
             sheng_zhongCaiZhe_name: "恩布拉",
 
             //技能
-            //剑之魔女
-            jiZhiJianYi: "[响应]技之剑意",
-            jiZhiJianYi_info: "<span class='tiaoJian'>([攻击行动]结束时发动)</span>额外+1技类[攻击行动]。",
+            //劍之魔女
+            jiZhiJianYi: "[響應]技之劍意",
+            jiZhiJianYi_info: "<span class='tiaoJian'>([攻擊行動]結束時發動)</span>額外+1技類[攻擊行動]。",
 
-            yiXiangJian: "[响应]臆想剑[回合限定]",
-            yiXiangJian_info: "<span class='tiaoJian'>(主动攻击命中时发动②)</span>攻击目标弃1张牌[强制][展示]。若为攻击牌，你可以获得该牌，额外+1[攻击行动]。(若为法术牌)，本次攻击伤害+2。",
+            yiXiangJian: "[響應]臆想劍[回合限定]",
+            yiXiangJian_info: "<span class='tiaoJian'>(主動攻擊命中時發動②)</span>攻擊目標棄1張牌[強制][展示]。若為攻擊牌，你可以獲得該牌，額外+1[攻擊行動]。(若為法術牌)，本次攻擊傷害+2。",
 
-            mengXiangJian: "[被动]梦想剑",
-            mengXiangJian_info: "<span class='tiaoJian'>(本回合第一次[攻击行动]后)</span>回合内你的主动攻击无视【圣盾】。<span class='tiaoJian'>(本回合第二次[攻击行动]后)</span>回合内你的主动攻击对方无法应战。<span class='tiaoJian'>(本回合第四次[攻击行动]后)</span>回合内你的主动攻击强制命中。",
+            mengXiangJian: "[被動]夢想劍",
+            mengXiangJian_info: "<span class='tiaoJian'>(本回合第一次[攻擊行動]後)</span>回合內你的主動攻擊無視【聖盾】。<span class='tiaoJian'>(本回合第二次[攻擊行動]後)</span>回合內你的主動攻擊對方無法應戰。<span class='tiaoJian'>(本回合第四次[攻擊行動]後)</span>回合內你的主動攻擊強制命中。",
 
-            jianYingDuanNian: "[响应]剑影*断念[回合限定]",
-            jianYingDuanNian_info: "[宝石]<span class='tiaoJian'>([攻击行动]结束时发动)</span>弃2张牌，摸1张牌[强制]，额外+1攻击行动。",
+            jianYingDuanNian: "[響應]劍影*斷念[回合限定]",
+            jianYingDuanNian_info: "[寶石]<span class='tiaoJian'>([攻擊行動]結束時發動)</span>棄2張牌，摸1張牌[強制]，額外+1攻擊行動。",
             
-            //节日魔导
-            jiRi_moBaoChongJie:"[法术]魔爆冲击",
-            jiRi_moBaoChongJie_info:"<span class='tiaoJian'>(弃1张法术牌[展示])</span>我方【战绩区】+1【宝石】。目标对手弃1张法术牌[展示]，若他不如此做，你对他造成2点法术伤害③。",
-            faLiHuDun:"[响应]法力护盾",
-            faLiHuDun_info:"<span class='tiaoJian'>(任何人对你造成伤害时发动③)</span>弃X张法术牌[展示]。",
+            //節日魔導
+            jiRi_moBaoChongJie:"[法術]魔爆衝擊",
+            jiRi_moBaoChongJie_info:"<span class='tiaoJian'>(棄1張法術牌[展示])</span>我方【戰績區】+1【寶石】。目標對手棄1張法術牌[展示]，若他不如此做，你對他造成2點法術傷害③。",
+            faLiHuDun:"[響應]法力護盾",
+            faLiHuDun_info:"<span class='tiaoJian'>(任何人對你造成傷害時發動③)</span>棄X張法術牌[展示]。",
 
-            //贪婪少女
-            tanYuHeiDong:"[法术]贪欲黑洞[回合限定]",
-            tanYuHeiDong_info:"<span class='tiaoJian'>(弃1张法术牌[展示])</span>我方战绩区+1[水晶]。目标对手弃1张法术牌[展示]；若他不如此做，你对其造成2点法术伤害③，你+1[法术行动]。本回合你无法发动【亡女的金库】。",
-            lianJinMoFa:"[响应]殓金魔法",
-            lianJinMoFa_info:"<span class='tiaoJian'>(你使用【魔弹】造成伤害后发动⑥)</span>我方战绩区+1[水晶]。",
-            lianJinShu:"[响应]炼金术",
-            lianJinShu_info:"你的雷系或火系牌可以当【魔弹】使用。",
-            wangNvJinKu:"[法术]亡女的金库",
-            wangNvJinKu_info:"[水晶]对2名目标对手各造成1点法术伤害③。<span class='tiaoJian'>(若你额外移除【战绩区】所有星石)</span>每移除2星石，伤害+1；<span class='tiaoJian'>(若本次移除的星石中[宝石]>1，伤害结算完成后)将对方1点士气转移给我方。",
+            //貪婪少女
+            tanYuHeiDong:"[法術]貪慾黑洞[回合限定]",
+            tanYuHeiDong_info:"<span class='tiaoJian'>(棄1張法術牌[展示])</span>我方戰績區+1[水晶]。目標對手棄1張法術牌[展示]；若他不如此做，你對其造成2點法術傷害③，你+1[法術行動]。本回合你無法發動【亡女的金庫】。",
+            lianJinMoFa:"[響應]殮金魔法",
+            lianJinMoFa_info:"<span class='tiaoJian'>(你使用【魔彈】造成傷害後發動⑥)</span>我方戰績區+1[水晶]。",
+            lianJinShu:"[響應]鍊金術",
+            lianJinShu_info:"你的雷系或火系牌可以當【魔彈】使用。",
+            wangNvJinKu:"[法術]亡女的金庫",
+            wangNvJinKu_info:"[水晶]對2名目標對手各造成1點法術傷害③。<span class='tiaoJian'>(若你額外移除【戰績區】所有星石)</span>每移除2星石，傷害+1；<span class='tiaoJian'>(若本次移除的星石中[寶石]>1，傷害結算完成後)將對方1點士氣轉移給我方。",
 
-            // 灵熙之潮
-            lingZhiZhiYi: "[被动]灵枝旨意",
-            lingZhiZhiYi_info: "你无法成为基础效果的目标。",
-            xieLingTuiSan: "[响应]邪灵退散",
-            xieLingTuiSan_info: "<span class='tiaoJian'>(你放置基础效果后)</span>对目标对手造成1点法术伤害③。",
-            banXiangHunLing: "[响应]伴响魂灵[回合限定]",
+            // 靈熙之潮
+            lingZhiZhiYi: "[被動]靈枝旨意",
+            lingZhiZhiYi_info: "你無法成為基礎效果的目標。",
+            xieLingTuiSan: "[響應]邪靈退散",
+            xieLingTuiSan_info: "<span class='tiaoJian'>(你放置基礎效果後)</span>對目標對手造成1點法術傷害③。",
+            banXiangHunLing: "[響應]伴響魂靈[回合限定]",
             banXiangHunLing_info:
-                "<span class='tiaoJian'>(你回合内目标对手承受你造成的伤害而导致士气下降时)</span>对除他外所有目标对手各造成1点法术伤害③。",
-            boYongZhiLi: "[被动]波涌之力",
-            boYongZhiLi_info: "<span class='tiaoJian'>(目标角色触发基础效果并结算完成后)</span>你+1<span class='hong'>【灵涌】</span>。",
-            nuChaoHuangTao: "[被动]怒潮荒涛",
+                "<span class='tiaoJian'>(你回合內目標對手承受你造成的傷害而導致士氣下降時)</span>對除他外所有目標對手各造成1點法術傷害③。",
+            boYongZhiLi: "[被動]波湧之力",
+            boYongZhiLi_info: "<span class='tiaoJian'>(目標角色觸發基礎效果並結算完成後)</span>你+1<span class='hong'>【靈湧】</span>。",
+            nuChaoHuangTao: "[被動]怒潮荒濤",
             nuChaoHuangTao_info:
-                "<span class='tiaoJian'>(你的回合结束时，若</span><span class='hong'>【灵涌】</span><span class='tiaoJian'>已达到上限)</span>移除所有<span class='hong'>【灵涌】</span>，对4名目标角色各造成1点法术伤害③；<span class='tiaoJian'>(若目标角色拥有X个基础效果)</span>本次对他的法术伤害额外+X点。",
-            haiShenYuWu: "[法术]海神御巫",
-            haiShenYuWu_info: "[水晶](使用一张封印师或祈祷师的独有技)你弃一张牌。",
-            lingYong: "灵涌",
-            lingYong_info: "<span class='hong'>【灵涌】</span>为灵熙之潮专有的指示物，上限为4。",
+                "<span class='tiaoJian'>(你的回合結束時，若</span><span class='hong'>【靈湧】</span><span class='tiaoJian'>已達到上限)</span>移除所有<span class='hong'>【靈湧】</span>，對4名目標角色各造成1點法術傷害③；<span class='tiaoJian'>(若目標角色擁有X個基礎效果)</span>本次對他的法術傷害額外+X點。",
+            haiShenYuWu: "[法術]海神御巫",
+            haiShenYuWu_info: "[水晶](使用一張封印師或祈禱師的獨有技)你棄一張牌。",
+            lingYong: "靈湧",
+            lingYong_info: "<span class='hong'>【靈湧】</span>為靈熙之潮專有的指示物，上限為4。",
 
-            // 游击士
-            jingLingZengLi: "[被动]精灵赠礼",
-            jingLingZengLi_info: "游戏初始时, 将牌库顶6张牌牌面朝下放置于你的角色旁，作为【子弹】。",
-            "yuanSuSheJi*sora": "[响应]元素射击*SORA",
+            // 游擊士
+            jingLingZengLi: "[被動]精靈贈禮",
+            jingLingZengLi_info: "遊戲初始時, 將牌庫頂6張牌牌面朝下放置於你的角色旁，作為【子彈】。",
+            "yuanSuSheJi*sora": "[響應]元素射擊*SORA",
             "yuanSuSheJi*sora_info":
-                "<span class='tiaoJian'>(主动攻击时①,移除1个子弹)</span>根据【子弹】系别附加以下效果：<br>【火系】：本次攻击伤害额外+1。<br>【水系】：<span class='tiaoJian'>(主动攻击命中时②)</span>目标角色+1[治疗]。<br>【风系】：<span class='tiaoJian'>([攻击行动]结束后)</span>额外+1[攻击行动]。<br>【雷系】：本次攻击无法应战。<br>【地系】：<span class='tiaoJian'>(主动攻击命中时②)</span>对目标角色造成1点法术伤害③。<br>【光系或暗系】：视为任一系别的【子弹】。",
-            'yuanSuSheJi*sora_huo':'火之弹',
-            'yuanSuSheJi*sora_feng':'风之弹',
-            'yuanSuSheJi*sora_lei':'雷之弹',
-            'yuanSuSheJi*sora_shui':'水之弹',
-            'yuanSuSheJi*sora_di':'地之弹',
-            erChongJianYing: "[响应]二重剑影[回合限定]",
-            erChongJianYing_info: "<span class='tiaoJian'>([攻击行动]结束时，若本次攻击命中②)</span>额外加1系别相同的[攻击行动]。",
-            fuMoZhiShu: "[响应]附魔之术",
+                "<span class='tiaoJian'>(主動攻擊時①,移除1個子彈)</span>根據【子彈】系別附加以下效果：<br>【火系】：本次攻擊傷害額外+1。<br>【水系】：<span class='tiaoJian'>(主動攻擊命中時②)</span>目標角色+1[治療]。<br>【風系】：<span class='tiaoJian'>([攻擊行動]結束後)</span>額外+1[攻擊行動]。<br>【雷系】：本次攻擊無法應戰。<br>【地系】：<span class='tiaoJian'>(主動攻擊命中時②)</span>對目標角色造成1點法術傷害③。<br>【光系或暗系】：視為任一系別的【子彈】。",
+            'yuanSuSheJi*sora_huo':'火之彈',
+            'yuanSuSheJi*sora_feng':'風之彈',
+            'yuanSuSheJi*sora_lei':'雷之彈',
+            'yuanSuSheJi*sora_shui':'水之彈',
+            'yuanSuSheJi*sora_di':'地之彈',
+            erChongJianYing: "[響應]二重劍影[回合限定]",
+            erChongJianYing_info: "<span class='tiaoJian'>([攻擊行動]結束時，若本次攻擊命中②)</span>額外加1系別相同的[攻擊行動]。",
+            fuMoZhiShu: "[響應]附魔之術",
             fuMoZhiShu_info:
-                "<span class='tiaoJian'>(你执行【提炼】时，若你未拥有【子弹】)</span>消耗你提炼的1能量，将1张手牌面朝下置于你的角色旁，作为【子弹】。",
-            jingLingDeJianWu: "[响应]精灵的剑舞",
-            jingLingDeJianWu_info: "[水晶]<span class='tiaoJian'>(主动攻击前①)</span>本次你的攻击牌系别视为风系。",
-            ziDan: "子弹",
-            ziDan_info: "【子弹】为游击士专有盖牌，上限为6。",
+                "<span class='tiaoJian'>(你執行【提煉】時，若你未擁有【子彈】)</span>消耗你提煉的1能量，將1張手牌面朝下置於你的角色旁，作為【子彈】。",
+            jingLingDeJianWu: "[響應]精靈的劍舞",
+            jingLingDeJianWu_info: "[水晶]<span class='tiaoJian'>(主動攻擊前①)</span>本次你的攻擊牌系別視為風系。",
+            ziDan: "子彈",
+            ziDan_info: "【子彈】為游擊士專有蓋牌，上限為6。",
 
             // 暴食少女
-            tianDianChongJi: "[法术]甜点冲击",
+            tianDianChongJi: "[法術]甜點衝擊",
             tianDianChongJi_info:
-                "<span class='tiaoJian'>(弃1张法术牌[展示])</span>我方【战绩区】+1[宝石]。2名目标对手各弃1张法术牌，每有人不如此做，你对他造成2点法术伤害③、你弃1张牌。",
-            shiYuDeHeiDong: "[响应]食欲的黑洞",
-            shiYuDeHeiDong_info: "<span class='tiaoJian'>(当我方承受伤害时⑥，你弃1张【魔弹】[展示])</span>改由你承受此伤害。你不会因此造成士气下降。",
-            meiWeiRongHe: "[响应]美味融合",
-            meiWeiRongHe_info: "你的水系或火系牌可以当[魔弹]传递。",
-            sanMiaoYuanZe: "[响应]三秒原则",
-            sanMiaoYuanZe_info: "<span class='tiaoJian'>(目标队友手牌或盖牌中的【魔弹】正面朝上进入弃牌前)</span>你弃1张牌，你获得该【魔弹】[强制]。<span class='tiaoJian'>(因机制问题，无法完全符合faq)</span>",
-            meiShiFengBao: "[法术]美食风暴",
-            meiShiFengBao_info: "[宝石]对2名目标对手各造成2点法术伤害③。",
+                "<span class='tiaoJian'>(棄1張法術牌[展示])</span>我方【戰績區】+1[寶石]。2名目標對手各棄1張法術牌，每有人不如此做，你對他造成2點法術傷害③、你棄1張牌。",
+            shiYuDeHeiDong: "[響應]食慾的黑洞",
+            shiYuDeHeiDong_info: "<span class='tiaoJian'>(當我方承受傷害時⑥，你棄1張【魔彈】[展示])</span>改由你承受此傷害。你不會因此造成士氣下降。",
+            meiWeiRongHe: "[響應]美味融合",
+            meiWeiRongHe_info: "你的水系或火系牌可以當[魔彈]傳遞。",
+            sanMiaoYuanZe: "[響應]三秒原則",
+            sanMiaoYuanZe_info: "<span class='tiaoJian'>(目標隊友手牌或蓋牌中的【魔彈】正面朝上進入棄牌前)</span>你棄1張牌，你獲得該【魔彈】[強制]。<span class='tiaoJian'>(因機制問題，無法完全符合faq)</span>",
+            meiShiFengBao: "[法術]美食風暴",
+            meiShiFengBao_info: "[寶石]對2名目標對手各造成2點法術傷害③。",
 
-            // 咒符师
-            zhouFuHuoLi: "[法术]咒符-火璃",
-            zhouFuHuoLi_info: "<span class='tiaoJian'>(弃1张火系牌①)</span>对1名目标角色造成1点法术伤害③，你摸1张牌，弃1张牌。",
-            zhouFuDongTian: "[法术]咒符-冻天",
-            zhouFuDongTian_info: "<span class='tiaoJian'>(弃1张水系牌①)</span>指定1名目标角色弃1张牌，将除你外1名目标角色的1[治疗]转移给你。",
-            zhouFu_nianZhou: "[响应]念咒",
-            zhouFu_nianZhou_info: "每当你发动【咒符】，可将自己的1张手牌面朝下放置在你的角色旁，作为【妖力】。",
-            chiMeiWangLiang: "[响应]魑魅魍魎",
+            // 咒符師
+            zhouFuHuoLi: "[法術]咒符-火璃",
+            zhouFuHuoLi_info: "<span class='tiaoJian'>(棄1張火系牌①)</span>對1名目標角色造成1點法術傷害③，你摸1張牌，棄1張牌。",
+            zhouFuDongTian: "[法術]咒符-凍天",
+            zhouFuDongTian_info: "<span class='tiaoJian'>(棄1張水系牌①)</span>指定1名目標角色棄1張牌，將除你外1名目標角色的1[治療]轉移給你。",
+            zhouFu_nianZhou: "[響應]唸咒",
+            zhouFu_nianZhou_info: "每當你發動【咒符】，可將自己的1張手牌面朝下放置在你的角色旁，作為【妖力】。",
+            chiMeiWangLiang: "[響應]魑魅魍魎",
             chiMeiWangLiang_info:
-                "<span class='tiaoJian'>(主动攻击命中后发动②，移除1个【妖力】)</span>视为无条件发动一次【咒符-火璃】或【咒符-冻天】，但无法发动念咒；(若【妖力】为地系牌，可展示之[展示])该次【火璃】的伤害或【冻天】的弃牌效果+1。",
-            zhouLiChongSu: "[响应]咒力重塑",
-            zhouLiChongSu_info: "[水晶]<span class='tiaoJian'>(发动【咒符-火璃】或【咒符-冻天】时发动)</span>将“1名目标角色”改为“2名目标角色”。",
+                "<span class='tiaoJian'>(主動攻擊命中後發動②，移除1個【妖力】)</span>視為無條件發動一次【咒符-火璃】或【咒符-凍天】，但無法發動唸咒；(若【妖力】為地系牌，可展示之[展示])該次【火璃】的傷害或【凍天】的棄牌效果+1。",
+            zhouLiChongSu: "[響應]咒力重塑",
+            zhouLiChongSu_info: "[水晶]<span class='tiaoJian'>(發動【咒符-火璃】或【咒符-凍天】時發動)</span>將“1名目標角色”改為“2名目標角色”。",
             zhouFu_yaoLi: "妖力",
-            zhouFu_yaoLi_info: "【妖力】为咒符师专有盖牌，上限为2；若【妖力】达到上限，则不能发动【念咒】。",
+            zhouFu_yaoLi_info: "【妖力】為咒符師專有蓋牌，上限為2；若【妖力】達到上限，則不能發動【唸咒】。",
 
             // 原初之弓
-            yuanChu_tianZhiGong: "[被动]天之弓",
-            yuanChu_tianZhiGong_info: "游戏初始时，你拥有【圣煌辉光炮】，你的[治疗]上限+1。<span class='tiaoJian'>(主动攻击时，若攻击牌不为圣类命格)</span>本次攻击伤害-1；<span class='tiaoJian'>(攻击命中时②，若攻击牌为圣类命格)</span>你+1<span class='hong'>【信仰】</span>。",
-            yuanChu_shengXieJuBao: "[法术]圣屑飓暴",
-            yuanChu_shengXieJuBao_info:"<span class='tiaoJian'>(弃2张同系牌[展示])</span>视为一次圣类命格的该系主动攻击；<span class='tiaoJian'>(若该弃牌为【圣光】)</span>则视为一次圣类命格的暗系主动攻击； <span class='tiaoJian'>(若攻击未命中②，移除X点[治疗]，X最高为2)</span>目标队友弃X张牌。",
-            yuanChu_shengHuangJiangLin: "[法术]圣煌降临[持续]",
-            yuanChu_shengHuangJiangLin_backup:'[法术]圣煌降临[持续]',
-            yuanChu_shengHuangJiangLin_info: "<span class='tiaoJian'>(移除你的2个[治疗]或2点</span><span class='hong'>【信仰】</span><span class='tiaoJian'>)</span>[横置]，转为【圣煌形态】，额外+1[法术行动]。此形态下，你若执行【特殊行动】，则[重置]脱离【圣煌形态】并+1[治疗]。",
-            yuanChu_shengGuangBaoLie: "[法术]圣光爆裂",
-            yuanChu_shengGuangBaoLie_backup:'[法术]圣光爆裂',
-            yuanChu_shengGuangBaoLie_info:"<span class='tiaoJian'>(仅【圣煌形态】下可发动)</span>你选择以下一项发动：<br>·<span class='tiaoJian'>(移除你的1[治疗])</span>摸1张牌[强制]，对手牌数小于你的目标对手造成2点攻击伤害，你+1<span class='hong'>【信仰】</span>。 <br>·<span class='tiaoJian'>(移除你的X[治疗]，选择最多X名手牌数不大于你手牌数-X的对手)</span>你弃X张牌，然后对他们各造成(Y+2)点攻击伤害， Y为目标数中拥有[治疗]的人数，你+X<span class='hong'>【信仰】</span>。",
-            yuanChu_shengHuangHuiGuangPao: "(专)[法术]圣煌辉光炮",
-            yuanChu_shengHuangHuiGuangPao_info: "<span class='tiaoJian'>(仅【圣煌形态】下可发动，移除4点</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，然后移除等同我方落后[士气]的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>数)</span>所有角色将手牌调整为4张，我方【星杯区】+1[星杯]，然后将一方[士气]调整与另一方相同，我方所有角色各+1[治疗]，你额外+1[攻击行动]或[法术行动]并将【圣煌辉光炮】翻面。",
-            yuanChu_shengHuangYuHui: "(专)[法术]圣煌余辉",
-            yuanChu_shengHuangYuHui_info: "<span class='tiaoJian'>(仅【圣煌形态】下可发动，移除4点</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，然后移除等同我方落后[士气]的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>数)</span>所有角色将手牌调整为4张，我方【星杯区】+1[星杯]，然后将一方[士气]调整与另一方相同，然后移除【圣煌余辉】。",
+            yuanChu_tianZhiGong: "[被動]天之弓",
+            yuanChu_tianZhiGong_info: "遊戲初始時，你擁有【聖煌輝光炮】，你的[治療]上限+1。<span class='tiaoJian'>(主動攻擊時，若攻擊牌不為聖類命格)</span>本次攻擊傷害-1；<span class='tiaoJian'>(攻擊命中時②，若攻擊牌為聖類命格)</span>你+1<span class='hong'>【信仰】</span>。",
+            yuanChu_shengXieJuBao: "[法術]聖屑颶暴",
+            yuanChu_shengXieJuBao_info:"<span class='tiaoJian'>(棄2張同系牌[展示])</span>視為一次聖類命格的該系主動攻擊；<span class='tiaoJian'>(若該棄牌為【聖光】)</span>則視為一次聖類命格的暗系主動攻擊； <span class='tiaoJian'>(若攻擊未命中②，移除X點[治療]，X最高為2)</span>目標隊友棄X張牌。",
+            yuanChu_shengHuangJiangLin: "[法術]聖煌降臨[持續]",
+            yuanChu_shengHuangJiangLin_backup:'[法術]聖煌降臨[持續]',
+            yuanChu_shengHuangJiangLin_info: "<span class='tiaoJian'>(移除你的2個[治療]或2點</span><span class='hong'>【信仰】</span><span class='tiaoJian'>)</span>[橫置]，轉為【聖煌形態】，額外+1[法術行動]。此形態下，你若執行【特殊行動】，則[重置]脫離【聖煌形態】並+1[治療]。",
+            yuanChu_shengGuangBaoLie: "[法術]聖光爆裂",
+            yuanChu_shengGuangBaoLie_backup:'[法術]聖光爆裂',
+            yuanChu_shengGuangBaoLie_info:"<span class='tiaoJian'>(僅【聖煌形態】下可發動)</span>你選擇以下一項發動：<br>·<span class='tiaoJian'>(移除你的1[治療])</span>摸1張牌[強制]，對手牌數小於你的目標對手造成2點攻擊傷害，你+1<span class='hong'>【信仰】</span>。 <br>·<span class='tiaoJian'>(移除你的X[治療]，選擇最多X名手牌數不大於你手牌數-X的對手)</span>你棄X張牌，然後對他們各造成(Y+2)點攻擊傷害， Y為目標數中擁有[治療]的人數，你+X<span class='hong'>【信仰】</span>。",
+            yuanChu_shengHuangHuiGuangPao: "(專)[法術]聖煌輝光炮",
+            yuanChu_shengHuangHuiGuangPao_info: "<span class='tiaoJian'>(僅【聖煌形態】下可發動，移除4點</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，然後移除等同我方落後[士氣]的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>數)</span>所有角色將手牌調整為4張，我方【星杯區】+1[星杯]，然後將一方[士氣]調整與另一方相同，我方所有角色各+1[治療]，你額外+1[攻擊行動]或[法術行動]並將【聖煌輝光炮】翻面。",
+            yuanChu_shengHuangYuHui: "(專)[法術]聖煌餘輝",
+            yuanChu_shengHuangYuHui_info: "<span class='tiaoJian'>(僅【聖煌形態】下可發動，移除4點</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，然後移除等同我方落後[士氣]的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>數)</span>所有角色將手牌調整為4張，我方【星杯區】+1[星杯]，然後將一方[士氣]調整與另一方相同，然後移除【聖煌餘輝】。",
             yuanChu_xinYang: "信仰",
-            yuanChu_xinYang_info: "<span class='hong'>【信仰】</span>为原初之弓专有的指示物，上限为10。",
+            yuanChu_xinYang_info: "<span class='hong'>【信仰】</span>為原初之弓專有的指示物，上限為10。",
 
-            // 捣蛋萝莉
-            'tianShi?': "[响应]天使？",
-            'tianShi?_info': "你可将有【天使之墙】的基础牌作为【圣盾】使用。",
-            panNiZhiQiang: "[法术]叛逆之墙",
-            panNiZhiQiang_info: "<span class='tiaoJian'>(将手牌的1个【圣盾】[展示]与场上的1个基础效果交换)</span>你弃1张牌。",
-            shenMiFuBi: "[被动]神秘伏笔",
-            shenMiFuBi_info: "<span class='tiaoJian'>([法术行动]结束后)</span>将牌库顶1-2张牌面朝下放置于X名目标角色面前，视为基础效果【Tricky】。",
+            // 搗蛋蘿莉
+            'tianShi?': "[響應]天使？",
+            'tianShi?_info': "你可將有【天使之牆】的基礎牌作為【聖盾】使用。",
+            panNiZhiQiang: "[法術]叛逆之牆",
+            panNiZhiQiang_info: "<span class='tiaoJian'>(將手牌的1個【聖盾】[展示]與場上的1個基礎效果交換)</span>你棄1張牌。",
+            shenMiFuBi: "[被動]神秘伏筆",
+            shenMiFuBi_info: "<span class='tiaoJian'>([法術行動]結束後)</span>將牌庫頂1-2張牌面朝下放置於X名目標角色面前，視為基礎效果【Tricky】。",
             tricky_xiaoGuo: "Tricky",
-            "T-r-i-c-k-y!": "[响应]T-r-i-c-k-y!",
+            "T-r-i-c-k-y!": "[響應]T-r-i-c-k-y!",
             'T-r-i-c-k-y!_info':
-                "<span class='tiaoJian'>(主动攻击未命中时发动②)</span>查看1个【Tricky】。(若你移除该【Tricky】并额外弃1张同系牌)对原拥有该【Tricky】的目标角色造成2点法术伤害③。",
-            trickOrTreat: "[被动]Trick or Treat",
+                "<span class='tiaoJian'>(主動攻擊未命中時發動②)</span>查看1個【Tricky】。(若你移除該【Tricky】並額外棄1張同系牌)對原擁有該【Tricky】的目標角色造成2點法術傷害③。",
+            trickOrTreat: "[被動]Trick or Treat",
             trickOrTreat_info:
-                "<span class='tiaoJian'>(你的行动阶段结束时,若场上存在的【Tricky】>4,展示所有【Tricky】)</span>所有人各弃1张与面前【Tricky】同系的牌，然后移除所有【Tricky】。（每有人不如此做）你对他造成2点法术伤害③。<span class='tiaoJian'>(若我方对应【Tricky】弃牌>对方)</span>我方【战绩区】+1[水晶]且你+1[水晶]，或你弃1张牌并额外获得一个回合；<span class='tiaoJian'>(若我方对应【Tricky】弃牌<对方)</span>对方【战绩区】+1[宝石]。",
-            suprise: "[法术]Surprise!",
+                "<span class='tiaoJian'>(你的行動階段結束時,若場上存在的【Tricky】>4,展示所有【Tricky】)</span>所有人各棄1張與面前【Tricky】同系的牌，然後移除所有【Tricky】。（每有人不如此做）你對他造成2點法術傷害③。<span class='tiaoJian'>(若我方對應【Tricky】棄牌>對方)</span>我方【戰績區】+1[水晶]且你+1[水晶]，或你棄1張牌並額外獲得一個回合；<span class='tiaoJian'>(若我方對應【Tricky】棄牌<對方)</span>對方【戰績區】+1[寶石]。",
+            suprise: "[法術]Surprise!",
             suprise_info:
-                "[水晶]<span class='tiaoJian'>(你弃1张牌)</span>本回合结束前你的手牌上限+5， 将场上所有【Tricky】加入手牌，然后将X张手牌面朝下放置于X名目标角色面前，视为基础效果【Tricky】。",
+                "[水晶]<span class='tiaoJian'>(你棄1張牌)</span>本回合結束前你的手牌上限+5， 將場上所有【Tricky】加入手牌，然後將X張手牌面朝下放置於X名目標角色面前，視為基礎效果【Tricky】。",
 
-            // trick圣弓
-            trick_tianZhiGong:"[被动]天之弓",
-            trick_tianZhiGong_info:"游戏初始时，你+2[宝石]。你的[治疗]上限+1。<span class='tiaoJian'>（主动攻击时①，若该次攻击不为圣类命格）</span>本次攻击伤害-1；<span class='tiaoJian'>（主动攻击命中时②，若该次攻击为圣类命格）</span>你+1【信仰】。",
-            trick_shengHuangJiangLin:"[法术]圣煌降临[持续]",
-            trick_shengHuangJiangLin_backup:"[法术]圣煌降临[持续]",
-            trick_shengHuangJiangLin_info:"<span class='tiaoJian'>(移除你的2点[治疗]或2点</span><span class='hong'>【信仰】</span><span class='tiaoJian'>)</span>[横置]，转为【圣煌形态】，额外+1[法术行动]。此形态下，你若执行【特殊行动】，则[重置]脱离【圣煌形态】并+1[治疗]。",
-            trick_shengGuangBaoLie:"[法术]圣光爆裂",
-            trick_shengGuangBaoLie_backup:"[法术]圣光爆裂",
-            trick_shengGuangBaoLie_info:"<span class='tiaoJian'>(仅【圣煌形态】下可发动)</span>你选择以下一项发动：<br>·移除你的1点[治疗]，摸1张牌[强制]，你+1<span class='hong'>【信仰】</span>，目标队友+1[治疗]。 <br>·<span class='tiaoJian'>(移除你的X[治疗]，选择最多X名手牌数不大于你手牌数-X的对手)</span>你弃X张牌，然后对他们各造成(Y+2)点攻击伤害。 Y为目标数中拥有[治疗]的人数。",
-            trick_shengHuangHuiGuangPao:"[法术]圣煌辉光炮",
-            trick_shengHuangHuiGuangPao_info:"<span class='tiaoJian'>(仅【圣煌形态】下可发动，移除1点</span><span class='lan'>【圣煌辉光炮】</span><span class='tiaoJian'>，移除4点</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，并额外移除等同我方落后士气的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>数)</span>所有角色将手牌调整为4张，我方【星杯区】+1[星杯]，然后将一方[士气]调整与另一方相同，我方所有角色各+1[治疗]。",
-            trick_ziDongTianChong:"[被动]自动填充",
-            trick_ziDongTianChong_info:"<span class='tiaoJian'>(你的回合结束时，若你未执行【特殊行动】)</span>你选择以下一项发动：<br>·[水晶]你+1<span class='hong'>【信仰】</span>或+1[治疗]，然后+1<span class='lan'>【圣煌辉光炮】</span>。 <br>·[宝石]你+2<span class='hong'>【信仰】</span>或目标角色+2[治疗]。",
+            // trick聖弓
+            trick_tianZhiGong:"[被動]天之弓",
+            trick_tianZhiGong_info:"遊戲初始時，你+2[寶石]。你的[治療]上限+1。<span class='tiaoJian'>（主動攻擊時①，若該次攻擊不為聖類命格）</span>本次攻擊傷害-1；<span class='tiaoJian'>（主動攻擊命中時②，若該次攻擊為聖類命格）</span>你+1【信仰】。",
+            trick_shengHuangJiangLin:"[法術]聖煌降臨[持續]",
+            trick_shengHuangJiangLin_backup:"[法術]聖煌降臨[持續]",
+            trick_shengHuangJiangLin_info:"<span class='tiaoJian'>(移除你的2點[治療]或2點</span><span class='hong'>【信仰】</span><span class='tiaoJian'>)</span>[橫置]，轉為【聖煌形態】，額外+1[法術行動]。此形態下，你若執行【特殊行動】，則[重置]脫離【聖煌形態】並+1[治療]。",
+            trick_shengGuangBaoLie:"[法術]聖光爆裂",
+            trick_shengGuangBaoLie_backup:"[法術]聖光爆裂",
+            trick_shengGuangBaoLie_info:"<span class='tiaoJian'>(僅【聖煌形態】下可發動)</span>你選擇以下一項發動：<br>·移除你的1點[治療]，摸1張牌[強制]，你+1<span class='hong'>【信仰】</span>，目標隊友+1[治療]。 <br>·<span class='tiaoJian'>(移除你的X[治療]，選擇最多X名手牌數不大於你手牌數-X的對手)</span>你棄X張牌，然後對他們各造成(Y+2)點攻擊傷害。 Y為目標數中擁有[治療]的人數。",
+            trick_shengHuangHuiGuangPao:"[法術]聖煌輝光炮",
+            trick_shengHuangHuiGuangPao_info:"<span class='tiaoJian'>(僅【聖煌形態】下可發動，移除1點</span><span class='lan'>【聖煌輝光炮】</span><span class='tiaoJian'>，移除4點</span><span class='hong'>【信仰】</span><span class='tiaoJian'>，並額外移除等同我方落後士氣的</span><span class='hong'>【信仰】</span><span class='tiaoJian'>數)</span>所有角色將手牌調整為4張，我方【星杯區】+1[星杯]，然後將一方[士氣]調整與另一方相同，我方所有角色各+1[治療]。",
+            trick_ziDongTianChong:"[被動]自動填充",
+            trick_ziDongTianChong_info:"<span class='tiaoJian'>(你的回合結束時，若你未執行【特殊行動】)</span>你選擇以下一項發動：<br>·[水晶]你+1<span class='hong'>【信仰】</span>或+1[治療]，然後+1<span class='lan'>【聖煌輝光炮】</span>。 <br>·[寶石]你+2<span class='hong'>【信仰】</span>或目標角色+2[治療]。",
 
-            // trick冒险家
-            trick_qiZha:"[响应]欺诈",
-            trick_qiZha_info:"<span class='tiaoJian'>(弃2张同系牌[展示])</span>视为一次除暗系以外的任意系的主动攻击，该系由你决定",
-            trick_maoXianJiaTianTang:"[响应]冒险者天堂",
-            trick_maoXianJiaTianTang_backup:"[响应]冒险者天堂",
-            trick_maoXianJiaTianTang_info:"<span class='tiaoJian'>(你执行【提炼】时，移除自身X[能量])</span>额外提炼X[水晶]，然后将提炼出的[宝石]和[水晶]全部交给目标队友。",
+            // trick冒險家
+            trick_qiZha:"[響應]欺詐",
+            trick_qiZha_info:"<span class='tiaoJian'>(棄2張同系牌[展示])</span>視為一次除暗系以外的任意系的主動攻擊，該系由你決定",
+            trick_maoXianJiaTianTang:"[響應]冒險者天堂",
+            trick_maoXianJiaTianTang_backup:"[響應]冒險者天堂",
+            trick_maoXianJiaTianTang_info:"<span class='tiaoJian'>(你執行【提煉】時，移除自身X[能量])</span>額外提煉X[水晶]，然後將提煉出的[寶石]和[水晶]全部交給目標隊友。",
 
-            // 萝莉番长
-            xuanHuaShangDeng: "[被动]喧哗上等",
+            // 蘿莉番長
+            xuanHuaShangDeng: "[被動]喧譁上等",
             xuanHuaShangDeng_info:
-                "<span class='tiaoJian'>(攻击命中时②)</span>持续移除牌库顶牌[展示]，直到移除的牌非血类命格或非法术牌，或累积移除三张牌。本次攻击伤害额外+X，X为此法移除的牌库顶牌数。",
-            yeLuSiKu: "[响应]夜露死苦",
-            yeLuSiKu_xueYingKuangDao: "[响应]血影狂刀",
-            yeLuSiKu_xueXingPaoXiao: "[响应]血腥咆哮",
-            yeLuSiKu_info: `你可以使用狂战士的独有技。<br>
-                <span class="greentext">(独)[响应]血影狂刀</span><br>
-                <span class='tiaoJian'>(作为主动攻击打出时发动)</span><br>·若命中手牌为2的对手②，本次攻击伤害额外+2；<br>·若命中手牌为3的对手②，本次攻击伤害额外+1。<br>
-                <span class="greentext">(独)[响应]血腥咆哮</span><br>
-                <span class="tiaoJian">(作为主动攻击打出时发动)</span>若攻击的目标拥有的[治疗]为2，则本次攻击强制命中。
+                "<span class='tiaoJian'>(攻擊命中時②)</span>持續移除牌庫頂牌[展示]，直到移除的牌非血類命格或非法術牌，或累積移除三張牌。本次攻擊傷害額外+X，X為此法移除的牌庫頂牌數。",
+            yeLuSiKu: "[響應]夜露死苦",
+            yeLuSiKu_xueYingKuangDao: "[響應]血影狂刀",
+            yeLuSiKu_xueXingPaoXiao: "[響應]血腥咆哮",
+            yeLuSiKu_info: `你可以使用狂戰士的獨有技。<br>
+                <span class="greentext">(獨)[響應]血影狂刀</span><br>
+                <span class='tiaoJian'>(作為主動攻擊打出時發動)</span><br>·若命中手牌為2的對手②，本次攻擊傷害額外+2；<br>·若命中手牌為3的對手②，本次攻擊傷害額外+1。<br>
+                <span class="greentext">(獨)[響應]血腥咆哮</span><br>
+                <span class="tiaoJian">(作為主動攻擊打出時發動)</span>若攻擊的目標擁有的[治療]為2，則本次攻擊強制命中。
             `,
-            aiSiTianLiu: "[被动]爱死天流",
+            aiSiTianLiu: "[被動]愛死天流",
             aiSiTianLiu_info:
-                "<span class='tiaoJian'>(你发动【血腥咆哮】时)</span>“若攻击的目标拥有的[治疗]为2，则本次攻击强制命中”改为“若攻击的目标拥有[治疗]，则本次攻击无法用【暗灭】应战或使用【圣光】抵挡”。",
-            mieChaKuCha: "[响应]灭茶苦茶",
+                "<span class='tiaoJian'>(你發動【血腥咆哮】時)</span>“若攻擊的目標擁有的[治療]為2，則本次攻擊強制命中”改為“若攻擊的目標擁有[治療]，則本次攻擊無法用【暗滅】應戰或使用【聖光】抵擋”。",
+            mieChaKuCha: "[響應]滅茶苦茶",
             mieChaKuCha_info:
-                "<span class='tiaoJian'>(攻击命中后发动②)</span>选择以下一项：<br>[宝石]本次攻击伤害额外+2。<br>[水晶]本次攻击伤害额外+1。",
+                "<span class='tiaoJian'>(攻擊命中後發動②)</span>選擇以下一項：<br>[寶石]本次攻擊傷害額外+2。<br>[水晶]本次攻擊傷害額外+1。",
             
-            // 见习制片
-            yuanZiXiShou: "[响应]元子吸收",
-            yuanZiXiShou_info: `<span class="tiaoJian">(对目标角色造成法术伤害时发动③)</span>你+1<span class="hong">【元子】</span>。`,
-            yuanZiChongSu: "[法术]元子重塑",
-            yuanZiChongSu_info: "<span class='tiaoJian'>(移除2点【元子】)</span>你弃X张牌，摸X张牌（X<4），额外+1[法术行动]。",
-            yuanSuXueTu: "[响应]元素学徒",
-            yuanSuXueTu_bingDong: "[法术]冰冻",
-            yuanSuXueTu_yunShi: "[法术]陨石",
-            yuanSuXueTu_huoQou: "[法术]火球",
-            yuanSuXueTu_fengRen: "[法术]风刃",
-            yuanSuXueTu_leiJi: "[法术]雷击",
-            yuanSuXueTu_info: "你可以使用元素师的独有技。",
-            leiJiBianYi: "[被动]雷击变异",
-            leiJiBianYi_info: "<span class='tiaoJian'>(你发动【雷击】时)</span>将“我方【战绩区】+1[宝石]”改为“你+1<span class='hong'>【元子】</span>”",
-            yueYun: "[法术]月陨",
-            yueYun_info: "[宝石]对目标角色造成(X+1)点法术伤害③，X为你剩余的【能量】数。",
+            // 見習製片
+            yuanZiXiShou: "[響應]元子吸收",
+            yuanZiXiShou_info: `<span class="tiaoJian">(對目標角色造成法術傷害時發動③)</span>你+1<span class="hong">【元子】</span>。`,
+            yuanZiChongSu: "[法術]元子重塑",
+            yuanZiChongSu_info: "<span class='tiaoJian'>(移除2點【元子】)</span>你棄X張牌，摸X張牌（X<4），額外+1[法術行動]。",
+            yuanSuXueTu: "[響應]元素學徒",
+            yuanSuXueTu_bingDong: "[法術]冰凍",
+            yuanSuXueTu_yunShi: "[法術]隕石",
+            yuanSuXueTu_huoQou: "[法術]火球",
+            yuanSuXueTu_fengRen: "[法術]風刃",
+            yuanSuXueTu_leiJi: "[法術]雷擊",
+            yuanSuXueTu_info: "你可以使用元素師的獨有技。",
+            leiJiBianYi: "[被動]雷擊變異",
+            leiJiBianYi_info: "<span class='tiaoJian'>(你發動【雷擊】時)</span>將“我方【戰績區】+1[寶石]”改為“你+1<span class='hong'>【元子】</span>”",
+            yueYun: "[法術]月隕",
+            yueYun_info: "[寶石]對目標角色造成(X+1)點法術傷害③，X為你剩餘的【能量】數。",
             yuanZi: "元子",
-            yuanZi_info: "<span class='hong'>【元子】</span>为见习制片专有的指示物，上限为3。",
+            yuanZi_info: "<span class='hong'>【元子】</span>為見習製片專有的指示物，上限為3。",
 
             //怠惰少女
-            bieFanWo:"[法术]别烦我……",
-            bieFanWo_info:"<span class='tiaoJian'>(你右手边最近的队友随机丢弃你1张手牌并指定目标对手摸1张牌[强制])</span>我方【战绩区】+1[水晶]，该对手弃1张法术牌[展示]；<span class='tiaoJian'>(若该对手不如此做)</span>他摸1张牌[强制]，你右手边最近的队友+1[治疗]。",
-            rangWoTangPing:"[响应]让我躺平",
-            rangWoTangPing_info:"<span class='tiaoJian'>(你的回合开始时，若你手牌>3)</span>目标队友+1[治疗]，然后跳过你的行动阶段。",
-            xiangYongMoDan:"[响应]想用魔弹",
-            xiangYongMoDan_info:"<span class='tiaoJian'>(你需要使用魔弹时，弃2张同系牌[展示])</span>视为使用【魔弹】。",
-            buXiangTiLian:"[被动]不想提炼",
-            buXiangTiLian_info:"你无法执行【提炼】。<span class='tiaoJian'>(目标队友指定【提炼】时)</span>你+1[宝石]，移除我方【战绩区】1星石",
-            zaiShuiYiXia:"[被动]再睡一下",
-            zaiShuiYiXia_info:"[宝石]<span class='tiaoJian'>(你跳过行动阶段后强制触发[强制])</span>弃1张牌，所有队友各+1[治疗]。<span class='tiaoJian'>(若如此导致有队友[治疗]溢出)</span>我方+1【士气】。",
+            bieFanWo:"[法術]別煩我……",
+            bieFanWo_info:"<span class='tiaoJian'>(你右手邊最近的隊友隨機丟棄你1張手牌並指定目標對手摸1張牌[強制])</span>我方【戰績區】+1[水晶]，該對手棄1張法術牌[展示]；<span class='tiaoJian'>(若該對手不如此做)</span>他摸1張牌[強制]，你右手邊最近的隊友+1[治療]。",
+            rangWoTangPing:"[響應]讓我躺平",
+            rangWoTangPing_info:"<span class='tiaoJian'>(你的回合開始時，若你手牌>3)</span>目標隊友+1[治療]，然後跳過你的行動階段。",
+            xiangYongMoDan:"[響應]想用魔彈",
+            xiangYongMoDan_info:"<span class='tiaoJian'>(你需要使用魔彈時，棄2張同系牌[展示])</span>視為使用【魔彈】。",
+            buXiangTiLian:"[被動]不想提煉",
+            buXiangTiLian_info:"你無法執行【提煉】。<span class='tiaoJian'>(目標隊友指定【提煉】時)</span>你+1[寶石]，移除我方【戰績區】1星石",
+            zaiShuiYiXia:"[被動]再睡一下",
+            zaiShuiYiXia_info:"[寶石]<span class='tiaoJian'>(你跳過行動階段後強制觸發[強制])</span>棄1張牌，所有隊友各+1[治療]。<span class='tiaoJian'>(若如此導致有隊友[治療]溢出)</span>我方+1【士氣】。",
 
             //嫉妒少女
-            cuYiXiuXin: "[响应]醋意羞心",
-            cuYiXiuXin_info: "<span class='tiaoJian'>(主动攻击未命中时②)</span>目标角色弃1张法术牌[展示]；<span class='tiaoJian'>(若他不如此做)</span>你对他造成2点法术伤害③，我方【战绩区】+1[水晶]。",
-            xuRongZhangWo:"[响应]虚荣掌握",
-            xuRongZhangWo_info: "<span class='tiaoJian'>(主动攻击命中时②)</span>额外+1[法术行动]，本次法术行动只能使用【魔弹】且可以选择逆向传递。",
-            xiangSiBing:"[响应]相思病",
-            xiangSiBing_info:"你的地系牌或风系牌可以当【魔弹】使用。",
-            jiDuZhuiFang:"[响应]嫉妒追放[回合限定]",
-            jiDuZhuiFang_info:"[水晶]<span class='tiaoJian'>([攻击行动]或[法术行动]后)</span>额外+1[攻击行动]，本次攻击行动只能攻击手牌数大于你的目标对手。",
+            cuYiXiuXin: "[響應]醋意羞心",
+            cuYiXiuXin_info: "<span class='tiaoJian'>(主動攻擊未命中時②)</span>目標角色棄1張法術牌[展示]；<span class='tiaoJian'>(若他不如此做)</span>你對他造成2點法術傷害③，我方【戰績區】+1[水晶]。",
+            xuRongZhangWo:"[響應]虛榮掌握",
+            xuRongZhangWo_info: "<span class='tiaoJian'>(主動攻擊命中時②)</span>額外+1[法術行動]，本次法術行動只能使用【魔彈】且可以選擇逆向傳遞。",
+            xiangSiBing:"[響應]相思病",
+            xiangSiBing_info:"你的地系牌或風系牌可以當【魔彈】使用。",
+            jiDuZhuiFang:"[響應]嫉妒追放[回合限定]",
+            jiDuZhuiFang_info:"[水晶]<span class='tiaoJian'>([攻擊行動]或[法術行動]後)</span>額外+1[攻擊行動]，本次攻擊行動只能攻擊手牌數大於你的目標對手。",
 
-            //剑之子
-            qingMu:"[被动]倾慕",
-            qingMu_info:"<span class='tiaoJian'>(若【剑之魔女】在场)</span>你无法发动【剑守誓言】，你获得【剑之魔女】的【剑影*断念】、【梦想剑】。",
-            fengZhiJian:"[响应]风之剑",
-            fengZhiJian_info:"<span class='tiaoJian'>(你使用技类命格牌作为主动攻击打出时，移除我方【战绩区】1星石)</span>视为你发动该牌上的剑圣的独有技。",
-            jianShouShiYan:"[响应]剑守誓言",
-            jianShouShiYan_info:"<span class='tiaoJian'>(你有主动攻击命中②或任意一方【星杯区】星杯数增加的回合结束后)</span>弃置牌堆顶(X+1)张牌[展示]，X为双方【星杯区】星杯数之和，你可选择其中1张加入你手牌。<span class='tiaoJian'>(若弃牌中有法术牌)</span>你+2[水晶]，立即执行1个你的额外回合，该回合你的攻击伤害额外+1，永久将你的角色卡替换为【风之剑圣】。",
-            jianCanYing:"[响应]剑残影[回合限定]",
-            jianCanYing_info:"[水晶]<span class='tiaoJian'>([攻击行动]结束后发动)</span>目标对手弃1张牌，额外+1[攻击行动]。本回合你的下次主动攻击只能攻击该目标对手。",
+            //劍之子
+            qingMu:"[被動]傾慕",
+            qingMu_info:"<span class='tiaoJian'>(若【劍之魔女】在場)</span>你無法發動【劍守誓言】，你獲得【劍之魔女】的【劍影*斷念】、【夢想劍】。",
+            fengZhiJian:"[響應]風之劍",
+            fengZhiJian_info:"<span class='tiaoJian'>(你使用技類命格牌作為主動攻擊打出時，移除我方【戰績區】1星石)</span>視為你發動該牌上的劍聖的獨有技。",
+            jianShouShiYan:"[響應]劍守誓言",
+            jianShouShiYan_info:"<span class='tiaoJian'>(你有主動攻擊命中②或任意一方【星杯區】星杯數增加的回合結束後)</span>棄置牌堆頂(X+1)張牌[展示]，X為雙方【星杯區】星杯數之和，你可選擇其中1張加入你手牌。<span class='tiaoJian'>(若棄牌中有法術牌)</span>你+2[水晶]，立即執行1個你的額外回合，該回合你的攻擊傷害額外+1，永久將你的角色卡替換為【風之劍聖】。",
+            jianCanYing:"[響應]劍殘影[回合限定]",
+            jianCanYing_info:"[水晶]<span class='tiaoJian'>([攻擊行動]結束後發動)</span>目標對手棄1張牌，額外+1[攻擊行動]。本回合你的下次主動攻擊只能攻擊該目標對手。",
 
             //魔弓EX
-            shenFengShi:"[被动]神风矢",
-            shenFengShi_info:"你的风系攻击牌对手无法应战",
-            jiFengZhuiShe:"[被动]疾风追射",
+            shenFengShi:"[被動]神風矢",
+            shenFengShi_info:"你的風系攻擊牌對手無法應戰",
+            jiFengZhuiShe:"[被動]疾風追射",
             //jiFengZhuiShe_info:"",
-            gongShenHouBu:"[被动]弓神候补",
-            gongShenHouBu_info:`你可以使用神箭手的独有技。<br>
-                <span class="greentext">(独)[法术]闪光陷阱</span><br>
-                对目标角色造成2点法术伤害③。<br>
-                <span class="greentext">(独)[响应]精准射击</span><br>
-                此攻击强制命中，但本次攻击伤害-1。`,
-            gongShenHouBu_jingZhunSheJi:"[响应]精准射击",
-            gongShenHouBu_shanGuangXianJing:"[法术]闪光陷阱",
+            gongShenHouBu:"[被動]弓神候補",
+            gongShenHouBu_info:`你可以使用神箭手的獨有技。<br>
+                <span class="greentext">(獨)[法術]閃光陷阱</span><br>
+                對目標角色造成2點法術傷害③。<br>
+                <span class="greentext">(獨)[響應]精準射擊</span><br>
+                此攻擊強制命中，但本次攻擊傷害-1。`,
+            gongShenHouBu_jingZhunSheJi:"[響應]精準射擊",
+            gongShenHouBu_shanGuangXianJing:"[法術]閃光陷阱",
 
-            //圣仲裁者
-            shenZhiTianPing:"[被动]神之天平",
-            shenZhiTianPing_info:"游戏初始时你拥有【天平·左】与【天平·右】。",
-            shanEBiJi:"[响应]善恶必计",
-            shanEBiJi_info:"[回合限定]<span class='tiaoJian'>(我方角色承受伤害⑥并结算完毕后，你将手牌中1张基础牌面朝上[展示]放到【天平·左】或【天平·右】上)</span>你摸1张牌[强制]。",
-            tianPingQingDao:"[被动]天平倾倒",
-            tianPingQingDao_info:"<span class='tiaoJian'>(你的回合开始时或你的回合结束时，若【天平·左】和【天平·右】上的牌差>1，舍弃牌数多的一方上所有牌)</span>展示牌堆顶4张牌[展示]，你将其中2张加入手牌[强制]并弃掉另外2张牌，你+1<span class='hong'>【罪】</span>，然后目标队友+2[治疗]。",
-            shenZhiShenPan:"[响应]神之审判",
-            shenZhiShenPan_info:"<span class='tiaoJian'>(你的回合结束时，若【天平·左】和【天平·右】上的牌数都>2)</span>舍弃【天平·左】与【天平·右】上的所有牌，然后对2名目标角色各造成2点攻击伤害③。",
-            tianPing:"(专)天平",
+            //聖仲裁者
+            shenZhiTianPing:"[被動]神之天平",
+            shenZhiTianPing_info:"遊戲初始時你擁有【天平·左】與【天平·右】。",
+            shanEBiJi:"[響應]善惡必計",
+            shanEBiJi_info:"[回合限定]<span class='tiaoJian'>(我方角色承受傷害⑥並結算完畢後，你將手牌中1張基礎牌面朝上[展示]放到【天平·左】或【天平·右】上)</span>你摸1張牌[強制]。",
+            tianPingQingDao:"[被動]天平傾倒",
+            tianPingQingDao_info:"<span class='tiaoJian'>(你的回合開始時或你的回合結束時，若【天平·左】和【天平·右】上的牌差>1，捨棄牌數多的一方上所有牌)</span>展示牌堆頂4張牌[展示]，你將其中2張加入手牌[強制]並棄掉另外2張牌，你+1<span class='hong'>【罪】</span>，然後目標隊友+2[治療]。",
+            shenZhiShenPan:"[響應]神之審判",
+            shenZhiShenPan_info:"<span class='tiaoJian'>(你的回合結束時，若【天平·左】和【天平·右】上的牌數都>2)</span>捨棄【天平·左】與【天平·右】上的所有牌，然後對2名目標角色各造成2點攻擊傷害③。",
+            tianPing:"(專)天平",
             tianPingZuo:"天平·左",
             tianPingYou:"天平·右",
-            tianPing_zuo:"[被动]罪灭之左",
-            tianPing_you:"[被动]圣方之右",
-            tianPing_fangZhi:"[被动]替罪羔羊",
+            tianPing_zuo:"[被動]罪滅之左",
+            tianPing_you:"[被動]聖方之右",
+            tianPing_fangZhi:"[被動]替罪羔羊",
             tianPing_info:`
-            【天平·左】/【天平·右】上的牌上限为3；达到上限则无法被再放置新牌。<br>
-            (天平共有技能)<span class='greentext'>[被动]替罪羔羊</span><br>
-            <span class='tiaoJian'>(每当有新牌将被放置在本卡上时，若该卡与本卡上的牌不同系)</span>移除本卡上所有卡，你+1<span class='hong'>【罪】</span>。<br>
-            (天平·左)<span class='greentext'>[被动]罪灭之左</span><br>
-            <span class='tiaoJian'>(每当本卡上的牌数增加，且增加后本卡上的牌数>1)</span>对(X-1)名目标对手造成1点攻击伤害③，X为本卡上的牌数。<br>
-            (天平·右)<span class='greentext'>[被动]圣方之右</span><br>
-            <span class='tiaoJian'>(每当本卡上的牌被移除且移除牌数>1)</span>你+1[治疗]。
+            【天平·左】/【天平·右】上的牌上限為3；達到上限則無法被再放置新牌。<br>
+            (天平共有技能)<span class='greentext'>[被動]替罪羔羊</span><br>
+            <span class='tiaoJian'>(每當有新牌將被放置在本卡上時，若該卡與本卡上的牌不同系)</span>移除本卡上所有卡，你+1<span class='hong'>【罪】</span>。<br>
+            (天平·左)<span class='greentext'>[被動]罪滅之左</span><br>
+            <span class='tiaoJian'>(每當本卡上的牌數增加，且增加後本卡上的牌數>1)</span>對(X-1)名目標對手造成1點攻擊傷害③，X為本卡上的牌數。<br>
+            (天平·右)<span class='greentext'>[被動]聖方之右</span><br>
+            <span class='tiaoJian'>(每當本卡上的牌被移除且移除牌數>1)</span>你+1[治療]。
             `,
-            tianZui:"[启动]天罪", 
-            tianZui_info:"[水晶]你+1<span class='hong'>【罪】</span>。[横置]持续到本回合结束时，你主动攻击命中时②，可将手牌中2张基本牌面朝上[展示]分别放到【天平·左】和【天平·右】上。【天罪】的效果结束时[重置]。",
-            zuiChiBiDao:"[法术]罪迟必到",
-            zuiChiBiDao_info:"[水晶]本回合你无法获得<span class='hong'>【罪】</span>。<span class='tiaoJian'>(你移除所有</span><span class='hong'>【罪】</span><span class='tiaoJian'>)</span>你可将手牌中X张基本牌面朝上[展示]依次放到【天平·左】或【天平·右】上，X为移除的<span class='hong'>【罪】</span>数量",
+            tianZui:"[啟動]天罪", 
+            tianZui_info:"[水晶]你+1<span class='hong'>【罪】</span>。[橫置]持續到本回合結束時，你主動攻擊命中時②，可將手牌中2張基本牌面朝上[展示]分別放到【天平·左】和【天平·右】上。【天罪】的效果結束時[重置]。",
+            zuiChiBiDao:"[法術]罪遲必到",
+            zuiChiBiDao_info:"[水晶]本回合你無法獲得<span class='hong'>【罪】</span>。<span class='tiaoJian'>(你移除所有</span><span class='hong'>【罪】</span><span class='tiaoJian'>)</span>你可將手牌中X張基本牌面朝上[展示]依次放到【天平·左】或【天平·右】上，X為移除的<span class='hong'>【罪】</span>數量",
             zui:'罪',
-            zui_info:"<span class='hong'>【罪】</span>为仲裁者专有指示物，上限为3。",
+            zui_info:"<span class='hong'>【罪】</span>為仲裁者專有指示物，上限為3。",
         },
     };
 });

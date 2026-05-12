@@ -25,24 +25,24 @@ export class UI {
 		}
 		var hongZhanJi_str='';
 		var lanZhanJi_str='';
-		var baoShi=lib.assetURL+'image/card/xingShi/baoShi.png';  // 根据颜色选择不同图片
+		var baoShi=lib.assetURL+'image/card/xingShi/baoShi.png';  // 根據顏色選擇不同圖片
 		var shuiJing=lib.assetURL+'image/card/xingShi/shuiJing.png';
 
-		var keysSorted = Object.keys(hongZhanJi).sort();  // 获取键数组并排序
+		var keysSorted = Object.keys(hongZhanJi).sort();  // 獲取鍵數組並排序
 		keysSorted.forEach(function(key) {
 			let images = '';
 			for (let i = 0; i < hongZhanJi[key]; i++) {
-				let imageSrc = (key == 'baoShi' ? baoShi : shuiJing);  // 根据键来决定使用哪张图片
+				let imageSrc = (key == 'baoShi' ? baoShi : shuiJing);  // 根據鍵來決定使用哪張圖片
 				images += `<img src="${imageSrc}" style="width: 20px; height: 20px;">`;
 			}
 			hongZhanJi_str += images;
 		});
 
-		var keysSorted = Object.keys(lanZhanJi).sort();  // 获取键数组并排序
+		var keysSorted = Object.keys(lanZhanJi).sort();  // 獲取鍵數組並排序
 		keysSorted.forEach(function(key) {
 			let images = '';
 			for (let i = 0; i < lanZhanJi[key]; i++) {
-				let imageSrc = (key == 'baoShi' ? baoShi : shuiJing);  // 根据键来决定使用哪张图片
+				let imageSrc = (key == 'baoShi' ? baoShi : shuiJing);  // 根據鍵來決定使用哪張圖片
 				images += `<img src="${imageSrc}" style="width: 20px; height: 20px;">`;
 			}
 			lanZhanJi_str += images;
@@ -61,13 +61,13 @@ export class UI {
 			var teamClass2='';
 		}
 
-		// 定义布尔变量
+		// 定義布爾變量
 
-		// 根据布尔变量值修改表格内容
+		// 根據布爾變量值修改表格內容
 		ui.shiQiInfo.innerHTML = `
 			<table class="table zhanJi">
 				<tr>
-					<td>士气</td>
+					<td>士氣</td>
 					<td>星石</td>
 					<td>星杯</td>
 				</tr>
@@ -186,17 +186,17 @@ export class UI {
 	 */
 	chess;
 	/**
-	 * 手动在菜单栏中添加一个武将包的ui
+	 * 手動在菜單欄中添加一個武將包的ui
 	 * @type { ((packName: string) => void)[] }
 	 */
 	updateCharacterPackMenu = [];
 	/**
-	 * 手动在菜单栏中添加一个卡牌包的ui
+	 * 手動在菜單欄中添加一個卡牌包的ui
 	 * @type { ((packName: string) => void)[] }
 	 */
 	updateCardPackMenu = [];
 	/**
-	 * @type { HTMLDivElement } 挑战模式下正在操作的角色
+	 * @type { HTMLDivElement } 挑戰模式下正在操作的角色
 	 */
 	mebg;
 	/**
@@ -389,7 +389,7 @@ export class UI {
 			var width = widths.shift();
 			offset += width + 6;
 			if (get.is.phoneLayout()) {
-				offset += 12;//之前是6，再次增加触屏模式下手机间距
+				offset += 12;//之前是6，再次增加觸屏模式下手機間距
 			}
 			if (control._offset != offset) {
 				control.addTempClass("controlpressdownx", 500);
@@ -479,7 +479,7 @@ export class UI {
 				start = 1;
 			}
 			ui.updatejm(player, player.node.marks, start, get.is.mobileMe(player));
-			//marks2显示红蓝石和红蓝灯，因为无连环标故从0开始
+			//marks2顯示紅藍石和紅藍燈，因為無連環標故從0開始
 			ui.updatejm2(player, player.node.marks2, 0, get.is.mobileMe(player));
 		} else {
 			for (var i = 0; i < game.players.length; i++) {
@@ -810,28 +810,28 @@ export class UI {
 	 */
 	updatePlayerPositions(numberOfPlayers) {
 		if (typeof numberOfPlayers != "number") numberOfPlayers = ui.arena.dataset.number;
-		//当人数不超过8人时，还是用以前的布局
+		//當人數不超過8人時，還是用以前的佈局
 		if (!numberOfPlayers || numberOfPlayers <= 8) return;
 		const playerPositions = ui.playerPositions;
 		playerPositions.forEach((position) => {
 			game.dynamicStyle.remove(position);
 		});
 		playerPositions.length = 0;
-		//单个人物的宽度，这里要设置玩家的实际的宽度
+		//單個人物的寬度，這裡要設置玩家的實際的寬度
 		const temporaryPlayer = ui.create.div(".player", ui.arena).hide();
 		const computedStyle = getComputedStyle(temporaryPlayer);
 		const scale = 6 / numberOfPlayers;
-		//玩家顶部距离父容器上边缘的距离偏移的单位距离
+		//玩家頂部距離父容器上邊緣的距離偏移的單位距離
 		const quarterHeight = (parseFloat(computedStyle.height) / 4) * scale;
 		const halfWidth = parseFloat(computedStyle.width) / 2;
 		temporaryPlayer.remove();
-		//列数，即假如8人场，除去自己后，上面7个人占7列
+		//列數，即假如8人場，除去自己後，上面7個人佔7列
 		const columnCount = numberOfPlayers - 1;
 		const percentage = 90 / (columnCount - 1);
-		//仅当游戏人数大于8人，且玩家的座位号大于0时，设置玩家的位置；因为0号位是game.me在最下方，无需设置
+		//僅當遊戲人數大於8人，且玩家的座位號大於0時，設置玩家的位置；因為0號位是game.me在最下方，無需設置
 		for (let ordinal = 1; ordinal < numberOfPlayers; ordinal++) {
 			const reversedOrdinal = columnCount - ordinal;
-			//动态计算玩家的top属性，实现拱桥的效果；只让两边的各两个人向下偏移一些
+			//動態計算玩家的top屬性，實現拱橋的效果；只讓兩邊的各兩個人向下偏移一些
 			const top =
 				Math.max(
 					0,
@@ -848,7 +848,7 @@ export class UI {
 		}
 	}
 	updateRoundNumber(roundNumber, cardPileNumber) {
-		if (ui.cardPileNumber) ui.cardPileNumber.innerHTML = `${roundNumber}轮 剩余牌: ${cardPileNumber}`;
+		if (ui.cardPileNumber) ui.cardPileNumber.innerHTML = `${roundNumber}輪 剩餘牌: ${cardPileNumber}`;
 	}
 }
 

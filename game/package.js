@@ -1,52 +1,52 @@
 window.noname_package = {
 	character: {
-		shiZhouNian:"十周年",
-		yiDuanYeHuo:"异端业火",
-		shenZiChuangLin:"神子创临",
-		zhongMoDaoZhu:'终末祷铸',
+		shiZhouNian:"十週年",
+		yiDuanYeHuo:"異端業火",
+		shenZiChuangLin:"神子創臨",
+		zhongMoDaoZhu:'終末禱鑄',
 		teDian:'特典',
 		sanBan:'三版',
 		siBan:'四版',
-		poXiao:'破晓',
+		poXiao:'破曉',
 		boss:'BOSS',
 	},
 	card: {
-		xingBei:'星杯传说',
+		xingBei:'星杯傳說',
 	},
 	play: {
 
 	},
 	mode: {
-		xingBei: "单机",
+		xingBei: "單機",
 		boss: "BOSS",
-		connect: "联机",
-		offlineChoose: "线下选角",
-		illustration: "图鉴",
+		connect: "聯機",
+		offlineChoose: "線下選角",
+		illustration: "圖鑑",
 		leaderboard: "排行榜",
-		tutorial: "新手向导",
+		tutorial: "新手嚮導",
 	},
 	submode: {
 		
 	},
 	background: {
-		xingBei_bg: "星杯传说",
+		xingBei_bg: "星杯傳說",
 		noname_bg: "璀璨",
-		wuming_bg: "无名",
+		wuming_bg: "無名",
 	},
 	music: {
 
 	},
 	font: {
-		xiaozhuan: "方正小篆体",
-		xinwei: "华文新魏_GBK",
-		huangcao: "方正黄草_GBK",
-		yuanli: "方正北魏楷书_GBK",
+		xiaozhuan: "方正小篆體",
+		xinwei: "華文新魏_GBK",
+		huangcao: "方正黃草_GBK",
+		yuanli: "方正北魏楷書_GBK",
 		xingkai: "方正行楷_GBK",
-		shousha: "方正隶变_GBK",
+		shousha: "方正隸變_GBK",
 	},
 	theme: {
-		woodden: "木纹",
-		music: "音乐",
-		simple: "简约",
+		woodden: "木紋",
+		music: "音樂",
+		simple: "簡約",
 	},
 };

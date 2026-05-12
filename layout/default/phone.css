@@ -1,4 +1,4 @@
-/*调整询问弹窗宽度，因为手机比较窄，内容多时会盖住卡牌导致无法选择*/
+/*調整詢問彈窗寬度，因為手機比較窄，內容多時會蓋住卡牌導致無法選擇*/
 .dialog.nobutton:not(.fullheight) {
 	top: 130px !important;
 	width: 600px;
@@ -131,7 +131,7 @@ div.finish_game {
 @media screen and (orientation: portrait) {
 }
 
-/*--------位置(7人)手机------*/
+/*--------位置(7人)手機------*/
 [data-number="7"] > .player[data-position="1"] {
 	top: calc(55% - 135px);
 	left: calc(100% - 150px);

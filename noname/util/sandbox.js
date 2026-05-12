@@ -1,29 +1,29 @@
-// 给扩展开发者的的提示:
-// 如果你在调试时启用了类似 `在出现异常时中断` 的选项，
-// 如果你不想频繁进入此文件，那么你可以在调试窗口中 `右键-将此文件添加到忽略列表/black box script` 来屏蔽此文件
-// 另外由于封送的原因，如果当前模式启用了沙盒，会导致编译后的本地或远程代码创建的对象使用代理包装
-// 你在调试器中需要通过 `[[Target]].target` 查看原始对象，在此导致的不便对开发者表示歉意
-// 不过沙盒默认只在联机实际，实际影响已经降到最低，对于不接触联机模式的开发者来说，应该没有太大问题
+// 給擴展開發者的的提示:
+// 如果你在調試時啟用了類似 `在出現異常時中斷` 的選項，
+// 如果你不想頻繁進入此文件，那麼你可以在調試窗口中 `右鍵-將此文件添加到忽略列表/black box script` 來屏蔽此文件
+// 另外由於封送的原因，如果當前模式啟用了沙盒，會導致編譯後的本地或遠程代碼創建的對象使用代理包裝
+// 你在調試器中需要通過 `[[Target]].target` 查看原始對象，在此導致的不便對開發者表示歉意
+// 不過沙盒默認只在聯機實際，實際影響已經降到最低，對於不接觸聯機模式的開發者來說，應該沒有太大問題
 
-// 最后为安全考虑，请遵守规范，尽量不要使用 `eval` 函数而是使用 `security.exec2` 来替代
+// 最後為安全考慮，請遵守規範，儘量不要使用 `eval` 函數而是使用 `security.exec2` 來替代
 
 import { SANDBOX_EXPORT, isSandboxEnabled } from "./initRealms.js";
 
 // 很重要的事情！
-// 请不要在在其他文件中import sandbox.js！
-// 如果需要沙盒相关的类请用security.importSandbox()导入！！！
-// 什么时候支持顶级await(Chrome 89)就可以改回去了，现在好麻烦哦
+// 請不要在在其他文件中import sandbox.js！
+// 如果需要沙盒相關的類請用security.importSandbox()導入！！！
+// 什麼時候支持頂級await(Chrome 89)就可以改回去了，現在好麻煩哦
 
 /** @typedef {any} Window */
 
-// 新的开关放到了 "./initRealms.js" 里面，请不要改动此处！
+// 新的開關放到了 "./initRealms.js" 裡面，請不要改動此處！
 const SANDBOX_ENABLED = isSandboxEnabled();
 
-// 暴露方法Symbol，用于类之间通信
-const SandboxExposer = Symbol("Sandbox.Exposer"); // 实例暴露
-const SandboxExposer2 = Symbol("Sandbox.Exposer2"); // 静态暴露
+// 暴露方法Symbol，用於類之間通信
+const SandboxExposer = Symbol("Sandbox.Exposer"); // 實例暴露
+const SandboxExposer2 = Symbol("Sandbox.Exposer2"); // 靜態暴露
 
-// 暴露方法Signal，类间通信信号
+// 暴露方法Signal，類間通信信號
 const SandboxSignal_InitDomain = Symbol("InitDomain");
 const SandboxSignal_GetMarshalledProxy = Symbol("GetMarshalledProxy");
 const SandboxSignal_SetMarshalledProxy = Symbol("SetMarshalledProxy");
@@ -48,7 +48,7 @@ let ErrorReporter;
 /** @type {typeof import("./error.js").ErrorManager} */
 let ErrorManager;
 
-// 用于适配 < Chrome 84 的设备
+// 用於適配 < Chrome 84 的設備
 const WeakRef = window.WeakRef || class WeakRef {
 	/**
 	 * @param {any} target
@@ -82,7 +82,7 @@ const AsyncGeneratorFunction = (async function* () { }).constructor;
 
 /**
  * ```plain
- * 判断是否为基元类型
+ * 判斷是否為基元類型
  * ```
  * 
  * @param {any} obj 
@@ -94,9 +94,9 @@ function isPrimitive(obj) {
 
 /**
  * ```plain
- * AccessAction枚举
- * 提供给Rule类作为权限ID
- * 对应 Proxy 的12种拦截器
+ * AccessAction枚舉
+ * 提供給Rule類作為權限ID
+ * 對應 Proxy 的12種攔截器
  * ```
  */
 class AccessAction {
@@ -139,7 +139,7 @@ class AccessAction {
 	static DELETE = 11
 
 	/**
-	 * 判断给定的action是否是AccessAction
+	 * 判斷給定的action是否是AccessAction
 	 * 
 	 * @param {number} action 
 	 * @returns 
@@ -152,11 +152,11 @@ class AccessAction {
 
 /**
  * ```plain
- * 指定一个对象的封送规则
+ * 指定一個對象的封送規則
  * 
- * 是否允许对象进行封送
- * 是否允许对象封送到某个具体的运行域
- * 是否允许封送的对象进行特定的操作
+ * 是否允許對象進行封送
+ * 是否允許對象封送到某個具體的運行域
+ * 是否允許封送的對象進行特定的操作
  * ```
  */
 class Rule {
@@ -178,7 +178,7 @@ class Rule {
 
 	/**
 	 * ```plain
-	 * 创建一个封送规则
+	 * 創建一個封送規則
 	 * ```
 	 * 
 	 * @param {Rule?} rule 
@@ -197,19 +197,19 @@ class Rule {
 
 	/**
 	 * ```plain
-	 * 检查当前是否是 Rule 所属的运行域
+	 * 檢查當前是否是 Rule 所屬的運行域
 	 * ```
 	 * 
 	 * @param {Rule} thiz 
 	 */
 	static #assertOperator = function (thiz) {
 		if (thiz.#domain !== Domain.current)
-			throw new Error("当前不是 Rule 所属的运行域");
+			throw new Error("當前不是 Rule 所屬的運行域");
 	}
 
 	/**
 	 * ```plain
-	 * 是否允许对象进行封送
+	 * 是否允許對象進行封送
 	 * ```
 	 * 
 	 * @type {boolean}
@@ -221,7 +221,7 @@ class Rule {
 
 	/**
 	 * ```plain
-	 * 是否允许对象进行封送
+	 * 是否允許對象進行封送
 	 * ```
 	 * 
 	 * @type {boolean}
@@ -233,7 +233,7 @@ class Rule {
 
 	/**
 	 * ```plain
-	 * 检查当前的规则是否允许封送到指定的运行域
+	 * 檢查當前的規則是否允許封送到指定的運行域
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -245,7 +245,7 @@ class Rule {
 		if (!this.#allowMarshal)
 			return false;
 
-		// 存在于封送白名单或不存在于封送黑名单
+		// 存在於封送白名單或不存在於封送黑名單
 		if (this.#allowMarshalTo)
 			return this.#allowMarshalTo.has(domain);
 		else if (this.#disallowMarshalTo)
@@ -256,9 +256,9 @@ class Rule {
 
 	/**
 	 * ```plain
-	 * 将特定的运行域添加到当前对象的封送白名单
+	 * 將特定的運行域添加到當前對象的封送白名單
 	 * 
-	 * 请注意，封送白名单与黑名单不能同时指定
+	 * 請注意，封送白名單與黑名單不能同時指定
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -268,7 +268,7 @@ class Rule {
 
 		if (!this.#allowMarshalTo) {
 			if (this.#disallowMarshalTo)
-				throw new TypeError("封送黑名单与封送白名单不能同时存在");
+				throw new TypeError("封送黑名單與封送白名單不能同時存在");
 
 			this.#allowMarshalTo = new WeakSet();
 		}
@@ -278,9 +278,9 @@ class Rule {
 
 	/**
 	 * ```plain
-	 * 将特定的运行域添加到当前对象的封送黑名单
+	 * 將特定的運行域添加到當前對象的封送黑名單
 	 * 
-	 * 请注意，封送白名单与黑名单不能同时指定
+	 * 請注意，封送白名單與黑名單不能同時指定
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -290,7 +290,7 @@ class Rule {
 
 		if (!this.#disallowMarshalTo) {
 			if (this.#allowMarshalTo)
-				throw new TypeError("封送黑名单与封送白名单不能同时存在");
+				throw new TypeError("封送黑名單與封送白名單不能同時存在");
 
 			this.#disallowMarshalTo = new WeakSet();
 		}
@@ -300,7 +300,7 @@ class Rule {
 
 	/**
 	 * ```plain
-	 * 检查给定的AccessAction是否被允许
+	 * 檢查給定的AccessAction是否被允許
 	 * ```
 	 * 
 	 * @param {number} action 
@@ -310,14 +310,14 @@ class Rule {
 		Rule.#assertOperator(this);
 
 		if (!AccessAction.isAccessAction(action))
-			throw new TypeError("参数 action 不是一个有效的操作");
+			throw new TypeError("參數 action 不是一個有效的操作");
 
 		return this.#permissions[action];
 	}
 
 	/**
 	 * ```plain
-	 * 指定给定的AccessAction是否被允许
+	 * 指定給定的AccessAction是否被允許
 	 * ```
 	 * 
 	 * @param {number} action 
@@ -327,14 +327,14 @@ class Rule {
 		Rule.#assertOperator(this);
 
 		if (!AccessAction.isAccessAction(action))
-			throw new TypeError("参数 action 不是一个有效的操作");
+			throw new TypeError("參數 action 不是一個有效的操作");
 
 		this.#permissions[action] = !!granted;
 	}
 
 	/**
 	 * ```plain
-	 * 判断在给定的AccessAction与指定的参数下是否允许访问
+	 * 判斷在給定的AccessAction與指定的參數下是否允許訪問
 	 * ```
 	 * 
 	 * @param {number} action 
@@ -344,11 +344,11 @@ class Rule {
 	canAccess(action, ...args) {
 		Rule.#assertOperator(this);
 
-		// 判断行为是否允许
+		// 判斷行為是否允許
 		if (!this.isGranted(action))
 			return false;
 
-		// 通过权限控制器判断是否允许
+		// 通過權限控制器判斷是否允許
 		if (this.#accessControl
 			&& !this.#accessControl(action, ...args))
 			return false;
@@ -358,10 +358,10 @@ class Rule {
 
 	/**
 	 * ```plain
-	 * 设置当前的权限控制器
+	 * 設置當前的權限控制器
 	 * 
-	 * 权限控制器形参是拦截器的对应参数
-	 * 返回值则控制本次访问是否允许
+	 * 權限控制器形參是攔截器的對應參數
+	 * 返回值則控制本次訪問是否允許
 	 * ```
 	 * 
 	 * @param {(action: number, ...args: any[]) => boolean} accessControl 
@@ -370,9 +370,9 @@ class Rule {
 		Rule.#assertOperator(this);
 
 		if (typeof accessControl != "function")
-			throw new TypeError("无效的权限控制器");
+			throw new TypeError("無效的權限控制器");
 		if (this.#accessControl)
-			throw new TypeError("权限控制器已经被设置");
+			throw new TypeError("權限控制器已經被設置");
 
 		this.#accessControl = accessControl;
 	}
@@ -380,23 +380,23 @@ class Rule {
 
 /**
  * ```plain
- * 全局变量映射表
+ * 全局變量映射表
  * 
- * 在下表中标记的全局变量，
- * 封送时将不使用代理封送，
- * 而是直接映射成另一个运行域对应的全部变量
+ * 在下表中標記的全局變量，
+ * 封送時將不使用代理封送，
+ * 而是直接映射成另一個運行域對應的全部變量
  * 
- * 映射表项格式:
- * string: 全局变量路径
+ * 映射表項格式:
+ * string: 全局變量路徑
  * 例如: /Object/assign 指向 window.Object.assign
- * 同时路径也是映射的键名
- * array: [全局变量名称, 对应的获取代码]
+ * 同時路徑也是映射的鍵名
+ * array: [全局變量名稱, 對應的獲取代碼]
  * 例如: [/AsyncFunction, (async()=>{}).constructor]
- * 指向异步函数的构造函数，使用/AsyncFunction作为映射键名
+ * 指向異步函數的構造函數，使用/AsyncFunction作為映射鍵名
  * 
- * 请注意，映射键名不得相同，不然会导致相互覆盖
- * 全局变量映射表应该用于JavaScript的内建对象
- * 因为只有内建对象才会在所有运行域同时都有
+ * 請注意，映射鍵名不得相同，不然會導致相互覆蓋
+ * 全局變量映射表應該用於JavaScript的內建對象
+ * 因為只有內建對象才會在所有運行域同時都有
  * ```
  */
 const GLOBAL_PATHES = Object.freeze([
@@ -460,7 +460,7 @@ const GLOBAL_PATHES = Object.freeze([
 	"/isNaN",
 	"/isFinite",
 
-	// 危险对象不传递
+	// 危險對象不傳遞
 	// "/Function",
 	// ["/GeneratorFunction", "(function*(){}).constructor"],
 	// ["/AsyncFunction", "(async()=>{}).constructor"],
@@ -470,10 +470,10 @@ const GLOBAL_PATHES = Object.freeze([
 
 /**
  * ```plain
- * 初始化内建对象时就需要封送的全局变量
+ * 初始化內建對象時就需要封送的全局變量
  * 
- * 这些函数的成功执行依赖于browser context
- * 必须要顶级域来提供给其他运行域
+ * 這些函數的成功執行依賴於browser context
+ * 必須要頂級域來提供給其他運行域
  * ```
  */
 const MARSHALLED_LIST = Object.freeze([
@@ -489,20 +489,20 @@ const MARSHALLED_LIST = Object.freeze([
 	"/cancelIdleCallback",
 	"/queueMicrotask",
 	"/MutationObserver",
-	// 根据狂神喵提供的问题
-	// 我们对console进行迁移
+	// 根據狂神喵提供的問題
+	// 我們對console進行遷移
 	...Object.keys(console)
 		.map(key => `/console/${key}`),
-	// 另外补充这两个可能的函数哦
+	// 另外補充這兩個可能的函數哦
 	"/alert",
 	"/confirm",
 ]);
 
 /**
  * ```plain
- * 为每个运行域的全局对象提供封送映射
+ * 為每個運行域的全局對象提供封送映射
  * 
- * 非暴露类
+ * 非暴露類
  * ```
  */
 class Globals {
@@ -515,26 +515,26 @@ class Globals {
 
 	/**
 	 * ```plain
-	 * 判断是否是顶级域的内建对象
+	 * 判斷是否是頂級域的內建對象
 	 * ```
 	 * 
 	 * @param {string|symbol} key 
 	 * @returns {boolean} 
 	 */
 	static isBuiltinKey(key) {
-		return key in Globals.#builtinKeys; // 基于hash的存在性检查效率最高喵
+		return key in Globals.#builtinKeys; // 基於hash的存在性檢查效率最高喵
 	}
 
 	/**
 	 * ```plain
-	 * 解析映射路径
+	 * 解析映射路徑
 	 * 
 	 * 如: /a/b/c => ["/a/b/c", window.a.b.c]
 	 * ```
 	 *
 	 * @param {string|string[]} path 
 	 * @param {Window} window 
-	 * @returns {[string, any]} [映射键名, 映射值]
+	 * @returns {[string, any]} [映射鍵名, 映射值]
 	 */
 	static parseFrom(path, window) {
 		if (typeof path == "string") {
@@ -552,14 +552,14 @@ class Globals {
 
 	/**
 	 * ```plain
-	 * 解析映射路径为索引
+	 * 解析映射路徑為索引
 	 * 
 	 * 如: /a/b/c => [window.a.b, "c"]
 	 * ```
 	 *
 	 * @param {string} path 
 	 * @param {Window} window 
-	 * @returns {[Object, string]} [索引对象, 索引键名]
+	 * @returns {[Object, string]} [索引對象, 索引鍵名]
 	 */
 	static parseIndex(path, window) {
 		const items = path.split("/").filter(Boolean);
@@ -576,7 +576,7 @@ class Globals {
 
 	/**
 	 * ```plain
-	 * 初始化运行域的全局对象映射
+	 * 初始化運行域的全局對象映射
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -588,9 +588,9 @@ class Globals {
 			// @ts-ignore
 			Globals.#globals.set(domain, globals);
 
-			// 检查是否是顶级域
+			// 檢查是否是頂級域
 			if (Globals.#topGlobals) {
-				// 不是顶级域则封送 `MARSHALLED_LIST` 的对象
+				// 不是頂級域則封送 `MARSHALLED_LIST` 的對象
 				const marshalleds = Globals.#topGlobals[2];
 
 				for (const path of MARSHALLED_LIST) {
@@ -598,7 +598,7 @@ class Globals {
 					obj[key] = trapMarshal(Domain.topDomain, domain, marshalleds[path]);
 				}
 			} else {
-				// 否则将 `MARSHALLED_LIST` 的对象保存
+				// 否則將 `MARSHALLED_LIST` 的對象保存
 				// @ts-ignore
 				Globals.#topGlobals = globals;
 				globals.push({});
@@ -612,12 +612,12 @@ class Globals {
 					globals[2][key] = obj;
 				}
 
-				// 另外构造内建对象表
+				// 另外構造內建對象表
 				for (const key of Reflect.ownKeys(window))
 					Globals.#builtinKeys[key] = true;
 			}
 
-			// 构建全局变量映射
+			// 構建全局變量映射
 			for (const path of GLOBAL_PATHES) {
 				const [key, obj] = Globals.parseFrom(path, window);
 
@@ -632,7 +632,7 @@ class Globals {
 
 	/**
 	 * ```plain
-	 * 将一个对象映射为全局键
+	 * 將一個對象映射為全局鍵
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -647,7 +647,7 @@ class Globals {
 
 	/**
 	 * ```plain
-	 * 将一个全局键映射为对象
+	 * 將一個全局鍵映射為對象
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -662,7 +662,7 @@ class Globals {
 
 	/**
 	 * ```plain
-	 * 将一个运行域的全局对象映射为另一个运行域的全局对象
+	 * 將一個運行域的全局對象映射為另一個運行域的全局對象
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -681,10 +681,10 @@ class Globals {
 
 /**
  * ```plain
- * 需要封装传递ExecuteContext的函数
+ * 需要封裝傳遞ExecuteContext的函數
  * 
- * 根据HTML现有函数设置
- * 请不要改动下面的列表
+ * 根據HTML現有函數設置
+ * 請不要改動下面的列表
  * ```
  */
 const wrappingFunctions = [
@@ -701,7 +701,7 @@ const wrappingFunctions = [
 	["XMLHttpRequestEventTarget", "prototype", /^on[a-z0-9]+$/, "*"],
 	"/MutationObserver",
 
-	// 对于 cordova 的特殊处理
+	// 對於 cordova 的特殊處理
 	"/document/addEventListener",
 	"/document/removeEventListener",
 	"/window/addEventListener",
@@ -717,13 +717,13 @@ const wrappingFunctions = [
 ];
 
 // 不支持的：
-// customElements / CustomElementRegistry, 太抽象了喵，太多东西了喵，太麻烦了喵，太复杂了喵（用这个的要被狠狠的打皮鼓喵！
+// customElements / CustomElementRegistry, 太抽象了喵，太多東西了喵，太麻煩了喵，太複雜了喵（用這個的要被狠狠的打皮鼓喵！
 
 /**
  * ```plain
- * 对于原生函数进行封装
+ * 對於原生函數進行封裝
  * 
- * 非暴露类
+ * 非暴露類
  * ```
  */
 class NativeWrapper {
@@ -741,30 +741,30 @@ class NativeWrapper {
 
 	/**
 	 * ```plain
-	 * 初始化顶级运行域的Function
+	 * 初始化頂級運行域的Function
 	 * ```
 	 * 
 	 * @param {Window} topGlobal 
 	 */
 	static initTopDomain(topGlobal) {
 		if (NativeWrapper.#topFunction)
-			throw new Error("NativeWrapper 已经初始化过了");
+			throw new Error("NativeWrapper 已經初始化過了");
 
 		NativeWrapper.#topFunction = topGlobal.Function;
 	}
 
 	/**
 	 * ```plain
-	 * 对某个域的原生函数进行封装
+	 * 對某個域的原生函數進行封裝
 	 * ```
 	 * 
 	 * @param {Window} global 
 	 */
 	static wrapInDomains(global) {
-		// 保存当前域的Function构造函数用于后续构建原型链
+		// 保存當前域的Function構造函數用於後續構建原型鏈
 		NativeWrapper.#currentFunction = global.Function;
 
-		// 封装所有函数
+		// 封裝所有函數
 		for (const selector of wrappingFunctions)
 			NativeWrapper.wrapFunctions(global, selector);
 
@@ -773,7 +773,7 @@ class NativeWrapper {
 
 	/**
 	 * ```plain
-	 * 根据选择器对原生函数进行封装
+	 * 根據選擇器對原生函數進行封裝
 	 * ```
 	 * 
 	 * @param {Window} global 
@@ -784,7 +784,7 @@ class NativeWrapper {
 		const items = Array.isArray(selector)
 			? selector : selector.split("/").filter(Boolean);
 
-		let flags = 2; // 默认装箱了喵
+		let flags = 2; // 默認裝箱了喵
 
 		if (items[items.length - 1] === "*") {
 			flags |= 1;
@@ -796,16 +796,16 @@ class NativeWrapper {
 		const pathes = [items];
 		const indexes = [];
 
-		// 将所有路径转换为索引
+		// 將所有路徑轉換為索引
 		// 如: /a/b/c => [window.a.b, "c"]
 		while (pathes.length) {
 			/** @type {Array} */
 			// @ts-ignore
 			const path = pathes.shift();
 
-			// 如果已经是长度为二了
+			// 如果已經是長度為二了
 			if (path.length == 2) {
-				// 最后一项如果不是正则表达式直接添加为索引
+				// 最後一項如果不是正則表達式直接添加為索引
 				if (!(path[1] instanceof RegExp)) {
 					if (path[1] in path[0])
 						indexes.push(path);
@@ -813,7 +813,7 @@ class NativeWrapper {
 					continue;
 				}
 
-				// 否则需要遍历添加索引
+				// 否則需要遍歷添加索引
 				const root = path[0];
 				const pattern = path[1];
 				indexes.push(...Reflect.ownKeys(root)
@@ -826,11 +826,11 @@ class NativeWrapper {
 				continue;
 			}
 
-			// 如果下一个键不是正则表达式
+			// 如果下一個鍵不是正則表達式
 			if (!(path[1] instanceof RegExp)) {
 				const root = path.shift();
 
-				// 向下索引，并将 `__proto__` 改为原型获取
+				// 向下索引，並將 `__proto__` 改為原型獲取
 				if (path[0] === "__proto__")
 					path[0] = Reflect.getPrototypeOf(root);
 				else
@@ -839,13 +839,13 @@ class NativeWrapper {
 				if (!path[0])
 					continue;
 
-				// 添加新的路径
+				// 添加新的路徑
 				pathes.push(path);
 				continue;
 			}
 
-			// 如果下一个键是正则表达式
-			// 此时需要遍历向下索引
+			// 如果下一個鍵是正則表達式
+			// 此時需要遍歷向下索引
 			const root = path.shift();
 			const pattern = path.shift();
 			const keys = Reflect.ownKeys(root)
@@ -857,12 +857,12 @@ class NativeWrapper {
 			if (!keys.length)
 				continue;
 
-			// 添加新的路径
+			// 添加新的路徑
 			pathes.push(...keys
 				.map(k => [root[k], ...path]));
 		}
 
-		// 根据索引进行封装
+		// 根據索引進行封裝
 		for (const index of indexes)
 			// @ts-ignore
 			NativeWrapper.wrapFunction(global, ...index, flags);
@@ -870,7 +870,7 @@ class NativeWrapper {
 
 	/**
 	 * ```plain
-	 * 对于具体的原生函数进行封装
+	 * 對於具體的原生函數進行封裝
 	 * ```
 	 * 
 	 * @param {Window} global 
@@ -880,15 +880,15 @@ class NativeWrapper {
 	 */
 	static wrapFunction(global, parent, name, flags) {
 		if (flags & 1) {
-			// 如果路径结尾是 `*`，代表需要封装访问器(getter与setter)
+			// 如果路徑結尾是 `*`，代表需要封裝訪問器(getter與setter)
 			const descriptor = Reflect.getOwnPropertyDescriptor(parent, name);
 
 			if (!descriptor
 				|| typeof descriptor.get != "function"
 				|| typeof descriptor.set != "function")
-				throw new TypeError("不支持的HTML实现");
+				throw new TypeError("不支持的HTML實現");
 
-			// 封装访问器
+			// 封裝訪問器
 			descriptor.get = NativeWrapper.wrapGetter(descriptor.get);
 			descriptor.set = NativeWrapper.wrapSetter(descriptor.set);
 			Reflect.defineProperty(parent, name, descriptor);
@@ -899,11 +899,11 @@ class NativeWrapper {
 				return;
 
 			if (defaultFunction.prototype) {
-				// 如果此函数是一个构造函数
+				// 如果此函數是一個構造函數
 				const wrappedApply = NativeWrapper.wrapApply(defaultFunction, flags);
 				const wrappedConstruct = NativeWrapper.wrapConstruct(defaultFunction, flags);
 
-				// 使用代理封装
+				// 使用代理封裝
 				parent[name] = new Proxy(defaultFunction, {
 					apply(target, thisArg, argArray) {
 						return Reflect.apply(wrappedApply, thisArg, argArray);
@@ -913,7 +913,7 @@ class NativeWrapper {
 					},
 				});
 			} else {
-				// 否则直接进行封装
+				// 否則直接進行封裝
 				parent[name] = NativeWrapper.wrapApply(
 					global === parent
 						? defaultFunction.bind(null)
@@ -924,7 +924,7 @@ class NativeWrapper {
 
 	/**
 	 * ```plain
-	 * 将原生函数进行调用封装
+	 * 將原生函數進行調用封裝
 	 * ```
 	 * 
 	 * @param {Function} func 
@@ -934,7 +934,7 @@ class NativeWrapper {
 	static wrapApply(func, flags = 0) {
 		// @ts-ignore
 		const prototype = NativeWrapper.#currentFunction.prototype;
-		// 根据是否装箱进行不同的封装
+		// 根據是否裝箱進行不同的封裝
 		const wrapped = (flags & 2)
 			? function (/** @type {any[]} */ ...args) {
 				const list = args.map(a =>
@@ -947,14 +947,14 @@ class NativeWrapper {
 				return ContextInvoker1(func, this, args);
 			};
 
-		// 构造原型链
+		// 構造原型鏈
 		Reflect.setPrototypeOf(wrapped, prototype);
 		return wrapped;
 	}
 
 	/**
 	 * ```plain
-	 * 将原生函数进行构造封装
+	 * 將原生函數進行構造封裝
 	 * ```
 	 * 
 	 * @param {Function} func 
@@ -964,7 +964,7 @@ class NativeWrapper {
 	static wrapConstruct(func, flags = 0) {
 		// @ts-ignore
 		const prototype = NativeWrapper.#currentFunction.prototype;
-		// 根据是否装箱进行不同的封装
+		// 根據是否裝箱進行不同的封裝
 		const wrapped = (flags & 2)
 			? function (/** @type {any[]} */ ...args) {
 				const list = args.map(a =>
@@ -975,14 +975,14 @@ class NativeWrapper {
 				return ContextInvoker2(func, args, new.target);
 			};
 
-		// 构造原型链
+		// 構造原型鏈
 		Reflect.setPrototypeOf(wrapped, prototype);
 		return wrapped;
 	}
 
 	/**
 	 * ```plain
-	 * 将原生GETTER进行调用封装
+	 * 將原生GETTER進行調用封裝
 	 * ```
 	 * 
 	 * @param {Function} func 
@@ -996,14 +996,14 @@ class NativeWrapper {
 			return NativeWrapper.unboxCallback(ContextInvoker1(func, this, []));
 		};
 
-		// 构造原型链
+		// 構造原型鏈
 		Reflect.setPrototypeOf(wrapped, prototype);
 		return wrapped;
 	}
 
 	/**
 	 * ```plain
-	 * 将原生SETTER进行调用封装
+	 * 將原生SETTER進行調用封裝
 	 * ```
 	 * 
 	 * @param {Function} func 
@@ -1018,14 +1018,14 @@ class NativeWrapper {
 				[NativeWrapper.boxCallback(value, prototype)]);
 		};
 
-		// 构造原型链
+		// 構造原型鏈
 		Reflect.setPrototypeOf(wrapped, prototype);
 		return wrapped;
 	}
 
 	/**
 	 * ```plain
-	 * 将回调函数进行装箱
+	 * 將回調函數進行裝箱
 	 * ```
 	 * 
 	 * @param {Proxy} unboxed 
@@ -1036,13 +1036,13 @@ class NativeWrapper {
 		if (typeof unboxed != "function")
 			return unboxed;
 
-		// 读取缓存
+		// 讀取緩存
 		let wrapped = NativeWrapper.#boxedMap.get(unboxed);
 
 		if (!wrapped) {
-			// 缓存不存在则创建
+			// 緩存不存在則創建
 			wrapped = ContextInvokerCreator({
-				unboxed, // 向封装函数提供unboxed函数
+				unboxed, // 向封裝函數提供unboxed函數
 			}, function (/** @type {any} */ thiz, /** @type {readonly any[]} */ args, /** @type {(new (...args: any) => any) | undefined} */ newTarget) {
 				return newTarget
 					// @ts-ignore
@@ -1051,13 +1051,13 @@ class NativeWrapper {
 					: Reflect.apply(this.unboxed, thiz, args);
 			});
 
-			// 设置暴露器
+			// 設置暴露器
 			wrapped[SandboxExposer] = (/** @type {symbol} */ signal) => {
 				if (signal === NativeWrapper.#unboxedFunction)
 					return unboxed;
 			};
 
-			// 构造原型链
+			// 構造原型鏈
 			Reflect.setPrototypeOf(wrapped, prototype);
 			NativeWrapper.#boxedMap.set(unboxed, wrapped);
 		}
@@ -1068,7 +1068,7 @@ class NativeWrapper {
 
 	/**
 	 * ```plain
-	 * 将回调函数进行拆箱
+	 * 將回調函數進行拆箱
 	 * ```
 	 * 
 	 * @param {Function} boxed 
@@ -1078,14 +1078,14 @@ class NativeWrapper {
 		if (!NativeWrapper.#boxedSet.has(boxed))
 			return boxed;
 
-		// 通过暴露器获取原始函数
+		// 通過暴露器獲取原始函數
 		return boxed[SandboxExposer]
 			(NativeWrapper.#unboxedFunction);
 	}
 }
 
-// 执行上下文传递函数，请勿动喵
-// 用于传递顶级execute context
+// 執行上下文傳遞函數，請勿動喵
+// 用於傳遞頂級execute context
 
 /** @type {(target: Function, thiz: Object, args: Array) => any} */
 // @ts-ignore
@@ -1101,9 +1101,9 @@ const ContextInvokerCreator = window.replacedCIC;
 
 /**
  * ```plain
- * 管理每个运行域对于其封送对象的 Monitor
+ * 管理每個運行域對於其封送對象的 Monitor
  * 
- * 非暴露类
+ * 非暴露類
  * ```
  */
 class DomainMonitors {
@@ -1117,14 +1117,14 @@ class DomainMonitors {
 
 	/**
 	 * ```plain
-	 * 在当前运行域安装一个 Monitor
+	 * 在當前運行域安裝一個 Monitor
 	 * ```
 	 * 
 	 * @param {DomainMonitors} thiz 
 	 * @param {Monitor} monitor 
 	 */
 	static #installMonitor = function (thiz, monitor) {
-		// 解构 Monitor 相关条件
+		// 解構 Monitor 相關條件
 		// @ts-ignore
 		const [
 			actions,
@@ -1148,8 +1148,8 @@ class DomainMonitors {
 			}
 		}
 
-		// 如果指定了目标，使用目标 Monitor 集合
-		// 以此对于特定对象的 Monitor 进行性能优化
+		// 如果指定了目標，使用目標 Monitor 集合
+		// 以此對於特定對象的 Monitor 進行性能優化
 		if (targets) {
 			for (const target of targets) {
 				let actionMap = thiz.#targetMonitorsMap.get(target);
@@ -1157,7 +1157,7 @@ class DomainMonitors {
 				if (!actionMap)
 					thiz.#targetMonitorsMap.set(target, actionMap = {});
 
-				// 根据 actions 添加到不同的触发器集合
+				// 根據 actions 添加到不同的觸發器集合
 				addToActionMap(actionMap);
 			}
 
@@ -1167,7 +1167,7 @@ class DomainMonitors {
 		const domainList = [];
 
 		if (!allowDomains) {
-			// 取运行域补集
+			// 取運行域補集
 			// @ts-ignore
 			const totalDomains = new Set(Domain[SandboxExposer2]
 				(SandboxSignal_ListDomain));
@@ -1181,28 +1181,28 @@ class DomainMonitors {
 		} else
 			domainList.push(...allowDomains);
 
-		// 根据允许的运行域安装 Monitor
+		// 根據允許的運行域安裝 Monitor
 		for (const domain of domainList) {
 			let actionMap = thiz.#monitorsMap.get(domain);
 
 			if (!actionMap)
 				thiz.#monitorsMap.set(domain, actionMap = {});
 
-			// 根据 actions 添加到不同的触发器集合
+			// 根據 actions 添加到不同的觸發器集合
 			addToActionMap(actionMap);
 		}
 	}
 
 	/**
 	 * ```plain
-	 * 从当前运行域卸载一个 Monitor
+	 * 從當前運行域卸載一個 Monitor
 	 * ```
 	 *
 	 * @param {DomainMonitors} thiz 
 	 * @param {Monitor} monitor 
 	 */
 	static #uninstallMonitor = function (thiz, monitor) {
-		// 解构 Monitor 相关条件
+		// 解構 Monitor 相關條件
 		// @ts-ignore
 		const [
 			actions,
@@ -1226,7 +1226,7 @@ class DomainMonitors {
 			}
 		}
 
-		// 对于指定了目标的 Monitor 特殊处理
+		// 對於指定了目標的 Monitor 特殊處理
 		if (targets) {
 			for (const target of targets) {
 				const actionMap = thiz.#targetMonitorsMap.get(target);
@@ -1234,7 +1234,7 @@ class DomainMonitors {
 				if (!actionMap)
 					continue;
 
-				// 根据 actions 从不同的触发器集合移除
+				// 根據 actions 從不同的觸發器集合移除
 				removeFromActionMap(actionMap);
 			}
 
@@ -1244,7 +1244,7 @@ class DomainMonitors {
 		const domainList = [];
 
 		if (!allowDomains) {
-			// 取运行域补集
+			// 取運行域補集
 			// @ts-ignore
 			const totalDomains = new Set(Domain[SandboxExposer2]
 				(SandboxSignal_ListDomain));
@@ -1257,21 +1257,21 @@ class DomainMonitors {
 		} else
 			domainList.push(...allowDomains);
 
-		// 根据允许的运行域卸载 Monitor
+		// 根據允許的運行域卸載 Monitor
 		for (const domain of domainList) {
 			const actionMap = thiz.#monitorsMap.get(domain);
 
 			if (!actionMap)
 				continue;
 
-			// 根据 actions 从不同的触发器集合移除
+			// 根據 actions 從不同的觸發器集合移除
 			removeFromActionMap(actionMap);
 		}
 	}
 
 	/**
 	 * ```plain
-	 * 获取当前运行域封送到目标运行域的所有符合条件的 Monitor
+	 * 獲取當前運行域封送到目標運行域的所有符合條件的 Monitor
 	 * ```
 	 * 
 	 * @param {Domain} sourceDomain 
@@ -1294,7 +1294,7 @@ class DomainMonitors {
 		let array = null;
 
 		if (targetMonitors)
-			array = [...targetMonitors]; // 优先执行指定目标的 Monitor
+			array = [...targetMonitors]; // 優先執行指定目標的 Monitor
 
 		if (actionMonitors) {
 			if (!array)
@@ -1308,7 +1308,7 @@ class DomainMonitors {
 
 	/**
 	 * ```plain
-	 * 对新的运行域进行 Monitor 安装
+	 * 對新的運行域進行 Monitor 安裝
 	 * ```
 	 * 
 	 * @param {DomainMonitors} thiz 
@@ -1317,14 +1317,14 @@ class DomainMonitors {
 	static #handleNewDomain = function (thiz, domain) {
 		let actionMap = thiz.#monitorsMap.get(domain);
 
-		// 遍历所有启用的 Monitor
+		// 遍歷所有啟用的 Monitor
 		for (const monitor of
 			// @ts-ignore
 			Monitor[SandboxExposer2](SandboxSignal_ListMonitor)) {
 			if (monitor.domain === domain)
 				continue;
 
-			// 解构 Monitor 相关条件
+			// 解構 Monitor 相關條件
 			const [
 				actions,
 				allowDomains,
@@ -1333,11 +1333,11 @@ class DomainMonitors {
 			] = Monitor[SandboxExposer2]
 					(SandboxSignal_ExposeInfo, monitor);
 
-			// 指定了目标的 Monitor 不参与新运行域处理
+			// 指定了目標的 Monitor 不參與新運行域處理
 			if (targets)
 				continue;
 
-			// 判断新增的 Domain 是否是 Monitor 监听的目标
+			// 判斷新增的 Domain 是否是 Monitor 監聽的目標
 			if (allowDomains
 				&& !allowDomains.has(domain))
 				continue;
@@ -1345,7 +1345,7 @@ class DomainMonitors {
 				&& disallowDomains.has(domain))
 				continue;
 
-			// 根据 actions 添加到不同的触发器集合
+			// 根據 actions 添加到不同的觸發器集合
 			if (!actionMap)
 				thiz.#monitorsMap.set(domain, actionMap = {});
 
@@ -1362,7 +1362,7 @@ class DomainMonitors {
 
 	/**
 	 * ```plain
-	 * 处理新的运行域
+	 * 處理新的運行域
 	 * ```
 	 * 
 	 * @param {Domain} newDomain 
@@ -1384,7 +1384,7 @@ class DomainMonitors {
 
 	/**
 	 * ```plain
-	 * 分发 Monitor 监听事件
+	 * 分發 Monitor 監聽事件
 	 * ```
 	 *
 	 * @param {Domain} sourceDomain 
@@ -1397,7 +1397,7 @@ class DomainMonitors {
 		const nameds = {};
 		let indexMap;
 
-		// 构造命名参数
+		// 構造命名參數
 		switch (action) {
 			case AccessAction.CALL:
 				indexMap = {
@@ -1457,7 +1457,7 @@ class DomainMonitors {
 				};
 				break;
 			default:
-				throw new TypeError("不支持的访问操作");
+				throw new TypeError("不支持的訪問操作");
 		}
 
 		for (const key in indexMap)
@@ -1466,7 +1466,7 @@ class DomainMonitors {
 		Object.freeze(indexMap);
 		Object.freeze(nameds);
 
-		// 获取可能的 Monitor 集合
+		// 獲取可能的 Monitor 集合
 		const monitorMap = DomainMonitors.#getMonitorsBy(
 			sourceDomain, targetDomain, action, args[0]);
 
@@ -1497,7 +1497,7 @@ class DomainMonitors {
 			 */
 			overrideParameter(name, value) {
 				if (!(name in indexMap))
-					throw new TypeError(`参数 ${name} 没有找到`);
+					throw new TypeError(`參數 ${name} 沒有找到`);
 
 				args[indexMap[name]] = value;
 			},
@@ -1508,11 +1508,11 @@ class DomainMonitors {
 				result.returnValue = value;
 			},
 			throwDenied(message = null) {
-				throw new RangeError(message || "封送对象的源运行域禁止了此项操作");
+				throw new RangeError(message || "封送對象的源運行域禁止了此項操作");
 			},
 		});
 
-		// 遍历并尝试分发监听事件
+		// 遍歷並嘗試分發監聽事件
 		for (const monitor of monitorMap) {
 			Monitor[SandboxExposer2]
 				(SandboxSignal_DiapatchMonitor, monitor, access, nameds, control);
@@ -1526,7 +1526,7 @@ class DomainMonitors {
 
 	/**
 	 * ```plain
-	 * 安装一个 Monitor 监控
+	 * 安裝一個 Monitor 監控
 	 * ```
 	 * 
 	 * @param {Monitor} monitor 
@@ -1544,7 +1544,7 @@ class DomainMonitors {
 
 	/**
 	 * ```plain
-	 * 卸载一个 Monitor 监控
+	 * 卸載一個 Monitor 監控
 	 * ```
 	 *
 	 * @param {Monitor} monitor 
@@ -1560,23 +1560,23 @@ class DomainMonitors {
 
 /**
  * ```plain
- * 提供封送对象的行为监控
+ * 提供封送對象的行為監控
  * 
- * 可以对具体的行为、访问的属性进行监控并更改行为
+ * 可以對具體的行為、訪問的屬性進行監控並更改行為
  * 
- * 例如监听 dummy 这个对象的 value 属性在运行域 domain 的修改行为:
+ * 例如監聽 dummy 這個對象的 value 屬性在運行域 domain 的修改行為:
  * ```
  * ```javascript
  * const monitor = new Monitor();
- * monitor.allow(domain); // 指定监听 domain 运行域
- * monitor.action(AccessAction.WRITE); // 指定监听 Reflect.set 行为
- * monitor.require("target", dummy); // 指定监听 dummy 对象
- * monitor.require("property", "value"); // 指定监听 value 属性
- * monitor.filter((access, nameds) => nameds.value >= 0); // 过滤掉大于等于 0 的修改
+ * monitor.allow(domain); // 指定監聽 domain 運行域
+ * monitor.action(AccessAction.WRITE); // 指定監聽 Reflect.set 行為
+ * monitor.require("target", dummy); // 指定監聽 dummy 對象
+ * monitor.require("property", "value"); // 指定監聽 value 屬性
+ * monitor.filter((access, nameds) => nameds.value >= 0); // 過濾掉大於等於 0 的修改
  * monitor.then((access, nameds, control) => {
- *     control.overrideParameter("value", 0); // 将要修改的新值改回 0
+ *     control.overrideParameter("value", 0); // 將要修改的新值改回 0
  * });
- * monitor.start(); // 启动Monitor
+ * monitor.start(); // 啟動Monitor
  * ```
  */
 class Monitor {
@@ -1604,19 +1604,19 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 检查当前是否是 Monitor 所属的运行域
+	 * 檢查當前是否是 Monitor 所屬的運行域
 	 * ```
 	 * 
 	 * @param {Monitor} thiz 
 	 */
 	static #assertOperator = function (thiz) {
 		if (thiz.#domain !== Domain.current)
-			throw new Error("当前不是 Monitor 所属的运行域");
+			throw new Error("當前不是 Monitor 所屬的運行域");
 	}
 
 	/**
 	 * ```plain
-	 * 获取 Monitor 所属的运行域
+	 * 獲取 Monitor 所屬的運行域
 	 * ```
 	 */
 	get domain() {
@@ -1625,8 +1625,8 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 指定 Monitor 可以监听的运行域
-	 * 默认监听封送到的所有运行域
+	 * 指定 Monitor 可以監聽的運行域
+	 * 默認監聽封送到的所有運行域
 	 * ```
 	 * 
 	 * @param  {...Domain} domains 
@@ -1635,20 +1635,20 @@ class Monitor {
 	allow(...domains) {
 		Monitor.#assertOperator(this);
 
-		// 参数检查
+		// 參數檢查
 		if (this.isStarted)
-			throw new Error("Monitor 在启动期间不能修改");
+			throw new Error("Monitor 在啟動期間不能修改");
 		if (!domains.length)
-			throw new TypeError("运行域至少要有一个");
+			throw new TypeError("運行域至少要有一個");
 
 		for (const domain of domains) {
 			if (!(domain instanceof Domain))
-				throw new TypeError("无效的运行域");
+				throw new TypeError("無效的運行域");
 			if (domain === this.#domain)
-				throw new TypeError("Monitor 不能监听自己");
+				throw new TypeError("Monitor 不能監聽自己");
 		}
 
-		// 使用黑白名单
+		// 使用黑白名單
 		if (this.#allowDomains) {
 			for (const domain of domains)
 				this.#allowDomains.add(domain);
@@ -1663,8 +1663,8 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 指定 Monitor 不可监听的运行域
-	 * 默认监听封送到的所有运行域
+	 * 指定 Monitor 不可監聽的運行域
+	 * 默認監聽封送到的所有運行域
 	 * ```
 	 * 
 	 * @param  {...Domain} domains 
@@ -1673,17 +1673,17 @@ class Monitor {
 	disallow(...domains) {
 		Monitor.#assertOperator(this);
 
-		// 参数检查
+		// 參數檢查
 		if (this.isStarted)
-			throw new Error("Monitor 在启动期间不能修改");
+			throw new Error("Monitor 在啟動期間不能修改");
 		if (!domains.length)
-			throw new TypeError("运行域至少要有一个");
+			throw new TypeError("運行域至少要有一個");
 
 		for (const domain of domains)
 			if (!(domain instanceof Domain))
-				throw new TypeError("无效的运行域");
+				throw new TypeError("無效的運行域");
 
-		// 使用黑白名单
+		// 使用黑白名單
 		if (this.#disallowDomains) {
 			for (const domain of domains)
 				this.#disallowDomains.add(domain);
@@ -1698,7 +1698,7 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 指定 Monitor 监听的访问动作
+	 * 指定 Monitor 監聽的訪問動作
 	 * ```
 	 * 
 	 * @param  {...number} action 
@@ -1707,12 +1707,12 @@ class Monitor {
 	action(...action) {
 		Monitor.#assertOperator(this);
 
-		// 参数检查
+		// 參數檢查
 		if (this.isStarted)
-			throw new Error("Monitor 在启动期间不能修改");
+			throw new Error("Monitor 在啟動期間不能修改");
 		if (action.length == 0
 			|| !action.every(AccessAction.isAccessAction))
-			throw new TypeError("无效的访问动作");
+			throw new TypeError("無效的訪問動作");
 
 		for (const item of action)
 			this.#actions.add(item);
@@ -1763,31 +1763,31 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 指定 Monitor 监听的命名参数
+	 * 指定 Monitor 監聽的命名參數
 	 * 
-	 * 命名参数可能如下:
-	 * target: 监听的对象，访问动作：所有
-	 * thisArg: 调用的this对象，访问动作：CALL
-	 * arguments: 调用的参数，访问动作：CALL, NEW
-	 * newTarget: 构造的new.target，访问动作：NEW
-	 * property: 访问的属性，访问动作：DEFINE, DELETE, DESCRIBE, EXISTS, READ, WRITE
-	 * descriptor: 定义的属性描述符，访问动作：DEFINE
-	 * receiver: 设置或读取的this对象，访问动作：READ, WRITE
-	 * prototype: 定义的原型，访问动作：META
-	 * value: 设置的新值，访问动作：WRITE
+	 * 命名參數可能如下:
+	 * target: 監聽的對象，訪問動作：所有
+	 * thisArg: 調用的this對象，訪問動作：CALL
+	 * arguments: 調用的參數，訪問動作：CALL, NEW
+	 * newTarget: 構造的new.target，訪問動作：NEW
+	 * property: 訪問的屬性，訪問動作：DEFINE, DELETE, DESCRIBE, EXISTS, READ, WRITE
+	 * descriptor: 定義的屬性描述符，訪問動作：DEFINE
+	 * receiver: 設置或讀取的this對象，訪問動作：READ, WRITE
+	 * prototype: 定義的原型，訪問動作：META
+	 * value: 設置的新值，訪問動作：WRITE
 	 * ```
 	 * 
-	 * @param {PropertyKey} name 命名参数名称
-	 * @param  {...any} values 命名参数可能的值
+	 * @param {PropertyKey} name 命名參數名稱
+	 * @param  {...any} values 命名參數可能的值
 	 * @returns {this} 
 	 */
 	require(name, ...values) {
 		Monitor.#assertOperator(this);
 
 		if (this.isStarted)
-			throw new Error("Monitor 在启动期间不能修改");
+			throw new Error("Monitor 在啟動期間不能修改");
 		if (typeof name != "string")
-			throw new TypeError("无效的检查名称");
+			throw new TypeError("無效的檢查名稱");
 		if (!values.length)
 			return this;
 
@@ -1804,21 +1804,21 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 指定 Monitor 监听的过滤器
+	 * 指定 Monitor 監聽的過濾器
 	 * 
-	 * 回调参数 nameds 是一个对象，包含了 Monitor 监听的命名参数
+	 * 回調參數 nameds 是一個對象，包含了 Monitor 監聽的命名參數
 	 * ```
 	 * 
-	 * @param {(access: Access, nameds: Nameds) => boolean} filter 要指定的过滤器
+	 * @param {(access: Access, nameds: Nameds) => boolean} filter 要指定的過濾器
 	 * @returns {this} 
 	 */
 	filter(filter) {
 		Monitor.#assertOperator(this);
 
 		if (this.isStarted)
-			throw new Error("Monitor 在启动期间不能修改");
+			throw new Error("Monitor 在啟動期間不能修改");
 		if (typeof filter != "function")
-			throw new TypeError("无效的过滤器");
+			throw new TypeError("無效的過濾器");
 
 		this.#filter = filter;
 		return this;
@@ -1826,14 +1826,14 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 指定 Monitor 监听的回调函数
+	 * 指定 Monitor 監聽的回調函數
 	 * 
-	 * 回调参数 nameds 是一个对象，包含了 Monitor 监听的命名参数
-	 * 回调参数 control 是一个对象，提供本次监听的控制函数
-	 * control.preventDefault(value) 阻止默认的行为，并将设定的返回值作为本次代理访问的返回值
-	 * control.stopPropagation() 阻断后续的监听器，但不会阻止默认行为
-	 * control.overrideParameter(name, value) 覆盖本次监听的命名参数
-	 * control.setReturnValue(value) 设置本次代理访问的返回值，可以覆盖之前监听器设置的返回值
+	 * 回調參數 nameds 是一個對象，包含了 Monitor 監聽的命名參數
+	 * 回調參數 control 是一個對象，提供本次監聽的控制函數
+	 * control.preventDefault(value) 阻止默認的行為，並將設定的返回值作為本次代理訪問的返回值
+	 * control.stopPropagation() 阻斷後續的監聽器，但不會阻止默認行為
+	 * control.overrideParameter(name, value) 覆蓋本次監聽的命名參數
+	 * control.setReturnValue(value) 設置本次代理訪問的返回值，可以覆蓋之前監聽器設置的返回值
 	 * ```
 	 * 
 	 * @param {(access: Access, nameds: Nameds, control: Control) => void} handler 
@@ -1843,9 +1843,9 @@ class Monitor {
 		Monitor.#assertOperator(this);
 
 		if (this.isStarted)
-			throw new Error("Monitor 在启动期间不能修改");
+			throw new Error("Monitor 在啟動期間不能修改");
 		if (typeof handler != "function")
-			throw new TypeError("无效的回调");
+			throw new TypeError("無效的回調");
 
 		this.#handler = handler;
 		return this;
@@ -1853,7 +1853,7 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 判断 Monitor 是否已经启动
+	 * 判斷 Monitor 是否已經啟動
 	 * ```
 	 * 
 	 * @type {boolean}
@@ -1864,16 +1864,16 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 启动 Monitor
+	 * 啟動 Monitor
 	 * ```
 	 */
 	start() {
 		Monitor.#assertOperator(this);
 
 		if (this.isStarted)
-			throw new Error("Monitor 已经启动");
+			throw new Error("Monitor 已經啟動");
 		if (typeof this.#handler != "function")
-			throw new Error("Monitor 未指定回调函数");
+			throw new Error("Monitor 未指定回調函數");
 
 		Monitor.#monitorSet.add(this);
 		DomainMonitors.installMonitor(this);
@@ -1888,7 +1888,7 @@ class Monitor {
 		Monitor.#assertOperator(this);
 
 		if (!this.isStarted)
-			throw new Error("Monitor 还未启动");
+			throw new Error("Monitor 還未啟動");
 
 		DomainMonitors.uninstallMonitor(this);
 		Monitor.#monitorSet.delete(this);
@@ -1896,7 +1896,7 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 向外暴露 Monitor 监听的相关数据
+	 * 向外暴露 Monitor 監聽的相關數據
 	 * ```
 	 * 
 	 * @param {Monitor} thiz 
@@ -1912,7 +1912,7 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 检查 Monitor 监听的命名参数是否符合要求
+	 * 檢查 Monitor 監聽的命名參數是否符合要求
 	 * ```
 	 * 
 	 * @param {Record<string, any>} nameds 
@@ -1931,7 +1931,7 @@ class Monitor {
 
 	/**
 	 * ```plain
-	 * 处理 Monitor 监听事件
+	 * 處理 Monitor 監聽事件
 	 * ```
 	 * 
 	 * @param {Monitor} thiz
@@ -1948,7 +1948,7 @@ class Monitor {
 			return;
 
 		if (typeof thiz.#handler !== 'function')
-			throw new TypeError("Monitor 未指定回调函数");
+			throw new TypeError("Monitor 未指定回調函數");
 
 		thiz.#handler(access, nameds, control);
 	}
@@ -1973,7 +1973,7 @@ class Monitor {
 
 /**
  * ```plain
- * 提供运行域之间的对象封送
+ * 提供運行域之間的對象封送
  * ```
  */
 class Marshal {
@@ -1984,12 +1984,12 @@ class Marshal {
 	static #marshalledProxies = new WeakSet();
 
 	constructor() {
-		throw new TypeError("Marshal 类无法被构造");
+		throw new TypeError("Marshal 類無法被構造");
 	}
 
 	/**
 	 * ```plain
-	 * 判断是否应该封送
+	 * 判斷是否應該封送
 	 * ```
 	 * 
 	 * @param {any} obj 
@@ -2009,7 +2009,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 判断是否禁止封送
+	 * 判斷是否禁止封送
 	 * ```
 	 *
 	 * @param {any} obj 
@@ -2043,7 +2043,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 检查封送缓存
+	 * 檢查封送緩存
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -2057,7 +2057,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 获取指定对象的封送规则引用
+	 * 獲取指定對象的封送規則引用
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -2074,7 +2074,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 判断某个对象是否指定了封送规则
+	 * 判斷某個對象是否指定了封送規則
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -2086,7 +2086,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 指定某个对象的封送规则
+	 * 指定某個對象的封送規則
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -2094,19 +2094,19 @@ class Marshal {
 	 */
 	static setRule(obj, rule) {
 		if (Marshal.#marshalledProxies.has(obj))
-			throw new ReferenceError("无法为封送对象设置封送规则");
+			throw new ReferenceError("無法為封送對象設置封送規則");
 
 		const ref = Marshal.#ensureRuleRef(obj);
 
 		if (ref.rule)
-			throw new ReferenceError("对象的封送规则已经被设置");
+			throw new ReferenceError("對象的封送規則已經被設置");
 
 		ref.rule = rule;
 	}
 
 	/**
 	 * ```plain
-	 * 判断某个对象是否是其他运行域被封送的对象
+	 * 判斷某個對象是否是其他運行域被封送的對象
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -2118,7 +2118,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 获取封送对象的源运行域
+	 * 獲取封送對象的源運行域
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -2134,14 +2134,14 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 对于封送或未封送的函数执行转字符串操作
+	 * 對於封送或未封送的函數執行轉字符串操作
 	 * ```
 	 * 
 	 * @param {Function} func 
 	 */
 	static decompileFunction(func) {
 		if (typeof func !== "function")
-			throw new TypeError("无效的函数对象");
+			throw new TypeError("無效的函數對象");
 
 		if (Marshal.#marshalledProxies.has(func))
 			[, func] = Marshal.#revertProxy(func);
@@ -2157,7 +2157,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 判断给定的参数列表和函数体字符串是否可以构造一个合法的函数
+	 * 判斷給定的參數列表和函數體字符串是否可以構造一個合法的函數
 	 * ```
 	 * 
 	 * @typedef {"async"|"generator"|"agenerator"|"any"|null} FunctionType
@@ -2173,7 +2173,7 @@ class Marshal {
 		if (type == "any") {
 			return (
 				["async", "generator", "agenerator", null]
-					// @ts-ignore // 突然发现ts-ignore也挺方便的喵
+					// @ts-ignore // 突然發現ts-ignore也挺方便的喵
 					.some(t => Marshal.canCreateFunction(t, paramList, funcBody))
 			);
 		}
@@ -2202,7 +2202,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 陷入某个运行域并执行代码
+	 * 陷入某個運行域並執行代碼
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -2211,9 +2211,9 @@ class Marshal {
 	static #trapDomain = function (domain, action) {
 		const prevDomain = Domain.current;
 
-		// 如果可能，应该尽量避免陷入相同运行域
+		// 如果可能，應該儘量避免陷入相同運行域
 		if (prevDomain === domain)
-			return console.warn("trapDomain 处于相同 domain"), action();
+			return console.warn("trapDomain 處於相同 domain"), action();
 
 		Domain[SandboxExposer2](SandboxSignal_EnterDomain, domain);
 
@@ -2228,7 +2228,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 封送数组
+	 * 封送數組
 	 * ```
 	 * 
 	 * @param {Array} array 
@@ -2239,7 +2239,7 @@ class Marshal {
 		if (isPrimitive(array))
 			return array;
 
-		// 构造目标域的数组，并逐个元素封送
+		// 構造目標域的數組，並逐個元素封送
 		const window = targetDomain[SandboxExposer](SandboxSignal_GetWindow);
 		const newArray = new window.Array(array.length);
 
@@ -2251,7 +2251,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 封送对象
+	 * 封送對象
 	 * ```
 	 * 
 	 * @param {Object} object 
@@ -2262,7 +2262,7 @@ class Marshal {
 		if (isPrimitive(object))
 			return object;
 
-		// 构造目标域的对象，并逐个属性封送
+		// 構造目標域的對象，並逐個屬性封送
 		const window = targetDomain[SandboxExposer](SandboxSignal_GetWindow);
 		const newObject = new window.Object();
 
@@ -2274,7 +2274,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 根据目标对象的特征复制一个基本对象
+	 * 根據目標對象的特徵複製一個基本對象
 	 * ```
 	 * 
 	 * @param {Object} src 
@@ -2303,7 +2303,7 @@ class Marshal {
 
 	/**
 	 * ```plain
-	 * 封送核心函数
+	 * 封送核心函數
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -2315,39 +2315,39 @@ class Marshal {
 		if (isPrimitive(obj))
 			return obj;
 
-		// 尝试拆除代理
+		// 嘗試拆除代理
 		let [sourceDomain, target] =
 			Marshal.#marshalledProxies.has(obj)
 				? Marshal.#revertProxy(obj)
 				: [Domain.current, obj];
 
-		// target: 确保拆除了封送代理的对象
-		// sourceDomain: target所属的运行域
-		// targetDomain: 要封送到的运行域
+		// target: 確保拆除了封送代理的對象
+		// sourceDomain: target所屬的運行域
+		// targetDomain: 要封送到的運行域
 
 		if (sourceDomain === targetDomain)
 			return target;
 
-		// 检查基本封送条件
+		// 檢查基本封送條件
 		if (Marshal.#strictMarshal(target)
 			|| sourceDomain.isUnsafe(target))
-			throw new TypeError("对象无法封送");
+			throw new TypeError("對象無法封送");
 		if (!Marshal.#shouldMarshal(target))
 			return target;
 
-		// 全局变量封送
+		// 全局變量封送
 		const mapped = Globals.mapTo(target, sourceDomain, targetDomain);
 
 		if (mapped != null)
 			return mapped;
 
-		// 错误封送
+		// 錯誤封送
 		if (sourceDomain.isError(target)) {
-			// 把源错误对象克隆到目标运行域
+			// 把源錯誤對象克隆到目標運行域
 			const errorCtor = target.constructor;
 			const mappedCtor = Globals.mapTo(errorCtor, sourceDomain, targetDomain);
 
-			// // 立即报告错误，而不是通过封送报错
+			// // 立即報告錯誤，而不是通過封送報錯
 			// const window = Domain.topDomain[SandboxExposer](SandboxSignal_GetWindow);
 			// window.onunhandledrejection && window.onunhandledrejection({ promise: Promise.reject(target) });
 
@@ -2371,44 +2371,44 @@ class Marshal {
 					});
 				};
 
-				const name = String(silentAccess(target, "name", "#无法获取错误名#"));
-				const message = String(silentAccess(target, "message", "#无法获取错误消息#"));
-				const stack = String(silentAccess(target, "stack", "#无法获取调用栈#"));
-				const string = silentAccess(target, String, "#无法获取错误信息#");
+				const name = String(silentAccess(target, "name", "#無法獲取錯誤名#"));
+				const message = String(silentAccess(target, "message", "#無法獲取錯誤消息#"));
+				const stack = String(silentAccess(target, "stack", "#無法獲取調用棧#"));
+				const string = silentAccess(target, String, "#無法獲取錯誤信息#");
 
 				pinValue(newError, "name", name);
 				pinValue(newError, "message", message);
 				pinValue(newError, "stack", stack);
 				pinValue(newError, "toString", () => string);
 
-				// 继承原本的错误信息
+				// 繼承原本的錯誤信息
 				const errorReporter = ErrorManager.getErrorReporter(target);
 				ErrorManager.setErrorReporter(newError,
-					errorReporter || new ErrorReporter(target)); // 无论有没有都捕获当前的错误信息
+					errorReporter || new ErrorReporter(target)); // 無論有沒有都捕獲當前的錯誤信息
 
 				return newError;
 			}
 		}
 
-		// 检查封送权限
-		const ruleRef = Marshal.#ensureRuleRef(target); // 为加快访问速度使用了引用
+		// 檢查封送權限
+		const ruleRef = Marshal.#ensureRuleRef(target); // 為加快訪問速度使用了引用
 		const rule = ruleRef.rule;
 
 		if (rule && !rule.canMarshalTo(targetDomain))
-			throw new TypeError("无法将对象封送到目标运行域");
+			throw new TypeError("無法將對象封送到目標運行域");
 
-		// 检查封送缓存
+		// 檢查封送緩存
 		const cached = Marshal.#cacheProxy(target, targetDomain);
 
 		if (cached)
 			return cached;
 
-		// 创建一个空白对象，防止JavaScript的一些奇怪错误
+		// 創建一個空白對象，防止JavaScript的一些奇怪錯誤
 		const pure = Marshal.#clonePureObject(target);
 
-		// 创建封送代理
+		// 創建封送代理
 		const proxy = new Proxy(pure, {
-			// 设置属性方便调试
+			// 設置屬性方便調試
 			// @ts-ignore
 			$target: target,
 			$sourceDomain: sourceDomain,
@@ -2423,7 +2423,7 @@ class Marshal {
 
 						if (rule && !rule.canAccess(AccessAction.CALL,
 							target, marshalledThis, marshalledArgs))
-							throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+							throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 						const args = [target, marshalledThis, marshalledArgs];
 						const dispatched = DomainMonitors.dispatch(
@@ -2438,8 +2438,8 @@ class Marshal {
 					});
 				};
 
-				// 此处处理异步封送
-				// 如果没有逃逸情况，此处代表着当前是异步调用
+				// 此處處理異步封送
+				// 如果沒有逃逸情況，此處代表著當前是異步調用
 				if (Domain.current !== targetDomain)
 					return Marshal.#trapDomain(targetDomain, defaultApply);
 
@@ -2454,7 +2454,7 @@ class Marshal {
 
 					if (rule && !rule.canAccess(AccessAction.NEW,
 						target, argArray, newTarget))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target, marshalledArgs, marshalledNewTarget];
 					const dispatched = DomainMonitors.dispatch(
@@ -2504,7 +2504,7 @@ class Marshal {
 
 					if (rule && !rule.canAccess(AccessAction.DEFINE,
 						target, property, attributes))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target, property, attributes];
 					const dispatched = DomainMonitors.dispatch(
@@ -2517,8 +2517,8 @@ class Marshal {
 					const success = Reflect.defineProperty(...args);
 
 					if (success && target === args[0]) {
-						// 为适配JavaScript对于代理的强制要求
-						// 我们要对空白对象模拟不可配置
+						// 為適配JavaScript對於代理的強制要求
+						// 我們要對空白對象模擬不可配置
 						// @ts-ignore
 						attributes = Reflect.getOwnPropertyDescriptor(...args);
 
@@ -2529,8 +2529,8 @@ class Marshal {
 					return success;
 				};
 
-				// `defineProperty`、`getOwnPropertyDescriptor`、`has` 都可能被JavaScript引擎重复调用
-				// 故在执行之前，为避免 `trapDomain` 的警告，我们先进行一次判断
+				// `defineProperty`、`getOwnPropertyDescriptor`、`has` 都可能被JavaScript引擎重複調用
+				// 故在執行之前，為避免 `trapDomain` 的警告，我們先進行一次判斷
 				return isSourceDomain
 					? domainTrapAction()
 					: Marshal.#trapDomain(sourceDomain, domainTrapAction);
@@ -2540,7 +2540,7 @@ class Marshal {
 					const rule = ruleRef.rule;
 
 					if (rule && !rule.canAccess(AccessAction.DELETE, target, p))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target, p];
 					const dispatched = DomainMonitors.dispatch(
@@ -2554,8 +2554,8 @@ class Marshal {
 				});
 			},
 			get(_, p, receiver) {
-				// 因为 get 的东西最多，所以对此追加注释
-				// 其他的拦截器都是与 get 类似
+				// 因為 get 的東西最多，所以對此追加註釋
+				// 其他的攔截器都是與 get 類似
 
 				// 向外暴露封送
 				switch (p) {
@@ -2565,28 +2565,28 @@ class Marshal {
 						return sourceDomain;
 				}
 
-				// 默认封送
+				// 默認封送
 				const marshalledReceiver = Marshal.#marshal(receiver, sourceDomain);
 
-				// 陷入源运行域执行
+				// 陷入源運行域執行
 				return Marshal.#trapDomain(sourceDomain, () => {
-					// 获取封送规则并检查
+					// 獲取封送規則並檢查
 					const rule = ruleRef.rule;
 
 					if (rule && !rule.canAccess(AccessAction.READ,
 						target, p, marshalledReceiver))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					// 通知 Monitor
 					const args = [target, p, marshalledReceiver];
 					const dispatched = DomainMonitors.dispatch(
 						sourceDomain, targetDomain, AccessAction.READ, args);
 
-					// 处理 Monitor 的结果
+					// 處理 Monitor 的結果
 					if (dispatched.preventDefault)
 						return Marshal.#marshal(dispatched.returnValue, targetDomain);
 
-					// 执行默认流程
+					// 執行默認流程
 					// @ts-ignore
 					const result = Reflect.get(...args);
 					return Marshal.#marshal(result, targetDomain);
@@ -2599,7 +2599,7 @@ class Marshal {
 					const rule = ruleRef.rule;
 
 					if (rule && !rule.canAccess(AccessAction.DESCRIBE, target, p))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target, p];
 					const dispatched = DomainMonitors.dispatch(
@@ -2625,7 +2625,7 @@ class Marshal {
 					const rule = ruleRef.rule;
 
 					if (rule && !rule.canAccess(AccessAction.TRACE, target))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target];
 					const dispatched = DomainMonitors.dispatch(
@@ -2639,7 +2639,7 @@ class Marshal {
 					const marshalledResult = Marshal.#marshal(result, targetDomain);
 
 					if (Marshal.#marshalledProxies.has(marshalledResult))
-						return null; // 没有实装hasInstance喵，只能折中处理喵
+						return null; // 沒有實裝hasInstance喵，只能折中處理喵
 
 					return marshalledResult;
 				});
@@ -2650,7 +2650,7 @@ class Marshal {
 					const rule = ruleRef.rule;
 
 					if (rule && !rule.canAccess(AccessAction.EXISTS, target, p))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target, p];
 					const dispatched = DomainMonitors.dispatch(
@@ -2676,7 +2676,7 @@ class Marshal {
 					const rule = ruleRef.rule;
 
 					if (rule && !rule.canAccess(AccessAction.LIST, target))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target];
 					const dispatched = DomainMonitors.dispatch(
@@ -2687,7 +2687,7 @@ class Marshal {
 
 					if (dispatched.preventDefault) {
 						if (!Array.isArray(dispatched.returnValue))
-							throw new TypeError("`Reflect.ownKeys` 必须返回一个数组");
+							throw new TypeError("`Reflect.ownKeys` 必須返回一個數組");
 
 						keys = dispatched.returnValue;
 					} else
@@ -2703,7 +2703,7 @@ class Marshal {
 					const rule = ruleRef.rule;
 
 					if (rule && !rule.canAccess(AccessAction.SEAL, target))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target];
 					const dispatched = DomainMonitors.dispatch(
@@ -2716,8 +2716,8 @@ class Marshal {
 					const success = Reflect.preventExtensions(...args);
 
 					if (success && target === args[0]) {
-						// 为适配JavaScript对于代理的强制要求
-						// 我们要对空白对象进行模拟键
+						// 為適配JavaScript對於代理的強制要求
+						// 我們要對空白對象進行模擬鍵
 						Reflect.ownKeys(target).forEach(key => {
 							pure[key] = undefined;
 						});
@@ -2736,7 +2736,7 @@ class Marshal {
 
 					if (rule && !rule.canAccess(AccessAction.WRITE,
 						target, p, marshalledNewValue, marshalledReceiver))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target, p, marshalledNewValue, marshalledReceiver];
 					const dispatched = DomainMonitors.dispatch(
@@ -2753,13 +2753,13 @@ class Marshal {
 				const marshalledV = Marshal.#marshal(v, sourceDomain);
 
 				if (Marshal.#marshalledProxies.has(marshalledV))
-					return false; // 没有实装hasInstance喵，只能折中处理喵
+					return false; // 沒有實裝hasInstance喵，只能折中處理喵
 
 				return Marshal.#trapDomain(sourceDomain, () => {
 					const rule = ruleRef.rule;
 
 					if (rule && !rule.canAccess(AccessAction.META, target, marshalledV))
-						throw new ReferenceError("封送对象的源运行域禁止了此项操作");
+						throw new ReferenceError("封送對象的源運行域禁止了此項操作");
 
 					const args = [target, marshalledV];
 					const dispatched = DomainMonitors.dispatch(
@@ -2804,9 +2804,9 @@ class Marshal {
 
 /**
  * ```plain
- * 运行域对象
+ * 運行域對象
  * 
- * 提供运行域的创建以及周期管理
+ * 提供運行域的創建以及週期管理
  * ```
  */
 class Domain {
@@ -2858,10 +2858,10 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 创建运行域
+	 * 創建運行域
 	 * 
 	 * 一般不直接使用，
-	 * 请考虑使用直接创建沙盒
+	 * 請考慮使用直接創建沙盒
 	 * ```
 	 */
 	constructor() {
@@ -2871,9 +2871,9 @@ class Domain {
 		if (Domain.#currentDomain) {
 			// @ts-ignore
 			if (!window.createRealms)
-				throw new ReferenceError("Sandbox 载入时处于不安全运行域");
+				throw new ReferenceError("Sandbox 載入時處於不安全運行域");
 
-			// 创建新的运行变量域
+			// 創建新的運行變量域
 			// @ts-ignore
 			global = createRealms();
 			this.#domainName = Math.random().toString(36).slice(2);
@@ -2901,7 +2901,7 @@ class Domain {
 		sealObjectTree(this);
 	}
 
-	// 实装这个要代理Object喵
+	// 實裝這個要代理Object喵
 	// static #hasInstanceMarshalled = function (obj) {
 	//     if (Marshal.isMarshalled(obj))
 	//         [, obj] = Marshal[SandboxExposer2]
@@ -2912,7 +2912,7 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 检查对象是否来自于当前的运行域
+	 * 檢查對象是否來自於當前的運行域
 	 * ```
 	 * 
 	 * @param {Object?} obj 
@@ -2931,7 +2931,7 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 检查对象是否来自于当前的运行域的Promise
+	 * 檢查對象是否來自於當前的運行域的Promise
 	 * ```
 	 * 
 	 * @param {Promise?} promise 
@@ -2948,7 +2948,7 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 检查对象是否来自于当前的运行域的Error
+	 * 檢查對象是否來自於當前的運行域的Error
 	 * ```
 	 * 
 	 * @param {Error?} error 
@@ -2965,7 +2965,7 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 检查对象是否来自于当前的运行域的危险对象
+	 * 檢查對象是否來自於當前的運行域的危險對象
 	 * ```
 	 * 
 	 * @param {Object?} obj 
@@ -3006,7 +3006,7 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 检查对象是否是Promise对象
+	 * 檢查對象是否是Promise對象
 	 * ```
 	 * 
 	 * @param {Error?} error 
@@ -3034,7 +3034,7 @@ class Domain {
 
 	static #exitDomain = function () {
 		if (Domain.#domainStack.length < 1)
-			throw new ReferenceError("无法弹出更多的运行域");
+			throw new ReferenceError("無法彈出更多的運行域");
 
 		// @ts-ignore
 		Domain.#currentDomain = Domain.#domainStack.pop();
@@ -3047,7 +3047,7 @@ class Domain {
 		const links = Domain.#domainLinks;
 		const list = [];
 
-		// 遍历查询并清除无效的运行域
+		// 遍歷查詢並清除無效的運行域
 		for (let i = links.length - 1; i >= 0; i--) {
 			const link = links[i].deref();
 
@@ -3063,7 +3063,7 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 获取当前运行域
+	 * 獲取當前運行域
 	 * ```
 	 * 
 	 * @type {Domain}
@@ -3074,7 +3074,7 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 获取调用链中上一个运行域
+	 * 獲取調用鏈中上一個運行域
 	 * ```
 	 * 
 	 * @type {Domain?}
@@ -3092,7 +3092,7 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 获取顶级运行域
+	 * 獲取頂級運行域
 	 * ```
 	 * 
 	 * @type {Domain}
@@ -3103,10 +3103,10 @@ class Domain {
 
 	/**
 	 * ```plain
-	 * 检查当前的调用是否来自可信的运行域
+	 * 檢查當前的調用是否來自可信的運行域
 	 * 
-	 * 如果检查顶级运行域，则要求没有进行任何其他运行域的陷入
-	 * 如果检查非顶级运行域，则要求只有顶级运行域与给定运行域的陷入
+	 * 如果檢查頂級運行域，則要求沒有進行任何其他運行域的陷入
+	 * 如果檢查非頂級運行域，則要求只有頂級運行域與給定運行域的陷入
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -3146,7 +3146,7 @@ class Domain {
 		switch (signal) {
 			case SandboxSignal_InitDomain:
 				if (Domain.#currentDomain)
-					throw new TypeError("顶级运行域已经被初始化");
+					throw new TypeError("頂級運行域已經被初始化");
 
 				Domain.#currentDomain = new Domain();
 				Domain.#topDomain = Domain.#currentDomain;
@@ -3164,7 +3164,7 @@ class Domain {
 
 /**
  * ```plain
- * 将对象从源运行域封送到目标运行域
+ * 將對象從源運行域封送到目標運行域
  * ```
  * 
  * @param {Domain} srcDomain 
@@ -3178,11 +3178,11 @@ function trapMarshal(srcDomain, dstDomain, obj) {
 
 	const domain = Domain.current;
 
-	// 如果不需要陷入，则直接封送
+	// 如果不需要陷入，則直接封送
 	if (domain === srcDomain)
 		return Marshal[SandboxExposer2](SandboxSignal_Marshal, obj, dstDomain);
 
-	// 否则先陷入，然后再封送
+	// 否則先陷入，然後再封送
 	return Marshal[SandboxExposer2](SandboxSignal_TrapDomain, srcDomain, () => {
 		return Marshal[SandboxExposer2](SandboxSignal_Marshal, obj, dstDomain);
 	});
@@ -3190,8 +3190,8 @@ function trapMarshal(srcDomain, dstDomain, obj) {
 
 /**
  * ```plain
- * 向JavaScript提供类似于Python的exec的自带上下文的eval功能
- * 同时自动排除原有作用域以沙盒方式来执行部分代码
+ * 向JavaScript提供類似於Python的exec的自帶上下文的eval功能
+ * 同時自動排除原有作用域以沙盒方式來執行部分代碼
  * ```
  */
 class Sandbox {
@@ -3228,11 +3228,11 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 当在当前scope中访问不到变量时，
-	 * 是否允许沙盒代码可以穿透到顶级域的全局变量域中
-	 * 去读取部分非内建的全局变量（仅读取）
+	 * 當在當前scope中訪問不到變量時，
+	 * 是否允許沙盒代碼可以穿透到頂級域的全局變量域中
+	 * 去讀取部分非內建的全局變量（僅讀取）
 	 * 
-	 * 此开关有风险，请谨慎使用
+	 * 此開關有風險，請謹慎使用
 	 * ```
 	 * 
 	 * @type {boolean} 
@@ -3241,12 +3241,12 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 当在当前scope中访问不到变量时，
-	 * 是否允许沙盒代码可以穿透到顶级域的全局变量域中
-	 * 去读取DOM类型的构造函数（仅读取）
+	 * 當在當前scope中訪問不到變量時，
+	 * 是否允許沙盒代碼可以穿透到頂級域的全局變量域中
+	 * 去讀取DOM類型的構造函數（僅讀取）
 	 * （包括Image、Audio等）
 	 * 
-	 * 此开关有风险，请谨慎使用
+	 * 此開關有風險，請謹慎使用
 	 * ```
 	 * 
 	 * @type {boolean} 
@@ -3254,13 +3254,13 @@ class Sandbox {
 	#domAccess = false;
 
 	/**
-	 * 创建一个新的沙盒
+	 * 創建一個新的沙盒
 	 */
 	constructor() {
 		this.#sourceDomain = Domain.current;
 		this.#domain = new Domain();
 		this.#domainWindow = this.#domain[SandboxExposer](SandboxSignal_GetWindow);
-		this.#domainDocument = null; // 默认不开放DOM，而且我们也缺少BrowserContext
+		this.#domainDocument = null; // 默認不開放DOM，而且我們也缺少BrowserContext
 		this.#domainObject = this.#domainWindow.Object;
 		this.#domainFunction = this.#domainWindow.Function;
 		this.#domainEval = this.#domainWindow.eval;
@@ -3271,19 +3271,19 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 检查沙盒操作运行域
+	 * 檢查沙盒操作運行域
 	 * ```
 	 * 
 	 * @param {Sandbox} thiz 
 	 */
 	static #assertOperator = function (thiz) {
 		if (thiz.#sourceDomain !== Domain.current)
-			throw new TypeError("当前运行域不是沙盒的所有运行域");
+			throw new TypeError("當前運行域不是沙盒的所有運行域");
 	}
 
 	/**
 	 * ```plain
-	 * 封装沙盒的 Function 函数
+	 * 封裝沙盒的 Function 函數
 	 * ```
 	 * 
 	 * @param {Sandbox} thiz 
@@ -3345,14 +3345,14 @@ class Sandbox {
 		function rewriteCtor(prototype, newCtor) {
 			const descriptor = Object.getOwnPropertyDescriptor(prototype, 'constructor')
 				|| { configurable: true, writable: true, enumerable: false };
-			if (!descriptor.configurable) throw new TypeError("无法覆盖不可配置的构造函数");
+			if (!descriptor.configurable) throw new TypeError("無法覆蓋不可配置的構造函數");
 			descriptor.value = newCtor;
 			Reflect.defineProperty(prototype, 'constructor', descriptor)
 		}
 
-		// 封装当前运行域所有Function类型的构造函数
-		// 确保沙盒代码无法访问真正的 Window 对象
-		// (不过理论上说访问了也基本上没什么东西喵)
+		// 封裝當前運行域所有Function類型的構造函數
+		// 確保沙盒代碼無法訪問真正的 Window 對象
+		// (不過理論上說訪問了也基本上沒什麼東西喵)
 		rewriteCtor(defaultFunction.prototype, global.Function = new Proxy(defaultFunction, handler));
 		rewriteCtor(defaultGeneratorFunction.prototype, new Proxy(defaultGeneratorFunction, handler));
 		rewriteCtor(defaultAsyncFunction.prototype, new Proxy(defaultAsyncFunction, handler));
@@ -3361,7 +3361,7 @@ class Sandbox {
 
 	// /**
 	//  * ```plain
-	//  * 替代原本的eval函数，阻止访问原生的 window 对象
+	//  * 替代原本的eval函數，阻止訪問原生的 window 對象
 	//  * ```
 	//  * 
 	//  * @param {Window} trueWindow
@@ -3386,7 +3386,7 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 替代原本的eval函数，阻止访问原生的 window 对象
+	 * 替代原本的eval函數，阻止訪問原生的 window 對象
 	 * ```
 	 * 
 	 * @param {Sandbox} thiz 
@@ -3412,7 +3412,7 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 获取当前的scope
+	 * 獲取當前的scope
 	 * ```
 	 * 
 	 * @type {Object}
@@ -3424,7 +3424,7 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 获取当前沙盒内的运行域
+	 * 獲取當前沙盒內的運行域
 	 * ```
 	 * 
 	 * @type {Domain}
@@ -3435,7 +3435,7 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 获取当前沙盒内的document对象
+	 * 獲取當前沙盒內的document對象
 	 * ```
 	 * 
 	 * @type {Document}
@@ -3447,7 +3447,7 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 设置当前沙盒内的document对象
+	 * 設置當前沙盒內的document對象
 	 * ```
 	 * 
 	 * @type {Document}
@@ -3460,11 +3460,11 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 当在当前scope中访问不到变量时，
-	 * 是否允许沙盒代码可以穿透到顶级域的全局变量域中
-	 * 去读取部分非内建的全局变量（仅读取）
+	 * 當在當前scope中訪問不到變量時，
+	 * 是否允許沙盒代碼可以穿透到頂級域的全局變量域中
+	 * 去讀取部分非內建的全局變量（僅讀取）
 	 * 
-	 * 此开关有风险，请谨慎使用
+	 * 此開關有風險，請謹慎使用
 	 * ```
 	 * 
 	 * @type {boolean} 
@@ -3476,11 +3476,11 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 当在当前scope中访问不到变量时，
-	 * 是否允许沙盒代码可以穿透到顶级域的全局变量域中
-	 * 去读取部分非内建的全局变量（仅读取）
+	 * 當在當前scope中訪問不到變量時，
+	 * 是否允許沙盒代碼可以穿透到頂級域的全局變量域中
+	 * 去讀取部分非內建的全局變量（僅讀取）
 	 * 
-	 * 此开关有风险，请谨慎使用
+	 * 此開關有風險，請謹慎使用
 	 * ```
 	 * 
 	 * @type {boolean} 
@@ -3492,12 +3492,12 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 当在当前scope中访问不到变量时，
-	 * 是否允许沙盒代码可以穿透到顶级域的全局变量域中
-	 * 去读取DOM类型的构造函数（仅读取）
+	 * 當在當前scope中訪問不到變量時，
+	 * 是否允許沙盒代碼可以穿透到頂級域的全局變量域中
+	 * 去讀取DOM類型的構造函數（僅讀取）
 	 * （包括Image、Audio等）
 	 * 
-	 * 此开关有风险，请谨慎使用
+	 * 此開關有風險，請謹慎使用
 	 * ```
 	 * 
 	 * @type {boolean} 
@@ -3509,12 +3509,12 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 当在当前scope中访问不到变量时，
-	 * 是否允许沙盒代码可以穿透到顶级域的全局变量域中
-	 * 去读取DOM类型的构造函数（仅读取）
+	 * 當在當前scope中訪問不到變量時，
+	 * 是否允許沙盒代碼可以穿透到頂級域的全局變量域中
+	 * 去讀取DOM類型的構造函數（僅讀取）
 	 * （包括Image、Audio等）
 	 * 
-	 * 此开关有风险，请谨慎使用
+	 * 此開關有風險，請謹慎使用
 	 * ```
 	 * 
 	 * @type {boolean} 
@@ -3526,10 +3526,10 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 向当前域注入内建对象
+	 * 向當前域注入內建對象
 	 * 
-	 * 如果使用在使用了 `initBuiltins` 之后进行 `pushScope`，
-	 * 则将自动继承前面的内建对象，无需再次调用 `initBuiltins`
+	 * 如果使用在使用了 `initBuiltins` 之後進行 `pushScope`，
+	 * 則將自動繼承前面的內建對象，無需再次調用 `initBuiltins`
 	 * ```
 	 */
 	initBuiltins() {
@@ -3537,7 +3537,7 @@ class Sandbox {
 
 		/**
 		 * ```plain
-		 * 如果要扩充沙盒的内建函数或类，请在此增加喵
+		 * 如果要擴充沙盒的內建函數或類，請在此增加喵
 		 * ```
 		 */
 		const builtins = {
@@ -3567,7 +3567,7 @@ class Sandbox {
 			Reflect: this.#domainWindow.Reflect,
 			BigInt: this.#domainWindow.BigInt,
 			JSON: this.#domainWindow.JSON,
-			// eval: this.#domainWindow.eval, // 我们另外定义 `eval` 函数
+			// eval: this.#domainWindow.eval, // 我們另外定義 `eval` 函數
 			setTimeout: this.#domainWindow.setTimeout,
 			clearTimeout: this.#domainWindow.clearTimeout,
 			setInterval: this.#domainWindow.setInterval,
@@ -3596,13 +3596,13 @@ class Sandbox {
 			undefined: undefined,
 		};
 
-		// 放置内建函数或类
+		// 放置內建函數或類
 		Marshal[SandboxExposer2](SandboxSignal_TrapDomain, this.#domain, () => {
 			for (const [k, v] of Object.entries(builtins)) {
 				if (!v)
 					delete builtins[k];
 
-				// 非类的函数应该要绑定 this 为 null
+				// 非類的函數應該要綁定 this 為 null
 				if (typeof v == "function" && !("prototype" in v))
 					builtins[k] = v.bind(null);
 			}
@@ -3610,7 +3610,7 @@ class Sandbox {
 
 		Object.assign(this.#scope, builtins);
 
-		// 对于常量我们需要重定义
+		// 對於常量我們需要重定義
 		for (const [k, v] of Object.entries(hardBuiltins)) {
 			Reflect.defineProperty(this.#scope, k, {
 				value: v,
@@ -3623,8 +3623,8 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 基于当前的scope克隆一个新的scope
-	 * 然后将原本的scope压入栈中
+	 * 基於當前的scope克隆一個新的scope
+	 * 然後將原本的scope壓入棧中
 	 * ```
 	 */
 	pushScope() {
@@ -3635,40 +3635,40 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 丢弃当前的scope并从栈中弹出原本的scope
+	 * 丟棄當前的scope並從棧中彈出原本的scope
 	 * ```
 	 */
 	popScope() {
 		Sandbox.#assertOperator(this);
 
 		if (!this.#scopeStack)
-			throw new ReferenceError("没有更多的scope可以弹出");
+			throw new ReferenceError("沒有更多的scope可以彈出");
 
 		this.#scope = this.#scopeStack.pop();
 	}
 
 	/**
 	 * ```plain
-	 * 核心编译函数
+	 * 核心編譯函數
 	 * ```
 	 * 
-	 * @param {Sandbox} thiz 当前沙盒实例
-	 * @param {string} code 代码字符串
-	 * @param {Object?} context 额外的执行上下文
-	 * @param {Array<string>?} paramList 参数名列表，以此来创建可以传递参数的函数
-	 * @param {boolean?} inheritScope 是否继承当前正在执行的scope而不是当前沙盒的scope（为封装Function类型而提供的参数）
-	 * @param {"exists"|"extend"|"all"} writeContext 当执行的代码尝试为未声明的变量赋值时，应该 根据context与window的变量写入(默认行为)|默认行为并且新的变量写入context|全部写入context
+	 * @param {Sandbox} thiz 當前沙盒實例
+	 * @param {string} code 代碼字符串
+	 * @param {Object?} context 額外的執行上下文
+	 * @param {Array<string>?} paramList 參數名列表，以此來創建可以傳遞參數的函數
+	 * @param {boolean?} inheritScope 是否繼承當前正在執行的scope而不是當前沙盒的scope（為封裝Function類型而提供的參數）
+	 * @param {"exists"|"extend"|"all"} writeContext 當執行的代碼嘗試為未聲明的變量賦值時，應該 根據context與window的變量寫入(默認行為)|默認行為並且新的變量寫入context|全部寫入context
 	 * @returns 
 	 */
 	static #compileCore = function (thiz, code, context = null,
 		paramList = null, inheritScope = false, writeContext = 'exists') {
 		if (typeof code != "string")
-			throw new TypeError("代码需要是一个字符串");
+			throw new TypeError("代碼需要是一個字符串");
 
 		if (isPrimitive(context))
 			context = {};
 
-		// 进行语法检查，防止注入
+		// 進行語法檢查，防止注入
 		new thiz.#domainFunction(code);
 
 		const passThis = !("this" in context);
@@ -3684,15 +3684,15 @@ class Sandbox {
 		let argumentList;
 		let wrappedEval;
 
-		const raw = new thiz.#domainFunction("_", `with(_){with(window){with(${contextName}){return(${applyName}(function(${parameters}){"use strict";\n// 沙盒代码起始\n${code}\n// 沙盒代码结束\n},${contextName}.this,${argsName}))}}}`);
-		const snippet = new CodeSnippet(code, 5); // 错误信息的行号从 5 开始 (即错误信息的前 5 行是不属于 `code` 的范围)
+		const raw = new thiz.#domainFunction("_", `with(_){with(window){with(${contextName}){return(${applyName}(function(${parameters}){"use strict";\n// 沙盒代碼起始\n${code}\n// 沙盒代碼結束\n},${contextName}.this,${argsName}))}}}`);
+		const snippet = new CodeSnippet(code, 5); // 錯誤信息的行號從 5 開始 (即錯誤信息的前 5 行是不屬於 `code` 的範圍)
 
 		const domain = thiz.#domain;
 		const domainWindow = thiz.#domainWindow;
 		const marshalledContext = Marshal[SandboxExposer2]
 			(SandboxSignal_Marshal, context, domain);
 
-		// 构建上下文拦截器
+		// 構建上下文攔截器
 		const intercepter = new Proxy(scope, {
 			has() {
 				return true;
@@ -3713,7 +3713,7 @@ class Sandbox {
 
 				if (!(p in target)) {
 					if (p === "eval")
-						return wrappedEval; // 返回我们封装的 `eval` 函数
+						return wrappedEval; // 返回我們封裝的 `eval` 函數
 
 					throw new domainWindow.ReferenceError(`${String(p)} is not defined`);
 				}
@@ -3733,40 +3733,40 @@ class Sandbox {
 		// 	thiz.#domainWindow, thiz.#domainEval, intercepter, scope);
 		wrappedEval = Sandbox.#wrappedEval.bind(null, thiz);
 
-		// 构建陷入的沙盒闭包
-		// 同时对返回值进行封送
+		// 構建陷入的沙盒閉包
+		// 同時對返回值進行封送
 		return /** @this {any} */ function (/** @type {any} */ ...args) {
 			const prevDomain = Domain.current;
 			const domainAction = () => {
-				// 指定执行域
-				// 方便后续新的函数来继承
+				// 指定執行域
+				// 方便後續新的函數來繼承
 				Sandbox.#executingScope.push(scope);
-				// 指定当前的代码片段
+				// 指定當前的代碼片段
 				CodeSnippet.pushSnippet(snippet);
 
 				try {
-					// 传递 `this`、以及函数参数
+					// 傳遞 `this`、以及函數參數
 					if (passThis)
 						context.this = Marshal[SandboxExposer2]
 							(SandboxSignal_Marshal, this, domain);
 					argumentList = Marshal[SandboxExposer2]
 						(SandboxSignal_MarshalArray, args, domain);
 
-					// 调用闭包函数
+					// 調用閉包函數
 					const result = raw.call(null, intercepter);
 
-					// 封送返回结果
+					// 封送返回結果
 					return Marshal[SandboxExposer2]
 						(SandboxSignal_Marshal, result, prevDomain);
 				} catch (e) {
 					// @ts-ignore
 					if (!Domain.isError(e))
-						throw e; // 非错误对象无法读取堆栈，继续向上抛出
+						throw e; // 非錯誤對象無法讀取堆棧，繼續向上拋出
 
-					// 保存当前错误信息
-					// 这样无论几次重抛都可以复现最原始的错误信息
+					// 保存當前錯誤信息
+					// 這樣無論幾次重拋都可以復現最原始的錯誤信息
 					ErrorManager.setErrorReporter(e);
-					throw e; // 继续向上抛出(由于JS不支持rethrow只能这样喵)
+					throw e; // 繼續向上拋出(由於JS不支持rethrow只能這樣喵)
 				} finally {
 					CodeSnippet.popSnippet();
 					Sandbox.#executingScope.pop();
@@ -3783,18 +3783,18 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 基于给定的代码与当前的scope来构造一个闭包函数
+	 * 基於給定的代碼與當前的scope來構造一個閉包函數
 	 * 
-	 * 参数context指定临时上下文，类似与scope但是里面的变量优先级高于scope
-	 * 另外可以通过context.this属性来指定函数的this
+	 * 參數context指定臨時上下文，類似與scope但是裡面的變量優先級高於scope
+	 * 另外可以通過context.this屬性來指定函數的this
 	 * 
-	 * 请注意，当沙盒闭包函数构造后，scope将被闭包固定
-	 * 这意味着pushScope与popScope不会影响到构造好的函数
+	 * 請注意，當沙盒閉包函數構造後，scope將被閉包固定
+	 * 這意味著pushScope與popScope不會影響到構造好的函數
 	 * ```
 	 * 
-	 * @param {string} code 沙盒闭包函数的代码
-	 * @param {Object?} context 临时上下文
-	 * @returns {(...args: any[]) => any} 构造的沙盒闭包函数
+	 * @param {string} code 沙盒閉包函數的代碼
+	 * @param {Object?} context 臨時上下文
+	 * @returns {(...args: any[]) => any} 構造的沙盒閉包函數
 	 */
 	compile(code, context = null) {
 		return Sandbox.#compileCore(this, code, context);
@@ -3802,15 +3802,15 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 基于当前的scope在沙盒环境下执行给定的代码
+	 * 基於當前的scope在沙盒環境下執行給定的代碼
 	 * 
-	 * 参数context指定临时上下文，类似与scope但是里面的变量优先级高于scope
-	 * 另外可以通过context.this属性来指定函数的this
+	 * 參數context指定臨時上下文，類似與scope但是裡面的變量優先級高於scope
+	 * 另外可以通過context.this屬性來指定函數的this
 	 * ```
 	 * 
-	 * @param {string} code 沙盒闭包函数的代码
-	 * @param {Object?} context 临时上下文
-	 * @returns 执行代码的返回值
+	 * @param {string} code 沙盒閉包函數的代碼
+	 * @param {Object?} context 臨時上下文
+	 * @returns 執行代碼的返回值
 	 */
 	exec(code, context = null) {
 		return this.compile(code, context)();
@@ -3818,20 +3818,20 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 基于当前的scope在沙盒环境下执行给定的代码
+	 * 基於當前的scope在沙盒環境下執行給定的代碼
 	 * 
-	 * 参数context指定临时上下文，类似与scope但是里面的变量优先级高于scope
-	 * 另外可以通过context.this属性来指定函数的this
+	 * 參數context指定臨時上下文，類似與scope但是裡面的變量優先級高於scope
+	 * 另外可以通過context.this屬性來指定函數的this
 	 * 
-	 * 与exec的区别在于，此函数可以指定未定义变量赋值行为
-	 * 当 `readonly` 为false时，不存在的全局变量的赋值行为将被转移到context里面
-	 * 当 `readonly` 为true(默认)时，任何全局变量的赋值行为将被转移到context里面
+	 * 與exec的區別在於，此函數可以指定未定義變量賦值行為
+	 * 當 `readonly` 為false時，不存在的全局變量的賦值行為將被轉移到context裡面
+	 * 當 `readonly` 為true(默認)時，任何全局變量的賦值行為將被轉移到context裡面
 	 * ```
 	 * 
-	 * @param {string} code 沙盒闭包函数的代码
-	 * @param {Object?} context 临时上下文(没有给出将自动创建)
-	 * @param {boolean} readonly 是否拦截所有全局变量的赋值
-	 * @returns {[any, Object]} [执行代码的返回值, 参数context]
+	 * @param {string} code 沙盒閉包函數的代碼
+	 * @param {Object?} context 臨時上下文(沒有給出將自動創建)
+	 * @param {boolean} readonly 是否攔截所有全局變量的賦值
+	 * @returns {[any, Object]} [執行代碼的返回值, 參數context]
 	 */
 	exec2(code, context = null, readonly = true) {
 		if (isPrimitive(context))
@@ -3844,7 +3844,7 @@ class Sandbox {
 
 	/**
 	 * ```plain
-	 * 根据运行域获取沙盒对象
+	 * 根據運行域獲取沙盒對象
 	 * ```
 	 * 
 	 * @param {Domain} domain 
@@ -3857,16 +3857,16 @@ class Sandbox {
 			return null;
 
 		if (sandbox.#sourceDomain !== Domain.current)
-			throw new TypeError("当前运行域不是沙盒的所有运行域");
+			throw new TypeError("當前運行域不是沙盒的所有運行域");
 
 		return sandbox;
 	}
 
 	/**
 	 * ```plain
-	 * 创建一个被代理的 Window 对象
+	 * 創建一個被代理的 Window 對象
 	 * 
-	 * （为什么一定要指名道姓选window的东西喵）
+	 * （為什麼一定要指名道姓選window的東西喵）
 	 * ```
 	 * 
 	 * @param {Sandbox} thiz 
@@ -3880,7 +3880,7 @@ class Sandbox {
 				if (p in target)
 					return Reflect.get(target, p, receiver);
 
-				// 暴露非内建的顶级全局变量
+				// 暴露非內建的頂級全局變量
 				if (thiz.#freeAccess
 					&& !Globals.isBuiltinKey(p)) {
 					const topWindow = Sandbox.#topWindow;
@@ -3921,7 +3921,7 @@ class Sandbox {
 			},
 		});
 
-		// 定义三个超级变量
+		// 定義三個超級變量
 		Reflect.defineProperty(rawScope, "window", {
 			get: (function () {
 				// @ts-ignore
@@ -3950,7 +3950,7 @@ class Sandbox {
 		if (!baseScope)
 			return;
 
-		// 继承之前的变量域
+		// 繼承之前的變量域
 		const descriptors = Object.getOwnPropertyDescriptors(baseScope);
 		delete descriptors.window;
 		delete descriptors.self;
@@ -4020,7 +4020,7 @@ function sealObject(obj, freeze = Object.freeze) {
 
 	freeze(obj);
 
-	// 防止通过函数属性传值
+	// 防止通過函數屬性傳值
 	for (const [key, descriptor] of Object.entries(descriptors)) {
 		if (descriptor.get)
 			freeze(descriptor.get);
@@ -4032,7 +4032,7 @@ function sealObject(obj, freeze = Object.freeze) {
 }
 
 if (SANDBOX_ENABLED) {
-	// 确保顶级运行域的原型链不暴露
+	// 確保頂級運行域的原型鏈不暴露
 	if (window.top === window) {
 		({
 			// @ts-ignore
@@ -4049,7 +4049,7 @@ if (SANDBOX_ENABLED) {
 			Sandbox,
 		} = SANDBOX_EXPORT);
 	} else {
-		// 防止被不信任代码更改
+		// 防止被不信任代碼更改
 		sealClass(AccessAction);
 		sealClass(Rule);
 		sealClass(Globals);
@@ -4083,10 +4083,10 @@ if (SANDBOX_ENABLED) {
 		sealClass(async function () { }.constructor);
 		sealClass(async function* () { }.constructor);
 
-		// 改为此处初始化，防止多次初始化
+		// 改為此處初始化，防止多次初始化
 		Domain[SandboxExposer2](SandboxSignal_InitDomain);
 
-		// 获取顶级域的错误管理器
+		// 獲取頂級域的錯誤管理器
 		// @ts-ignore
 		({
 			CodeSnippet,
@@ -4096,7 +4096,7 @@ if (SANDBOX_ENABLED) {
 			// @ts-ignore
 			= window.replacedErrors);
 
-		// 向顶级运行域暴露导出
+		// 向頂級運行域暴露導出
 		// @ts-ignore
 		window.SANDBOX_EXPORT = {
 			AccessAction,

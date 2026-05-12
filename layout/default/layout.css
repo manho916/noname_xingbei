@@ -1,4 +1,4 @@
-/*--------标签--------*/
+/*--------標籤--------*/
 html {
 	width: 100%;
 	height: 100%;
@@ -39,7 +39,7 @@ table {
 	table-layout: fixed;
 }
 
-/*--------场景--------*/
+/*--------場景--------*/
 #window {
 	width: 100%;
 	height: 100%;
@@ -427,7 +427,7 @@ table {
 	border-radius: 12px;
 }
 
-/* 启动页style2 */
+/* 啟動頁style2 */
 #splash[data-splash_style="style2"] > div {
 	width: 250px;
 	height: 350px;
@@ -2219,7 +2219,7 @@ div:not(.handcards) > .card > .info > span,
 	width: 10px;
 	height: 10px;
 }
-/*--------确认--------*/
+/*--------確認--------*/
 #control {
 	text-align: center;
 	z-index: 5;
@@ -2910,7 +2910,7 @@ div:not(.handcards) > .card > .info > span,
 	border: 1px solid rgba(63, 119, 173, 1);
 }
 
-/*xingBei星级*/
+/*xingBei星級*/
 .hp:not(.text):not(.actcount):not(.treasure)[data-condition="xing"]>div:not(.lost){
     background: url('../../theme/style/hp/image/xing.png') no-repeat center;
     box-shadow: none;
@@ -3653,7 +3653,7 @@ div:not(.handcards) > .card > .info > span,
 	font-weight: bold;
 }
 
-/*--------动画--------*/
+/*--------動畫--------*/
 .start,
 .equips > .card,
 .popup {
@@ -3763,7 +3763,7 @@ div:not(.handcards) > .card > .info > span,
 	animation: flip 1s;
 	-webkit-animation: flip 1s;
 }
-/*--------样式--------*/
+/*--------樣式--------*/
 #arena.selecting:not(.video) .player[data-position="0"] .card:not(.selectable) > .background,
 #arena.selecting:not(.video) .player[data-position="0"] .card:not(.selectable) > .image,
 #arena.selecting:not(.video) .player[data-position="0"] .card:not(.selectable) > .name,
@@ -5033,7 +5033,7 @@ div[data-decoration="bronze"]::after {
 .timerbar[data-color="purple"]>div:last-child{background: linear-gradient(#E247FF, #CE0404)}
 .timerbar[data-color="orange"]>div:last-child{background: linear-gradient(#FFDA47, #CE0404)}*/
 
-/*阴影*/
+/*陰影*/
 /*.player.selectable{
 	box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px, rgba(0, 133, 255, 0.5) 0 0 5px, rgba(0, 133, 255, 0.6) 0 0 12px, rgba(0, 133, 255, 0.8) 0 0 15px;
 }*/
@@ -5374,7 +5374,7 @@ div[data-decoration="bronze"]::after {
 	z-index: 31415926;
 }
 
-/*--------动画--------*/
+/*--------動畫--------*/
 @keyframes shadow_thunder {
 	0% {
 		box-shadow: rgba(0, 0, 0, 1) 0 0 1px, rgba(0, 0, 0, 0.1) 0 0 40px, rgba(100, 74, 139, 0.5) 0 0 60px,
@@ -5897,15 +5897,15 @@ div[data-decoration="bronze"]::after {
 	}
 }
 /*--------其它--------*/
-/* 解放下拉框滚动条！ */
+/* 解放下拉框滾動條！ */
 :not(select)::-webkit-scrollbar {
 	display: none;
 }
-/* 火狐和chrome120+隐藏滚动条 */
+/* 火狐和chrome120+隱藏滾動條 */
 :not(select) {
 	scrollbar-width: none;
 }
-/* 更新进度条 */
+/* 更新進度條 */
 progress.progress {
 	width: 75%;
 	height: 10px;

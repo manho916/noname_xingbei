@@ -10,7 +10,7 @@ import { lib, Library } from "../library/index.js";
 export const importCardPack = generateImportFunction("card", name => `../../card/${name}.js`);
 
 /**
- * @param {string} name - 武将包名
+ * @param {string} name - 武將包名
  * @returns {Promise<void>}
  */
 export const importCharacterPack = generateImportFunction("character", name => {
@@ -20,7 +20,7 @@ export const importCharacterPack = generateImportFunction("character", name => {
 });
 
 /**
- * @param {string} name - 扩展名
+ * @param {string} name - 擴展名
  * @returns {Promise<void>}
  */
 export const importExtension = generateImportFunction("extension", name => `../../extension/${name}/extension.js`);
@@ -32,7 +32,7 @@ export const importExtension = generateImportFunction("extension", name => `../.
 export const importMode = generateImportFunction("mode", name => `../../mode/${name}.js`);
 
 /**
- * 生成导入
+ * 生成導入
  *
  * @param { 'card' | 'character' | 'extension' | 'mode' } type
  * @param {(name: string) => string} pathParser
@@ -53,8 +53,8 @@ function generateImportFunction(type, pathParser) {
 			}
 		}
 		let path = pathParser(name);
-		// 通过浏览器自带的script标签导入可直接获取报错信息，且不会影响JS运行
-		// 此时代码内容也将缓存在浏览器中，故再次import后将不会重新执行代码内容（测试下来如此）
+		// 通過瀏覽器自帶的script標籤導入可直接獲取報錯信息，且不會影響JS運行
+		// 此時代碼內容也將緩存在瀏覽器中，故再次import後將不會重新執行代碼內容（測試下來如此）
 		const [status, script] = await new Promise(resolve => {
 			const createScript = () => {
 				const script = document.createElement("script");
@@ -71,8 +71,8 @@ function generateImportFunction(type, pathParser) {
 					let ts = createScript();
 					ts.onerror = e2 => {
 						if (lib.path.basename(path) === "extension.js" && lib.path.dirname(path).endsWith("/extension")) {
-							console.error(`扩展《${name}》加载失败`, e, e2);
-							let remove = confirm(`扩展《${name}》加载失败，是否移除此扩展？此操作不会移除目录下的文件。`);
+							console.error(`擴展《${name}》加載失敗`, e, e2);
+							let remove = confirm(`擴展《${name}》加載失敗，是否移除此擴展？此操作不會移除目錄下的文件。`);
 							if (remove) {
 								lib.config.extensions.remove(name);
 								if (lib.config[`@Experimental.extension.${name}.character`]) {
@@ -96,7 +96,7 @@ function generateImportFunction(type, pathParser) {
 		script.remove();
 		if (status === "error") {
 			if (type === "character") {
-				console.warn("如果您在扩展中使用了game.import创建角色包，可将以下代码删除: lib.config.all.characters.push('角色包名');");
+				console.warn("如果您在擴展中使用了game.import創建角色包，可將以下代碼刪除: lib.config.all.characters.push('角色包名');");
 			}
 			return;
 		}
@@ -112,7 +112,7 @@ async function createEmptyExtension(name) {
 	const extensionInfo = await lib.init.promises.json(`${lib.assetURL}extension/${name}/info.json`).then(info => info, () => {
 		return {
 			name,
-			intro: `扩展<b>《${name}》</b>尚未开启，请开启后查看信息。（建议扩展添加info.json以在关闭时查看信息）`,
+			intro: `擴展<b>《${name}》</b>尚未開啟，請開啟後查看信息。（建議擴展添加info.json以在關閉時查看信息）`,
 			author: "未知",
 			diskURL: "",
 			forumURL: "",

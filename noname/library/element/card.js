@@ -103,11 +103,11 @@ export class Card extends HTMLDivElement {
 	isCard;
 	/**
 	 * @type { string[] }
-	 * 卡牌“占用的装备栏”
-	 * TODO: 补充对应的typings
+	 * 卡牌“佔用的裝備欄”
+	 * TODO: 補充對應的typings
 	 */
 	subtypes;
-	//执行销毁一张牌的钩子函数
+	//執行銷燬一張牌的鉤子函數
 	selfDestroy(event) {
 		if (this._selfDestroyed) return;
 		this._selfDestroyed = true;
@@ -115,10 +115,10 @@ export class Card extends HTMLDivElement {
 		this.delete();
 		const info = get.info(this, false);
 		if (!info) return;
-		if (info.destroyLog !== false) game.log(this, "被销毁了");
+		if (info.destroyLog !== false) game.log(this, "被銷燬了");
 		if (info.onDestroy) info.onDestroy(this, event);
 	}
-	//判断一张牌进入某个区域后是否会被销毁
+	//判斷一張牌進入某個區域後是否會被銷燬
 	willBeDestroyed(targetPosition, player, event) {
 		const destroyed = this.destroyed;
 		if (typeof destroyed == "function") {
@@ -139,7 +139,7 @@ export class Card extends HTMLDivElement {
 	hasDuYou(duYou, player) {
 		return game.hasDuYou(this, duYou, player);
 	}
-	//只针对【杀】起效果
+	//只針對【殺】起效果
 	addNature(nature) {
 		let natures = [];
 		if (!this.nature) this.nature = "";
@@ -149,7 +149,7 @@ export class Card extends HTMLDivElement {
 		natures.addArray(get.duYouList(nature));
 		this.nature = get.duYou(natures);
 		this.classList.add(nature);
-		let str = get.translation(this.nature) + "杀";
+		let str = get.translation(this.nature) + "殺";
 		this.node.name.innerText = str;
 		let name = get.name(this, false);
 		do {
@@ -172,7 +172,7 @@ export class Card extends HTMLDivElement {
 		if (!natures.length) delete this.nature;
 		else this.nature = get.duYou(natures);
 		this.classList.remove(nature);
-		let str = get.translation(this.nature) + "杀";
+		let str = get.translation(this.nature) + "殺";
 		this.node.name.innerText = str;
 		let name = get.name(this, false);
 		do {
@@ -508,7 +508,7 @@ export class Card extends HTMLDivElement {
 					if (nature != "stab") this.node.image.classList.add(nature);
 				}
 			}
-			name += "杀";
+			name += "殺";
 		}
 		this.node.name.innerHTML = name;
 		if (name.length >= 5) {
@@ -525,7 +525,7 @@ export class Card extends HTMLDivElement {
 				if (n) this.classList.add(n);
 			});
 			this.duYou = natures
-				//.filter(n => lib.nature.has(n)) //筛选出游戏内存在的属性
+				//.filter(n => lib.nature.has(n)) //篩選出遊戲內存在的屬性
 				.sort(lib.sort.nature)
 				.join(lib.natureSeparator);
 		} else if (this.duYou) {
@@ -544,22 +544,22 @@ export class Card extends HTMLDivElement {
 					var dist = lib.card[this.name].distance;
 					if (dist.attackFrom) {
 						added = true;
-						this.node.range.innerHTML = "范围: " + (-dist.attackFrom + 1);
+						this.node.range.innerHTML = "範圍: " + (-dist.attackFrom + 1);
 					}
 				}
 				if (!added) {
-					this.node.range.innerHTML = "范围: 1";
+					this.node.range.innerHTML = "範圍: 1";
 				}
 				break;
 			case "equip3":
 				if (info.distance && info.distance.globalTo) {
-					this.node.range.innerHTML = "防御: " + info.distance.globalTo;
+					this.node.range.innerHTML = "防禦: " + info.distance.globalTo;
 					this.node.name2.innerHTML += "+";
 				}
 				break;
 			case "equip4":
 				if (info.distance && info.distance.globalFrom) {
-					this.node.range.innerHTML = "进攻: " + -info.distance.globalFrom;
+					this.node.range.innerHTML = "進攻: " + -info.distance.globalFrom;
 					this.node.name2.innerHTML += "-";
 				}
 				break;
@@ -595,7 +595,7 @@ export class Card extends HTMLDivElement {
 		return this;
 	}
 	/**
-	 * 给此牌添加特定的cardtag（如添加应变条件）
+	 * 給此牌添加特定的cardtag（如添加應變條件）
 	 * @param { string } tag
 	 */
 	addCardtag(tag) {
@@ -616,7 +616,7 @@ export class Card extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 给此牌移除特定的cardtag（如移除应变条件）
+	 * 給此牌移除特定的cardtag（如移除應變條件）
 	 * @param { string } tag
 	 */
 	removeCardtag(tag) {
@@ -656,7 +656,7 @@ export class Card extends HTMLDivElement {
 	aiexclude() {
 		_status.event._aiexclude.add(this);
 	}
-	//为此牌添加知情者。参数可为数组，若参数为字符串'everyone'，则所有玩家均为知情者。
+	//為此牌添加知情者。參數可為數組，若參數為字符串'everyone'，則所有玩家均為知情者。
 	addKnower(player) {
 		if (!this._knowers) {
 			this._knowers = [];
@@ -691,13 +691,13 @@ export class Card extends HTMLDivElement {
 	clearKnowers() {
 		if (this._knowers) delete this._knowers;
 	}
-	//判断玩家对此牌是否知情。
+	//判斷玩家對此牌是否知情。
 	isKnownBy(player) {
-		if (["e", "j"].includes(get.position(this))) return true; //装备区或者判定区的牌，必知情。
+		if (["e", "j"].includes(get.position(this))) return true; //裝備區或者判定區的牌，必知情。
 		let owner = get.owner(this);
 		if (owner) {
 			if (owner == player) return true; //是牌主，必知情。
-			if (player.hasSkillTag("viewHandcard", null, owner, true)) return true; //有viewHandcard标签，必知情。
+			if (player.hasSkillTag("viewHandcard", null, owner, true)) return true; //有viewHandcard標籤，必知情。
 			if (owner.isUnderControl(true, player)) return true; //被操控，必知情。
 		}
 		if (get.is.shownCard(this)) return true; //此牌是明置牌，必知情。
@@ -784,7 +784,7 @@ export class Card extends HTMLDivElement {
 			image: node.querySelector(".image"),
 			gaintag: node.querySelector(".gaintag"),
 		};
-		// 只显示前缀为eternal_的标签
+		// 只顯示前綴為eternal_的標籤
 		var str = "";
 		for (var gi = 0; gi < this.gaintag.length; gi++) {
 			var tag = this.gaintag[gi];
@@ -822,7 +822,7 @@ export class Card extends HTMLDivElement {
 		if (this._uncheck.length == 0) this.classList.remove("uncheck");
 	}
 	/**
-	 * 判断此牌是否包含class样式，参数有多个时，只需一个满足。
+	 * 判斷此牌是否包含class樣式，參數有多個時，只需一個滿足。
 	 *
 	 * @param {string} className
 	 *
@@ -832,7 +832,7 @@ export class Card extends HTMLDivElement {
 		return Array.from(arguments).some(name => this.classList.contains(className));
 	}
 	/**
-	 * 判断此牌是否包含class样式，参数有多个时，需全部满足。
+	 * 判斷此牌是否包含class樣式，參數有多個時，需全部滿足。
 	 *
 	 * @param {string} className
 	 *
@@ -842,8 +842,8 @@ export class Card extends HTMLDivElement {
 		return Array.from(arguments).every(name => this.classList.contains(this.className));
 	}
 	/**
-	 * 返回一个键值，用于在缓存中作为键名。
-	 * @param { boolean } [similar] false统一前缀
+	 * 返回一個鍵值，用於在緩存中作為鍵名。
+	 * @param { boolean } [similar] false統一前綴
 	 * @returns {string} cacheKey
 	 */
 	getCacheKey(similar) {

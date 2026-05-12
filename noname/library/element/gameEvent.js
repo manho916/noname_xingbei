@@ -479,7 +479,7 @@ export class GameEvent {
 	}
 
 		/**
-	 * 在可await/异步情况下获取客机执行的结果
+	 * 在可await/異步情況下獲取客機執行的結果
 	 */
 	sendAsync() {
 		return new Promise(resolve => {
@@ -505,12 +505,12 @@ export class GameEvent {
 		return this;
 	}
 	/**
-	 * 获取事件的父节点。
-	 * 获取事件链上的指定事件。
-	 * 默认获取上一个父节点（核心）。
-	 * @param {number|string|((evt:GameEvent)=>boolean)} [level=1] 获取深度（number）/指定名字（string）/指定特征（function）
-	 * @param {boolean} [forced] 若获取不到节点，默认返回{}，若forced为true则返回null
-	 * @param {boolean} [includeSelf] 若level不是数字，指定搜索时是否包含事件本身
+	 * 獲取事件的父節點。
+	 * 獲取事件鏈上的指定事件。
+	 * 默認獲取上一個父節點（核心）。
+	 * @param {number|string|((evt:GameEvent)=>boolean)} [level=1] 獲取深度（number）/指定名字（string）/指定特徵（function）
+	 * @param {boolean} [forced] 若獲取不到節點，默認返回{}，若forced為true則返回null
+	 * @param {boolean} [includeSelf] 若level不是數字，指定搜索時是否包含事件本身
 	 * @returns {GameEvent|{}|null}
 	 */
 	getParent(level = 1, forced, includeSelf) {
@@ -983,7 +983,7 @@ export class GameEvent {
 	 */
 	content;
 	/**
-	 * content执行中的标志，如果inContent && finished则不执行子事件
+	 * content執行中的標誌，如果inContent && finished則不執行子事件
 	 * @type { boolean }
 	 */
 	#inContent = false;
@@ -1143,7 +1143,7 @@ export class GameEvent {
 					let next = this.content(this);
 					if (_status.withError || (_status.connectMode && !lib.config.debug)) {
 						next = next.catch(error => {
-							game.print("游戏出错：" + this.name);
+							game.print("遊戲出錯：" + this.name);
 							game.print(error.toString());
 							console.error(error);
 						});
@@ -1198,23 +1198,23 @@ export class GameEvent {
 		return this.#waitNext;
 	}
 	/**
-	 * 获取 Result 对象中的信息。
+	 * 獲取 Result 對象中的信息。
 	 * @example 
 	 * ```js
 	// 示例 1：
 	const chooseCardResult = await player.chooseCard().forResult();
-	// 获取整个结果对象，然后访问如 chooseCardResult.cards 等属性
+	// 獲取整個結果對象，然後訪問如 chooseCardResult.cards 等屬性
 	
 	// 示例 2：
 	const cards = await player.chooseCard().forResult('cards');
-	// 获取结果对象中 'cards' 属性的值
+	// 獲取結果對象中 'cards' 屬性的值
 	
 	// 示例 3：
 	const [success, cards, targets] = await player.chooseCardTarget().forResult('bool', 'cards', 'targets');
-	// 获取结果对象中多个属性的值
+	// 獲取結果對象中多個屬性的值
 	// - success 表示是否成功
-	// - cards 表示选择的卡片
-	// - targets 表示选择的目标
+	// - cards 表示選擇的卡片
+	// - targets 表示選擇的目標
 	```
 	 * @template {keyof Result} T
 	 * @this GameEvent
@@ -1236,30 +1236,30 @@ export class GameEvent {
 		return Array.from(params).map(key => this.result[key]);
 	}
 	/**
-	 * 返回result中的bool项
+	 * 返回result中的bool項
 	 */
 	forResultBool() {
 		return this.forResult("bool");
 	}
 
 	/**
-	 * 返回result中的targets项。
+	 * 返回result中的targets項。
 	 */
 	forResultTargets() {
 		return this.forResult("targets");
 	}
 
 	/**
-	 * 返回result中的cards项
+	 * 返回result中的cards項
 	 */
 	forResultCards() {
 		return this.forResult("cards");
 	}
 
 	/**
-	 * 返回result中的card项
+	 * 返回result中的card項
 	 *
-	 * @returns {Promise<VCard>|Promise<Card>} 返回的card项。
+	 * @returns {Promise<VCard>|Promise<Card>} 返回的card項。
 	 *
 	 */
 	forResultCard() {
@@ -1267,40 +1267,40 @@ export class GameEvent {
 	}
 
 	/**
-	 * 返回result中的control项。
+	 * 返回result中的control項。
 	 */
 	forResultControl() {
 		return this.forResult("control");
 	}
 
 	/**
-	 * 返回result中的links项。
+	 * 返回result中的links項。
 	 */
 	forResultLinks() {
 		return this.forResult("links");
 	}
 
 	/**
-	 * 在某个异步事件中调试变量信息
+	 * 在某個異步事件中調試變量信息
 	 *
-	 * 注: 在调试步骤中`定义的变量只在当前输入的语句有效`
+	 * 注: 在調試步驟中`定義的變量只在當前輸入的語句有效`
 	 *
 	 * @example
-	 * 在技能中调试技能content相关的信息
+	 * 在技能中調試技能content相關的信息
 	 * ```js
 	 * await event.debugger();
 	 * ```
-	 * 在技能中调试触发此技能事件的相关的信息
+	 * 在技能中調試觸發此技能事件的相關的信息
 	 * ```js
 	 * await trigger.debugger();
 	 * ```
 	 */
 	async debugger() {
 		if (!lib.config.dev) return;
-		if (security.isSandboxRequired()) throw new Error("当前模式下禁止调试");
+		if (security.isSandboxRequired()) throw new Error("當前模式下禁止調試");
 		const runCode = function (event, code) {
 			try {
-				// 为了使玩家调试时使用var player=xxx时不报错，故使用var
+				// 為了使玩家調試時使用var player=xxx時不報錯，故使用var
 				// var { player, _trigger: trigger, _result: result } = event;
 				var context = {
 					event,
@@ -1315,7 +1315,7 @@ export class GameEvent {
 		}.bind(window);
 
 		const input = async () => {
-			const result = await game.promises.prompt("debugger调试");
+			const result = await game.promises.prompt("debugger調試");
 
 			if (result === false) return false;
 
@@ -1335,7 +1335,7 @@ export class GameEvent {
 		return this;
 	}
 	/**
-	 * @param {num} num 伤害改变量 
+	 * @param {num} num 傷害改變量 
 	 */
 	changeDamageNum(num){
 		if(typeof num != 'number') num = 1;
@@ -1369,7 +1369,7 @@ export class GameEvent {
 		}
 	}
 	/** 
-	 * 设置攻击效果 主要在攻击设置/攻击前时机调用
+	 * 設置攻擊效果 主要在攻擊設置/攻擊前時機調用
 	*/
 	qiangZhiMingZhong(){
 		if(this.canYingZhan!=undefined){

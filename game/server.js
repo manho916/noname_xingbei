@@ -222,7 +222,7 @@ function attachLobbyWebSocket(httpServer) {
 	};
 	var util = {
 		getNickname: function (str) {
-			return typeof str == "string" ? str.slice(0, 12) : "无名玩家";
+			return typeof str == "string" ? str.slice(0, 12) : "無名玩家";
 		},
 		isBanned: function (str) {
 			for (var i of bannedKeyWords) {

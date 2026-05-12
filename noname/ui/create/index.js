@@ -18,7 +18,7 @@ export class Create {
 	 */
 	videoNode;
 	/**
-	 * 创建身份牌实例
+	 * 創建身份牌實例
 	 */
 	identityCard(identity, position, noclick) {
 		const card = ui.create.card(position, "noclick", noclick);
@@ -41,7 +41,7 @@ export class Create {
 		return card;
 	}
 	/**
-	 * 让卡牌旋转
+	 * 讓卡牌旋轉
 	 */
 	cardSpinning(card) {
 		if (lib.config.cardback_style != "default") {
@@ -75,7 +75,7 @@ export class Create {
 		onEnd01();
 	}
 	/**
-	 * 旋转的身份牌！
+	 * 旋轉的身份牌！
 	 */
 	spinningIdentityCard(identity, dialog) {
 		const card = ui.create.identityCard(identity);
@@ -87,7 +87,7 @@ export class Create {
 		}, 50);
 	}
 	/**
-	 * 创建codemirror编辑器
+	 * 創建codemirror編輯器
 	 * @param {HTMLDivElement} container
 	 * @param {Function} saveInput
 	 */
@@ -95,7 +95,7 @@ export class Create {
 		const createList = [];
 		const containerDelete = container.delete;
 		const editorpage = ui.create.div(container);
-		//删除container的时候，删除创建的ul列表
+		//刪除container的時候，刪除創建的ul列表
 		container.delete = function () {
 			for (let i = createList.length - 1; i >= 0; i--) {
 				createList[i].parentNode && createList[i].parentNode.removeChild(createList[i]);
@@ -105,7 +105,7 @@ export class Create {
 			});
 			containerDelete.apply(this, arguments);
 		};
-		//创建ul列表
+		//創建ul列表
 		const createMenu = function (pos, self, List, click) {
 			if (!self || self == window) return;
 			const parent = self.parentNode;
@@ -180,13 +180,13 @@ export class Create {
 			ui.window.appendChild(ul);
 			return ul;
 		};
-		//关闭ul列表
+		//關閉ul列表
 		const closeMenu = function () {
 			const ul = this.ul;
 			if (!ul) return false;
 			if (ul.parentNode) ul.parentNode.removeChild(ul);
 			this.style.background = "";
-			//创建后不用删除了，除非以后要动态加载。
+			//創建後不用刪除了，除非以後要動態加載。
 			//delete this.ul;
 			createList.remove(ul);
 			return ul;
@@ -198,7 +198,7 @@ export class Create {
 			delete window.saveNonameInput;
 		});
 		const saveConfig = ui.create.div(".editbutton", "保存", editorpage, saveInput);
-		const theme = ui.create.div(".editbutton", "主题", editorpage, function () {
+		const theme = ui.create.div(".editbutton", "主題", editorpage, function () {
 			if (!this || this == window) return;
 			if (this.ul && this.ul.parentNode) {
 				return closeMenu.call(this);
@@ -206,15 +206,15 @@ export class Create {
 			//this
 			const self = this;
 			if (!this.ul) {
-				//主题列表
+				//主題列表
 				const list = ["mdn-like", "mbo"];
-				//正在使用的主题
+				//正在使用的主題
 				const active = container.editor.options.theme;
-				//排个序
+				//排個序
 				list.remove(active).splice(0, 0, active);
 				//元素位置
 				const pos = self.getBoundingClientRect();
-				//点击事件
+				//點擊事件
 				const click = function (e) {
 					const theme = this.innerHTML;
 					container.editor.setOption("theme", theme);
@@ -228,7 +228,7 @@ export class Create {
 				createMenu(null, self);
 			}
 		});
-		const edit = ui.create.div(".editbutton", "编辑", editorpage, function () {
+		const edit = ui.create.div(".editbutton", "編輯", editorpage, function () {
 			if (!this || this == window) return;
 			if (this.ul && this.ul.parentNode) {
 				return closeMenu.call(this);
@@ -236,7 +236,7 @@ export class Create {
 			const self = this;
 			if (!this.ul) {
 				const pos = this.getBoundingClientRect();
-				const list = ["撤销        Ctrl+Z", "恢复撤销    Ctrl+Y"];
+				const list = ["撤銷        Ctrl+Z", "恢復撤銷    Ctrl+Y"];
 				const click = function (e) {
 					const num = this.innerHTML.indexOf("Ctrl");
 					const inner = this.innerHTML.slice(num).replace("+", "-");
@@ -250,7 +250,7 @@ export class Create {
 				createMenu(null, self);
 			}
 		});
-		const fontSize = ui.create.div(".editbutton", "字号", editorpage, function () {
+		const fontSize = ui.create.div(".editbutton", "字號", editorpage, function () {
 			if (!this || this == window) return;
 			if (this.ul && this.ul.parentNode) {
 				return closeMenu.call(this);
@@ -282,8 +282,8 @@ export class Create {
 		return editor;
 	}
 	/**
-	 * 弹出提示。
-	 * @param {string} message 弹出的文字
+	 * 彈出提示。
+	 * @param {string} message 彈出的文字
 	 */
 	toast(message) {
 		const toastContainer =
@@ -330,7 +330,7 @@ export class Create {
 		let cardPosition = get.position(card);
 		getApplyNode._tempName = node;
 		if (cardTempNameConfig != "image") {
-			//清空，避免和下面的image部分有冲突
+			//清空，避免和下面的image部分有衝突
 			node.innerHTML = "";
 			datasetNature = "fire";
 			if ((cardPosition === "e" || cardPosition === "j") && card.viewAs && card.viewAs != card.name) {
@@ -433,7 +433,7 @@ export class Create {
 					bg.setBackground(get.dynamicVariable(lib.card[cardName].image, card));
 				}
 			} else {
-				console.warn("卡牌图片解析失败");
+				console.warn("卡牌圖片解析失敗");
 			}
 			if (datasetNature.length > 0) {
 				node.classList.add(datasetNature);
@@ -454,7 +454,7 @@ export class Create {
 		ui.roombase.classList.add("scroll2");
 		ui.roombase.classList.add("noupdate");
 		for (var i = 0; i < list.length; i++) {
-			var player = ui.roombase.add('<div class="popup text pointerdiv" style="width:calc(100% - 10px);display:inline-block;white-space:nowrap">空房间</div>');
+			var player = ui.roombase.add('<div class="popup text pointerdiv" style="width:calc(100% - 10px);display:inline-block;white-space:nowrap">空房間</div>');
 			player.roomindex = i;
 			player.initRoom = lib.element.Player.prototype.initRoom;
 			player.addEventListener("click", ui.click.connectroom);
@@ -683,7 +683,7 @@ export class Create {
 	}
 	exit() {
 		if (!ui.exit) {
-			ui.exit = ui.create.control("退出房间", ui.click.exit);
+			ui.exit = ui.create.control("退出房間", ui.click.exit);
 		}
 	}
 	connecting(bool) {
@@ -697,7 +697,7 @@ export class Create {
 			ui.window.classList.add("connecting");
 			ui.connecting = ui.create.div(".fullsize.connectlayer");
 			document.body.appendChild(ui.connecting);
-			ui.create.div("", "正在重连...", ui.connecting);
+			ui.create.div("", "正在重連...", ui.connecting);
 			ui.connecting.splashtimeout = setTimeout(function () {
 				if (ui.connecting) {
 					delete ui.connecting.splashtimeout;
@@ -712,7 +712,7 @@ export class Create {
 	}
 	roomInfo() {
 		var chat = ui.create.system(
-			game.online ? "房间信息" : "房间设置",
+			game.online ? "房間信息" : "房間設置",
 			function () {
 				if (!game.online || game.onlinezhu) {
 					ui.click.connectMenu();
@@ -766,19 +766,19 @@ export class Create {
 		}
 		return select;
 	}
-	/** 创建菜单 */
+	/** 創建菜單 */
 	menu = menu;
-	/** 创建“开始”菜单 */
+	/** 創建“開始”菜單 */
 	startMenu = startMenu;
-	/** 创建“选项”菜单 */
+	/** 創建“選項”菜單 */
 	optionsMenu = optionsMenu;
-	/** 创建“武将”菜单 */
+	/** 創建“武將”菜單 */
 	characterPackMenu = characterPackMenu;
-	/** 创建“卡牌”菜单 */
+	/** 創建“卡牌”菜單 */
 	cardPackMenu = cardPackMenu;
-	/** 创建“扩展”菜单 */
+	/** 創建“擴展”菜單 */
 	extensionMenu = extensionMenu;
-	/** 创建“其他”菜单 */
+	/** 創建“其他”菜單 */
 	otherMenu = otherMenu;
 	statictable() {
 		var str, row, col, position, position2, fixed, style, divposition;
@@ -990,7 +990,7 @@ export class Create {
 			clickCapt.call(packnode.firstChild);
 		}
 
-		var node = ui.create.div(".dialogbutton.menubutton.large", "筛选", packnode);
+		var node = ui.create.div(".dialogbutton.menubutton.large", "篩選", packnode);
 		return dialog;
 	}
 	characterDialog() {
@@ -1030,7 +1030,7 @@ export class Create {
 		const groups = [];
 		/** @type { Dialog } */
 		var dialog;
-		/** 筛选武将的信息 */
+		/** 篩選武將的信息 */
 		var node = ui.create.div(".caption.pointerspan");
 		if (get.is.phoneLayout()) {
 			node.style.fontSize = "30px";
@@ -1045,7 +1045,7 @@ export class Create {
 			}
 			capt = capt.toLowerCase();
 			if (!/[a-z]/i.test(capt)) {
-				capt = "自定义";
+				capt = "自定義";
 			}
 			return capt;
 		};
@@ -1087,7 +1087,7 @@ export class Create {
 		});
 		groups.sort(lib.sort.group);
 		if (!thisiscard) {
-			namecapt.remove("自定义");
+			namecapt.remove("自定義");
 			namecapt.push("newline");
 			for (var i in lib.characterDialogGroup) {
 				namecapt.push(i);
@@ -1096,7 +1096,7 @@ export class Create {
 		var newlined = false;
 		var newlined2;
 		var packsource;
-		/** 点击筛选中的按钮 */
+		/** 點擊篩選中的按鈕 */
 		var clickCapt = function (e) {
 			if (_status.dragged) return;
 			if (dialog.currentcapt2 == "最近" && dialog.currentcaptnode2 != this && !dialog.currentcaptnode2.inited) {
@@ -1271,7 +1271,7 @@ export class Create {
 			var span = document.createElement("span");
 			newlined.appendChild(span);
 			span.style.margin = "8px";
-			/** 点击筛选某势力的武将 */
+			/** 點擊篩選某勢力的武將 */
 			var clickGroup = function () {
 				if (_status.dragged) return;
 				if (dialog.currentcapt2 == "最近" && dialog.currentcaptnode2 != this && !dialog.currentcaptnode2.inited) {
@@ -1353,7 +1353,7 @@ export class Create {
 			};
 			if (get.is.phoneLayout() && lib.config.filternode_button) {
 				newlined.style.marginTop = "";
-				packsource.innerHTML = "筛选";
+				packsource.innerHTML = "篩選";
 				filternode = ui.create.div(".popup-container.filter-character.modenopause");
 				ui.create.div(filternode);
 				filternode.listen(function (e) {
@@ -1502,7 +1502,7 @@ export class Create {
 		} else {
 			list.sort(lib.sort.character);
 		}
-		// 自由选将
+		// 自由選將
 		dialog = ui.create.dialog("hidden");
 		dialog.classList.add("noupdate");
 		dialog.classList.add("scroll1");
@@ -1514,7 +1514,7 @@ export class Create {
 			_status.clicked2 = true;
 		});
 		if (heightset) {
-			//这里如果dialog的高度较低的话，会显示不全下面的分页按钮，所以我增加了50px，后面遇到高度问题，可以研究更完美的方案，在这里更改。
+			//這裡如果dialog的高度較低的話，會顯示不全下面的分頁按鈕，所以我增加了50px，後面遇到高度問題，可以研究更完美的方案，在這裡更改。
 			dialog.style.height = (game.layout == "long2" || game.layout == "nova" ? 380 : 350) + 50 + "px";
 			dialog._scrollset = true;
 		}
@@ -1548,8 +1548,8 @@ export class Create {
 			fontSize: "21px"
 		});
 		const div = ui.create.div(".searcher.find");
-		input.placeholder = "支持正则搜索";
-		//使用click事件搜索，因为用input事件，难以解决按下a键会触发自动托管的bug
+		input.placeholder = "支持正則搜索";
+		//使用click事件搜索，因為用input事件，難以解決按下a鍵會觸發自動託管的bug
 		let find = ui.create.button(["find", "搜索"], "tdnodes");
 		find.style.display = "inline";
 		const updatePagination = () => {
@@ -1590,7 +1590,7 @@ export class Create {
 				updateFind();
 			}
 		};
-		//阻止冒泡以防止触发窗口被拖动而无法选中文字
+		//阻止冒泡以防止觸發窗口被拖動而無法選中文字
 		input.onmousedown = function (e) {
 			e.stopPropagation();
 		};
@@ -1661,7 +1661,7 @@ export class Create {
 			}
 		}
 		if (!expandall) {
-			if (!thisiscard && (lib.characterDialogGroup[lib.config.character_dialog_tool] || lib.config.character_dialog_tool == "自创")) {
+			if (!thisiscard && (lib.characterDialogGroup[lib.config.character_dialog_tool] || lib.config.character_dialog_tool == "自創")) {
 				clickCapt.call(node[lib.config.character_dialog_tool]);
 			}
 		}
@@ -1670,20 +1670,20 @@ export class Create {
 			// @ts-ignore
 			const buttons = dialog.content.querySelector(".buttons");
 			const array = dialog.buttons.filter(item => !item.classList.contains("nodisplay") && item.style.display !== 'none');
-			// 传入初始配置 + 渲染元素
+			// 傳入初始配置 + 渲染元素
 			dialog.addPagination({
-				// 数据
+				// 數據
 				data: array,
-				// 总页数(向上取整)
+				// 總頁數(向上取整)
 				totalPageCount: Math.ceil(array.length / dialog.paginationMaxCount.get("character")),
 				// 父元素
 				container: dialog.content,
-				// 添加到容器的哪个子元素后面
+				// 添加到容器的哪個子元素後面
 				insertAfter: buttons,
-				// 回调修改数据
+				// 回調修改數據
 				onPageChange: state => {
 					const { pageNumber, data } = state;
-					// 设一个dialog一页显示10张武将牌
+					// 設一個dialog一頁顯示10張武將牌
 					data.forEach((item, index) => {
 						const maxCount = dialog.paginationMaxCount.get("character");
 						if (index >= (pageNumber - 1) * maxCount && index < pageNumber * maxCount) {
@@ -1693,7 +1693,7 @@ export class Create {
 						}
 					});
 				},
-				// 触发什么事件来更改当前页数，默认为click
+				// 觸發什麼事件來更改當前頁數，默認為click
 				changePageEvent: "click",
 			});
 		}
@@ -1920,20 +1920,20 @@ export class Create {
 		if (window.isNonameServer) {
 			ui.window.classList.add("server");
 			var serverinfo = ui.create.div(".serverinfo", ui.window);
-			ui.create.div("", "服务器正在运行", serverinfo);
+			ui.create.div("", "服務器正在運行", serverinfo);
 			var serverinfotable = ui.create.table(2, 2, ui.create.div(serverinfo));
 			serverinfotable.style.display = "inline-block";
-			serverinfotable.firstChild.firstChild.innerHTML = "房间人数：";
+			serverinfotable.firstChild.firstChild.innerHTML = "房間人數：";
 			serverinfotable.firstChild.lastChild.id = "server_count";
 			serverinfotable.firstChild.lastChild.innerHTML = "0";
-			serverinfotable.lastChild.firstChild.innerHTML = "房间状态：";
+			serverinfotable.lastChild.firstChild.innerHTML = "房間狀態：";
 			serverinfotable.lastChild.lastChild.id = "server_status";
-			serverinfotable.lastChild.lastChild.innerHTML = "空闲";
+			serverinfotable.lastChild.lastChild.innerHTML = "空閒";
 			ui.create.div(
 				".menubutton.large",
-				"关闭服务器",
+				"關閉服務器",
 				function () {
-					if (_status.gameStarted && !confirm("关闭服务器当前进行的游戏将终止且不可恢复，是否确定关闭？")) {
+					if (_status.gameStarted && !confirm("關閉服務器當前進行的遊戲將終止且不可恢復，是否確定關閉？")) {
 						return;
 					}
 					localStorage.removeItem(lib.configprefix + "asserver");
@@ -2260,10 +2260,10 @@ export class Create {
 		ui.system1 = ui.create.div("#system1", ui.system);
 		ui.system2 = ui.create.div("#system2", ui.system);
 
-		ui.replay = ui.create.system("重来", game.reload, true);
+		ui.replay = ui.create.system("重來", game.reload, true);
 		ui.replay.id = "restartbutton";
-		ui.config2 = ui.create.system("选项", ui.click.config);
-		ui.pause = ui.create.system("暂停", ui.click.pause);
+		ui.config2 = ui.create.system("選項", ui.click.config);
+		ui.pause = ui.create.system("暫停", ui.click.pause);
 		ui.pause.id = "pausebutton";
 		if (!_status.video) {
 			ui.pause.hide();
@@ -2277,11 +2277,11 @@ export class Create {
 		ui.cardPileButton = ui.create.system("牌堆", null, true);
 		ui.cardPileButton.style.display = "none";
 		lib.setPopped(ui.cardPileButton, ui.click.cardPileButton, 220);
-		ui.wuxie = ui.create.system("不询问无懈", ui.click.wuxie, true);
+		ui.wuxie = ui.create.system("不詢問無懈", ui.click.wuxie, true);
 		if (!lib.config.touchscreen) {
 			lib.setPopped(ui.config2, ui.click.pauseconfig, 170);
 		}
-		ui.auto = ui.create.system("托管", ui.click.auto);
+		ui.auto = ui.create.system("託管", ui.click.auto);
 		if (!game.syncMenu) {
 			ui.config2.classList.add("hidden");
 			ui.config2.style.transition = "all 0.5s";
@@ -2297,7 +2297,7 @@ export class Create {
 			});
 		}
 		ui.auto.id = "autobutton";
-		ui.autonode = ui.create.div("#autonode", "<div>托管中...</div>", ui.arena);
+		ui.autonode = ui.create.div("#autonode", "<div>託管中...</div>", ui.arena);
 		ui.autonode.listen(ui.click.auto);
 		if (lib.config.mode == "connect") {
 			ui.auto.hide();
@@ -2353,9 +2353,9 @@ export class Create {
 		if (!lib.config.show_sortcard) {
 			ui.sortCard.style.display = "none";
 		}
-		//------添加记牌器 by Curpond-------
+		//------添加記牌器 by Curpond-------
 		ui.deckMonitor = ui.create.system(
-			"记牌器",
+			"記牌器",
 			async function () {
 				function getResult() {
 					return new Promise((resolve, reject) => {
@@ -2401,7 +2401,7 @@ export class Create {
 				let flag = true;
 				let titleContainer = ui.create.div(".title", container, function (e) {
 					if (flag) {
-						statistic(discardPile, "弃牌牌堆");
+						statistic(discardPile, "棄牌牌堆");
 					} else {
 						statistic(drawPile, "摸牌牌堆");
 					}
@@ -2410,7 +2410,7 @@ export class Create {
 				let contentContainer = ui.create.div(".contentContainer", container);
 				statistic(drawPile, "摸牌牌堆");
 				function statistic(cards, title) {
-					titleContainer.innerHTML = `${title}【${cards.length}张】 <span>(点击切换)</span>`;
+					titleContainer.innerHTML = `${title}【${cards.length}張】 <span>(點擊切換)</span>`;
 					contentContainer.innerHTML = "";
 					renderNumberColumn();
 					renderSuitColumn();
@@ -2420,7 +2420,7 @@ export class Create {
 						for (let i = 1; i <= 13; i++) {
 							if (!numberResult[i]) numberResult[i] = [];
 						}
-						createColumnContainer(numberResult, "点数", cards.length);
+						createColumnContainer(numberResult, "點數", cards.length);
 					}
 					function renderSuitColumn() {
 						let suitResult = Object.groupBy(cards, card => get.suit(card));
@@ -2455,7 +2455,7 @@ export class Create {
 									result,
 									Object.groupBy(typeResult[key], card => {
 										if (get.name(card) !== "sha") return;
-										return get.translation(get.color(card)) + "杀";
+										return get.translation(get.color(card)) + "殺";
 									})
 								);
 								Object.assign(
@@ -2464,7 +2464,7 @@ export class Create {
 										if (get.name(card) !== "sha") return;
 										let perfix = get.translation(get.duYou(card));
 										if (perfix == "") perfix = "普通";
-										return perfix + "杀";
+										return perfix + "殺";
 									})
 								);
 								// @ts-ignore
@@ -2537,7 +2537,7 @@ export class Create {
 
 		//---------------------------------
 		ui.playerids = ui.create.system(
-			"显示身份",
+			"顯示身份",
 			function () {
 				if (game.showIdentity) {
 					game.showIdentity();
@@ -2631,10 +2631,10 @@ export class Create {
 		ui.create.div(ui.shortcut, function (e) {
 			e.stopPropagation();
 		});
-		ui.create.div(".menubutton.round", "<span>重来</span>", ui.shortcut, game.reload).dataset.position = 1;
+		ui.create.div(".menubutton.round", "<span>重來</span>", ui.shortcut, game.reload).dataset.position = 1;
 		ui.create.div(".menubutton.round", "<span>退出</span>", ui.shortcut, game.exit).dataset.position = 3;
-		ui.create.div(".menubutton.round", "<span>记录</span>", ui.shortcut, ui.click.pause).dataset.position = 4;
-		ui.shortcut.autobutton = ui.create.div(".menubutton.round", "<span>托管</span>", ui.shortcut, ui.click.auto);
+		ui.create.div(".menubutton.round", "<span>記錄</span>", ui.shortcut, ui.click.pause).dataset.position = 4;
+		ui.shortcut.autobutton = ui.create.div(".menubutton.round", "<span>託管</span>", ui.shortcut, ui.click.auto);
 		ui.shortcut.autobutton.dataset.position = 2;
 		ui.favmodelist = ui.create.div(".favmodelist", ui.shortcut);
 		ui.favmodelist.update = function () {
@@ -2686,11 +2686,11 @@ export class Create {
 		});
 		ui.favmode.style.display = "none";
 		ui.favmodelist.update();
-		// ui.create.div('.menubutton.round','<span>菜单</span>',ui.shortcut,ui.click.config).dataset.position=5;
+		// ui.create.div('.menubutton.round','<span>菜單</span>',ui.shortcut,ui.click.config).dataset.position=5;
 
 		if (_status.connectMode) {
 			ui.playerids.remove();
-			ui.pause.innerHTML = "记录";
+			ui.pause.innerHTML = "記錄";
 		}
 		setTimerPosition.call(ui.timer);
 		ui.arena.appendChild(ui.timer);
@@ -2724,17 +2724,17 @@ export class Create {
 			lib.onfree.push(function () {
 				setTimeout(function () {
 					if (!game.download) {
-						game.saveConfig("asset_version", "无");
+						game.saveConfig("asset_version", "無");
 					} else {
 						var func = function () {
-							if (confirm("是否下载图片和字体素材？（约90MB）")) {
+							if (confirm("是否下載圖片和字體素材？（約90MB）")) {
 								if (!ui.arena.classList.contains("menupaused")) {
 									ui.click.configMenu();
 									ui.click.menuTab("其它");
 								}
 								setTimeout(game.checkForAssetUpdate, 500);
 							} else {
-								game.saveConfig("asset_version", "无");
+								game.saveConfig("asset_version", "無");
 							}
 						};
 						if (_status.new_tutorial) {
@@ -2760,7 +2760,7 @@ export class Create {
 			setTimeout(function () {
 				var node = ui.create.pause().addTempClass("start");
 				node.appendChild(ui.sidebar);
-				node.firstChild.innerHTML = "正在测试";
+				node.firstChild.innerHTML = "正在測試";
 				node.removeEventListener("click", ui.click.resume);
 			}, 500);
 		}
@@ -2813,7 +2813,7 @@ export class Create {
 		if (_status.connectMode) {
 			node2.innerHTML = "";
 		} else {
-			node2.innerHTML = "已暂停";
+			node2.innerHTML = "已暫停";
 		}
 
 		// node2.listen(function(){
@@ -3035,7 +3035,7 @@ export class Create {
 					var intro = ui.create.div(".button.replaceButton", node);
 					intro[lib.experimental.symbol.itemType] = "button";
 					node.node.replaceButton = intro;
-					intro.innerHTML = "切换";
+					intro.innerHTML = "切換";
 					intro._node = node;
 					intro.addEventListener(lib.config.touchscreen ? "touchend" : "click", function () {
 						_status.tempNoButton = true;
@@ -3169,7 +3169,7 @@ export class Create {
 		ipbar.style.borderRadius = "2px";
 		ipbar.style.position = "relative";
 
-		var button = ui.create.div(".menubutton.large.highlight.connectbutton.connectbutton1.pointerdiv", game.online ? "退出联机" : "开始游戏", ui.window, function () {
+		var button = ui.create.div(".menubutton.large.highlight.connectbutton.connectbutton1.pointerdiv", game.online ? "退出聯機" : "開始遊戲", ui.window, function () {
 			if (button.clicked) return;
 			if (game.online) {
 				if (game.onlinezhu) {
@@ -3186,7 +3186,7 @@ export class Create {
 					if (!i.nickname && !i.classList.contains("unselectable2")) num++;
 				}
 				if (num >= lib.configOL.number - 1) {
-					alert("至少要有两名玩家才能开始游戏！");
+					alert("至少要有兩名玩家才能開始遊戲！");
 					return;
 				}
 				game.resume();
@@ -3200,8 +3200,8 @@ export class Create {
 			button.clicked = true;
 		});
 
-		var shareButton = ui.create.div(".menubutton.large.highlight.connectbutton.connectbutton2.pointerdiv", "分享房间", ui.window, function () {
-			var text = `无名杀-联机-${lib.translate[get.mode()]}-${game.connectPlayers.filter(p => p.avatar).length}/${game.connectPlayers.filter(p => !p.classList.contains("unselectable2")).length}\n${get.connectNickname()}邀请你加入${game.roomId}房间\n联机地址:${game.ip}\n请先通过游戏内菜单-开始-联机中启用“读取邀请链接”选项`;
+		var shareButton = ui.create.div(".menubutton.large.highlight.connectbutton.connectbutton2.pointerdiv", "分享房間", ui.window, function () {
+			var text = `無名殺-聯機-${lib.translate[get.mode()]}-${game.connectPlayers.filter(p => p.avatar).length}/${game.connectPlayers.filter(p => !p.classList.contains("unselectable2")).length}\n${get.connectNickname()}邀請你加入${game.roomId}房間\n聯機地址:${game.ip}\n請先通過遊戲內菜單-開始-聯機中啟用“讀取邀請鏈接”選項`;
 			window.focus();
 			const fallbackCopyTextToClipboard = function (text) {
 				const textArea = document.createElement("textarea");
@@ -3223,10 +3223,10 @@ export class Create {
 					const successful = document.execCommand("copy");
 					if (!successful) {
 						console.error("Unable to copy using execCommand");
-						game.promises.prompt(`###分享内容复制失败，请自行复制以下内容###${text}`, true);
+						game.promises.prompt(`###分享內容複製失敗，請自行復制以下內容###${text}`, true);
 					}
 					else {
-						game.alert("分享内容复制成功");
+						game.alert("分享內容複製成功");
 					}
 				} catch (err) {
 					console.error("Unable to copy using execCommand:", err);
@@ -3235,7 +3235,7 @@ export class Create {
 			};
 			if ("clipboard" in navigator) {
 				navigator.clipboard.writeText(text).then(() => {
-					game.alert("分享内容复制成功");
+					game.alert("分享內容複製成功");
 				}).catch(() => {
 					fallbackCopyTextToClipboard(text);
 				});
@@ -3367,7 +3367,7 @@ export class Create {
 		}
 		game.broadcastAll(
 			function (num, pile, top, cardtag, inpile2) {
-				if (ui.cardPileNumber) ui.cardPileNumber.innerHTML = "0轮 剩余牌: " + num;
+				if (ui.cardPileNumber) ui.cardPileNumber.innerHTML = "0輪 剩餘牌: " + num;
 				lib.inpile = pile;
 				_status.pileTop = top;
 				_status.cardtag = cardtag;
@@ -3381,7 +3381,7 @@ export class Create {
 		);
 	}
 	/**
-	 * 创建分页类
+	 * 創建分頁類
 	 * @param {Partial<PaginationState>} options 
 	 */
 	pagination(options) {

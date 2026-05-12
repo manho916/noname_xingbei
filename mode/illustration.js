@@ -6,7 +6,7 @@ export default () => {
         start:function(){
             var characterDialog=function() {
                 var characterDialogGroup=Object.assign({},lib.characterDialogGroup);
-                // 添加"最近"分组，显示最近使用的角色
+                // 添加"最近"分組，顯示最近使用的角色
                 characterDialogGroup['最近']=function (name, capt) {
                     var list = get.config("recentCharacter",'xingBei') || [];
                     return list.includes(name) ? capt : null;
@@ -19,7 +19,7 @@ export default () => {
                 var namecapt = [];
                 /** @type { Dialog } */
                 var dialog;
-                /** 筛选武将的信息 */
+                /** 篩選武將的信息 */
                 var node = ui.create.div(".caption.pointerspan");
                 if (get.is.phoneLayout()) {
                     node.style.fontSize = "30px";
@@ -33,7 +33,7 @@ export default () => {
                     }
                     capt = capt.toLowerCase();
                     if (!/[a-z]/i.test(capt)) {
-                        capt = "自定义";
+                        capt = "自定義";
                     }
                     return capt;
                 };
@@ -41,29 +41,29 @@ export default () => {
                 var allCharacterDict = {};
 
                 for(var pack in lib.characterPack){
-                    // 检查是否查看所有角色，如果不是则只显示已启用的角色包
+                    // 檢查是否查看所有角色，如果不是則只顯示已啟用的角色包
                     if(!get.config('viewAll') && !lib.config.characters.includes(pack)) continue;
                     
                     for (var i in lib.characterPack[pack]) {
                         allCharacterDict[i] = lib.characterPack[pack][i];
-                        // 角色可用性检查
+                        // 角色可用性檢查
                         if (lib.characterPack[pack][i][4]) {
-                            if (lib.characterPack[pack][i].isMinskin) continue;        // 跳过皮肤角色
+                            if (lib.characterPack[pack][i].isMinskin) continue;        // 跳過皮膚角色
                             /*
                             if (lib.characterPack[pack][i].isBoss || lib.characterPack[pack][i].isHiddenBoss) {
-                                if (lib.config.mode == "boss") continue;              // Boss模式检查
+                                if (lib.config.mode == "boss") continue;              // Boss模式檢查
                                 if (!lib.characterPack[pack][i].isBossAllowed) continue;
                             }*/
-                            if (lib.characterPack[pack][i].isUnseen) continue;             // 跳过不可见角色
+                            if (lib.characterPack[pack][i].isUnseen) continue;             // 跳過不可見角色
                         }
                         
                         list.push(i);
-                        // 添加到势力分组
+                        // 添加到勢力分組
                         if (get.is.double(i)) {
-                            groups.add("double");  // 双势力角色
+                            groups.add("double");  // 雙勢力角色
                         } else groups.add(lib.characterPack[pack][i][1]);
                         
-                        // 添加首字母分类
+                        // 添加首字母分類
                         if (namecapt.indexOf(getCapt(i)) == -1) {
                             namecapt.push(getCapt(i));
                         }
@@ -84,13 +84,13 @@ export default () => {
                 var newlined2;
                 var packsource;
                 var selectPack=[];
-                /** 点击筛选中的按钮 */
-                //点字母和收藏和最近
+                /** 點擊篩選中的按鈕 */
+                //點字母和收藏和最近
                 var clickCapt = function (e) {
                     if (_status.dragged) return;
                     if (dialog.currentcapt2 == "最近" && dialog.currentcaptnode2 != this && !dialog.currentcaptnode2.inited) {
                         dialog.currentcapt2 = null;
-                        dialog.currentcaptnode2.classList.remove("thundertext");//移除被点击的效果
+                        dialog.currentcaptnode2.classList.remove("thundertext");//移除被點擊的效果
                         dialog.currentcaptnode2.inited = true;
                         dialog.currentcaptnode2 = null;
                     }
@@ -228,7 +228,7 @@ export default () => {
                     updatePagination();
                     if (e) e.stopPropagation();
                 };
-                // 创建字母表和收藏/最近
+                // 創建字母表和收藏/最近
                 for (i = 0; i < namecapt.length; i++) {
                     if (namecapt[i] == "newline") {
                         newlined = document.createElement("div");
@@ -269,7 +269,7 @@ export default () => {
                 var span = document.createElement("span");
                 newlined.appendChild(span);
                 span.style.margin = "8px";
-                /** 点击筛选某势力的武将 */
+                /** 點擊篩選某勢力的武將 */
                 var clickGroup = function () {
                     if (_status.dragged) return;
                     if (dialog.currentcapt2 == "最近" && dialog.currentcaptnode2 != this && !dialog.currentcaptnode2.inited) {
@@ -345,7 +345,7 @@ export default () => {
                 };
                 if (get.is.phoneLayout() && lib.config.filternode_button) {
                     newlined.style.marginTop = "";
-                    packsource.innerHTML = "筛选";
+                    packsource.innerHTML = "篩選";
                     filternode = ui.create.div(".popup-container.filter-character.modenopause");
                     ui.create.div(filternode);
                     filternode.listen(function (e) {
@@ -419,7 +419,7 @@ export default () => {
                     var indexA = sortList.indexOf(a);
                     var indexB = sortList.indexOf(b);
                     
-                    // 如果两个元素都在 sortList 中，按 sortList 的顺序排
+                    // 如果兩個元素都在 sortList 中，按 sortList 的順序排
                     if (indexA !== -1 && indexB !== -1) {
                         return indexA - indexB;
                     }
@@ -431,7 +431,7 @@ export default () => {
                     else if (indexB !== -1) {
                         return 1;
                     }
-                    // 如果两个元素都不在 sortList 中，按原有顺序排列
+                    // 如果兩個元素都不在 sortList 中，按原有順序排列
                     return 0;
                 });
 
@@ -525,7 +525,7 @@ export default () => {
 
                 list.sort(sort);
 
-                // 自由选将
+                // 自由選將
                 dialog = ui.create.dialog("hidden");
                 dialog.classList.add("noupdate");
                 dialog.classList.add("scroll1");
@@ -537,7 +537,7 @@ export default () => {
                     _status.clicked2 = true;
                 });
                 if (heightset) {
-                    //这里如果dialog的高度较低的话，会显示不全下面的分页按钮，所以我增加了50px，后面遇到高度问题，可以研究更完美的方案，在这里更改。
+                    //這裡如果dialog的高度較低的話，會顯示不全下面的分頁按鈕，所以我增加了50px，後面遇到高度問題，可以研究更完美的方案，在這裡更改。
                     dialog.style.height = (game.layout == "long2" || game.layout == "nova" ? 380 : 350) + 50 + "px";
                     dialog._scrollset = true;
                 }
@@ -574,8 +574,8 @@ export default () => {
                     fontSize: "21px"
                 });
                 const div = ui.create.div(".searcher.find");
-                input.placeholder = "支持正则搜索";
-                //使用click事件搜索，因为用input事件，难以解决按下a键会触发自动托管的bug
+                input.placeholder = "支持正則搜索";
+                //使用click事件搜索，因為用input事件，難以解決按下a鍵會觸發自動託管的bug
                 let find = ui.create.button(["find", "搜索"], "tdnodes");
                 find.style.display = "inline";
                 const updatePagination = () => {
@@ -611,7 +611,7 @@ export default () => {
                         updateFind();
                     }
                 };
-                //阻止冒泡以防止触发窗口被拖动而无法选中文字
+                //阻止冒泡以防止觸發窗口被拖動而無法選中文字
                 input.onmousedown = function (e) {
                     e.stopPropagation();
                 };
@@ -634,7 +634,7 @@ export default () => {
                         return;
                     }
                     
-                    ui.click.charactercard(this.link, this);  // 显示角色卡片
+                    ui.click.charactercard(this.link, this);  // 顯示角色卡片
                 };
 
                 for (i = 0; i < dialog.buttons.length; i++) {
@@ -645,7 +645,7 @@ export default () => {
                 }
 
                 if (!expandall) {
-                    if (characterDialogGroup[lib.config.character_dialog_tool] || lib.config.character_dialog_tool == "自创") {
+                    if (characterDialogGroup[lib.config.character_dialog_tool] || lib.config.character_dialog_tool == "自創") {
                         clickCapt.call(node[lib.config.character_dialog_tool]);
                     }
                 }
@@ -654,20 +654,20 @@ export default () => {
                     // @ts-ignore
                     const buttons = dialog.content.querySelector(".buttons");
                     const array = dialog.buttons.filter(item => !item.classList.contains("nodisplay") && item.style.display !== 'none');
-                    // 传入初始配置 + 渲染元素
+                    // 傳入初始配置 + 渲染元素
                     dialog.addPagination({
-                        // 数据
+                        // 數據
                         data: array,
-                        // 总页数(向上取整)
+                        // 總頁數(向上取整)
                         totalPageCount: Math.ceil(array.length / dialog.paginationMaxCount.get("character")),
                         // 父元素
                         container: dialog.content,
-                        // 添加到容器的哪个子元素后面
+                        // 添加到容器的哪個子元素後面
                         insertAfter: buttons,
-                        // 回调修改数据
+                        // 回調修改數據
                         onPageChange: state => {
                             const { pageNumber, data } = state;
-                            // 设一个dialog一页显示10张武将牌
+                            // 設一個dialog一頁顯示10張武將牌
                             data.forEach((item, index) => {
                                 const maxCount = dialog.paginationMaxCount.get("character");
                                 if (index >= (pageNumber - 1) * maxCount && index < pageNumber * maxCount) {
@@ -677,7 +677,7 @@ export default () => {
                                 }
                             });
                         },
-                        // 触发什么事件来更改当前页数，默认为click
+                        // 觸發什麼事件來更改當前頁數，默認為click
                         changePageEvent: "click",
                     });
                 }

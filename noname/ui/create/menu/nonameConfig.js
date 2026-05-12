@@ -2,7 +2,7 @@ import { createApp } from "../../../../game/vue.esm-browser.prod.js";
 import { _status, game, get, lib, ui } from "../../../../noname.js";
 
 /**
- * 使字符串有html的代码提示
+ * 使字符串有html的代碼提示
  */
 const html = (strings, ...values) => String.raw({ raw: strings }, ...values);
 
@@ -64,7 +64,7 @@ export const NonameConfig = {
 			if (config.update) {
 				config.update();
 			}
-			// saveconfig后发送通知
+			// saveconfig後發送通知
 		},
 		nodeStyle() {
 			if (this.config.clear && this.$refs.node.innerHTML.length >= 15) {
@@ -96,13 +96,13 @@ export const NonameConfig = {
 			const config = this.config;
 			// root._link = { config: this.config };
 			if (!config.clear) {
-				if (config.name != "开启") {
-					if (config.name == "屏蔽弱将") {
-						config.intro = "强度过低的武将（孙策除外）不会出现在选将框，也不会被AI选择";
-					} else if (config.name == "屏蔽强将") {
-						config.intro = "强度过高的武将不会出现在选将框，也不会被AI选择";
+				if (config.name != "開啟") {
+					if (config.name == "屏蔽弱將") {
+						config.intro = "強度過低的武將（孫策除外）不會出現在選將框，也不會被AI選擇";
+					} else if (config.name == "屏蔽強將") {
+						config.intro = "強度過高的武將不會出現在選將框，也不會被AI選擇";
 					} else if (!config.intro) {
-						config.intro = "设置" + config.name;
+						config.intro = "設置" + config.name;
 					}
 					lib.setIntro(this.$refs.node, function (uiintro) {
 						if (lib.config.touchscreen) _status.dragged = true;
@@ -123,12 +123,12 @@ export const NonameConfig = {
 				}
 			}
 			if (config.item) {
-				// 还没写，是false
+				// 還沒寫，是false
 				if (this.$refs.menu) {
 					if (typeof this.config.textMenu == "function" && this.$refs.menu.childElementCount > 0) {
 						Array.from(this.$refs.menu.children).forEach(node => {
 							const link = node.getAttribute("link");
-							// 设置不同字体时，修改对应node的文字字体
+							// 設置不同字體時，修改對應node的文字字體
 							this.config.textMenu?.(node, link, this.config.item[link], this.config);
 						});
 					}
@@ -148,19 +148,19 @@ export const NonameConfig = {
 			}
 			else if (config.input) {
 				const input = this.$refs.input;
-				if (config.name == "联机昵称") {
-					input.innerHTML = config.init || "无名玩家";
+				if (config.name == "聯機暱稱") {
+					input.innerHTML = config.init || "無名玩家";
 					input.onblur = function () {
 						input.innerHTML = input.innerHTML.replace(/<br>/g, "");
 						if (!input.innerHTML || get.is.banWords(input.innerHTML)) {
-							input.innerHTML = "无名玩家";
+							input.innerHTML = "無名玩家";
 						}
 						input.innerHTML = input.innerHTML.slice(0, 12);
 						game.saveConfig("connect_nickname", input.innerHTML);
 						game.saveConfig("connect_nickname", input.innerHTML, "connect");
 					};
 				} 
-				else if (config.name == "联机大厅") {
+				else if (config.name == "聯機大廳") {
 					input.innerHTML = config.init || lib.hallURL;
 					input.onblur = function () {
 						if (!input.innerHTML) {

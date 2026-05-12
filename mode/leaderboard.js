@@ -11,7 +11,7 @@ export default () => {
                     min_games: 10
                 });
                 try {
-                    // 请求角色的胜率排行榜数据
+                    // 請求角色的勝率排行榜數據
                     const response = await fetch(`https://agdatabase.ssyy.tech:50000/v1/leaderboard?${params}`, {
                         method: 'GET',
                         headers: {
@@ -19,15 +19,15 @@ export default () => {
                         }
                     });
                     const data = await response.json();
-                    return data;  // 获取返回的角色数据
+                    return data;  // 獲取返回的角色數據
                 } catch (error) {
-                    console.error('获取角色数据失败:', error);
+                    console.error('獲取角色數據失敗:', error);
                     return undefined;
                 }
             };
             var characterDialog= async function() {
                 var characterDialogGroup=Object.assign({},lib.characterDialogGroup);
-                // 添加"最近"分组，显示最近使用的角色
+                // 添加"最近"分組，顯示最近使用的角色
                 characterDialogGroup['最近']=function (name, capt) {
                     var list = get.config("recentCharacter",'xingBei') || [];
                     return list.includes(name) ? capt : null;
@@ -35,14 +35,14 @@ export default () => {
                
                 var  str, noclick, expandall, heightset;
                 var payload = ["3v3", "false"];
-                // 获取排行榜数据
+                // 獲取排行榜數據
                 var charactersRankingData = await fetchCharactersData(payload[0],payload[1]);
                 // var charactersRankingData = [];
                 if (!Array.isArray(charactersRankingData)) {
                     console.error('unexpected payload:', charactersRankingData);
                     return;
                 }
-                // 建立索引方便后续筛选
+                // 建立索引方便後續篩選
                 var characterRankingMap = new Map(
                     charactersRankingData.map(o => [o.character_id, o])
                 );
@@ -52,7 +52,7 @@ export default () => {
                 var namecapt = [];
                 /** @type { Dialog } */
                 var dialog;
-                /** 筛选武将的信息 */
+                /** 篩選武將的信息 */
                 var node = ui.create.div(".caption.pointerspan");
                 if (get.is.phoneLayout()) {
                     node.style.fontSize = "30px";
@@ -66,7 +66,7 @@ export default () => {
                     }
                     capt = capt.toLowerCase();
                     if (!/[a-z]/i.test(capt)) {
-                        capt = "自定义";
+                        capt = "自定義";
                     }
                     return capt;
                 };
@@ -74,28 +74,28 @@ export default () => {
                 var allCharacterDict = {};
 
                 for(var pack in lib.characterPack){
-                    // 检查是否查看所有角色，如果不是则只显示已启用的角色包
+                    // 檢查是否查看所有角色，如果不是則只顯示已啟用的角色包
                     if(!get.config('viewAll') && !lib.config.characters.includes(pack)) continue;
                     
                     for (var i in lib.characterPack[pack]) {
                         allCharacterDict[i] = lib.characterPack[pack][i];
-                        // 角色可用性检查
+                        // 角色可用性檢查
                         if (lib.characterPack[pack][i][4]) {
-                            if (lib.characterPack[pack][i].isMinskin) continue;        // 跳过皮肤角色
+                            if (lib.characterPack[pack][i].isMinskin) continue;        // 跳過皮膚角色
                             if (lib.characterPack[pack][i].isBoss || lib.characterPack[pack][i].isHiddenBoss) {
-                                if (lib.config.mode == "boss") continue;              // Boss模式检查
+                                if (lib.config.mode == "boss") continue;              // Boss模式檢查
                                 if (!lib.characterPack[pack][i].isBossAllowed) continue;
                             }
-                            if (lib.characterPack[pack][i].isUnseen) continue;             // 跳过不可见角色
+                            if (lib.characterPack[pack][i].isUnseen) continue;             // 跳過不可見角色
                         }
                         
                         list.push(i);
-                        // 添加到势力分组
+                        // 添加到勢力分組
                         if (get.is.double(i)) {
-                            groups.add("double");  // 双势力角色
+                            groups.add("double");  // 雙勢力角色
                         } else groups.add(lib.characterPack[pack][i][1]);
                         
-                        // 添加首字母分类
+                        // 添加首字母分類
                         if (namecapt.indexOf(getCapt(i)) == -1) {
                             namecapt.push(getCapt(i));
                         }
@@ -116,13 +116,13 @@ export default () => {
                 var newlined2;
                 var packsource;
                 var selectPack=[];
-                /** 点击筛选中的按钮 */
-                //点字母和收藏和最近
+                /** 點擊篩選中的按鈕 */
+                //點字母和收藏和最近
                 var clickCapt = function (e) {
                     if (_status.dragged) return;
                     if (dialog.currentcapt2 == "最近" && dialog.currentcaptnode2 != this && !dialog.currentcaptnode2.inited) {
                         dialog.currentcapt2 = null;
-                        dialog.currentcaptnode2.classList.remove("thundertext");//移除被点击的效果
+                        dialog.currentcaptnode2.classList.remove("thundertext");//移除被點擊的效果
                         dialog.currentcaptnode2.inited = true;
                         dialog.currentcaptnode2 = null;
                     }
@@ -260,7 +260,7 @@ export default () => {
                     updatePagination();
                     if (e) e.stopPropagation();
                 };
-                // 创建字母表和收藏/最近
+                // 創建字母表和收藏/最近
                 for (i = 0; i < namecapt.length; i++) {
                     if (namecapt[i] == "newline") {
                         newlined = document.createElement("div");
@@ -301,7 +301,7 @@ export default () => {
                 var span = document.createElement("span");
                 newlined.appendChild(span);
                 span.style.margin = "8px";
-                /** 点击筛选某势力的武将 */
+                /** 點擊篩選某勢力的武將 */
                 var clickGroup = function () {
                     if (_status.dragged) return;
                     if (dialog.currentcapt2 == "最近" && dialog.currentcaptnode2 != this && !dialog.currentcaptnode2.inited) {
@@ -377,7 +377,7 @@ export default () => {
                 };
                 if (get.is.phoneLayout() && lib.config.filternode_button) {
                     newlined.style.marginTop = "";
-                    packsource.innerHTML = "筛选";
+                    packsource.innerHTML = "篩選";
                     filternode = ui.create.div(".popup-container.filter-character.modenopause");
                     ui.create.div(filternode);
                     filternode.listen(function (e) {
@@ -400,7 +400,7 @@ export default () => {
                     packsource.innerHTML = "角色包";
                 }
 
-                // 排行榜筛选按钮
+                // 排行榜篩選按鈕
                 var rankingbtn1 = ui.create.div(".tdnode.pointerdiv.shadowed.reduce_radius.reduce_margin");
                 rankingbtn1.style.margin = "3px";
                 rankingbtn1.innerHTML = "模式：3v3";
@@ -529,7 +529,7 @@ export default () => {
                     return Number.isFinite(n) ? n : -Infinity;
                 }
 
-                // 计算排名函数
+                // 計算排名函數
                 function recomputeAndRenderRanks() {
                     const EPS = 1e-6;
 
@@ -549,22 +549,22 @@ export default () => {
 
                     const sorted = candidates.slice().sort((a, b) => {
                         const A = metrics.get(a), B = metrics.get(b);
-                        if (Math.abs(A.wr - B.wr) > EPS) return B.wr - A.wr;  // 胜率降序
-                        if (A.g !== B.g) return B.g - A.g;                    // 对局数降序
-                        return A.nm.localeCompare(B.nm);                      // 名称升序
+                        if (Math.abs(A.wr - B.wr) > EPS) return B.wr - A.wr;  // 勝率降序
+                        if (A.g !== B.g) return B.g - A.g;                    // 對局數降序
+                        return A.nm.localeCompare(B.nm);                      // 名稱升序
                     });
 
-                    // 赋并列名次：1,1,3...
+                    // 賦並列名次：1,1,3...
                     let lastWr = null;
-                    let lastRank = 0;     // 上一次写入的名次
-                    let seenValid = 0;    // 已计入排名的有效项数量（无数据的不计入）
+                    let lastRank = 0;     // 上一次寫入的名次
+                    let seenValid = 0;    // 已計入排名的有效項數量（無數據的不計入）
                     for (const btn of sorted) {
                         const row = btn._row;
                         if (!row || !row._cells || !row._cells.tdRank) continue;
 
                         const m = metrics.get(btn);
                         if (!m || m.wr === -Infinity) {
-                            row._cells.tdRank.innerHTML = '';  // 无数据
+                            row._cells.tdRank.innerHTML = '';  // 無數據
                             continue;
                         }
 
@@ -617,14 +617,14 @@ export default () => {
                     applyActiveFilters();
                 }
 
-                let sortDir;             // 当前排序方向
-                let nextSort = 'desc';   // 下次点击方向
-                let sortWinRate = false; // 是否已启用胜率排序
+                let sortDir;             // 當前排序方向
+                let nextSort = 'desc';   // 下次點擊方向
+                let sortWinRate = false; // 是否已啟用勝率排序
 
                 var titleClick = function (e) {
                     sortAllAndRepaginate({ direction: nextSort });
                     sortWinRate = true;
-                    this.innerHTML = (nextSort === 'desc') ? `<span class='firetext'>胜率↓</span>` : `<span class='firetext'>胜率↑</span>`;
+                    this.innerHTML = (nextSort === 'desc') ? `<span class='firetext'>勝率↓</span>` : `<span class='firetext'>勝率↑</span>`;
                     sortDir = nextSort;
                     nextSort = (nextSort === 'desc') ? 'asc' : 'desc';
                 };
@@ -635,7 +635,7 @@ export default () => {
                     var indexA = sortList.indexOf(a);
                     var indexB = sortList.indexOf(b);
                     
-                    // 如果两个元素都在 sortList 中，按 sortList 的顺序排
+                    // 如果兩個元素都在 sortList 中，按 sortList 的順序排
                     if (indexA !== -1 && indexB !== -1) {
                         return indexA - indexB;
                     }
@@ -647,7 +647,7 @@ export default () => {
                     else if (indexB !== -1) {
                         return 1;
                     }
-                    // 如果两个元素都不在 sortList 中，按原有顺序排列
+                    // 如果兩個元素都不在 sortList 中，按原有順序排列
                     return 0;
                 });
 
@@ -708,16 +708,16 @@ export default () => {
                     const btns = dialog.buttons;
                     for (const btn of btns) {
                         let hide = false;
-                        // 字母/最近等一级筛选
+                        // 字母/最近等一級篩選
                         if (dialog.currentcapt && btn.capt != dialog.getCurrentCapt(btn.link, btn.capt)) {
                         hide = true;
                         }
-                        // 角色包/收藏/最近等二级筛选
+                        // 角色包/收藏/最近等二級篩選
                         if (!hide && (dialog.currentcapt2 || selectPack.length) &&
                             btn.capt != dialog.getCurrentCapt(btn.link, btn.capt, true)) {
                         hide = true;
                         }
-                        // 势力/双势力筛选
+                        // 勢力/雙勢力篩選
                         if (!hide && dialog.currentgroup) {
                         if (dialog.currentgroup === 'double') {
                             hide = !btn._changeGroup;
@@ -727,7 +727,7 @@ export default () => {
                         }
                         btn.classList.toggle('nodisplay', hide);
                     }
-                    // 分页同步
+                    // 分頁同步
                     const p = dialog.paginationMap && dialog.paginationMap.get(position);
                     if (p) {
                         const pageSize = dialog.paginationMaxCount?.get?.('character') || 20;
@@ -739,7 +739,7 @@ export default () => {
                         else if (typeof p.setPageNumber === 'function') p.setPageNumber(1);
                     }
                 }
-                // 模式筛选
+                // 模式篩選
                 var modeSwitch = async function(e) {
                     if (_status.dragged) return;
                     if (dialog.currentcapt2 == "最近" && dialog.currentcaptnode2 != this && !dialog.currentcaptnode2.inited) {
@@ -774,7 +774,7 @@ export default () => {
 
                     // 防抖
                     const mySeq = ++rankingFetchSeq;
-                    // 更新数据
+                    // 更新數據
                     const data = await fetchCharactersData(payload[0],payload[1]);
                     if (mySeq !== rankingFetchSeq) return; 
 
@@ -797,7 +797,7 @@ export default () => {
                     }
                 }
 
-                // AI筛选
+                // AI篩選
                 var aiSwitch = async function(e) {
                     if (_status.dragged) return;
                     if (dialog.currentcapt2 == "最近" && dialog.currentcaptnode2 != this && !dialog.currentcaptnode2.inited) {
@@ -832,7 +832,7 @@ export default () => {
                     payload[1] = !isActive ? this.innerHTML==="包含"? "true": "false" : "false";
 
                     const mySeq = ++rankingFetchSeq;
-                    // 更新数据
+                    // 更新數據
                     const data = await fetchCharactersData(payload[0],payload[1]);
                     if (mySeq !== rankingFetchSeq) return; 
 
@@ -856,7 +856,7 @@ export default () => {
                     }
                 }
                 
-                // 排行榜两个按钮的子选项
+                // 排行榜兩個按鈕的子選項
                 var modelist = ["4v4", "3v3", "2v2"];
                 for(var i = 0; i < modelist.length; i++) {
                     var modespan = document.createElement("div");
@@ -869,7 +869,7 @@ export default () => {
                         modespan.style.fontSize = "22px";
                     }
                     modespan.innerHTML = modelist[i];
-                    // 初始默认筛选3v3
+                    // 初始默認篩選3v3
                     if(modelist[i] === "3v3") {
                         modespan.classList.add("thundertext");
                     }
@@ -890,7 +890,7 @@ export default () => {
                         aispan.style.fontSize = "22px";
                     }
                     aispan.innerHTML = ailist[i];
-                    // 初始默认筛选不包含AI
+                    // 初始默認篩選不包含AI
                     if(ailist[i] === "不包含") {
                         aispan.classList.add("thundertext");
                     }
@@ -946,7 +946,7 @@ export default () => {
 
                 list.sort(sort);
 
-                // 自由选将
+                // 自由選將
                 dialog = ui.create.dialog("hidden");
                 dialog.classList.add("noupdate");
                 dialog.classList.add("scroll1");
@@ -958,7 +958,7 @@ export default () => {
                     _status.clicked2 = true;
                 });
                 if (heightset) {
-                    //这里如果dialog的高度较低的话，会显示不全下面的分页按钮，所以我增加了50px，后面遇到高度问题，可以研究更完美的方案，在这里更改。
+                    //這裡如果dialog的高度較低的話，會顯示不全下面的分頁按鈕，所以我增加了50px，後面遇到高度問題，可以研究更完美的方案，在這裡更改。
                     dialog.style.height = (game.layout == "long2" || game.layout == "nova" ? 380 : 350) + 50 + "px";
                     dialog._scrollset = true;
                 }
@@ -995,8 +995,8 @@ export default () => {
                     fontSize: "21px"
                 });
                 const div = ui.create.div(".searcher.find");
-                input.placeholder = "支持正则搜索";
-                //使用click事件搜索，因为用input事件，难以解决按下a键会触发自动托管的bug
+                input.placeholder = "支持正則搜索";
+                //使用click事件搜索，因為用input事件，難以解決按下a鍵會觸發自動託管的bug
                 let find = ui.create.button(["find", "搜索"], "tdnodes");
                 find.style.display = "inline";
                 const updatePagination = () => {
@@ -1032,7 +1032,7 @@ export default () => {
                         updateFind();
                     }
                 };
-                //阻止冒泡以防止触发窗口被拖动而无法选中文字
+                //阻止冒泡以防止觸發窗口被拖動而無法選中文字
                 input.onmousedown = function (e) {
                     e.stopPropagation();
                 };
@@ -1044,7 +1044,7 @@ export default () => {
                 }
                 dialog.add(node);
 
-                // 创建表格式布局来容纳排行榜
+                // 創建表格式佈局來容納排行榜
                 const characterList = document.createElement('table');
                 characterList.classList.add("character-list");
                 characterList.style.fontSize = lib.config.touchscreen ? "16px" : "18px";
@@ -1054,7 +1054,7 @@ export default () => {
                 thead.classList.add('table-head');
                 characterList.appendChild(thead);
 
-                //表头
+                //表頭
                 const thead_tr = document.createElement('tr');
                 thead.appendChild(thead_tr);
 
@@ -1070,50 +1070,50 @@ export default () => {
 
                 const matchCount_head = document.createElement('th');
                 matchCount_head.classList.add('matchCount');
-                matchCount_head.innerHTML = "对局数";
+                matchCount_head.innerHTML = "對局數";
                 thead_tr.appendChild(matchCount_head);
 
                 const winRate_head = document.createElement('th');
                 winRate_head.classList.add('winRate');
-                winRate_head.innerHTML = "<span class='firetext'>胜率</span>";
+                winRate_head.innerHTML = "<span class='firetext'>勝率</span>";
                 winRate_head.addEventListener(lib.config.touchscreen ? "touchend" : "click",titleClick);
                 thead_tr.appendChild(winRate_head);
 
                 const changeShiQi_head = document.createElement('th');
                 changeShiQi_head.classList.add('changeShiQi');
-                changeShiQi_head.innerHTML = "场均士<br>气输出";
+                changeShiQi_head.innerHTML = "場均士<br>氣輸出";
                 thead_tr.appendChild(changeShiQi_head);
 
                 const changedShiQi_head = document.createElement('th');
                 changedShiQi_head.classList.add('changedShiQi');
-                changedShiQi_head.innerHTML = "场均士<br>气损失";
+                changedShiQi_head.innerHTML = "場均士<br>氣損失";
                 thead_tr.appendChild(changedShiQi_head);
 
                 const zhanJi_head = document.createElement('th');
                 zhanJi_head.classList.add('zhanJi');
-                zhanJi_head.innerHTML = "场均产石";
+                zhanJi_head.innerHTML = "場均產石";
                 thead_tr.appendChild(zhanJi_head);
 
                 const zhiLiao_head = document.createElement('th');
                 zhiLiao_head.classList.add('zhiLiao');
-                zhiLiao_head.innerHTML = "场均治疗";
+                zhiLiao_head.innerHTML = "場均治療";
                 thead_tr.appendChild(zhiLiao_head);
 
                 const damage_head = document.createElement('th');
                 damage_head.classList.add('damage');
-                damage_head.innerHTML = "场均伤害";
+                damage_head.innerHTML = "場均傷害";
                 thead_tr.appendChild(damage_head);
 
                 const damaged_head = document.createElement('th');
                 damaged_head.classList.add('damaged');
-                damaged_head.innerHTML = "场均受伤";
+                damaged_head.innerHTML = "場均受傷";
                 thead_tr.appendChild(damaged_head);
 
                 const tbody = document.createElement('tbody');
                 tbody.classList.add('table-body');
                 characterList.appendChild(tbody);
 
-                // 角色数据渲染
+                // 角色數據渲染
                 var position = ui.create.div(".buttons", dialog.content);
                 var buttons = [];
                 var proxyFragment = document.createDocumentFragment();
@@ -1269,7 +1269,7 @@ export default () => {
                         proxyBtn._link = charId;
                         proxyBtn.link = charId;
 
-                        // 修复筛选问题
+                        // 修復篩選問題
                         proxyBtn.capt  = getCapt(charId);
                         proxyBtn.group = (allCharacterDict[charId] && allCharacterDict[charId][1]) || (get.character(charId) || [])[1];
                         if (get.is.double(charId, true)) proxyBtn._changeGroup = true;
@@ -1353,7 +1353,7 @@ export default () => {
                         return;
                     }
                     
-                    ui.click.charactercard(this.link, this);  // 显示角色卡片
+                    ui.click.charactercard(this.link, this);  // 顯示角色卡片
                 };
 
                 function applyProxyHandlers() {
@@ -1368,7 +1368,7 @@ export default () => {
                 dialog._applyProxyHandlers = applyProxyHandlers;
 
                 if (!expandall) {
-                    if (characterDialogGroup[lib.config.character_dialog_tool] || lib.config.character_dialog_tool == "自创") {
+                    if (characterDialogGroup[lib.config.character_dialog_tool] || lib.config.character_dialog_tool == "自創") {
                         clickCapt.call(node[lib.config.character_dialog_tool]);
                     }
                 }
@@ -1377,20 +1377,20 @@ export default () => {
                     // @ts-ignore
                     const buttons = dialog.content.querySelector(".buttons");
                     const array = dialog.buttons.filter(item => !item.classList.contains("nodisplay") && item.style.display !== 'none');
-                    // 传入初始配置 + 渲染元素
+                    // 傳入初始配置 + 渲染元素
                     dialog.addPagination({
-                        // 数据
+                        // 數據
                         data: array,
-                        // 总页数(向上取整)
+                        // 總頁數(向上取整)
                         totalPageCount: Math.ceil(array.length / dialog.paginationMaxCount.get("character")),
                         // 父元素
                         container: dialog.content,
-                        // 添加到容器的哪个子元素后面
+                        // 添加到容器的哪個子元素後面
                         insertAfter: buttons,
-                        // 回调修改数据
+                        // 回調修改數據
                         onPageChange: state => {
                             const { pageNumber, data } = state;
-                            // 设一个dialog一页显示10张武将牌
+                            // 設一個dialog一頁顯示10張武將牌
                             data.forEach((item, index) => {
                                 const maxCount = dialog.paginationMaxCount.get("character");
                                 if (index >= (pageNumber - 1) * maxCount && index < pageNumber * maxCount) {
@@ -1400,7 +1400,7 @@ export default () => {
                                 }
                             });
                         },
-                        // 触发什么事件来更改当前页数，默认为click
+                        // 觸發什麼事件來更改當前頁數，默認為click
                         changePageEvent: "click",
                     });
                 }
@@ -1408,7 +1408,7 @@ export default () => {
                 if(get.config('sort')!=='null') {
                     if(get.config('sort')==='desc') nextSort='desc';
                     else if(get.config('sort')==='asc') nextSort='asc';
-                    // 初始按胜率排序
+                    // 初始按勝率排序
                     titleClick.call(winRate_head, null);
                 }
 

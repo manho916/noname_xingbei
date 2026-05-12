@@ -1,5 +1,5 @@
 /**
- * 从读取的内容中获取数据
+ * 從讀取的內容中獲取數據
  */
 
 import { ai, setAI } from "../ai/index.js";
@@ -15,7 +15,7 @@ import { load } from "../util/config.js";
 import { isClass } from "../util/index.js";
 
 /**
- * 读取导入的卡牌包信息
+ * 讀取導入的卡牌包信息
  *
  * @param {importCardConfig} cardConfig
  */
@@ -103,14 +103,14 @@ export function loadCard(cardConfig) {
 }
 
 /**
- * 读取牌堆信息
+ * 讀取牌堆信息
  */
 export function loadCardPile() {
 	if (lib.config.mode === "connect") {
 		// @ts-ignore
 		lib.cardPackList = {};
 	} else {
-		let pilecfg = lib.config.customcardpile[get.config("cardpilename") || "当前牌堆"];
+		let pilecfg = lib.config.customcardpile[get.config("cardpilename") || "當前牌堆"];
 		if (pilecfg) {
 			lib.config.bannedpile = get.copy(pilecfg[0] || {});
 			lib.config.addedpile = get.copy(pilecfg[1] || {});
@@ -122,7 +122,7 @@ export function loadCardPile() {
 }
 
 /**
- * 读取导入的武将包信息
+ * 讀取導入的武將包信息
  *
  * @param {importCharacterConfig} character
  */
@@ -138,7 +138,7 @@ export function loadCharacter(character) {
 		}
 	}
 
-	// 摆了
+	// 擺了
 	for (let key in character) {
 		let value = character[key];
 
@@ -152,7 +152,7 @@ export function loadCharacter(character) {
 				if(value==true) lib.connectCharacterPack.push(name);
 				break;
 			case "disable":
-				if(value==true){//角色包无法启用，其中的角色也不会有禁用等选项
+				if(value==true){//角色包無法啟用，其中的角色也不會有禁用等選項
 					lib.disableCharacterPack.push(name);
 				}
 				break;
@@ -250,9 +250,9 @@ export async function loadExtension(extension) {
 			try {
 				await (gnc.is.coroutine(extension[1]) ? gnc.of(extension[1]) : extension[1]).call(extension, extension[2], extension[4]);
 			} catch (e) {
-				console.log(`加载《${extension[0]}》扩展的content时出现错误。`, e);
+				console.log(`加載《${extension[0]}》擴展的content時出現錯誤。`, e);
 				// @ts-ignore
-				if (!lib.config.extension_alert) alert(`加载《${extension[0]}》扩展的content时出现错误。\n该错误本身可能并不影响扩展运行。您可以在“设置→通用→无视扩展报错”中关闭此弹窗。\n${decodeURI(e.stack)}`);
+				if (!lib.config.extension_alert) alert(`加載《${extension[0]}》擴展的content時出現錯誤。\n該錯誤本身可能並不影響擴展運行。您可以在“設置→通用→無視擴展報錯”中關閉此彈窗。\n${decodeURI(e.stack)}`);
 			}
 		}
 
@@ -260,7 +260,7 @@ export async function loadExtension(extension) {
 			if (isClass(extension[6])) {
 				const classInstance = new extension[6]();
 				const proto = Object.getPrototypeOf(classInstance);
-				const methods = Object.getOwnPropertyNames(proto).filter(methodName => typeof proto[methodName] === "function" && methodName !== "constructor"); //防止把他的属性加进去了喵
+				const methods = Object.getOwnPropertyNames(proto).filter(methodName => typeof proto[methodName] === "function" && methodName !== "constructor"); //防止把他的屬性加進去了喵
 
 				methods.forEach(methodName => {
 					lib.arenaReady?.push(proto[methodName].bind(classInstance));
@@ -276,8 +276,8 @@ export async function loadExtension(extension) {
 				content.translate ??= {};
 				content.translate[content.name] ??= extension[0];
 
-				// ~~到最后，还得遍历一遍~~
-				// 我就是被拷打，成为新的1103，受到白鼠群的嘲笑谩骂，我也绝不再次遍历！
+				// ~~到最後，還得遍歷一遍~~
+				// 我就是被拷打，成為新的1103，受到白鼠群的嘲笑謾罵，我也絕不再次遍歷！
 				if (content.mode === "guozhan") {
 					lib.characterGuozhanFilter.add(content.name);
 				}
@@ -349,8 +349,8 @@ export async function loadExtension(extension) {
 				content.translate ??= {};
 				content.translate[content.name] ??= extension[0];
 
-				// ~~到最后，还得遍历一遍~~
-				// 我就是被拷打，成为新的1103，受到白鼠群的嘲笑谩骂，我也绝不再次遍历！
+				// ~~到最後，還得遍歷一遍~~
+				// 我就是被拷打，成為新的1103，受到白鼠群的嘲笑謾罵，我也絕不再次遍歷！
 				for (const [cardName, card] of Object.entries(content.card)) {
 					if (card.audio === true) {
 						card.audio = `ext:${extension[0]}`;
@@ -417,7 +417,7 @@ export async function loadExtension(extension) {
 }
 
 /**
- * 读取当前的模式信息
+ * 讀取當前的模式信息
  *
  * @param {importModeConfig} mode
  */
@@ -445,7 +445,7 @@ export function loadMode(mode) {
 }
 
 /**
- * 读取导入的play信息
+ * 讀取導入的play信息
  *
  * @param {importPlayConfig} playConfig
  */
@@ -497,9 +497,9 @@ function extSkillInject(extName, skillInfo) {
 }
 
 /**
- * 通用形式的内容注入
+ * 通用形式的內容注入
  *
- * 由于历史原因，故直接覆盖对应的变量
+ * 由於歷史原因，故直接覆蓋對應的變量
  *
  * @template {Object} T
  * @param {importModeConfig | importPlayConfig} config
@@ -513,7 +513,7 @@ function mixinGeneral(config, name, where) {
 	for (let [key, value] of Object.entries(config[name])) {
 		if (["ui", "ai"].includes(name)) {
 			if (typeof value == "object") {
-				// 我甚至不敢把这个双等于改了，怕了
+				// 我甚至不敢把這個雙等於改了，怕了
 				// noinspection EqualityComparisonWithCoercionJS
 				if (where[key] == undefined) where[key] = {};
 				for (let [key2, value2] of Object.entries(value)) {
@@ -529,7 +529,7 @@ function mixinGeneral(config, name, where) {
 }
 
 /**
- * `lib`的内容注入
+ * `lib`的內容注入
  *
  * @param {importModeConfig | importPlayConfig} config
  * @param {Library} lib
@@ -555,7 +555,7 @@ function mixinLibrary(config, lib) {
 }
 
 /**
- * `lib.element`的内容注入
+ * `lib.element`的內容注入
  *
  * @param {importModeConfig | importPlayConfig} config
  * @param {Record<string, Object>} element

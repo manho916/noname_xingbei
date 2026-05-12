@@ -156,7 +156,7 @@ export class Player extends HTMLDivElement {
 		};
 		player.queueCount = 0;
 		player.outCount = 0;
-		//TODO: 添加对应的typedef
+		//TODO: 添加對應的typedef
 		player.vcardsMap = {
 			handcards: [],
 			equips: [],
@@ -233,7 +233,7 @@ export class Player extends HTMLDivElement {
 	 */
 	stat;
 	/**
-	 * 玩家的行动历史，每个回合对应一个历史。
+	 * 玩家的行動歷史，每個回合對應一個歷史。
 	 * @type { ActionHistory[] }
 	 */
 	actionHistory;
@@ -365,11 +365,11 @@ export class Player extends HTMLDivElement {
 	tips;
 
 	/**
-	 * 设置提示文字，有则更改，无则加之。
-	 * @param {string} index 给标记起一个名字，名字任意
-	 * @param {string} message 设置提示标记的内容,标记中的\n代表换行符
-	 * @param { SkillTrigger | SAAType<Signal> | boolean } isTemp 是否是临时的tip。默认为false,表示一直存在；若为true,则回合结束自动失去。也可以填一个具体的自定义时机。
-	 * @param { object } [css] 自定义的样式
+	 * 設置提示文字，有則更改，無則加之。
+	 * @param {string} index 給標記起一個名字，名字任意
+	 * @param {string} message 設置提示標記的內容,標記中的\n代表換行符
+	 * @param { SkillTrigger | SAAType<Signal> | boolean } isTemp 是否是臨時的tip。默認為false,表示一直存在；若為true,則回合結束自動失去。也可以填一個具體的自定義時機。
+	 * @param { object } [css] 自定義的樣式
 	 * @returns { void }
 	 * @author Curpond
 	 */
@@ -393,7 +393,7 @@ export class Player extends HTMLDivElement {
 				let w = width * (double ? 2 : 1);
 				player.style.setProperty("--w", `${w}px`);
 
-				//检查tip的高度，使其不覆盖装备
+				//檢查tip的高度，使其不覆蓋裝備
 				game.callHook("checkTipBottom", [player]);
 			},
 			player,
@@ -423,8 +423,8 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 清除标记，不传参数可以清空所有标记
-	 * @param {string} [index] 标记的名字，不传则清空所有标记
+	 * 清除標記，不傳參數可以清空所有標記
+	 * @param {string} [index] 標記的名字，不傳則清空所有標記
 	 * @author Curpond
 	 */
 	removeTip(index) {
@@ -447,9 +447,9 @@ export class Player extends HTMLDivElement {
 			index
 		);
 	}
-	//新函数
+	//新函數
 	/**
-	 * 怒气
+	 * 怒氣
 	 * @param { number } amount
 	 * @param { boolean } [limit]
 	 */
@@ -461,23 +461,23 @@ export class Player extends HTMLDivElement {
 		else this.storage.stratagem_fury = Math.max(furyBefore + amount, 0);
 		const difference = this.storage.stratagem_fury - furyBefore;
 		if (!difference) return;
-		game.log(this, difference > 0 ? "获得了" : "失去了", get.cnNumber(Math.abs(difference)), "点", "#r怒气");
+		game.log(this, difference > 0 ? "獲得了" : "失去了", get.cnNumber(Math.abs(difference)), "點", "#r怒氣");
 		this.markSkill("stratagem_fury");
 	}
 	/**
 	 *
-	 * 链式创建一次性的API。
+	 * 鏈式創建一次性的API。
 	 *
-	 * 使用者只需关注技能的效果，而不是技能本身
+	 * 使用者只需關注技能的效果，而不是技能本身
 	 *
 	 *  @example
-	 * when('xxx') when([xxx1,xxx2])//均会被解析为：player:xxx或player:[xxx1,xxx2]
+	 * when('xxx') when([xxx1,xxx2])//均會被解析為：player:xxx或player:[xxx1,xxx2]
 	 *
-	 * when({player:xxx})或when({global:[xxx]})//对象类型将直接应用
+	 * when({player:xxx})或when({global:[xxx]})//對象類型將直接應用
 	 *
-	 * when(xxx1,xxx2)//解析为player:[xxx1,xxx2]
+	 * when(xxx1,xxx2)//解析為player:[xxx1,xxx2]
 	 *
-	 * when({player: 'xxAfter'}, {global: 'yyBegin'})//合并解析
+	 * when({player: 'xxAfter'}, {global: 'yyBegin'})//合併解析
 	 * @param  {[Signal[]]|Signal[]|SkillTrigger[]} triggerNames
 	 * @returns {When}
 	 */
@@ -501,16 +501,16 @@ export class Player extends HTMLDivElement {
 		}
 		let trigger;
 		let instantlyAdd = true;
-		//从triggerNames中取出instantlyAdd的部分
+		//從triggerNames中取出instantlyAdd的部分
 		if (triggerNames.includes(false)) {
 			instantlyAdd = false;
 			triggerNames.remove(false);
 		}
-		if (triggerNames.length == 0) throw "player.when的参数数量应大于0";
+		if (triggerNames.length == 0) throw "player.when的參數數量應大於0";
 		// add other triggerNames
 		// arguments.length = 1
 		if (triggerNames.length == 1) {
-			// 以下两种情况:
+			// 以下兩種情況:
 			// triggerNames = [ ['xxAfter', ...args] ]
 			// triggerNames = [ 'xxAfter' ]
 			if (Array.isArray(triggerNames[0]) || typeof triggerNames[0] == "string") trigger = { player: triggerNames[0] };
@@ -522,10 +522,10 @@ export class Player extends HTMLDivElement {
 			// triggerNames = [ 'xxAfter', 'yyBegin' ]
 			if (triggerNames.every(t => typeof t == "string")) trigger = { player: triggerNames };
 			// triggerNames = [ {player: 'xxAfter'}, {global: 'yyBegin'} ]
-			// 此处不做特殊的合并处理，由使用者自行把握，同名属性后者覆盖前者
+			// 此處不做特殊的合併處理，由使用者自行把握，同名屬性後者覆蓋前者
 			else if (triggerNames.every(t => get.is.object(t))) trigger = triggerNames.reduce((pre, cur) => Object.assign(pre, cur));
 		}
-		if (!trigger) throw "player.when传参数类型错误:" + triggerNames;
+		if (!trigger) throw "player.when傳參數類型錯誤:" + triggerNames;
 		let skillName;
 		do {
 			skillName = "player_when_" + Math.random().toString(36).slice(-8);
@@ -542,15 +542,15 @@ export class Player extends HTMLDivElement {
 			forced: true,
 			charlotte: true,
 			popup: false,
-			// 必要条件
+			// 必要條件
 			/** @type { Required<Skill>['filter'][] } */
 			filterFuns: [],
-			// 充分条件
+			// 充分條件
 			/** @type { Required<Skill>['filter'][] } */
 			filter2Funs: [],
 			/** @type { Required<Skill>['content'][] } */
 			contentFuns: [],
-			// 外部变量
+			// 外部變量
 			get vars() {
 				return vars;
 			},
@@ -586,7 +586,7 @@ export class Player extends HTMLDivElement {
 					}
 				`;
 
-				if (!get.isFunctionBody(body)) throw new Error(`无效的函数体: ${body}`);
+				if (!get.isFunctionBody(body)) throw new Error(`無效的函數體: ${body}`);
 
 				let compiled;
 				if (!scope) compiled = new Function(...params, body);
@@ -605,11 +605,11 @@ export class Player extends HTMLDivElement {
 					contents.push(fun2);
 				} else {
 					const a = fun2;
-					//防止传入()=>xxx的情况
+					//防止傳入()=>xxx的情況
 					const begin = a.indexOf("{") == a.indexOf("}") && a.indexOf("{") == -1 && a.indexOf("=>") > -1 ? a.indexOf("=>") + 2 : a.indexOf("{") + 1;
 					const str2 = a.slice(begin, a.lastIndexOf("}") != -1 ? a.lastIndexOf("}") : undefined).trim();
 					// 防止注入喵
-					if (!get.isFunctionBody(str2)) throw new Error("无效的content函数代码");
+					if (!get.isFunctionBody(str2)) throw new Error("無效的content函數代碼");
 					let recompiledScope;
 					if (security.isSandboxRequired()) {
 						recompiledScope = scope ? security.eval(`return (${scope.toString()})`) : code => security.eval(`return (${code.toString()})`);
@@ -625,7 +625,7 @@ export class Player extends HTMLDivElement {
 		};
 		Object.defineProperty(lib.skill, skillName, {
 			configurable: true,
-			//这类技能不需要被遍历到
+			//這類技能不需要被遍歷到
 			enumerable: false,
 			writable: true,
 			value: skill,
@@ -683,16 +683,16 @@ export class Player extends HTMLDivElement {
 			 */
 			then(fun) {
 				if (lib.skill[skillName] != skill) throw `This skill has been destroyed`;
-				skill.contentFuns.push(String(fun)); // 提前转换，防止与闭包函数弄混
+				skill.contentFuns.push(String(fun)); // 提前轉換，防止與閉包函數弄混
 				createContent();
 				return this;
 			},
 			/**
 			 * ```plain
-			 * 闭包用法的then，不再提供parsex变量，改为使用闭包访问
-			 * 传参为 event, trigger, player
+			 * 閉包用法的then，不再提供parsex變量，改為使用閉包訪問
+			 * 傳參為 event, trigger, player
 			 *
-			 * 闭包即你可以直接在when里面访问when外面的变量
+			 * 閉包即你可以直接在when裡面訪問when外面的變量
 			 * 如下：
 			 * ```
 			 * ```javascript
@@ -700,7 +700,7 @@ export class Player extends HTMLDivElement {
 			 *
 			 * player.when("phaseEnd")
 			 *     .step(() => {
-			 *         if (att > 0) // 闭包访问了外面定义的变量 att
+			 *         if (att > 0) // 閉包訪問了外面定義的變量 att
 			 *             player.say("你好喵!");
 			 *     });
 			 * ```
@@ -745,31 +745,31 @@ export class Player extends HTMLDivElement {
 			 */
 			vars(arg) {
 				if (lib.skill[skillName] != skill) throw `This skill has been destroyed`;
-				if (!get.is.object(arg)) throw "vars的第一个参数必须为对象";
+				if (!get.is.object(arg)) throw "vars的第一個參數必須為對象";
 				Object.assign(vars, arg);
 				createContent();
 				return this;
 			},
 			/**
-			 * 传递外部作用域
+			 * 傳遞外部作用域
 			 *
-			 * 一般是传递一个 code=>eval(code) 函数
+			 * 一般是傳遞一個 code=>eval(code) 函數
 			 *
-			 * 传递后可在then中使用外部变量(vars的上位替代)
+			 * 傳遞後可在then中使用外部變量(vars的上位替代)
 			 *
 			 * @param {Function} _scope
 			 */
 			apply(_scope) {
 				if (lib.skill[skillName] != skill) throw `This skill has been destroyed`;
-				if (security.isSandboxRequired()) console.warn("`player.when().apply()` 在沙盒模式下不推荐使用");
+				if (security.isSandboxRequired()) console.warn("`player.when().apply()` 在沙盒模式下不推薦使用");
 				// @ts-ignore
 				scope = _scope;
 				if (skill.contentFuns.length > 0) createContent();
 				return this;
 			},
 			/**
-			 * 获得技能
-			 * 如果instantlyAdd为false，则需要以此法获得技能
+			 * 獲得技能
+			 * 如果instantlyAdd為false，則需要以此法獲得技能
 			 **/
 			finish() {
 				if (lib.skill[skillName] != skill) throw `This skill has been destroyed`;
@@ -779,7 +779,7 @@ export class Player extends HTMLDivElement {
 		};
 	}
 	/**
-	 * 让一名角色明置一些手牌
+	 * 讓一名角色明置一些手牌
 	 */
 	addShownCards() {
 		const cards = [],
@@ -799,7 +799,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 让一名角色暗置一些手牌
+	 * 讓一名角色暗置一些手牌
 	 */
 	hideShownCards() {
 		const cards = [],
@@ -819,7 +819,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 获取角色所有的明置手牌
+	 * 獲取角色所有的明置手牌
 	 */
 	getShownCards() {
 		return this.getCards("h", card => {
@@ -827,17 +827,17 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 获取该角色被other所知的牌
+	 * 獲取該角色被other所知的牌
 	 * @param { Player } [other]
 	 * @param { (card: Card) => boolean } [filter]
 	 */
 	getKnownCards(other = _status.event.player, filter = card => true) {
 		if (!other) {
-			if (other === null) console.trace(`getKnownCards的other参数不应传入null,可以用void 0或undefined占位`);
+			if (other === null) console.trace(`getKnownCards的other參數不應傳入null,可以用void 0或undefined佔位`);
 			other = _status.event.player || this;
 		}
 		if (!filter) {
-			if (other === null) console.trace(`getKnownCards的filter参数不应传入null,可以用void 0或undefined占位`);
+			if (other === null) console.trace(`getKnownCards的filter參數不應傳入null,可以用void 0或undefined佔位`);
 			filter = card => true;
 		}
 		return this.getCards("h", card => {
@@ -845,12 +845,12 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 判断此角色的手牌是否已经被看光了
+	 * 判斷此角色的手牌是否已經被看光了
 	 * @param { Player } [other]
 	 */
 	isAllCardsKnown(other = _status.event.player) {
 		if (!other) {
-			if (other === null) console.trace(`isAllCardsKnown的other参数不应传入null,可以用void 0或undefined占位`);
+			if (other === null) console.trace(`isAllCardsKnown的other參數不應傳入null,可以用void 0或undefined佔位`);
 			other = _status.event.player || this;
 		}
 		if (!other) other = this;
@@ -861,17 +861,17 @@ export class Player extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 判断此角色是否有被知的牌。
+	 * 判斷此角色是否有被知的牌。
 	 * @param { Player } [other]
 	 * @param { (card: Card) => boolean } [filter]
 	 */
 	hasKnownCards(other = _status.event.player, filter = card => true) {
 		if (!other) {
-			if (other === null) console.trace(`hasKnownCards的other参数不应传入null,可以用void 0或undefined占位`);
+			if (other === null) console.trace(`hasKnownCards的other參數不應傳入null,可以用void 0或undefined佔位`);
 			other = _status.event.player || this;
 		}
 		if (!filter) {
-			if (other === null) console.trace(`hasKnownCards的filter参数不应传入null,可以用void 0或undefined占位`);
+			if (other === null) console.trace(`hasKnownCards的filter參數不應傳入null,可以用void 0或undefined佔位`);
 			filter = card => true;
 		}
 		return (
@@ -881,7 +881,7 @@ export class Player extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 数此角色被知道的牌
+	 * 數此角色被知道的牌
 	 * @param { Player } [other]
 	 * @param { (card: Card) => boolean } [filter]
 	 */
@@ -891,7 +891,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Execute the delay card effect
 	 *
-	 * 执行延时锦囊牌效果
+	 * 執行延時錦囊牌效果
 	 * @param { Card | string } card
 	 * @param { Player } target
 	 * @param {*} judge
@@ -922,7 +922,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Check if the card does not count toward hand limit
 	 *
-	 * 检测此牌是否不计入手牌上限
+	 * 檢測此牌是否不計入手牌上限
 	 * @param { Card } card
 	 * @returns { boolean }
 	 */
@@ -933,7 +933,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Gift
 	 *
-	 * 赠予
+	 * 贈予
 	 * @param { Card | Card[] } cards
 	 * @param { Player } target
 	 */
@@ -956,7 +956,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Check if the player can gift the card
 	 *
-	 * 检测角色是否能赠予此牌
+	 * 檢測角色是否能贈予此牌
 	 * @param { Card } card
 	 * @param { Player } target
 	 * @param { boolean } [strict]
@@ -967,7 +967,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Check if the player refuses gifts
 	 *
-	 * 检测角色是否拒绝赠予
+	 * 檢測角色是否拒絕贈予
 	 * @param { Card } card
 	 * @param { Player } player
 	 */
@@ -980,7 +980,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Gift AI related
 	 *
-	 * 赠予AI相关
+	 * 贈予AI相關
 	 * @param { Card } card
 	 * @param { Player } target
 	 */
@@ -1000,7 +1000,7 @@ export class Player extends HTMLDivElement {
 	}
 	//Recast
 	/**
-	 * 重铸
+	 * 重鑄
 	 * @param { Card | Card[] } cards
 	 * @param { (player: Player, cards: Card[]) => any } [recastingLose]
 	 * @param { (player: Player, cards: Card[]) => any } [recastingGain]
@@ -1016,13 +1016,13 @@ export class Player extends HTMLDivElement {
 			recast.resolve();
 		}
 		if (typeof recastingLose != "function") {
-			if (recastingLose === null) console.trace(`recast的recastingLose参数不应传入null,可以用void 0或undefined占位`);
+			if (recastingLose === null) console.trace(`recast的recastingLose參數不應傳入null,可以用void 0或undefined佔位`);
 			recastingLose = (player, cards) => (player.loseToDiscardpile(cards).log = false);
 		}
 		recast.recastingLose = recastingLose;
 		recast.recastingLosingEvents = [];
 		if (typeof recastingGain != "function") {
-			if (recastingLose === null) console.trace(`recast的recastingGain参数不应传入null,可以用void 0或undefined占位`);
+			if (recastingLose === null) console.trace(`recast的recastingGain參數不應傳入null,可以用void 0或undefined佔位`);
 			recastingGain = (player, cards) => (player.draw(cards.length).log = false);
 		}
 		recast.recastingGain = recastingGain;
@@ -1034,7 +1034,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Check if the player can recast the card
 	 *
-	 * 检测角色是否能重铸此牌
+	 * 檢測角色是否能重鑄此牌
 	 * @param { Card } card
 	 * @param { Player } [source]
 	 * @param { boolean } [strict]
@@ -1042,11 +1042,11 @@ export class Player extends HTMLDivElement {
 	canRecast(card, source, strict) {
 		return lib.filter.cardRecastable(card, this, source, strict);
 	}
-	//装备栏相关
+	//裝備欄相關
 	/**
-	 * 判断一名角色的某个区域是否被废除
+	 * 判斷一名角色的某個區域是否被廢除
 	 *
-	 * type为要判断的区域 若为空 则判断玩家是否有任意一个被废除的区域
+	 * type為要判斷的區域 若為空 則判斷玩家是否有任意一個被廢除的區域
 	 * @param { string | number } [type]
 	 * @returns { boolean }
 	 */
@@ -1059,7 +1059,7 @@ export class Player extends HTMLDivElement {
 		return this.countDisabledSlot(type) > 0;
 	}
 	/**
-	 * 判断一名角色的某个区域被废除的数量
+	 * 判斷一名角色的某個區域被廢除的數量
 	 *
 	 * 用法同 {@link hasDisabledSlot}
 	 * @param { string | number } [type]
@@ -1084,7 +1084,7 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 判断一名角色是否有某个装备栏空着
+	 * 判斷一名角色是否有某個裝備欄空著
 	 * @param { string | number } [type]
 	 * @returns { boolean }
 	 */
@@ -1097,7 +1097,7 @@ export class Player extends HTMLDivElement {
 		return this.countEmptySlot(type) > 0;
 	}
 	/**
-	 * 判断一名角色的某个装备栏空位的数量
+	 * 判斷一名角色的某個裝備欄空位的數量
 	 * @param { string | number } [type]
 	 */
 	countEmptySlot(type) {
@@ -1116,7 +1116,7 @@ export class Player extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 判断一名角色是否有可以用于装备新装备牌的区域（排除金箍棒和六龙等“不可被替换装备”）
+	 * 判斷一名角色是否有可以用於裝備新裝備牌的區域（排除金箍棒和六龍等“不可被替換裝備”）
 	 *
 	 * 用法同 {@link hasEnabledSlot}
 	 * @param { string | number } [type]
@@ -1125,7 +1125,7 @@ export class Player extends HTMLDivElement {
 		return this.countEquipableSlot(type) > 0;
 	}
 	/**
-	 * 统计一名角色有多少个可以用于装备新的装备牌的区域
+	 * 統計一名角色有多少個可以用於裝備新的裝備牌的區域
 	 *
 	 * 用法同 {@link hasEnabledSlot}
 	 * @param { string | number } [type]
@@ -1149,9 +1149,9 @@ export class Player extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 判断一名角色是否拥有未被废除的某个区域
+	 * 判斷一名角色是否擁有未被廢除的某個區域
 	 *
-	 * type为要判断的区域 若为空 则判断玩家是否有任意一个未被废除的区域
+	 * type為要判斷的區域 若為空 則判斷玩家是否有任意一個未被廢除的區域
 	 * @param { string | number } [type]
 	 * @returns { boolean }
 	 */
@@ -1168,7 +1168,7 @@ export class Player extends HTMLDivElement {
 		return this.countEnabledSlot(type) > 0;
 	}
 	/**
-	 * 判断一名角色的某个区域未被废除的数量
+	 * 判斷一名角色的某個區域未被廢除的數量
 	 *
 	 * 用法同 {@link hasEnabledSlot}
 	 * @param { string | number } [type]
@@ -1195,9 +1195,9 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 获取一名角色装备区内某种类型的装备牌
+	 * 獲取一名角色裝備區內某種類型的裝備牌
 	 *
-	 * 参数可以为数字/区域字符串/实体牌/虚拟牌/牌名
+	 * 參數可以為數字/區域字符串/實體牌/虛擬牌/牌名
 	 * @param { number | string | Card | VCard } subtype
 	 * @returns { Card[] }
 	 */
@@ -1210,9 +1210,9 @@ export class Player extends HTMLDivElement {
 		}, []);
 	}
 	/**
-	 * 获取一名角色装备区内某种类型的虚拟牌
+	 * 獲取一名角色裝備區內某種類型的虛擬牌
 	 *
-	 * 参数可以为数字/区域字符串/实体牌/虚拟牌/牌名
+	 * 參數可以為數字/區域字符串/實體牌/虛擬牌/牌名
 	 * @param { number | string | Card | VCard } subtype
 	 * @returns { VCard[] }
 	 */
@@ -1245,9 +1245,9 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 新的废除装备区
+	 * 新的廢除裝備區
 	 *
-	 * 参数：废除来源角色（不写默认当前事件角色），废除区域（数字/区域字符串/数组，可以写多个，重复废除）
+	 * 參數：廢除來源角色（不寫默認當前事件角色），廢除區域（數字/區域字符串/數組，可以寫多個，重複廢除）
 	 */
 	disableEquip() {
 		var next = game.createEvent("disableEquip");
@@ -1279,9 +1279,9 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 新的恢复装备区
+	 * 新的恢復裝備區
 	 *
-	 * 参数：恢复来源角色（不写默认当前事件角色），恢复区域（数字/区域字符串/数组，可以写多个，重复恢复）
+	 * 參數：恢復來源角色（不寫默認當前事件角色），恢復區域（數字/區域字符串/數組，可以寫多個，重複恢復）
 	 */
 	enableEquip() {
 		var next = game.createEvent("enableEquip");
@@ -1313,9 +1313,9 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 新的扩展装备区
+	 * 新的擴展裝備區
 	 *
-	 * 参数：扩展来源角色（不写默认当前事件角色），扩展区域（数字/区域字符串/数组，可以写多个，重复扩展）
+	 * 參數：擴展來源角色（不寫默認當前事件角色），擴展區域（數字/區域字符串/數組，可以寫多個，重複擴展）
 	 */
 	expandEquip() {
 		var next = game.createEvent("expandEquip");
@@ -1347,13 +1347,13 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 判断判定区是否被废除
+	 * 判斷判定區是否被廢除
 	 */
 	isDisabledJudge() {
 		return Boolean(this.storage._disableJudge);
 	}
 	/**
-	 * 同步显示扩展装备区状态
+	 * 同步顯示擴展裝備區狀態
 	 * @param { SMap<number> } [map]
 	 */
 	$syncExpand(map) {
@@ -1372,13 +1372,13 @@ export class Player extends HTMLDivElement {
 		this.markSkill("expandedSlots");
 	}
 	/**
-	 * 同步装备区废除牌显示状态
+	 * 同步裝備區廢除牌顯示狀態
 	 * @param { SMap<number> } [map]
 	 */
 	$syncDisable(map) {
-		//TODO:虚拟装备牌的添加暂时没有考虑到废除装备栏的情况，会出现排序错误的问题。需要手动设置排序。
-		const suits = { equip3: "+1马栏", equip4: "-1马栏", equip6: "特殊栏" };
-		if (get.is.mountCombined()) suits.equip3 = "坐骑栏";
+		//TODO:虛擬裝備牌的添加暫時沒有考慮到廢除裝備欄的情況，會出現排序錯誤的問題。需要手動設置排序。
+		const suits = { equip3: "+1馬欄", equip4: "-1馬欄", equip6: "特殊欄" };
+		if (get.is.mountCombined()) suits.equip3 = "坐騎欄";
 		if (!map) {
 			map = this.disabledSlots || {};
 		}
@@ -1407,7 +1407,7 @@ export class Player extends HTMLDivElement {
 			const num = map2[index];
 			if (num > 0) {
 				for (let i = 0; i < num; i++) {
-					const card = game.createCard("feichu_" + index, suits[index] || get.translation(index) + "栏", "");
+					const card = game.createCard("feichu_" + index, suits[index] || get.translation(index) + "欄", "");
 					card.fix();
 					card.style.transform = "";
 					card.classList.remove("drawinghidden");
@@ -1440,7 +1440,7 @@ export class Player extends HTMLDivElement {
 			}
 		}
 	}
-	//以下函数涉及到本次更新内容而进行修改
+	//以下函數涉及到本次更新內容而進行修改
 	/**
 	 * @param { string | Card | VCard | CardBaseUIData } name
 	 * @param { boolean } [replace]
@@ -1470,7 +1470,7 @@ export class Player extends HTMLDivElement {
 		}
 		return true;
 	}
-	//以下函数将不再进行后续维护
+	//以下函數將不再進行後續維護
 	/**
 	 * @deprecated
 	 */
@@ -1489,7 +1489,7 @@ export class Player extends HTMLDivElement {
 	isEmpty(num) {
 		return this.countEnabledSlot(num) > this.getVEquips(num).length;
 	}
-	//以下函数将被废弃
+	//以下函數將被廢棄
 	/**
 	 * @deprecated
 	 */
@@ -1498,7 +1498,7 @@ export class Player extends HTMLDivElement {
 	 * @deprecated
 	 */
 	$enableEquip() {}
-	//装备区End
+	//裝備區End
 	chooseToDebate() {
 		var next = game.createEvent("chooseToDebate");
 		next.player = this;
@@ -1514,7 +1514,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 向target发起协力
+	 * 向target發起協力
 	 * @param { Player } target
 	 * @param { string } type
 	 * @param {*} reason
@@ -1529,7 +1529,7 @@ export class Player extends HTMLDivElement {
 		this.storage.cooperation.add(info);
 		this.addTempSkill("cooperation", { player: "dieAfter" });
 		this.addSkill("cooperation_" + type, { player: "dieAfter" });
-		game.log(this, "向", target, "发起了“协力”，合作类型是", "#g" + get.translation("cooperation_" + type));
+		game.log(this, "向", target, "發起了“協力”，合作類型是", "#g" + get.translation("cooperation_" + type));
 	}
 	chooseCooperationFor() {
 		var next = game.createEvent("chooseCooperationFor");
@@ -1577,7 +1577,7 @@ export class Player extends HTMLDivElement {
 		else this.markSkill("cooperation_" + reason);
 	}
 	/**
-	 * @param { boolean } unseen 是否无视暗将的限制
+	 * @param { boolean } unseen 是否無視暗將的限制
 	 * @returns { string[] }
 	 */
 	getClans(unseen) {
@@ -1593,8 +1593,8 @@ export class Player extends HTMLDivElement {
 		return clans;
 	}
 	/**
-	 * @param { string } clan 氏族名称
-	 * @param { boolean } unseen 是否无视暗将的限制
+	 * @param { string } clan 氏族名稱
+	 * @param { boolean } unseen 是否無視暗將的限制
 	 * @returns { boolean }
 	 */
 	hasClan(clan, unseen) {
@@ -1640,7 +1640,7 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 设置玩家的座位号
+	 * 設置玩家的座位號
 	 * @param { number } num
 	 */
 	setSeatNum(num) {
@@ -1654,7 +1654,7 @@ export class Player extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 返回玩家的座位号
+	 * 返回玩家的座位號
 	 * @returns { number }
 	 */
 	getSeatNum() {
@@ -1662,7 +1662,7 @@ export class Player extends HTMLDivElement {
 		return 0;
 	}
 	/**
-	 * 是否拥有某一性别
+	 * 是否擁有某一性別
 	 * @param { string } sex
 	 */
 	hasSex(sex) {
@@ -1671,7 +1671,7 @@ export class Player extends HTMLDivElement {
 		return this.sex == sex;
 	}
 	/**
-	 * 是否和target同一性别
+	 * 是否和target同一性別
 	 * @param { Player } target
 	 */
 	sameSexAs(target) {
@@ -1682,7 +1682,7 @@ export class Player extends HTMLDivElement {
 		return sex1 == sex2;
 	}
 	/**
-	 * 是否和target不同性别
+	 * 是否和target不同性別
 	 * @param { Player } target
 	 */
 	differentSexFrom(target) {
@@ -1734,7 +1734,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 给一些牌加上Gaintag
+	 * 給一些牌加上Gaintag
 	 * @param { Card | Card[] } cards
 	 * @param { string } tag
 	 */
@@ -1821,12 +1821,12 @@ export class Player extends HTMLDivElement {
 	 */
 	changeCharacter(newPairs, log = true) {
 		if (!Array.isArray(newPairs)) {
-			console.warn(`警告：Player[${this.name}].changeCharacter填写了一个错误的参数:`, newPairs);
+			console.warn(`警告：Player[${this.name}].changeCharacter填寫了一個錯誤的參數:`, newPairs);
 			return;
 		}
 		for (let name of newPairs) {
 			if (!lib.character[name]) {
-				console.warn(`警告：Player[${this.name}]试图将角色牌变更为不存在的角色:`, name);
+				console.warn(`警告：Player[${this.name}]試圖將角色牌變更為不存在的角色:`, name);
 				return;
 			}
 		}
@@ -1838,7 +1838,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 亮将函数，若num为0，则只亮主将，num为1，则只亮副将，num为2，则亮主将和副将
+	 * 亮將函數，若num為0，則只亮主將，num為1，則只亮副將，num為2，則亮主將和副將
 	 * @param { 0 | 1 | 2 } num
 	 * @param { false } [log]
 	 */
@@ -1878,7 +1878,7 @@ export class Player extends HTMLDivElement {
 		var skills;
 		switch (num) {
 			case 0:
-				if (log !== false) game.log(this, "展示了主将", "#b" + this.name1);
+				if (log !== false) game.log(this, "展示了主將", "#b" + this.name1);
 				this.name = this.name1;
 				skills = lib.character[this.name][3] || [];
 				this.sex = lib.character[this.name][0];
@@ -1887,7 +1887,7 @@ export class Player extends HTMLDivElement {
 				this.classList.remove("unseen_show");
 				break;
 			case 1:
-				if (log !== false) game.log(this, "展示了副将", "#b" + this.name2);
+				if (log !== false) game.log(this, "展示了副將", "#b" + this.name2);
 				skills = lib.character[this.name2][3] || [];
 				if (this.sex == "unknown") this.sex = lib.character[this.name2][0];
 				if (this.name.startsWith("unknown")) this.name = this.name2;
@@ -1896,8 +1896,8 @@ export class Player extends HTMLDivElement {
 				break;
 			case 2:
 				if (log !== false) {
-					if (this.name2) game.log(this, "展示了主将", "#b" + this.name1, "、副将", "#b" + this.name2);
-					else game.log(this, "展示了主将", "#b" + this.name1);
+					if (this.name2) game.log(this, "展示了主將", "#b" + this.name1, "、副將", "#b" + this.name2);
+					else game.log(this, "展示了主將", "#b" + this.name1);
 				}
 				this.name = this.name1;
 				var skills = lib.character[this.name][3] || [];
@@ -2104,7 +2104,7 @@ export class Player extends HTMLDivElement {
 		);
 		if (lib.animate.skill[name]) lib.animate.skill[name].apply(this, arguments);
 		else {
-			//技能弹窗去除括号等
+			//技能彈窗去除括號等
 			var skillName=get.skillTranslation(name,this);
 			var reg=new RegExp(/[\[\(\)].{1,5}[\]\)]/g,'g');
 			if(skillName.replace){
@@ -2277,7 +2277,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Get the player's HP not less than 0. Set “raw” to true to get the player's raw HP instead.
 	 *
-	 * 获取角色的体力值。设置“raw”为true以获取角色的体力。
+	 * 獲取角色的體力值。設置“raw”為true以獲取角色的體力。
 	 *
 	 * @param { boolean } [raw]
 	 * @returns { number }
@@ -2288,7 +2288,7 @@ export class Player extends HTMLDivElement {
 	/**
 	 * Set “raw” to true to get the player's raw damaged HP instead.
 	 *
-	 * 设置“raw”为true以获取角色已损失的体力。
+	 * 設置“raw”為true以獲取角色已損失的體力。
 	 *
 	 * @param { boolean } [raw]
 	 * @returns { number }
@@ -2297,7 +2297,7 @@ export class Player extends HTMLDivElement {
 		return this.maxHp - this.getHp(raw);
 	}
 	/**
-	 * 将玩家切换至某个势力
+	 * 將玩家切換至某個勢力
 	 * @param { string } group
 	 * @param { boolean } [log]
 	 * @param { "nobroadcast" } [broadcast]
@@ -2331,7 +2331,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家与target划拳
+	 * 令玩家與target划拳
 	 * @param { Player } target
 	 * @returns { GameEventPromise }
 	 */
@@ -2343,7 +2343,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家选择恢复一个已废除的装备栏
+	 * 令玩家選擇恢復一個已廢除的裝備欄
 	 * @returns { GameEventPromise }
 	 */
 	chooseToEnable() {
@@ -2363,7 +2363,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家选择废除一个未废除的装备栏
+	 * 令玩家選擇廢除一個未廢除的裝備欄
 	 * @returns { GameEventPromise }
 	 */
 	chooseToDisable() {
@@ -2386,7 +2386,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 返回玩家是否处于出牌阶段
+	 * 返回玩家是否處於出牌階段
 	 * @param { boolean } [notmeisok]
 	 */
 	isXingDong(notmeisok) {
@@ -2395,7 +2395,7 @@ export class Player extends HTMLDivElement {
 		return _status.event.name == "xingDong" || _status.event.getParent("xingDong").name == "xingDong";
 	}
 	/**
-	 * 与target交换装备区里的牌
+	 * 與target交換裝備區裡的牌
 	 * @param { Player } target
 	 */
 	swapEquip(target) {
@@ -2406,10 +2406,10 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 返回玩家是否可以与target拼点
+	 * 返回玩家是否可以與target拼點
 	 * @param { Player } target
-	 * @param { boolean } [goon] 忽略玩家的手牌不足以拼点
-	 * @param { boolean} [bool] 忽略target的手牌不足以拼点
+	 * @param { boolean } [goon] 忽略玩家的手牌不足以拼點
+	 * @param { boolean} [bool] 忽略target的手牌不足以拼點
 	 */
 	canCompare(target, goon, bool) {
 		if (this == target) return false;
@@ -2456,7 +2456,7 @@ export class Player extends HTMLDivElement {
 		next.setContent("enableJudge");
 		return next;
 	}
-	//原有函数
+	//原有函數
 	init(character, character2, skill, update) {
 		let hidden = false;
 		if (typeof character == "string" && !lib.character[character]) {
@@ -2496,7 +2496,7 @@ export class Player extends HTMLDivElement {
 		this.sex = info.sex;
 		this.group = info.group;
 		this.hp = 0;
-		this.maxHp = 2;//显示为治疗上限为2
+		this.maxHp = 2;//顯示為治療上限為2
 		this.zhiLiao = 0;
 		this.node.intro.innerHTML = lib.config.intro;
 		this.node.name.dataset.nature = get.groupnature(this.group);
@@ -2662,23 +2662,23 @@ export class Player extends HTMLDivElement {
 		if (this.storage.nohp) {
 			this.node.hp.hide();
 		}
-		//队伍彼边框显示
+		//隊伍彼邊框顯示
 		if(lib.config.border_style=='side') this.node.framebg.dataset.auto=this.side;
 
 		return this;
 	}
 	/**
-	 * 换肤换音：想要支持某个武将更换皮肤，必须在lib.character.characterSubstitute中存在该武将的id（以下以name代指武将id，character代指换肤图片名）
+	 * 換膚換音：想要支持某個武將更換皮膚，必須在lib.character.characterSubstitute中存在該武將的id（以下以name代指武將id，character代指換膚圖片名）
 	 *
-	 * 如果换肤换音引用本体的image/character素材作为更换的皮肤且不需要使用本体audio/die以外的地方的配音，则你无需在characterSubstitute中书写关于此皮肤的信息
+	 * 如果換膚換音引用本體的image/character素材作為更換的皮膚且不需要使用本體audio/die以外的地方的配音，則你無需在characterSubstitute中書寫關於此皮膚的信息
 	 *
-	 * 如果lib.character[character]不存在，且想引用其他路径的图片素材或阵亡素材，请以[character,[]]的形式写入lib.character.characterSubstitute[name]中，第二个数组填入形式同lib.character[4]的书写形式
+	 * 如果lib.character[character]不存在，且想引用其他路徑的圖片素材或陣亡素材，請以[character,[]]的形式寫入lib.character.characterSubstitute[name]中，第二個數組填入形式同lib.character[4]的書寫形式
 	 *
 	 * @param { string | object | function } map
 	 * @param { string } character
 	 */
 	changeSkin(map, character) {
-		//TODO: 这一坨改不动了 谁爱改谁改
+		//TODO: 這一坨改不動了 誰愛改誰改
 		if (!map || !character) {
 			console.warn("error: no sourceMap or character to changeSkin", get.translation(this));
 			return;
@@ -2790,7 +2790,7 @@ export class Player extends HTMLDivElement {
 		this.serving = false;
 		if (!info || info == "server") {
 			this.roomempty = true;
-			str = "空房间";
+			str = "空房間";
 			this.roomfull = false;
 			this.roomgaming = false;
 			this.version = null;
@@ -2808,7 +2808,7 @@ export class Player extends HTMLDivElement {
 				for (var i = str.length; i < 11; i++) str += "　";
 				this.version = config.version;
 				if (config.gameStarted) {
-					str += '<span class="firetext">游戏中</span>　';
+					str += '<span class="firetext">遊戲中</span>　';
 					if (config.observe && config.observeReady && this.version == lib.versionOL) {
 						this.classList.remove("exclude");
 					} else {
@@ -2824,12 +2824,12 @@ export class Player extends HTMLDivElement {
 				}
 				this.maxHp = parseInt(config.number);
 				this.hp = Math.min(this.maxHp, info[3]);
-				if (this.hp < this.maxHp || config.gameStarted) str += "人数：" + this.hp + "/" + this.maxHp;
-				else str += '人数：<span class="firetext">' + this.hp + "/" + this.maxHp + "</span>";
+				if (this.hp < this.maxHp || config.gameStarted) str += "人數：" + this.hp + "/" + this.maxHp;
+				else str += '人數：<span class="firetext">' + this.hp + "/" + this.maxHp + "</span>";
 
-				str += "　(" + info[0].slice(0, 12) + " 的房间)";
-				if(info[2].remark && info[2].remark!='无'){
-					str+=`备注[${info[2].remark}]`;
+				str += "　(" + info[0].slice(0, 12) + " 的房間)";
+				if(info[2].remark && info[2].remark!='無'){
+					str+=`備註[${info[2].remark}]`;
 				}
 				/*
 				if (config.mode != "guozhan" && (config.mode != "doudizhu" || config.doudizhu_mode != "online")) {
@@ -2866,7 +2866,7 @@ export class Player extends HTMLDivElement {
 					this.roomgaming = false;
 				}
 			} else {
-				str = "异常房间";
+				str = "異常房間";
 				this.roomfull = true;
 				this.classList.add("exclude");
 			}
@@ -2885,7 +2885,7 @@ export class Player extends HTMLDivElement {
 		);
 		const rawPairs = [this.name1];
 		if (this.name2 && lib.character[this.name2]) rawPairs.push(this.name2);
-		//单将变单将 & 双将变双将
+		//單將變單將 & 雙將變雙將
 		if (rawPairs.length == newPairs.length) {
 			for (let i = 0; i < Math.min(2, rawPairs.length); i++) {
 				let rawName = rawPairs[i],
@@ -2895,19 +2895,19 @@ export class Player extends HTMLDivElement {
 				}
 			}
 		}
-		//单将变双将
+		//單將變雙將
 		else if (rawPairs.length == 1 && newPairs.length == 2) {
 			player.name1 = newPairs[0];
 			player.name2 = newPairs[1];
 			player.$reinit12(newPairs);
 		}
-		//双将变单将
+		//雙將變單將
 		else if (rawPairs.length == 2 && newPairs.length == 1) {
 			player.name1 = newPairs[0];
 			delete player.name2;
 			player.$reinit21(newPairs);
 		}
-		//修改性别
+		//修改性別
 		if (!player.isUnseen(1)) {
 			player.name = player.name1;
 			player.sex = get.character(player.name1, 0);
@@ -3238,7 +3238,7 @@ export class Player extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 用法同 {@link say}，但联机模式用这个
+	 * 用法同 {@link say}，但聯機模式用這個
 	 * @param { string } str
 	 */
 	chat(str) {
@@ -3262,7 +3262,7 @@ export class Player extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 让玩家说话
+	 * 讓玩家說話
 	 * @param { string } str
 	 */
 	say(str) {
@@ -3624,7 +3624,7 @@ export class Player extends HTMLDivElement {
 		return this;
 	}
 	/**
-	 * 清除玩家的标记
+	 * 清除玩家的標記
 	 * @param { string } i
 	 * @param { boolean } [log]
 	 */
@@ -3633,7 +3633,7 @@ export class Player extends HTMLDivElement {
 		if (num > 0) this.removeMark(i, num, log);
 	}
 	/**
-	 * 移除玩家的标记
+	 * 移除玩家的標記
 	 * @param { string } i
 	 * @param { number } [num = 1]
 	 * @param { boolean } [log]
@@ -3651,13 +3651,13 @@ export class Player extends HTMLDivElement {
 			if(info.markimage.includes('hong')) var colorStr='#r【'+str+'】';
 			else if(info.markimage.includes('lan')) var colorStr='#b【'+str+'】';
 			else var colorStr='【'+str+'】';
-			if (colorStr) game.log(this, "移去了", num, "个",colorStr);
+			if (colorStr) game.log(this, "移去了", num, "個",colorStr);
 		}
 		this.syncStorage(i);
 		this[this.storage[i] || (lib.skill[i] && lib.skill[i].mark) ? "markSkill" : "unmarkSkill"](i);
 	}
 	/**
-	 * 增加玩家的标记
+	 * 增加玩家的標記
 	 * @param { string } i
 	 * @param { number } [num = 1]
 	 * @param { boolean } [log]
@@ -3674,13 +3674,13 @@ export class Player extends HTMLDivElement {
 			if(info.markimage.includes('hong')) var colorStr='#r【'+str+'】';
 			else if(info.markimage.includes('lan')) var colorStr='#b【'+str+'】';
 			else var colorStr='【'+str+'】';
-			if (colorStr) game.log(this, "获得了", num, "个", colorStr);
+			if (colorStr) game.log(this, "獲得了", num, "個", colorStr);
 		}
 		this.syncStorage(i);
 		this.markSkill(i);
 	}
 	/**
-	 * 设置玩家的标记数
+	 * 設置玩家的標記數
 	 * @param { string } name
 	 * @param { number } num
 	 * @param { boolean } [log]
@@ -3691,7 +3691,7 @@ export class Player extends HTMLDivElement {
 		else if (count < num) this.addMark(name, num - count, log);
 	}
 	/**
-	 * 返回玩家的标记数
+	 * 返回玩家的標記數
 	 * @param { string } i
 	 * @returns { number }
 	 */
@@ -3702,7 +3702,7 @@ export class Player extends HTMLDivElement {
 		return 0;
 	}
 	/**
-	 * 返回玩家是否拥有某个标记
+	 * 返回玩家是否擁有某個標記
 	 * @param { string } i
 	 * @returns { boolean }
 	 */
@@ -3775,9 +3775,9 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 获得蓄力点
-	 * @param { number } [num = 1] 获得蓄力点数
-	 * @param { boolean } [log] false: 不进行广播
+	 * 獲得蓄力點
+	 * @param { number } [num = 1] 獲得蓄力點數
+	 * @param { boolean } [log] false: 不進行廣播
 	 */
 	addCharge(num, log) {
 		if (typeof num != "number" || !num) num = 1;
@@ -3786,9 +3786,9 @@ export class Player extends HTMLDivElement {
 		if (num > 0) this.addMark("charge", num, log);
 	}
 	/**
-	 * 移去蓄力点
-	 * @param { number } [num = 1] 移去蓄力点数
-	 * @param { boolean } [log] false: 不进行广播
+	 * 移去蓄力點
+	 * @param { number } [num = 1] 移去蓄力點數
+	 * @param { boolean } [log] false: 不進行廣播
 	 */
 	removeCharge(num, log) {
 		if (typeof num != "number" || !num) num = 1;
@@ -3796,8 +3796,8 @@ export class Player extends HTMLDivElement {
 		if (num > 0) this.removeMark("charge", num, log);
 	}
 	/**
-	 * 返回玩家的蓄力点数
-	 * @param { boolean } [max] true: 返回当前蓄力点与上限之差
+	 * 返回玩家的蓄力點數
+	 * @param { boolean } [max] true: 返回當前蓄力點與上限之差
 	 * @returns { number }
 	 */
 	countCharge(max) {
@@ -3805,7 +3805,7 @@ export class Player extends HTMLDivElement {
 		return this.countMark("charge");
 	}
 	/**
-	 * 获取蓄力点上限
+	 * 獲取蓄力點上限
 	 */
 	getMaxCharge() {
 		let skills = game.expandSkills(this.getSkills().concat(lib.skill.global));
@@ -3920,8 +3920,8 @@ export class Player extends HTMLDivElement {
 		return num;
 	}
 	/**
-	 * 返回一个键值，用于在缓存中作为键名。
-	 * @param { boolean } [similar] false统一前缀
+	 * 返回一個鍵值，用於在緩存中作為鍵名。
+	 * @param { boolean } [similar] false統一前綴
 	 * @returns {string} cacheKey
 	 */
 	getCacheKey(similar) {
@@ -3936,7 +3936,7 @@ export class Player extends HTMLDivElement {
 		);
 	}
 	/**
-	 * 返回玩家本回合使用某个技能的次数
+	 * 返回玩家本回合使用某個技能的次數
 	 * @param { string } skill
 	 * @returns { number }
 	 */
@@ -3944,7 +3944,7 @@ export class Player extends HTMLDivElement {
 		const info = lib.skill[skill];
 		let num = 0;
 		if (!info) {
-			console.warn("“" + skill + "”为无效技能ID！");
+			console.warn("“" + skill + "”為無效技能ID！");
 			return 0;
 		}
 		if (info.usable !== undefined && this.hasSkill("counttrigger") && this.storage.counttrigger) {
@@ -3992,7 +3992,7 @@ export class Player extends HTMLDivElement {
 		return list;
 	}
 	/**
-	 * 获取一名角色隐藏武将牌上的所有技能
+	 * 獲取一名角色隱藏武將牌上的所有技能
 	 * @param {*} [unowned]
 	 * @param {*} [unique]
 	 * @returns { string[] }
@@ -4246,8 +4246,8 @@ export class Player extends HTMLDivElement {
 		return this.getGainableCards(player, arg1, arg2).length;
 	}
 	/**
-	 * 返回武将牌上原有的技能
-	 * @returns { Array<string> } 技能名数组
+	 * 返回武將牌上原有的技能
+	 * @returns { Array<string> } 技能名數組
 	 */
 	getOriginalSkills() {
 		var skills = [];
@@ -4757,7 +4757,7 @@ export class Player extends HTMLDivElement {
 			if (typeof next.prompt == "string") {
 				//next.dialog=next.prompt;
 			} else {
-				var str = "请打出" + get.cnNumber(next.selectCard[0]) + "张";
+				var str = "請打出" + get.cnNumber(next.selectCard[0]) + "張";
 				if (filter) {
 					if (filter.name) {
 						str += get.translation(filter.name);
@@ -4770,7 +4770,7 @@ export class Player extends HTMLDivElement {
 				if (_status.event.getParent().name == "useCard") {
 					var cardname = _status.event.name;
 					if (lib.card[cardname] && lib.translate[cardname]) {
-						str += "响应" + lib.translate[cardname];
+						str += "響應" + lib.translate[cardname];
 					}
 				}
 				next.prompt = str;
@@ -4896,7 +4896,7 @@ export class Player extends HTMLDivElement {
 					var player = _status.event.player;
 					var event = _status.event.getParent();
 					var getn = function (card) {
-						//会赢吗？会赢的！
+						//會贏嗎？會贏的！
 						if (player.hasSkillTag("forceWin", null, { card })) return 13 * (Boolean(event.small) ? -1 : 1);
 						return get.mingGe(card) * (Boolean(event.small) ? -1 : 1);
 					};
@@ -5000,7 +5000,7 @@ export class Player extends HTMLDivElement {
 			else if (typeof arguments[i] == "string") prompt = arguments[i];
 			else if (get.itemtype(arguments[i]) == "select" || typeof arguments[i] == "number") select = arguments[i];
 		}
-		if (prompt == undefined) prompt = "请选择卡牌";
+		if (prompt == undefined) prompt = "請選擇卡牌";
 		return this.chooseButton(forced, select, "hidden", [prompt, cards, "hidden"]);
 	}
 	chooseVCardButton() {
@@ -5021,7 +5021,7 @@ export class Player extends HTMLDivElement {
 		for (var i = 0; i < list.length; i++) {
 			list[i] = [notype ? "" : get.subtype(list[i], false) || get.type(list[i]), list[i]];
 		}
-		if (prompt == undefined) prompt = "请选择卡牌";
+		if (prompt == undefined) prompt = "請選擇卡牌";
 		return this.chooseButton(forced, select, "hidden", [prompt, [list, "vcard"], "hidden"]);
 	}
 	chooseButton() {
@@ -5348,7 +5348,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 选择一或多个数值
+	 * 選擇一或多個數值
 	 */
 	chooseNumbers() {
 		const next = game.createEvent("chooseNumbers");
@@ -5629,7 +5629,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 玩家观看一些牌
+	 * 玩家觀看一些牌
 	 * @param { string } str
 	 * @param { Card[] } cards
 	 * @returns { GameEventPromise }
@@ -5644,7 +5644,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 玩家观看target的手牌
+	 * 玩家觀看target的手牌
 	 * @param { Player } target
 	 * @returns { GameEventPromise }
 	 */
@@ -5656,7 +5656,7 @@ export class Player extends HTMLDivElement {
 			return false;
 		}
 	}
-	//TODO: 给canMoveCard函数适配虚拟牌的移动
+	//TODO: 給canMoveCard函數適配虛擬牌的移動
 	canMoveCard(withatt, nojudge) {
 		const player = this;
 		const args = Array.from(arguments).slice(2);
@@ -5718,7 +5718,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 移动一些牌
+	 * 移動一些牌
 	 * @returns { GameEventPromise }
 	 */
 	moveCard() {
@@ -5892,7 +5892,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家使用某个技能
+	 * 令玩家使用某個技能
 	 * @returns { GameEventPromise }
 	 */
 	useSkill() {
@@ -6053,7 +6053,7 @@ export class Player extends HTMLDivElement {
 		return [];
 	}
 	/**
-	 * 强制令玩家弃置其区域内的一些牌
+	 * 強制令玩家棄置其區域內的一些牌
 	 * @returns { GameEventPromise }
 	 */
 	discard() {
@@ -6087,19 +6087,19 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家弃置其区域内一些能被弃置的牌
+	 * 令玩家棄置其區域內一些能被棄置的牌
 	 *
 	 * cards: Card[] | Card;
-	 * 要弃置的牌
+	 * 要棄置的牌
 	 *
 	 * source?: Player;
-	 * 来源，令Player弃牌的角色。默认目标角色
+	 * 來源，令Player棄牌的角色。默認目標角色
 	 *
 	 * position?: div | fragment;
-	 * 经Mod筛选后的牌要置入的区域，默认ui.discardPile
+	 * 經Mod篩選後的牌要置入的區域，默認ui.discardPile
 	 *
 	 * log?: 'popup' | 'logSkill' | false | string;
-	 * 因对应Mod技能导致部分牌未被弃置时，是否为Mod技能执行对应函数。默认'popup'
+	 * 因對應Mod技能導致部分牌未被棄置時，是否為Mod技能執行對應函數。默認'popup'
 	 *
 	 * @returns { GameEventPromise }
 	 */
@@ -6175,7 +6175,7 @@ export class Player extends HTMLDivElement {
 				}
 			if (!cards.length) event.finish();
 			"step 1";
-			game.log(player, "弃置了", cards);
+			game.log(player, "棄置了", cards);
 			event.done = player.lose(cards, event.position, "visible");
 			event.done.type = "discard";
 			if (event.discarder) event.done.discarder = event.discarder;
@@ -6185,7 +6185,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家将一些牌置入弃牌堆
+	 * 令玩家將一些牌置入棄牌堆
 	 * @returns { GameEventPromise }
 	 */
 	loseToDiscardpile() {
@@ -6402,7 +6402,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家获得一些牌
+	 * 令玩家獲得一些牌
 	 * @returns { GameEventPromise }
 	 */
 	gain() {
@@ -6490,7 +6490,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 将一些牌置入玩家的武将牌上
+	 * 將一些牌置入玩家的武將牌上
 	 * @returns { GameEventPromise }
 	 */
 	addToExpansion() {
@@ -6574,7 +6574,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 玩家交给target一些牌
+	 * 玩家交給target一些牌
 	 * @param { Card | Card[] } cards
 	 * @param { Player } target
 	 * @param { boolean } [visible]
@@ -6650,7 +6650,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家受到伤害
+	 * 令玩家受到傷害
 	 * @returns { GameEventPromise }
 	 */
 	damage() {
@@ -6698,18 +6698,18 @@ export class Player extends HTMLDivElement {
 		};
 		return next;
 	}
-	faShuDamage(...args){//法术伤害
+	faShuDamage(...args){//法術傷害
 		var next=this.damage(...args);
 		next.set('faShu',true);
 		return next;
 	}
-	damageFaShu(...args){//法术伤害
+	damageFaShu(...args){//法術傷害
 		var next=this.damage(...args);
 		next.set('faShu',true);
 		return next;
 	}
 	/**
-	 * 令玩家回复体力
+	 * 令玩家回覆體力
 	 * @returns { GameEventPromise }
 	 */
 	recover() {
@@ -6750,7 +6750,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家回复体力至指定值
+	 * 令玩家回覆體力至指定值
 	 * @returns { GameEventPromise }
 	 */
 	recoverTo() {
@@ -6777,7 +6777,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家流失体力
+	 * 令玩家流失體力
 	 * @param { number } [num]
 	 */
 	loseHp(num) {
@@ -6797,7 +6797,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 扣减玩家的体力上限
+	 * 扣減玩家的體力上限
 	 * @returns { GameEventPromise }}
 	 */
 	loseMaxHp() {
@@ -6815,7 +6815,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家获得体力上限
+	 * 令玩家獲得體力上限
 	 * @returns { GameEventPromise }
 	 */
 	gainMaxHp() {
@@ -6833,7 +6833,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 调整玩家的体力值
+	 * 調整玩家的體力值
 	 * @param { number } num
 	 * @param { boolean } [popup]
 	 * @returns { GameEventPromise }
@@ -6955,7 +6955,7 @@ export class Player extends HTMLDivElement {
 		return this;
 	}
 	/**
-	 * 令玩家进入濒死状态
+	 * 令玩家進入瀕死狀態
 	 * @param { GameEvent | GameEventPromise } [reason]
 	 * @returns { GameEventPromise }
 	 */
@@ -6988,12 +6988,12 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 令玩家复活
+	 * 令玩家復活
 	 * @param { number } [hp = 1]
 	 * @param { boolean } [log]
 	 */
 	revive(hp, log) {
-		if (log !== false) game.log(this, "复活");
+		if (log !== false) game.log(this, "復活");
 		if (this.maxHp < 1) this.maxHp = 1;
 		if (hp) this.hp = hp;
 		else {
@@ -7048,7 +7048,7 @@ export class Player extends HTMLDivElement {
 		return this.hasSkill("mad");
 	}
 	/**
-	 * 令玩家进入混乱状态
+	 * 令玩家進入混亂狀態
 	 */
 	goMad(end) {
 		if (end) {
@@ -7056,10 +7056,10 @@ export class Player extends HTMLDivElement {
 		} else {
 			this.addSkill("mad");
 		}
-		game.log(this, "进入混乱状态");
+		game.log(this, "進入混亂狀態");
 	}
 	/**
-	 * 解除玩家的混乱状态
+	 * 解除玩家的混亂狀態
 	 */
 	unMad() {
 		this.removeSkill("mad");
@@ -7146,7 +7146,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 将一些牌置入到玩家的判定区
+	 * 將一些牌置入到玩家的判定區
 	 * @param { Card } card
 	 * @param { Card[] } [cards]
 	 * @returns { GameEventPromise }
@@ -7215,7 +7215,7 @@ export class Player extends HTMLDivElement {
 		return next;
 	}
 	/**
-	 * 返回某些牌是否能进入玩家的判定区
+	 * 返回某些牌是否能進入玩家的判定區
 	 * @overload
 	 * @param { string | Card } card
 	 * @returns { boolean }
@@ -7251,7 +7251,7 @@ export class Player extends HTMLDivElement {
 					return position != "j" && position != "o";
 				})
 			) {
-				game.log(card, "已被移出处理区，无法置入判定区");
+				game.log(card, "已被移出處理區，無法置入判定區");
 				return;
 			}
 			for (let iwhile = 0; iwhile < 20; iwhile++) {
@@ -7336,7 +7336,7 @@ export class Player extends HTMLDivElement {
 		}
 		if (!this.classList.contains("out")) {
 			this.classList.add("out");
-			game.log(this, "离开游戏");
+			game.log(this, "離開遊戲");
 		}
 		if (!game.countPlayer()) {
 			game.over();
@@ -7362,7 +7362,7 @@ export class Player extends HTMLDivElement {
 			if (this.outCount <= 0 && !this.outSkills) {
 				this.outCount = 0;
 				this.classList.remove("out");
-				game.log(this, "进入游戏");
+				game.log(this, "進入遊戲");
 			}
 		}
 	}
@@ -7476,9 +7476,9 @@ export class Player extends HTMLDivElement {
 			this.trySkillAnimate(name, popname, checkShow);
 			if (Array.isArray(targets) && targets.length) {
 				var str =targets;
-				game.log(this, "对", str, "发动了", "【" + get.skillTranslation(name, this) + "】");
+				game.log(this, "對", str, "發動了", "【" + get.skillTranslation(name, this) + "】");
 			} else {
-				game.log(this, "发动了", "【" + get.skillTranslation(name, this) + "】");
+				game.log(this, "發動了", "【" + get.skillTranslation(name, this) + "】");
 			}
 		}
 		if (nature != false) {
@@ -7574,8 +7574,8 @@ export class Player extends HTMLDivElement {
 			evt.after.push(next);
 			next.setContent("emptyEvent");
 			player.getHistory("useSkill").push(logInfo);
-			//尽可能别往这写插入结算
-			//不能用来终止技能发动！！！
+			//儘可能別往這寫插入結算
+			//不能用來終止技能發動！！！
 			var next2 = game.createEvent("logSkillBegin", false);
 			next2.player = player;
 			next2.forceDie = true;
@@ -7730,9 +7730,9 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 向角色对应storage中添加相应元素，刷新标记状态
+	 * 向角色對應storage中添加相應元素，刷新標記狀態
 	 * @param { string } name 技能ID
-	 * @param { * } [info] 向storage数组中添加对应元素/元素数组
+	 * @param { * } [info] 向storage數組中添加對應元素/元素數組
 	 */
 	markAuto(name, info) {
 		if (typeof info != "undefined") {
@@ -7755,9 +7755,9 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 移除角色对应storage中相应元素并刷新标记状态
+	 * 移除角色對應storage中相應元素並刷新標記狀態
 	 * @param { string } name 技能ID
-	 * @param { * } info 移除storage数组中对应元素/元素数组
+	 * @param { * } info 移除storage數組中對應元素/元素數組
 	 */
 	unmarkAuto(name, info) {
 		var storage = this.storage[name];
@@ -7783,9 +7783,9 @@ export class Player extends HTMLDivElement {
 		return value;
 	}
 	/**
-	 * 获取this.storage[name]的值
+	 * 獲取this.storage[name]的值
 	 * @param { string } name
-	 * @param { any } defaultValue 预设值，默认为[]（不修改原storage）
+	 * @param { any } defaultValue 預設值，默認為[]（不修改原storage）
 	 * @returns
 	 */
 	getStorage(name, defaultValue = []) {
@@ -7896,7 +7896,7 @@ export class Player extends HTMLDivElement {
 					if (get.itemtype(this.storage[name]) == "cards") {
 						this.$throw(this.storage[name], 1000);
 						game.cardsDiscard(this.storage[name]);
-						game.log(this.storage[name], "进入了弃牌堆");
+						game.log(this.storage[name], "進入了棄牌堆");
 						this.storage[name].length = 0;
 					}
 				} else if (typeof info.intro.onunmark == "function") {
@@ -8009,7 +8009,7 @@ export class Player extends HTMLDivElement {
 				name = name.name;
 			} else {
 				node = ui.create.div(".card.mark.drawinghidden");
-				//将能量和红蓝灯放到单独的marks2里显示
+				//將能量和紅藍燈放到單獨的marks2裡顯示
 				if(lib.config.separateEnergyAndMarkers&&(name=='_tiLian_baoShi'||name=='_tiLian_shuiJing'||(lib.skill[name] &&(lib.skill[name].markimage=='image/card/zhiShiWu/hong.png'||lib.skill[name].markimage=='image/card/zhiShiWu/lan.png')))){
 					this.node.marks2.appendChild(node);
 				}else this.node.marks.insertBefore(node, this.node.marks.childNodes[1]);
@@ -8098,7 +8098,7 @@ export class Player extends HTMLDivElement {
 				let type=get.type(card,false);
 				if(type=='gongJi'){
 					let xiBie=get.xiBie(card,false);
-					str+=`${get.translation(xiBie)}斩<br>`;
+					str+=`${get.translation(xiBie)}斬<br>`;
 				}else if(type=='faShu'){
 					str+=`${get.translation(card.name)}<br>`;
 				}else{
@@ -8111,11 +8111,11 @@ export class Player extends HTMLDivElement {
 	}
 
 	/**
-	 * 能否对target使用card
+	 * 能否對target使用card
 	 * @param { Card | VCard | object | string } card
 	 * @param { Player } target
-	 * @param { false } [distance] false：无距离限制
-	 * @param { boolean | GameEvent } [includecard] 是否受使用次数限制，可以填入用于检测的事件
+	 * @param { false } [distance] false：無距離限制
+	 * @param { boolean | GameEvent } [includecard] 是否受使用次數限制，可以填入用於檢測的事件
 	 * @returns
 	 */
 	canUse(card, target, distance, includecard) {
@@ -8133,7 +8133,7 @@ export class Player extends HTMLDivElement {
 		return lib.filter[includecard ? "targetEnabledx" : "targetEnabled"](card, this, target);
 	}
 	/**
-	 * 能否对target使用card 不受是否是攻击行动限制
+	 * 能否對target使用card 不受是否是攻擊行動限制
 	 * @param { Card | VCard | object | string } card
 	 * @param { Player } target
 	 * @returns
@@ -8145,10 +8145,10 @@ export class Player extends HTMLDivElement {
 		return lib.filter["targetEnabled"](card, this, target);
 	}
 	/**
-	 * 场上是否存在能对其使用card的目标
+	 * 場上是否存在能對其使用card的目標
 	 * @param { Card | VCard | object | string } card
-	 * @param { false } [distance] false：无距离限制
-	 * @param { boolean | GameEvent } [includecard] 是否受使用次数限制，可以填入用于检测的事件
+	 * @param { false } [distance] false：無距離限制
+	 * @param { boolean | GameEvent } [includecard] 是否受使用次數限制，可以填入用於檢測的事件
 	 * @returns { boolean }
 	 */
 	hasUseTargetXingBei(card, distance, includecard) {
@@ -8158,10 +8158,10 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 场上是否存在能对其使用card的目标
+	 * 場上是否存在能對其使用card的目標
 	 * @param { Card | VCard | object | string } card
-	 * @param { false } [distance] false：无距离限制
-	 * @param { boolean | GameEvent } [includecard] 是否受使用次数限制，可以填入用于检测的事件
+	 * @param { false } [distance] false：無距離限制
+	 * @param { boolean | GameEvent } [includecard] 是否受使用次數限制，可以填入用於檢測的事件
 	 * @returns { boolean }
 	 */
 	hasUseTarget(card, distance, includecard) {
@@ -8171,10 +8171,10 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 场上是否存在收益为正的目标
+	 * 場上是否存在收益為正的目標
 	 * @param { Card | VCard | object | string } card
-	 * @param { false } [distance] false：无距离限制
-	 * @param { boolean | GameEvent } [includecard] 是否受使用次数限制，可以填入用于检测的事件
+	 * @param { false } [distance] false：無距離限制
+	 * @param { boolean | GameEvent } [includecard] 是否受使用次數限制，可以填入用於檢測的事件
 	 * @returns { boolean }
 	 */
 	hasValueTarget(card, distance, includecard) {
@@ -8219,11 +8219,11 @@ export class Player extends HTMLDivElement {
 		return min > 0;
 	}
 	/**
-	 * card使用价值
+	 * card使用價值
 	 * @param { Card | VCard | object | string } card
-	 * @param { false } [distance] false：无距离限制
-	 * @param { boolean | GameEvent } [includecard] 是否受使用次数限制，可以填入用于检测的事件
-	 * @returns { number } 无可选或正收益目标返回0
+	 * @param { false } [distance] false：無距離限制
+	 * @param { boolean | GameEvent } [includecard] 是否受使用次數限制，可以填入用於檢測的事件
+	 * @returns { number } 無可選或正收益目標返回0
 	 */
 	getUseValue(card, distance, includecard) {
 		if (typeof card == "string") {
@@ -8264,12 +8264,12 @@ export class Player extends HTMLDivElement {
 		return min;
 	}
 	/**
-	 * 添加随从
+	 * 添加隨從
 	 * @param { { hs?: Card[], es?: Card[], skills?: string[], hp?: number, maxHp?: number, hujia?: number, sex?: Sex, group?: string, skill?: string, source?: string  } } cfg
 	 */
 	addSubPlayer(cfg) {
 		var skill = "subplayer_" + cfg.name + "_" + get.id();
-		game.log(this, "获得了随从", "#g" + get.translation(cfg.name));
+		game.log(this, "獲得了隨從", "#g" + get.translation(cfg.name));
 		cfg.hs = cfg.hs || [];
 		cfg.es = cfg.es || [];
 		cfg.skills = cfg.skills || [];
@@ -8288,7 +8288,7 @@ export class Player extends HTMLDivElement {
 		}
 		const list = cfg.caption ? [cfg.caption] : ["", "_prefix", "_ab"].map(str => lib.translate[cfg.name + str]);
 		game.broadcastAll(
-			//TODO: 这里直接修改trashBin部分，后续需要修改为新写法
+			//TODO: 這裡直接修改trashBin部分，後續需要修改為新寫法
 			function (player, skill, list, cfg) {
 				lib.skill[skill] = {
 					intro: {
@@ -8332,7 +8332,7 @@ export class Player extends HTMLDivElement {
 			}
 			this.removeSkill(name);
 			delete this.storage[name];
-			game.log(player, "牺牲了随从", "#g" + name);
+			game.log(player, "犧牲了隨從", "#g" + name);
 			_status.event.trigger("removeSubPlayer");
 		}
 	}
@@ -8431,7 +8431,7 @@ export class Player extends HTMLDivElement {
 		if (!Array.isArray(skill)) skill = [skill];
 		game.log(
 			this,
-			"获得了技能",
+			"獲得了技能",
 			...skill.map(i => {
 				if (popup) this.popup(i);
 				return "#g【" + get.translation(i) + "】";
@@ -8500,7 +8500,7 @@ export class Player extends HTMLDivElement {
 	}
 	changeSkills(addSkill = [], removeSkill = [], popup = true) {
 		if (!Array.isArray(addSkill) || !Array.isArray(removeSkill)) {
-			console.warn(`警告：Player[${this.name}].changeSkills的参数错误，应当为数组形式。`);
+			console.warn(`警告：Player[${this.name}].changeSkills的參數錯誤，應當為數組形式。`);
 			return;
 		}
 		const next = game.createEvent("changeSkills", false);
@@ -8580,24 +8580,24 @@ export class Player extends HTMLDivElement {
 	addAdditionalSkills(skill, skillsToAdd, keep) {
 		if (typeof skillsToAdd == "string") skillsToAdd = [skillsToAdd];
 		if (!Array.isArray(skillsToAdd)) {
-			console.warn(`警告：Player[${this.name}].addAdditionalSkills的参数错误，应当为技能字符串或数组:`, skillsToAdd);
+			console.warn(`警告：Player[${this.name}].addAdditionalSkills的參數錯誤，應當為技能字符串或數組:`, skillsToAdd);
 		}
 		const skillsToRemove = [];
-		//如果不需要保留原本的additionalSkills，则判断要移除的技能，并移除这些技能
+		//如果不需要保留原本的additionalSkills，則判斷要移除的技能，並移除這些技能
 		if (!keep) {
 			skillsToRemove.addArray(this.getRemovableAdditionalSkills(skill));
 		}
-		//创建对应的addSkills的事件
+		//創建對應的addSkills的事件
 		return this.changeSkills(skillsToAdd, skillsToRemove).set("$handle", function (player, skillsToAdd, skillsToRemove) {
-			//先失去先前获得的衍生技能
+			//先失去先前獲得的衍生技能
 			if (skillsToRemove.length > 0) {
 				player.removeSkillLog(skillsToRemove, get.event().popup);
 			}
-			//再获得新的衍生技能
+			//再獲得新的衍生技能
 			if (skillsToAdd.length > 0) {
 				game.log(
 					player,
-					"获得了技能",
+					"獲得了技能",
 					...skillsToAdd.map(i => {
 						if (get.event().popup) player.popup(i);
 						return "#g【" + get.translation(i) + "】";
@@ -8616,15 +8616,15 @@ export class Player extends HTMLDivElement {
 	addAdditionalSkill(skill, skillsToAdd, keep) {
 		if (typeof skillsToAdd == "string") skillsToAdd = [skillsToAdd];
 		if (!Array.isArray(skillsToAdd)) {
-			console.warn(`警告：Player[${this.name}].addAdditionalSkill的参数错误，应当为技能字符串或数组:`, skillsToAdd);
+			console.warn(`警告：Player[${this.name}].addAdditionalSkill的參數錯誤，應當為技能字符串或數組:`, skillsToAdd);
 		}
 		const skillsToRemove = [];
-		//如果不需要保留原本的additionalSkills，则判断要移除的技能，并移除这些技能
+		//如果不需要保留原本的additionalSkills，則判斷要移除的技能，並移除這些技能
 		if (!keep) {
 			skillsToRemove.addArray(this.getRemovableAdditionalSkills(skill));
 		}
 		this.removeSkill(skillsToRemove);
-		//然后处理获得技能的操作
+		//然後處理獲得技能的操作
 		if (!Array.isArray(this.additionalSkills[skill])) this.additionalSkills[skill] = [];
 		for (var i = 0; i < skillsToAdd.length; i++) {
 			this.addSkill(skillsToAdd[i], null, true, true);
@@ -8982,26 +8982,26 @@ export class Player extends HTMLDivElement {
 	 * @returns
 	 */
 	addTempSkills(skillsToAdd, expire) {
-		//请注意，该方法的底层实现并非tempSkill，而是additionalSkills和player.when！
+		//請注意，該方法的底層實現並非tempSkill，而是additionalSkills和player.when！
 		if (typeof skillsToAdd == "string") skillsToAdd = [skillsToAdd];
 		if (!Array.isArray(skillsToAdd) || !skillsToAdd.length) {
-			console.warn(`警告：Player[${this.name}].addAdditionalSkills的参数错误，应当为技能字符串或非空数组:`, skillsToAdd);
+			console.warn(`警告：Player[${this.name}].addAdditionalSkills的參數錯誤，應當為技能字符串或非空數組:`, skillsToAdd);
 		}
-		//确定技能要被移除的时机
+		//確定技能要被移除的時機
 		if (!expire) expire = { global: ["phaseAfter", "phaseBeforeStart"] };
 		else if (typeof expire == "string" || Array.isArray(expire)) expire = { global: expire };
 		return this.changeSkills(skillsToAdd, []).set("$handle", function (player, addSkills, removeSkills) {
 			if (addSkills.length) {
 				game.log(
 					player,
-					"获得了技能",
+					"獲得了技能",
 					...addSkills.map(i => {
 						if (get.event().popup) player.popup(i);
 						return "#g【" + get.translation(i) + "】";
 					})
 				);
 				let skillName;
-				//生成该TempSkills对应的ID
+				//生成該TempSkills對應的ID
 				do {
 					skillName = "player_tempSkills_" + Math.random().toString(36).slice(-8);
 				} while (player.additionalSkills[skillName] != null);
@@ -9023,9 +9023,9 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 添加临时技能
+	 * 添加臨時技能
 	 * @overload
-	 * @param { string | string[] } skill 技能名(数组)
+	 * @param { string | string[] } skill 技能名(數組)
 	 * @param { SkillTrigger |SAAType<Signal> } [expire]
 	 * @param { boolean } [checkConflict]
 	 */
@@ -9062,7 +9062,7 @@ export class Player extends HTMLDivElement {
 			if (this.isTempBanned(skill)) return;
 			this.setStorage(`temp_ban_${skill}`, true);
 
-			if (log !== false && this.hasSkill(skill)) game.log(this, "的技能", `#g【${get.translation(skill)}】`, "暂时失效了");
+			if (log !== false && this.hasSkill(skill)) game.log(this, "的技能", `#g【${get.translation(skill)}】`, "暫時失效了");
 
 			if (expire !== "forever") {
 				if (!expire) expire = { global: ["phaseAfter", "phaseBeforeStart"] };
@@ -9083,7 +9083,7 @@ export class Player extends HTMLDivElement {
 		return skill;
 	}
 	/**
-	 * 返回技能是否暂时失效
+	 * 返回技能是否暫時失效
 	 * @param { string } skill 技能名
 	 * @returns { boolean }
 	 */
@@ -9119,7 +9119,7 @@ export class Player extends HTMLDivElement {
 	}
 	checkConflict(skill) {
 		return;
-		//屏蔽技能冲突检测功能，星杯中无实际用处
+		//屏蔽技能衝突檢測功能，星杯中無實際用處
 		if (skill) {
 			if (this.forbiddenSkills[skill]) {
 				delete this.forbiddenSkills[skill];
@@ -9166,13 +9166,13 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 快速获取一名角色当前轮次/倒数第X轮次的历史
+	 * 快速獲取一名角色當前輪次/倒數第X輪次的歷史
 	 *	@template {Exclude< keyof ActionHistory, 'isRound'|'isMe'>} T
 	 * @param {T} key
-	 * @param {(event:GameEventPromise)=>boolean} filter 筛选条件，不填写默认为lib.filter.all
-	 * @param {number} [num] 获取倒数第num轮的历史，默认为0，表示当前轮
-	 * @param {boolean} [keep] 若为true,则获取倒数第num轮到现在的所有历史
-	 * @param {GameEventPromise} last 代表最后一个事件，获取该事件之前的历史
+	 * @param {(event:GameEventPromise)=>boolean} filter 篩選條件，不填寫默認為lib.filter.all
+	 * @param {number} [num] 獲取倒數第num輪的歷史，默認為0，表示當前輪
+	 * @param {boolean} [keep] 若為true,則獲取倒數第num輪到現在的所有歷史
+	 * @param {GameEventPromise} last 代表最後一個事件，獲取該事件之前的歷史
 	 */
 	getRoundHistory(key, filter = lib.filter.all, num, keep, last) {
 		if (!num) num = 0;
@@ -9200,7 +9200,7 @@ export class Player extends HTMLDivElement {
 		return evts;
 	}
 	/**
-	 * 不填参数，直接获得最后一个回合的改玩家的整个历史对象。
+	 * 不填參數，直接獲得最後一個回合的改玩家的整個歷史對象。
 	 * @overload
 	 * @returns { ActionHistory }
 	 */
@@ -9214,8 +9214,8 @@ export class Player extends HTMLDivElement {
 	 * @template { Exclude<keyof ActionHistory,'isRound'|'isMe'> } T
 	 * @overload
 	 * @param { T } key
-	 * @param { (event: GameEventPromise) => boolean } [filter] 过滤条件
-	 * @param { GameEventPromise } [last] 若有改参数，则该参数事件之后的将被排除掉
+	 * @param { (event: GameEventPromise) => boolean } [filter] 過濾條件
+	 * @param { GameEventPromise } [last] 若有改參數，則該參數事件之後的將被排除掉
 	 * @returns { ActionHistory[T] }
 	 */
 	getHistory(key, filter, last) {
@@ -9234,10 +9234,10 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 遍历历史
+	 * 遍歷歷史
 	 * @template { Exclude<keyof ActionHistory,'isRound'|'isMe'> } T
 	 * @param { T } key
-	 * @param { (event: GameEventPromise) => void } filter 遍历过程需要执行的函数
+	 * @param { (event: GameEventPromise) => void } filter 遍歷過程需要執行的函數
 	 * @param { GameEventPromise } [last]
 	 */
 	checkHistory(key, filter, last) {
@@ -9275,7 +9275,7 @@ export class Player extends HTMLDivElement {
 		return history.some(filter);
 	}
 	/**
-	 * 不填参数，直接获得最后一个回合的改玩家的整个历史对象。
+	 * 不填參數，直接獲得最後一個回合的改玩家的整個歷史對象。
 	 * @overload
 	 * @returns { ActionHistory }
 	 */
@@ -9283,8 +9283,8 @@ export class Player extends HTMLDivElement {
 	 * @template { Exclude<keyof ActionHistory,'isRound'|'isMe'> } T
 	 * @overload
 	 * @param { T } key
-	 * @param { (event: GameEventPromise) => boolean } [filter] 过滤条件
-	 * @param { GameEventPromise } [last] 若有改参数，则该参数事件之后的将被排除掉
+	 * @param { (event: GameEventPromise) => boolean } [filter] 過濾條件
+	 * @param { GameEventPromise } [last] 若有改參數，則該參數事件之後的將被排除掉
 	 * @returns { ActionHistory[T] }
 	 */
 	getLastHistory(key, filter, last) {
@@ -9310,7 +9310,7 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	/**
-	 * 遍历整局游戏该玩家的历史
+	 * 遍歷整局遊戲該玩家的歷史
 	 * @template { Exclude<keyof ActionHistory,'isRound'|'isMe'> } T
 	 * @param { T } key
 	 * @param { (event: GameEventPromise) => void } filter
@@ -9332,12 +9332,12 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 获得整局游戏该玩家的行动历史
+	 * 獲得整局遊戲該玩家的行動歷史
 	 * @overload
 	 * @returns { ActionHistory[] }
 	 */
 	/**
-	 * 获得整局游戏该玩家的某个指定行为的历史
+	 * 獲得整局遊戲該玩家的某個指定行為的歷史
 	 * @template { Exclude<keyof ActionHistory,'isRound'|'isMe'> } T
 	 * @overload
 	 * @param { T } key
@@ -9412,7 +9412,7 @@ export class Player extends HTMLDivElement {
 		return this.stat[this.stat.length - 1][key];
 	}
 	/**
-	 * 用法同getStat，区别是获得自己的回合的统计
+	 * 用法同getStat，區別是獲得自己的回合的統計
 	 * @overload
 	 * @returns {Stat}
 	 */
@@ -9472,7 +9472,7 @@ export class Player extends HTMLDivElement {
 		return num;
 	}
 	/**
-	 * 返回玩家的攻击距离
+	 * 返回玩家的攻擊距離
 	 * @param { boolean } raw
 	 * @returns { number }
 	 */
@@ -9505,7 +9505,7 @@ export class Player extends HTMLDivElement {
 		return range;
 	}
 	/**
-	 * 返回一些牌的攻击距离
+	 * 返回一些牌的攻擊距離
 	 * @param { Card[] } cards
 	 * @returns { number }
 	 */
@@ -9521,11 +9521,11 @@ export class Player extends HTMLDivElement {
 			let newRange = false;
 			const info = get.info(card, false);
 			if (info.distance) {
-				//如果存在attackRange 则通过attackRange动态获取攻击范围
+				//如果存在attackRange 則通過attackRange動態獲取攻擊範圍
 				if (typeof info.distance.attackRange == "function") {
 					newRange = info.distance.attackRange(card, player);
 				}
-				//否则采用祖宗之法
+				//否則採用祖宗之法
 				else if (typeof info.distance.attackFrom == "number") {
 					newRange = 1 - info.distance.attackFrom;
 				}
@@ -9812,7 +9812,7 @@ export class Player extends HTMLDivElement {
 		return this.hp >= this.maxHp || this.storage.nohp;
 	}
 	/**
-	 * 判断玩家是否是场上体力最大的玩家
+	 * 判斷玩家是否是場上體力最大的玩家
 	 * @param { boolean } [only] 是否唯一
 	 * @param { boolean } [raw]
 	 * @returns { boolean }
@@ -9824,7 +9824,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 判断玩家是否是场上体力最少的玩家
+	 * 判斷玩家是否是場上體力最少的玩家
 	 * @param { boolean } [only] 是否唯一
 	 * @param { boolean } [raw]
 	 * @returns { boolean }
@@ -9836,7 +9836,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 判断玩家是否是场上牌最多的玩家
+	 * 判斷玩家是否是場上牌最多的玩家
 	 * @param { boolean } [only] 是否唯一
 	 * @returns { boolean }
 	 */
@@ -9848,7 +9848,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 判断玩家是否是场上牌最少的玩家
+	 * 判斷玩家是否是場上牌最少的玩家
 	 * @param { boolean } [only] 是否唯一
 	 * @returns { boolean }
 	 */
@@ -9860,7 +9860,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 判断玩家是否是场上手牌最多的玩家
+	 * 判斷玩家是否是場上手牌最多的玩家
 	 * @param { boolean } [only] 是否唯一
 	 * @returns { boolean }
 	 */
@@ -9872,7 +9872,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 判断玩家是否是场上手牌最少的玩家
+	 * 判斷玩家是否是場上手牌最少的玩家
 	 * @param { boolean } [only] 是否唯一
 	 * @returns { boolean }
 	 */
@@ -9884,7 +9884,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 判断玩家是否是场上装备区牌最多的玩家
+	 * 判斷玩家是否是場上裝備區牌最多的玩家
 	 * @param { boolean } [only] 是否唯一
 	 * @returns { boolean }
 	 */
@@ -9896,7 +9896,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 判断玩家是否是场上装备区牌最少的玩家
+	 * 判斷玩家是否是場上裝備區牌最少的玩家
 	 * @param { boolean } [only] 是否唯一
 	 * @returns { boolean }
 	 */
@@ -9908,7 +9908,7 @@ export class Player extends HTMLDivElement {
 		});
 	}
 	/**
-	 * 返回玩家是否是横置状态
+	 * 返回玩家是否是橫置狀態
 	 * @returns { boolean }
 	 */
 	isLinked() {
@@ -9918,14 +9918,14 @@ export class Player extends HTMLDivElement {
 		return this.classList.contains("linked");
 	}
 	/**
-	 * 返回玩家是否是翻面状态
+	 * 返回玩家是否是翻面狀態
 	 * @returns { boolean }
 	 */
 	isTurnedOver() {
 		return this.classList.contains("turnedover");
 	}
 	/**
-	 * 返回玩家是否是被移出游戏
+	 * 返回玩家是否是被移出遊戲
 	 * @returns { boolean }
 	 */
 	isOut() {
@@ -9952,8 +9952,8 @@ export class Player extends HTMLDivElement {
 		}
 	}
 	isUnderControl(self, me) {
-		if(_status.playback) return true;//使在录像模式下可以查看其他角色盖牌
-		//修复观战未允许观看手牌的情况可以观看队友牌
+		if(_status.playback) return true;//使在錄像模式下可以查看其他角色蓋牌
+		//修復觀戰未允許觀看手牌的情況可以觀看隊友牌
 		if(game.observe&&lib.configOL.observe_handcard===true) return true;
 		if(game.observe&&lib.configOL.observe_handcard===false) return false;
 		me = me || game.me;
@@ -9963,7 +9963,7 @@ export class Player extends HTMLDivElement {
 			if (self) return true;
 			return false;
 		}
-		//加个me&&可解决多控重新入局报错
+		//加個me&&可解決多控重新入局報錯
 		if (that === me ||  (me&&this == me._trueMe)) return true;
 		//if (_status.connectMode) return false;
 		//if (lib.config.mode == "versus") {
@@ -10157,10 +10157,10 @@ export class Player extends HTMLDivElement {
 	}
 	/**
 	 *
-	 * @param { number | Card[] | Card } [add] (逻辑上)同时考虑“获得”的这张/些牌
-	 * @param { (card?: Card, player?: Player) => boolean } [filter] 代替默认策略(计入手牌数的手牌)进行筛选
-	 * @param { boolean } [pure] (手牌上限大于手牌数时)返回负值
-	 * @returns { number } 需要弃置的牌数
+	 * @param { number | Card[] | Card } [add] (邏輯上)同時考慮“獲得”的這張/些牌
+	 * @param { (card?: Card, player?: Player) => boolean } [filter] 代替默認策略(計入手牌數的手牌)進行篩選
+	 * @param { boolean } [pure] (手牌上限大於手牌數時)返回負值
+	 * @returns { number } 需要棄置的牌數
 	 */
 	needsToDiscard(add, filter, pure) {
 		let cards = this.getCards("h"),
@@ -10266,7 +10266,7 @@ export class Player extends HTMLDivElement {
 	 * @param {string} tag
 	 * @param {Parameters<this['getSkills']>[0]} [hidden]
 	 * @param {Parameters<SkillAI['skillTagFilter']>[2]} [arg]
-	 * @param {boolean} [globalskill] 只有为false才不添加全局技能ai进行筛选
+	 * @param {boolean} [globalskill] 只有為false才不添加全局技能ai進行篩選
 	 */
 	hasSkillTag(tag, hidden, arg, globalskill) {
 		var skills = this.getSkills(hidden);
@@ -10289,7 +10289,7 @@ export class Player extends HTMLDivElement {
 	 *
 	 * @overload
 	 * @param { string } name
-	 * @returns { boolean} 返回玩家判定区是否有某(种牌名的)牌
+	 * @returns { boolean} 返回玩家判定區是否有某(種牌名的)牌
 	 */
 	hasJudge(name) {
 		if (name && typeof name === "object") {
@@ -10304,7 +10304,7 @@ export class Player extends HTMLDivElement {
 		return false;
 	}
 	/**
-	 * 返回玩家是否存在队友
+	 * 返回玩家是否存在隊友
 	 * @returns { boolean }
 	 */
 	hasFriend() {
@@ -10317,8 +10317,8 @@ export class Player extends HTMLDivElement {
 		return false;
 	}
 	/**
-	 * 场上是否有至少num/1个不明身份角色
-	 * @param { number } [num] 允许最多有num个不明身份角色
+	 * 場上是否有至少num/1個不明身份角色
+	 * @param { number } [num] 允許最多有num個不明身份角色
 	 * @returns { boolean }
 	 */
 	hasUnknown(num) {
@@ -10372,9 +10372,9 @@ export class Player extends HTMLDivElement {
 		return false;
 	}
 	/**
-	 * 有没有可用杀
-	 * @param { string | boolean } [respond] 响应什么类型，默认全部。"use": 使用，true / "respond": 打出
-	 * @param { boolean } [noauto] 不考虑出牌阶段才能用的（待补充）
+	 * 有沒有可用殺
+	 * @param { string | boolean } [respond] 響應什麼類型，默認全部。"use": 使用，true / "respond": 打出
+	 * @param { boolean } [noauto] 不考慮出牌階段才能用的（待補充）
 	 */
 	hasSha(respond, noauto) {
 		if (this.countCards("hs", "sha")) return true;
@@ -10387,8 +10387,8 @@ export class Player extends HTMLDivElement {
 		return this.hasUsableCard("sha", respond);
 	}
 	/**
-	 * 有没有可用闪
-	 * @param { string | boolean } [respond] 响应什么类型，默认全部。"use": 使用，true / "respond": 打出
+	 * 有沒有可用閃
+	 * @param { string | boolean } [respond] 響應什麼類型，默認全部。"use": 使用，true / "respond": 打出
 	 */
 	hasShan(respond) {
 		if (this.countCards("hs", "shan")) return true;
@@ -10400,12 +10400,12 @@ export class Player extends HTMLDivElement {
 		return this.hasUsableCard("shan", respond);
 	}
 	/**
-	 * 以viewer视角猜测Player手里的杀
+	 * 以viewer視角猜測Player手裡的殺
 	 * @param { Player } [viewer]
-	 * @param { "use" | "respond" } [type] 此杀用途："use"/"respond"，无则均加入
-	 * @param { Card[] | Card | null } [ignore] 此牌/这些牌不纳入考量
+	 * @param { "use" | "respond" } [type] 此殺用途："use"/"respond"，無則均加入
+	 * @param { Card[] | Card | null } [ignore] 此牌/這些牌不納入考量
 	 * @param { "bool" | "count" | "odds" } [rvt]
-	 * @returns { boolean | number } 返回值：rvt:"bool"(默认)是否可能有杀，"count"推测有多少张杀，"odds"有杀的概率
+	 * @returns { boolean | number } 返回值：rvt:"bool"(默認)是否可能有殺，"count"推測有多少張殺，"odds"有殺的概率
 	 */
 	mayHaveSha(viewer, type, ignore, rvt) {
 		let count = 0;
@@ -10448,12 +10448,12 @@ export class Player extends HTMLDivElement {
 		return count > _status.event.getRand("mayHaveSha" + hs + this.playerid);
 	}
 	/**
-	 * 以viewer视角猜测Player手里的闪
+	 * 以viewer視角猜測Player手裡的閃
 	 * @param { Player } [viewer]
-	 * @param { "use" | "respond" } [type] 此闪用途："use"/"respond"，无则均加入
-	 * @param { Card[] | Card | null } [ignore] 此牌/这些牌不纳入考量
+	 * @param { "use" | "respond" } [type] 此閃用途："use"/"respond"，無則均加入
+	 * @param { Card[] | Card | null } [ignore] 此牌/這些牌不納入考量
 	 * @param { "bool" | "count" | "odds" } [rvt]
-	 * @returns { boolean | number } 返回值：rvt:"bool"(默认)是否可能有闪，"count"推测有多少张闪，"odds"有闪的概率
+	 * @returns { boolean | number } 返回值：rvt:"bool"(默認)是否可能有閃，"count"推測有多少張閃，"odds"有閃的概率
 	 */
 	mayHaveShan(viewer, type, ignore, rvt) {
 		let count = 0;
@@ -10572,7 +10572,7 @@ export class Player extends HTMLDivElement {
 		return null;
 	}
 	/**
-	 * 返回玩家判定区中的虚拟牌
+	 * 返回玩家判定區中的虛擬牌
 	 * @param { string } [name]
 	 * @returns { VCard|null }
 	 */
@@ -10586,7 +10586,7 @@ export class Player extends HTMLDivElement {
 		return null;
 	}
 	/**
-	 * 返回玩家判定区中的牌
+	 * 返回玩家判定區中的牌
 	 * @deprecated
 	 * @param { string } [name]
 	 * @returns { Card|null }
@@ -11034,10 +11034,10 @@ export class Player extends HTMLDivElement {
 		return Math.max(0,num);
 	}
 
-	canBiShaShuiJing(){//能够使用必杀星石
+	canBiShaShuiJing(){//能夠使用必殺星石
 		return this.hasNengLiang('shuiJing')||this.hasNengLiang('baoShi');
 	}
-	canBiShaBaoShi(){//能否使用必杀宝石
+	canBiShaBaoShi(){//能否使用必殺寶石
 		return this.hasNengLiang('baoShi');
 	}
 	removeBiShaShuiJing(){//移除星石
@@ -11054,10 +11054,10 @@ export class Player extends HTMLDivElement {
 			}
 		}
 	}
-	removeBiShaBaoShi(){//移除宝石
+	removeBiShaBaoShi(){//移除寶石
 		return this.removeNengLiang('baoShi');
 	}
-	changeNengLiang(xingShi,num){//改变能量
+	changeNengLiang(xingShi,num){//改變能量
 		if(xingShi==undefined) return;
 		if(typeof num!='number'||!num) num=1;
 		if(num>0){
@@ -11092,15 +11092,15 @@ export class Player extends HTMLDivElement {
 		if(num>0) num=-num;
 		return this.changeNengLiang(xingShi,num);
 	}
-	countNengLiang(xingShi){//统计某个能量数
+	countNengLiang(xingShi){//統計某個能量數
 		if(xingShi==undefined) return 0;
 		return this.countMark('_tiLian_'+xingShi);
 	}
-	hasNengLiang(xingShi){//是否拥有某个能量
+	hasNengLiang(xingShi){//是否擁有某個能量
 		if(xingShi==undefined) return this.countNengLiangAll()>0;
 		else return this.countNengLiang(xingShi)>0;
 	}
-	countNengLiangAll(){//统计所有能量数
+	countNengLiangAll(){//統計所有能量數
 		return this.countMark('_tiLian_baoShi')+this.countMark('_tiLian_shuiJing');
 	}
 	
@@ -11108,9 +11108,9 @@ export class Player extends HTMLDivElement {
 	/**
 	 * 
 	 * @param {*} zhiShiWu 指示物名
-	 * @param {*} num 数量
-	 * @param {*} max 临时最大值
-	 * @param {*} forced 是否强制
+	 * @param {*} num 數量
+	 * @param {*} max 臨時最大值
+	 * @param {*} forced 是否強制
 	 * @returns 
 	*/
 	changeZhiShiWu () {
@@ -11187,7 +11187,7 @@ export class Player extends HTMLDivElement {
 		if(num<0) num=-num;
 		return this.changeZhiShiWu(num,max,zhiShiWu,forced);
 	}
-	countZhiShiWu(zhiShiWu){//统计指示物
+	countZhiShiWu(zhiShiWu){//統計指示物
 		return this.countMark(zhiShiWu);
 	}
 	removeZhiShiWu(){//移除指示物
@@ -11202,7 +11202,7 @@ export class Player extends HTMLDivElement {
 		if(num>0) num=-num;
 		return this.changeZhiShiWu(zhiShiWu,num,true);
 	}
-	//指示物是否到达上限
+	//指示物是否到達上限
 	isZhiShiWuMax(zhiShiWu){
 		if(!zhiShiWu) return false;
 		var info=get.info(zhiShiWu);
@@ -11217,15 +11217,15 @@ export class Player extends HTMLDivElement {
 		if (count > num) return this.removeZhiShiWu(zhiShiWu, count - num);
 		else if (count < num) return this.addZhiShiWu(zhiShiWu, num - count);
 	}
-	hasZhiShiWu(zhiShiWu){//是否拥有指示物
+	hasZhiShiWu(zhiShiWu){//是否擁有指示物
 		return this.hasMark(zhiShiWu);
 	}
 
-	addZhanJi(xingShi,num){//增加战绩
+	addZhanJi(xingShi,num){//增加戰績
 		if(typeof num!='number'||!num) num=1;
 		return this.changeZhanJi(xingShi,num);
 	}
-	removeZhanJi(xingShi,num){//移除战绩
+	removeZhanJi(xingShi,num){//移除戰績
 		if(typeof num!='number'||!num) num=-1;
 		if(num>0) num=-num;
 		return this.changeZhanJi(xingShi,num);
@@ -11238,7 +11238,7 @@ export class Player extends HTMLDivElement {
 			return next;
 		}
 	}
-	hengZhi(){//横置
+	hengZhi(){//橫置
 		if(!this.isLinked()){
 			var next=game.createEvent('hengZhi');
 			next.player=this;
@@ -11246,13 +11246,13 @@ export class Player extends HTMLDivElement {
 			return next;
 		}
 	}
-	qiPai(){//执行一次超出手牌上限的弃牌
+	qiPai(){//執行一次超出手牌上限的棄牌
 		var num=this.needsToDiscard();
 		if(num>0){
-			return this.chooseToDiscard(num,true,`爆牌：弃${num}张牌`).set('useCache',true).set('baoPai',true);
+			return this.chooseToDiscard(num,true,`爆牌：棄${num}張牌`).set('useCache',true).set('baoPai',true);
 		}
 	}
-	countTongXiPai(type){//统计同系牌数
+	countTongXiPai(type){//統計同系牌數
 		var h=this.getCards('h');
 		var dict={};
 		for(var i=0;i<h.length;i++){
@@ -11269,7 +11269,7 @@ export class Player extends HTMLDivElement {
 		}
 		return maxValue;  
 	}
-	countYiXiPai(type){//统计异系牌数
+	countYiXiPai(type){//統計異系牌數
 		var h=this.getCards('h');
 		var dict={};
 		for(var i=0;i<h.length;i++){
@@ -11280,7 +11280,7 @@ export class Player extends HTMLDivElement {
 		}
 		return Object.keys(dict).length;
 	}
-	countTongMingPai(){//统计同命格牌数
+	countTongMingPai(){//統計同命格牌數
 		var h=this.getCards('h');
 		var dict={};
 		for(var i=0;i<h.length;i++){
@@ -11296,7 +11296,7 @@ export class Player extends HTMLDivElement {
 		}
 		return maxValue;  
 	}
-	countYiMingPai(){//统计异命格牌数
+	countYiMingPai(){//統計異命格牌數
 		var h=this.getCards('h');
 		var dict={};
 		for(var i=0;i<h.length;i++){
@@ -11306,12 +11306,12 @@ export class Player extends HTMLDivElement {
 		}
 		return Object.keys(dict).length;
 	}
-	usedSkill(skill){//是否使用过技能
+	usedSkill(skill){//是否使用過技能
 		if(!skill) return false;
 		return this.countSkill(skill)>0;
 	}
 
-	changeHong(num,max){//改变红点
+	changeHong(num,max){//改變紅點
 		if(typeof num!='number'||!num) num=1;
 		var skills=this.getSkills();
 		for(var i=0;i<skills.length;i++){
@@ -11322,7 +11322,7 @@ export class Player extends HTMLDivElement {
 			}
 		}
 	}
-	changeLan(num,max){//改变蓝点
+	changeLan(num,max){//改變藍點
 		if(typeof num!='number'||!num) num=1;
 		var skills=this.getSkills();
 		for(var i=0;i<skills.length;i++){
@@ -11333,25 +11333,25 @@ export class Player extends HTMLDivElement {
 			}
 		}
 	}
-	addHong(num,max){//添加红点
+	addHong(num,max){//添加紅點
 		if(typeof num!='number'||!num) num=1;
 		return this.changeHong(num,max);
 	}
-	removeHong(num){//移除红点
+	removeHong(num){//移除紅點
 		if(typeof num!='number'||!num) num=-1;
 		if(num>0) num=-num;
 		return this.changeHong(num);
 	}
-	addLan(num,max){//添加蓝点
+	addLan(num,max){//添加藍點
 		if(typeof num!='number'||!num) num=1;
 		return this.changeLan(num,max);
 	}
-	removeLan(num){//移除蓝点
+	removeLan(num){//移除藍點
 		if(typeof num!='number'||!num) num=-1;
 		if(num>0) num=-num;
 		return this.changeLan(num);
 	}
-	countHong(){//统计红点
+	countHong(){//統計紅點
 		var num=0;
 		var skills=this.getSkills();
 		for(var i=0;i<skills.length;i++){
@@ -11364,7 +11364,7 @@ export class Player extends HTMLDivElement {
 		}
 		return num;
 	}
-	countLan(){//统计蓝点
+	countLan(){//統計藍點
 		var num=0;
 		var skills=this.getSkills();
 		for(var i=0;i<skills.length;i++){
@@ -11379,9 +11379,9 @@ export class Player extends HTMLDivElement {
 	}
 	/**
 	 * 
-	 * @param {*} num 治疗改变量
-	 * @param {*} limit 临时最大值
-	 * @param {*} source 治疗来源
+	 * @param {*} num 治療改變量
+	 * @param {*} limit 臨時最大值
+	 * @param {*} source 治療來源
 	 * @returns 
 	 */
 	changeZhiLiao(){
@@ -11460,8 +11460,8 @@ export class Player extends HTMLDivElement {
 
 	/**
 	 * 
-	 * @param {*} num 选择可摸牌数 0~num
-	 * @param {*} bool 是否包含0~num中间的数字
+	 * @param {*} num 選擇可摸牌數 0~num
+	 * @param {*} bool 是否包含0~num中間的數字
 	 * @returns 
 	 */
 	chooseDraw(num,bool){
@@ -11539,9 +11539,9 @@ export class Player extends HTMLDivElement {
 	canXingDong(type){
 		var player=this;
 		if(!type) return player.canXingDong('gongJi')||player.canXingDong('faShu')||player.canXingDong('teShu');
-		//获取所有技能
+		//獲取所有技能
 		var skills = game.expandSkills(player.getSkills("invisible").concat(lib.skill.global));
-		//判断是否有可触发的技能
+		//判斷是否有可觸發的技能
 		for(var i=0;i<skills.length;i++){
 			let info = get.info(skills[i]);
 			if(!info) continue;
@@ -11553,7 +11553,7 @@ export class Player extends HTMLDivElement {
 			}else continue;
 			if(enable) return true;
 		}
-		//判断是否有可使用的卡牌
+		//判斷是否有可使用的卡牌
 		var cards=player.getCards('h').concat(player.getCards('e'));
 		for(var i=0;i<cards.length;i++){
 			let info = get.info(cards[i]);
@@ -11652,7 +11652,7 @@ export class Player extends HTMLDivElement {
 				next.gaintag = [arguments[i]];
 				next.gaiPai = arguments[i];
 			} else if (typeof arguments[i] == "boolean") {
-				//是否是展示盖牌
+				//是否是展示蓋牌
 				next.show = arguments[i];
 			}
 		}
@@ -11662,10 +11662,10 @@ export class Player extends HTMLDivElement {
 		next.animate=function(event){
 			var cards=event.cards;
 			if(event.show){
-				game.log(event.player,'将',cards,`【${get.translation(event.gaintag[0])}】`,'置于角色牌上');
+				game.log(event.player,'將',cards,`【${get.translation(event.gaintag[0])}】`,'置於角色牌上');
 			}else{
 				cards=cards.length;
-				game.log(event.player,'将',cards,'张',`【${get.translation(event.gaintag[0])}】`,'置于角色牌上');
+				game.log(event.player,'將',cards,'張',`【${get.translation(event.gaintag[0])}】`,'置於角色牌上');
 			}
 			if(event.source){
 				event.source.$give(cards,event.player,false);
@@ -11729,13 +11729,13 @@ export class Player extends HTMLDivElement {
 
 		return next;
 	}
-	countGaiPai(gaintag){//统计盖牌
+	countGaiPai(gaintag){//統計蓋牌
 		return this.countExpansions(gaintag);
 	}
-	getGaiPai(gaintag){//获取盖牌
+	getGaiPai(gaintag){//獲取蓋牌
 		return this.getExpansions(gaintag);
 	}
-	hasGaiPai(gaintag){//是否拥有盖牌
+	hasGaiPai(gaintag){//是否擁有蓋牌
 		return this.hasExpansions(gaintag);
 	}
 	addJiChuXiaoGuo(){
@@ -11812,7 +11812,7 @@ export class Player extends HTMLDivElement {
 		}
 		return next;
 	}
-	getJiChuXiaoGuo(jiChuXiaoGuo){//获取基础效果
+	getJiChuXiaoGuo(jiChuXiaoGuo){//獲取基礎效果
 		if(jiChuXiaoGuo) return this.getExpansions(jiChuXiaoGuo);
 		else{
 			var list=[];
@@ -11823,7 +11823,7 @@ export class Player extends HTMLDivElement {
 			return list;
 		}
 	}
-	countJiChuXiaoGuo(jiChuXiaoGuo){//统计基础效果
+	countJiChuXiaoGuo(jiChuXiaoGuo){//統計基礎效果
 		if(jiChuXiaoGuo) return this.countExpansions(jiChuXiaoGuo);
 		else{
 			var list=[];
@@ -11853,7 +11853,7 @@ export class Player extends HTMLDivElement {
 		game.addVideo('setSide', this, side);
 		game.broadcastAll(function(player,side){
 			player.side=side;
-			player.node.identity.firstChild.innerHTML=player.side === true ? '红' : '蓝';
+			player.node.identity.firstChild.innerHTML=player.side === true ? '紅' : '藍';
 			player.node.identity.dataset.color=player.side+'zhu';
 		},this,side);
 	}
@@ -12585,7 +12585,7 @@ export class Player extends HTMLDivElement {
 			default:
 				tops = [-171, -57, 57, 171];
 		}
-		//优化触屏布局下处理区多牌显示，将牌调小，并根据调整后的牌大小，调整牌位置
+		//優化觸屏佈局下處理區多牌顯示，將牌調小，並根據調整後的牌大小，調整牌位置
 		if(get.is.phoneLayout()) tops = tops.map(x => x * 0.8);
 		while (uithrowns.length) {
 			var throwns = uithrowns.splice(0, Math.min(uithrowns.length, 4));
@@ -12829,7 +12829,7 @@ export class Player extends HTMLDivElement {
 		}
 		if (get.itemtype(card) == "cards") {
 			if (log != false && !_status.video) {
-				game.log(player, "从", this, "获得了", card);
+				game.log(player, "從", this, "獲得了", card);
 			}
 			if (this.$givemod) {
 				this.$givemod(card, player);
@@ -12840,7 +12840,7 @@ export class Player extends HTMLDivElement {
 			}
 		} else if (typeof card == "number" && card >= 0) {
 			if (log != false && !_status.video) {
-				game.log(player, "从", this, "获得了" + get.cnNumber(card) + "张牌");
+				game.log(player, "從", this, "獲得了" + get.cnNumber(card) + "張牌");
 			}
 			if (this.$givemod) {
 				this.$givemod(card, player);
@@ -12850,9 +12850,9 @@ export class Player extends HTMLDivElement {
 		} else {
 			if (log != false && !_status.video) {
 				if (get.itemtype(card) == "card" && log != false) {
-					game.log(player, "从", this, "获得了", card);
+					game.log(player, "從", this, "獲得了", card);
 				} else {
-					game.log(player, "从", this, "获得了一张牌");
+					game.log(player, "從", this, "獲得了一張牌");
 				}
 			}
 			if (this.$givemod) {
@@ -13168,7 +13168,7 @@ export class Player extends HTMLDivElement {
 		}
 		if (get.itemtype(card) == "cards") {
 			if (log != false && !_status.video) {
-				game.log(this, "获得了", card);
+				game.log(this, "獲得了", card);
 			}
 			if (this.$gainmod) {
 				this.$gainmod(card);
@@ -13179,7 +13179,7 @@ export class Player extends HTMLDivElement {
 			}
 		} else if (typeof card == "number" && card > 1) {
 			if (log != false && !_status.video) {
-				game.log(this, "获得了" + get.cnNumber(card) + "张牌");
+				game.log(this, "獲得了" + get.cnNumber(card) + "張牌");
 			}
 			if (this.$gainmod) {
 				this.$gainmod(card);
@@ -13190,7 +13190,7 @@ export class Player extends HTMLDivElement {
 			}
 		} else {
 			if (get.itemtype(card) == "card" && log != false && !_status.video) {
-				game.log(this, "获得了", card);
+				game.log(this, "獲得了", card);
 			}
 			if (this.$gainmod) {
 				this.$gainmod(card);
@@ -13225,7 +13225,7 @@ export class Player extends HTMLDivElement {
 	}
 	$gain2(cards, log) {
 		if (log === true) {
-			game.log(this, "获得了", cards);
+			game.log(this, "獲得了", cards);
 		}
 		game.broadcast(
 			function (player, cards) {
@@ -13698,7 +13698,7 @@ export class Player extends HTMLDivElement {
 				game.delay();
 			}
 		} else {
-			const VCard = game.createCard(card.name, "虚拟", "");
+			const VCard = game.createCard(card.name, "虛擬", "");
 			const clone = player.$throw(VCard);
 			if (lib.config.low_performance && VCard && VCard.clone) {
 				const waitingForTransition = get.time();

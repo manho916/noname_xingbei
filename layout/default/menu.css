@@ -314,9 +314,9 @@
 	left: 200px;
 	padding: 5px;
 	top: 130px;
-	white-space: normal; /* 改为 normal 以允许内容多行显示 */
-	overflow-x: hidden; /* 改为 hidden 以隐藏水平滚动条 */
-	overflow-y: auto; /* 添加 overflow-y 以允许垂直滚动 */
+	white-space: normal; /* 改為 normal 以允許內容多行顯示 */
+	overflow-x: hidden; /* 改為 hidden 以隱藏水平滾動條 */
+	overflow-y: auto; /* 添加 overflow-y 以允許垂直滾動 */
 	border-radius: 4px;
 	box-shadow: rgba(0, 0, 0, 0.2) 0 0 0 1px;
 	height: 100px;
@@ -2115,8 +2115,8 @@ div.popup-container.editor div {
 	cursor: pointer;
 }
 
-/* 最近对局样式 */
-/* 弹窗总体滚动区域 */
+/* 最近對局樣式 */
+/* 彈窗總體滾動區域 */
 .recent-matches-dialog {
   padding-top: 6px;
   padding-bottom: 8px;
@@ -2129,7 +2129,7 @@ div.popup-container.editor div {
 	gap: 8px;
 }
 
-/* 单条记录卡片 */
+/* 單條記錄卡片 */
 .recent-match-item {
 	height: 70px;
 	position: relative;

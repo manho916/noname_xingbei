@@ -1,5 +1,5 @@
 /**
- * 子节点观察器，对于需要频繁遍历子节点的DOM对象的实时变化进行缓存。
+ * 子節點觀察器，對於需要頻繁遍歷子節點的DOM對象的實時變化進行緩存。
  */
 export class ChildNodesWatcher {
 	constructor(dom) {

@@ -22,7 +22,7 @@ import { nonameInitialized } from "../../../../util/index.js";
 export const optionsMenu = function (connectMenu) {
 	if (connectMenu) return;
 	/**
-	 * 由于联机模式会创建第二个菜单，所以需要缓存一下可变的变量
+	 * 由於聯機模式會創建第二個菜單，所以需要緩存一下可變的變量
 	 */
 	// const cacheMenuContainer = menuContainer;
 	const cachePopupContainer = popupContainer;
@@ -73,7 +73,7 @@ export const optionsMenu = function (connectMenu) {
 		}
 	}
 	
-	/*星杯中无实际用处
+	/*星杯中無實際用處
 	var clickBanSkill = function (bool) {
 		var name = this._link.config._name;
 		var list = lib.config.forbidlist;
@@ -139,7 +139,7 @@ export const optionsMenu = function (connectMenu) {
 			if (mode == "skill") {
 				var autoskillexpanded = false;
 				var banskillexpanded = false;
-				ui.create.div(".config.more", "自动发动 <div>&gt;</div>", page, function () {
+				ui.create.div(".config.more", "自動發動 <div>&gt;</div>", page, function () {
 					if (autoskillexpanded) {
 						this.classList.remove("on");
 						for (var k = 0; k < autoskillNodes.length; k++) {
@@ -153,7 +153,7 @@ export const optionsMenu = function (connectMenu) {
 					}
 					autoskillexpanded = !autoskillexpanded;
 				});
-				banskill = ui.create.div(".config.more", "禁双角同时出现 <div>&gt;</div>", page, function () {
+				banskill = ui.create.div(".config.more", "禁雙角同時出現 <div>&gt;</div>", page, function () {
 					if (banskillexpanded) {
 						this.classList.remove("on");
 						for (var k = 0; k < banskillNodes.length; k++) {
@@ -213,7 +213,7 @@ export const optionsMenu = function (connectMenu) {
 					node.innerHTML = str;
 					var span = document.createElement("span");
 					span.classList.add("cardpiledelete");
-					span.innerHTML = "删除";
+					span.innerHTML = "刪除";
 					span.onclick = deleteCustomBanSkill;
 					node.appendChild(span);
 					page.insertBefore(node, banskilladdNode.nextSibling);
@@ -285,14 +285,14 @@ export const optionsMenu = function (connectMenu) {
 					selectname2.style.maxWidth = "85px";
 					//var skillopt2 = ui.create.selectlist(list2, list2[0], banskilladdNode);
 					var confirmbutton = document.createElement("button");
-					confirmbutton.innerHTML = "确定";
+					confirmbutton.innerHTML = "確定";
 					banskilladdNode.appendChild(confirmbutton);
 
 					confirmbutton.onclick = function () {
 						//console.log(selectname.value, selectname2.value);
 						var list=[selectname.value,selectname2.value];
 						if(list[0]==list[1]){
-							alert("请选择不同的角色");
+							alert("請選擇不同的角色");
 							return;
 						}
 						if (!lib.config.customforbid) return;
@@ -397,10 +397,10 @@ export const optionsMenu = function (connectMenu) {
 									}
 								} catch (e) {
 									console.log(e);
-									alert("导入失败");
+									alert("導入失敗");
 									return;
 								}
-								alert("导入成功");
+								alert("導入成功");
 								if (!lib.db) {
 									var noname_inited = localStorage.getItem("noname_inited");
 									var onlineKey = localStorage.getItem(lib.configprefix + "key");
@@ -442,7 +442,7 @@ export const optionsMenu = function (connectMenu) {
 							}
 							var link = (game.writeFile ? "cdv_" : "custom_") + name;
 							if (lib.config.customBackgroundMusic[link]) {
-								if (!confirm("已经存在文件名称相同的背景音乐，是否仍然要继续导入？")) {
+								if (!confirm("已經存在文件名稱相同的背景音樂，是否仍然要繼續導入？")) {
 									_status.music_importing = false;
 									return;
 								}
@@ -458,7 +458,7 @@ export const optionsMenu = function (connectMenu) {
 								var nodeyy = nodexx._link.menu;
 								var nodezz = nodexx._link.config;
 								var musicname = link.slice(link.indexOf("_") + 1);
-								game.prompt("###请输入音乐的名称###" + musicname, true, function (str) {
+								game.prompt("###請輸入音樂的名稱###" + musicname, true, function (str) {
 									if (str) musicname = str;
 									lib.config.customBackgroundMusic[link] = musicname;
 									lib.config.background_music = link;
@@ -550,7 +550,7 @@ export const optionsMenu = function (connectMenu) {
 			var importExtension;
 			var extensionnode = ui.create.div(
 				".config.more",
-				"导入素材包 <div>&gt;</div>",
+				"導入素材包 <div>&gt;</div>",
 				pageboard,
 				function () {
 					if (importextensionexpanded) {
@@ -572,7 +572,7 @@ export const optionsMenu = function (connectMenu) {
 			importExtension.style.textAlign = "left";
 			ui.create.div(
 				"",
-				'<input type="file" accept="application/zip" style="width:153px"><button>确定</button>',
+				'<input type="file" accept="application/zip" style="width:153px"><button>確定</button>',
 				importExtension
 			);
 			var promptnode = ui.create.div(
@@ -586,7 +586,7 @@ export const optionsMenu = function (connectMenu) {
 				var fileToLoad = this.previousSibling.files[0];
 				if (fileToLoad) {
 					promptnode.style.display = "";
-					promptnode.firstChild.innerHTML = "正在解压...";
+					promptnode.firstChild.innerHTML = "正在解壓...";
 					var fileReader = new FileReader();
 					fileReader.onload = function (fileLoadedEvent) {
 						var data = fileLoadedEvent.target.result;
@@ -624,31 +624,31 @@ export const optionsMenu = function (connectMenu) {
 							if (audios.length || fonts.length || images.length) {
 								var str = "";
 								if (audios.length) {
-									str += audios.length + "个音频文件";
+									str += audios.length + "個音頻文件";
 								}
 								if (fonts.length) {
 									if (str.length) str += "、";
-									str += fonts.length + "个字体文件";
+									str += fonts.length + "個字體文件";
 								}
 								if (images.length) {
 									if (str.length) str += "、";
-									str += images.length + "个图片文件";
+									str += images.length + "個圖片文件";
 								}
 								var filelist = audios.concat(fonts).concat(images);
 								if (filelist.length > 200) {
-									str += "，导入时间可能较长";
+									str += "，導入時間可能較長";
 								}
 								var assetLoaded = function () {
 									promptnode.firstChild.innerHTML =
-										'导入成功。<span class="hrefnode">重新启动</span><span class="closenode">×</span>';
+										'導入成功。<span class="hrefnode">重新啟動</span><span class="closenode">×</span>';
 									promptnode.firstChild.querySelectorAll("span")[0].onclick = game.reload;
 									promptnode.firstChild.querySelectorAll("span")[1].onclick = function () {
 										promptnode.style.display = "none";
 									};
 								};
-								if (confirm("本次将导入" + str + "，是否继续？")) {
+								if (confirm("本次將導入" + str + "，是否繼續？")) {
 									promptnode.firstChild.innerHTML =
-										'正在导入... <span class="hrefnode">详细信息</span>';
+										'正在導入... <span class="hrefnode">詳細信息</span>';
 									promptnode.firstChild.querySelector("span.hrefnode").onclick =
 										ui.click.consoleMenu;
 									if (lib.node && lib.node.fs) {
@@ -720,7 +720,7 @@ export const optionsMenu = function (connectMenu) {
 									promptnode.style.display = "none";
 								}
 							} else {
-								alert("没有检测到素材");
+								alert("沒有檢測到素材");
 							}
 						};
 						if (!window.JSZip) {
@@ -796,7 +796,7 @@ export const optionsMenu = function (connectMenu) {
 				if (_status.dragged) return;
 				var page = this.parentNode.parentNode.parentNode;
 				if (page.deletebutton.classList.contains("active")) {
-					if (confirm("确认删除" + this.innerHTML + "文件夹？（此操作不可撤销）")) {
+					if (confirm("確認刪除" + this.innerHTML + "文件夾？（此操作不可撤銷）")) {
 						if (lib.node && lib.node.fs) {
 							try {
 								var removeDirectory = function (path, callback) {
@@ -843,7 +843,7 @@ export const optionsMenu = function (connectMenu) {
 				if (_status.dragged) return;
 				var page = this.parentNode.parentNode.parentNode;
 				if (page.deletebutton.classList.contains("active")) {
-					if (confirm("确认删除" + this.innerHTML + "？（此操作不可撤销）")) {
+					if (confirm("確認刪除" + this.innerHTML + "？（此操作不可撤銷）")) {
 						removeFile([this], page);
 					}
 					return;
@@ -937,9 +937,9 @@ export const optionsMenu = function (connectMenu) {
 						});
 					}
 				};
-				ui.create.div("", "添加目录", addbutton.menu, function () {
+				ui.create.div("", "添加目錄", addbutton.menu, function () {
 					ui.create.templayer();
-					game.prompt("输入目录名称", function (str) {
+					game.prompt("輸入目錄名稱", function (str) {
 						if (str) {
 							createDir(str);
 						}
@@ -964,13 +964,13 @@ export const optionsMenu = function (connectMenu) {
 				addbutton.style.right = "10px";
 				addbutton.style.bottom = "80px";
 
-				var deletebutton = ui.create.div(".menubutton.round", "删", page, function () {
+				var deletebutton = ui.create.div(".menubutton.round", "刪", page, function () {
 					if (!this.parentNode) return;
 					if (!this.classList.contains("active")) {
 						var selected = Array.from(filelist.querySelectorAll("span.thundertext"));
 						if (selected.length) {
 							if (
-								confirm("一共要删除" + selected.length + "个文件，此操作不可撤销，是否确定？")
+								confirm("一共要刪除" + selected.length + "個文件，此操作不可撤銷，是否確定？")
 							) {
 								removeFile(selected, page);
 							}
@@ -1047,12 +1047,12 @@ export const optionsMenu = function (connectMenu) {
 					placeholder.style.display = "block";
 					placeholder.style.width = "100%";
 					placeholder.style.height = "14px";
-					createDash2("角", "角色图片", "image/character", page);
-					createDash2("肤", "皮肤图片", "image/skin", page);
-					createDash2("卡", "卡牌图片", "image/card", page);
-					createDash2("模", "模式图片", "image/mode", page);
-					createDash2("始", "开始图片", "image/splash", page);
-					createDash2("景", "背景图片", "image/background", page);
+					createDash2("角", "角色圖片", "image/character", page);
+					createDash2("膚", "皮膚圖片", "image/skin", page);
+					createDash2("卡", "卡牌圖片", "image/card", page);
+					createDash2("模", "模式圖片", "image/mode", page);
+					createDash2("始", "開始圖片", "image/splash", page);
+					createDash2("景", "背景圖片", "image/background", page);
 				};
 				page.reset();
 				return page;
@@ -1077,9 +1077,9 @@ export const optionsMenu = function (connectMenu) {
 					createDash2("技", "技能配音", "audio/skill", page);
 					createDash2("卡", "男性卡牌", "audio/card/male", page);
 					createDash2("牌", "女性卡牌", "audio/card/female", page);
-					createDash2("亡", "阵亡配音", "audio/die", page);
-					createDash2("效", "游戏音效", "audio/effect", page);
-					createDash2("景", "背景音乐", "audio/background", page);
+					createDash2("亡", "陣亡配音", "audio/die", page);
+					createDash2("效", "遊戲音效", "audio/effect", page);
+					createDash2("景", "背景音樂", "audio/background", page);
 				};
 				page.reset();
 				return page;
@@ -1110,9 +1110,9 @@ export const optionsMenu = function (connectMenu) {
 				};
 				return page;
 			})();
-			createDash("图", "图片文件", dash1);
-			createDash("音", "音频文件", dash2);
-			createDash("字", "字体文件", dash3);
+			createDash("圖", "圖片文件", dash1);
+			createDash("音", "音頻文件", dash2);
+			createDash("字", "字體文件", dash3);
 			createDash("全", "全部文件", dash4);
 		};
 		if (!get.config("menu_loadondemand")) node._initLink();

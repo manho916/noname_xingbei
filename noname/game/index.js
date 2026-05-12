@@ -166,11 +166,11 @@ export class Game extends GameCompatible {
 		}
 	})();
 	/**
-	 * 交换任意两个元素的位置，附带过渡动画
+	 * 交換任意兩個元素的位置，附帶過渡動畫
 	 * @param {HTMLDivElement} e1
 	 * @param {HTMLDivElement} e2
-	 * @param {number} duration //动画完成的时间 ms
-	 * @param {'linear'|'ease-in-out'} timefun //动画过度的时间曲线,很多，这里只列举两个
+	 * @param {number} duration //動畫完成的時間 ms
+	 * @param {'linear'|'ease-in-out'} timefun //動畫過度的時間曲線,很多，這裡只列舉兩個
 	 * @returns {Promise<void>}
 	 * @author Curpond
 	 */
@@ -230,12 +230,12 @@ export class Game extends GameCompatible {
 		});
 	}
 	/**
-	 * 元素去到某个父元素的某个位置，附带过度动画
+	 * 元素去到某個父元素的某個位置，附帶過度動畫
 	 * @param {HTMLDivElement} element
 	 * @param {HTMLDivElement} Parent
 	 * @param {number|'first'|'last'|Node} position 新的父容器中元素去的位置
-	 * @param {number} duration 动画完成的时间 ms
-	 * @param {'linear'|'ease-in-out'} timefun 动画过度的时间曲线,很多，这里只列举两个
+	 * @param {number} duration 動畫完成的時間 ms
+	 * @param {'linear'|'ease-in-out'} timefun 動畫過度的時間曲線,很多，這裡只列舉兩個
 	 * @returns {Promise<void>}
 	 * @author Curpond
 	 */
@@ -301,7 +301,7 @@ export class Game extends GameCompatible {
 		});
 	}
 	//Stratagem
-	//谋攻
+	//謀攻
 	setStratagemBuffCost(cardName, cost) {
 		return game.broadcastAll((clientCardName, clientCost) => lib.stratagemBuff.cost.set(clientCardName, clientCost), cardName, cost);
 	}
@@ -312,7 +312,7 @@ export class Game extends GameCompatible {
 		return game.broadcastAll((clientCardName, clientPrompt) => lib.stratagemBuff.cost.set(clientCardName, clientPrompt), cardName, prompt);
 	}
 	/**
-	 * 添加新的属性杀
+	 * 添加新的屬性殺
 	 */
 	addNature(nature, translation, config) {
 		if (!nature) throw new TypeError();
@@ -321,7 +321,7 @@ export class Game extends GameCompatible {
 		return nature;
 	}
 	/**
-	 * 判断卡牌信息/事件是否有某个属性
+	 * 判斷卡牌信息/事件是否有某個屬性
 	 */
 	hasDuYou(item, duYou, player) {
 		var duYous = get.duYouList(item, player);
@@ -330,7 +330,7 @@ export class Game extends GameCompatible {
 		return get.is.sameNature(duYous, duYou);
 	}
 	/**
-	 * 设置卡牌信息/事件的属性
+	 * 設置卡牌信息/事件的屬性
 	 */
 	setDuYou(item, duYou, addNature) {
 		if (!duYou) duYou = [];
@@ -380,7 +380,7 @@ export class Game extends GameCompatible {
 		return game.cardsGotoPile(cards, "triggeronly", "washCard", ["shuffleNumber", game.shuffleNumber]);
 	}
 	/**
-	 * 基于钩子的添加势力方法
+	 * 基於鉤子的添加勢力方法
 	 */
 	addGroup(id, short, name, config) {
 		if (!id) throw new TypeError();
@@ -402,7 +402,7 @@ export class Game extends GameCompatible {
 		return id;
 	}
 	/**
-	 * 通用的调用钩子函数
+	 * 通用的調用鉤子函數
 	 *
 	 * @template {NonameHookType} HookType
 	 * @template {keyof NonameHookType} Name
@@ -421,7 +421,7 @@ export class Game extends GameCompatible {
 		else callHook();
 	}
 	//Yingbian
-	//应变
+	//應變
 	yingbianEffect(event, content) {
 		const yingbianEffect = game.createEvent("yingbianEffect");
 		yingbianEffect.player = event.player;
@@ -448,24 +448,24 @@ export class Game extends GameCompatible {
 	}
 	/**
 	 * Dynamic Style Manager
-	 * 动态CSS管理对象
+	 * 動態CSS管理對象
 	 *
 	 * > No idea to write, it's just a tool to handle css.
-	 * > 暂时不知道写啥，反正就是个管CSS的工具
+	 * > 暫時不知道寫啥，反正就是個管CSS的工具
 	 *
 	 * @example
-	 * // 为符合".content"的元素增加"text-align: center"的样式
+	 * // 為符合".content"的元素增加"text-align: center"的樣式
 	 * game.dynamicStyle.add(".content", {
 	 * 	textAlign: "center"
 	 * });
 	 *
-	 * // 在上一条的基础上，再为".content"增加"color: #FFFFFF"的样式
+	 * // 在上一條的基礎上，再為".content"增加"color: #FFFFFF"的樣式
 	 * game.dynamicStyle.add(".content", {
 	 * 	color: "#FFFFFF"
 	 * });
 	 *
 	 * @example
-	 * // 批量添加符合对应选择器元素的样式
+	 * // 批量添加符合對應選擇器元素的樣式
 	 * game.dynamicStyle.addObject({
 	 * 	".content": {
 	 * 		textAlign: "center"
@@ -476,15 +476,15 @@ export class Game extends GameCompatible {
 	 * });
 	 *
 	 * @example
-	 * // 移除".content"元素的样式
+	 * // 移除".content"元素的樣式
 	 * game.dynamicStyle.remove(".content");
 	 *
 	 * @example
-	 * // 移除".content"元素的"textAlign"样式
+	 * // 移除".content"元素的"textAlign"樣式
 	 * game.dynamicStyle.removeStyles(".content", ["textAligh"]);
 	 *
 	 * @example
-	 * // 如果".content"元素的样式存在，则将".content"的样式修改为给定的样式
+	 * // 如果".content"元素的樣式存在，則將".content"的樣式修改為給定的樣式
 	 * // 反之效果同`game.dynamicStyle.add`
 	 * game.dynamicStyle.update(".content", {
 	 * 	textAlign: "center"
@@ -494,7 +494,7 @@ export class Game extends GameCompatible {
 	/**
 	 * Add a background music to the config option
 	 *
-	 * 在设置选项中添加一首背景音乐
+	 * 在設置選項中添加一首背景音樂
 	 */
 	addBackgroundMusic(link, musicName, aozhan) {
 		const backgroundMusicSetting = ui[aozhan ? "aozhan_bgm" : "background_music_setting"],
@@ -525,7 +525,7 @@ export class Game extends GameCompatible {
 	/**
 	 * Remove a background music from the config option
 	 *
-	 * 从设置选项中移除一首背景音乐
+	 * 從設置選項中移除一首背景音樂
 	 */
 	removeBackgroundMusic(link, aozhan) {
 		if (aozhan) {
@@ -574,7 +574,7 @@ export class Game extends GameCompatible {
 	/**
 	 * Generate a beatmap using the given BPM, beats, and offset
 	 *
-	 * 用给定的BPM、节拍和偏移生成谱面
+	 * 用給定的BPM、節拍和偏移生成譜面
 	 */
 	generateBeatmapTimeleap(bpm, beats, offset) {
 		return beats.map(value => Math.round((value * 60000) / bpm + (offset || 0)));
@@ -588,7 +588,7 @@ export class Game extends GameCompatible {
 		}
 	}
 	/**
-	 * 为牌添加知情者
+	 * 為牌添加知情者
 	 * @param { Card[] | Card } cards
 	 * @param { Player[] } players
 	 */
@@ -710,7 +710,7 @@ export class Game extends GameCompatible {
 	 * @returns { boolean }
 	 */
 	hasGlobalHistory(key, filter, last) {
-		// md谁写的和getGlobalHistory一样？害人！
+		// md誰寫的和getGlobalHistory一樣？害人！
 		if (!key || !filter) return false;
 		else {
 			const history = game.getGlobalHistory(key);
@@ -733,7 +733,7 @@ export class Game extends GameCompatible {
 	 * @returns { void }
 	 */
 	checkGlobalHistory(key, filter, last) {
-		// md谁写的和getGlobalHistory一样？害人！
+		// md誰寫的和getGlobalHistory一樣？害人！
 		if (!key || !filter) return;
 		else {
 			const history = game.getGlobalHistory(key);
@@ -910,7 +910,7 @@ export class Game extends GameCompatible {
 		return next;
 	}
 	/**
-	 * 将cards移动到处理区
+	 * 將cards移動到處理區
 	 * @param { Card[] | Card } cards
 	 * @returns { GameEventPromise }
 	 */
@@ -931,13 +931,13 @@ export class Game extends GameCompatible {
 	/**
 	 * @overload
 	 * @param { Card } cards
-	 * @param { 'toRenku' | false } [bool] 为false时不触发trigger，为'toRenku'时牌放到仁库
+	 * @param { 'toRenku' | false } [bool] 為false時不觸發trigger，為'toRenku'時牌放到仁庫
 	 * @returns { GameEventPromise }
 	 */
 	/**
 	 * @overload
 	 * @param {Card[]} cards
-	 * @param { 'toRenku' | false } [bool] 为false时不触发trigger，为'toRenku'时牌放到仁库
+	 * @param { 'toRenku' | false } [bool] 為false時不觸發trigger，為'toRenku'時牌放到仁庫
 	 * @returns { GameEventPromise }
 	 */
 	cardsGotoSpecial(cards, bool) {
@@ -1093,7 +1093,7 @@ export class Game extends GameCompatible {
 					(node.system = ui.create.system(lib.translate[skill], null, true, true)),
 					() => {
 						const uiIntro = ui.create.dialog("hidden");
-						uiIntro.addText(player ? `来源：${get.translation(player)}` : "地图").style.margin = "0";
+						uiIntro.addText(player ? `來源：${get.translation(player)}` : "地圖").style.margin = "0";
 						uiIntro._place_text = uiIntro.add(ui.create.div(".text", lib.translate[`${skill}_info`]));
 						uiIntro.add(ui.create.div(".placeholder.slim"));
 						return uiIntro;
@@ -1399,7 +1399,7 @@ export class Game extends GameCompatible {
 		if (_status.connectMode && !_status.countDown) {
 			ui.timer.show();
 			let num;
-			//这么一大行都是为了祢衡
+			//這麼一大行都是為了禰衡
 			if (_status.event && _status.event.name == "chooseToUse" && _status.event.type == "phase" && _status.event.player && _status.event.player.forceCountChoose && typeof _status.event.player.forceCountChoose.phaseUse == "number") {
 				num = _status.event.player.forceCountChoose.phaseUse;
 			} else if (_status.connectMode) {
@@ -1485,7 +1485,7 @@ export class Game extends GameCompatible {
 	}
 	/**
 	 * ```plain
-	 * 进入沙盒运行模式
+	 * 進入沙盒運行模式
 	 * ```
 	 *
 	 * @param { string } ip
@@ -1551,8 +1551,8 @@ export class Game extends GameCompatible {
 			}
 			game.ws = new WebSocket(ip);
 		} catch {
-			// 今天狂神龙尊来了这里也没有参数
-			alert("错误：无效联机地址");
+			// 今天狂神龍尊來了這裡也沒有參數
+			alert("錯誤：無效聯機地址");
 			if (callback) callback(false);
 			return;
 		}
@@ -1639,7 +1639,7 @@ export class Game extends GameCompatible {
 			onError = evt => void 0,
 		} = options;
 
-		// 为了能更美观的写代码，默认返回audio而不额外加一个void类型
+		// 為了能更美觀的寫代碼，默認返回audio而不額外加一個void類型
 		// @ts-ignore
 		if (_status.video && !video) return;
 
@@ -1708,7 +1708,7 @@ export class Game extends GameCompatible {
 		 */
 		let audio,
 			list = audioList.slice(),
-			refresh = false; // 当前audioList是否有可播放的音频
+			refresh = false; // 當前audioList是否有可播放的音頻
 
 		const check = () => {
 			if (list.length) return true;
@@ -1742,49 +1742,49 @@ export class Game extends GameCompatible {
 		};
 	}
 	/**
-	 * @deprecated 请使用get.Audio.skill().fileList
+	 * @deprecated 請使用get.Audio.skill().fileList
 	 *
-	 * 根据skill中的audio,audioname,audioname2和player来获取音频地址列表
+	 * 根據skill中的audio,audioname,audioname2和player來獲取音頻地址列表
 	 * @typedef {[string,number]|string|number|boolean} audioInfo
 	 * @typedef {{audio: audioInfo, audioname?:string[], audioname2?:{[playerName: string]: audioInfo}}} skillInfo
 	 * @param { string } skill  技能名
 	 * @param { Player | Object | string } [player]  角色/角色名
 	 * @param { skillInfo | audioInfo } [skillInfo]  使用指定的skillInfo/audioInfo
-	 * @returns { string[] }  语音地址列表
+	 * @returns { string[] }  語音地址列表
 	 */
 	parseSkillAudio(skill, player, skillInfo) {
 		return get.Audio.skill({ skill, player, info: skillInfo }).fileList;
 	}
 	/**
-	 * @deprecated 请使用get.Audio.skill().textList
+	 * @deprecated 請使用get.Audio.skill().textList
 	 *
-	 * 根据skill中的audio,audioname,audioname2和player来获取技能台词列表
+	 * 根據skill中的audio,audioname,audioname2和player來獲取技能臺詞列表
 	 * @param { string } skill  技能名
 	 * @param { Player | Object | string } [player]  角色/角色名
 	 * @param { skillInfo | audioInfo } [skillInfo]  使用指定的skillInfo/audioInfo
-	 * @returns { string[] }  语音地址列表
+	 * @returns { string[] }  語音地址列表
 	 */
 	parseSkillText(skill, player, skillInfo) {
 		return get.Audio.skill({ skill, player, info: skillInfo }).textList;
 	}
 	/**
-	 * @deprecated 请使用get.Audio.skill().audioList
+	 * @deprecated 請使用get.Audio.skill().audioList
 	 *
-	 * 根据skill中的audio,audioname,audioname2和player来获取技能台词列表及其对应的源文件名
+	 * 根據skill中的audio,audioname,audioname2和player來獲取技能臺詞列表及其對應的源文件名
 	 * @param { string } skill  技能名
 	 * @param { Player | Object | string } [player]  角色/角色名
 	 * @param { skillInfo | audioInfo } [skillInfo]  使用指定的skillInfo/audioInfo
-	 * @returns 语音地址列表
+	 * @returns 語音地址列表
 	 */
 	parseSkillTextMap(skill, player, skillInfo) {
 		return get.Audio.skill({ skill, player, info: skillInfo }).audioList;
 	}
 	/**
-	 * @deprecated 请使用get.Audio.die().audioList
+	 * @deprecated 請使用get.Audio.die().audioList
 	 *
-	 * 获取角色死亡时能播放的所有阵亡语音
+	 * 獲取角色死亡時能播放的所有陣亡語音
 	 * @param { string | Player } player  角色名
-	 * @returns 语音地址列表
+	 * @returns 語音地址列表
 	 */
 	parseDieTextMap(player) {
 		return get.Audio.die({ player }).audioList;
@@ -1796,7 +1796,7 @@ export class Game extends GameCompatible {
 	 * @param { boolean } [directaudio]
 	 * @param { boolean } [nobroadcast]
 	 * @param { any } [skillInfo]
-	 * @param { any[] } [args] logAudio的参数
+	 * @param { any[] } [args] logAudio的參數
 	 * @returns
 	 */
 	trySkillAudio(skill, player, directaudio, nobroadcast, skillInfo, args) {
@@ -1953,8 +1953,8 @@ export class Game extends GameCompatible {
 		else if (music.startsWith("ext:")) ui.backgroundMusic.src = `${lib.assetURL}extension/${music.slice(4)}`;
 		else ui.backgroundMusic.src = `${lib.assetURL}audio/background/${music}.mp3`;
 	}
-	// 某种意义上，改不了，得重写
-	// 等正式用import导入再说
+	// 某種意義上，改不了，得重寫
+	// 等正式用import導入再說
 	/**
 	 * @overload
 	 * @param { 'character' } type
@@ -2076,7 +2076,7 @@ export class Game extends GameCompatible {
 			extensionName = `extension_${name}`,
 			extensionMenu = (lib.extensionMenu[extensionName] = {
 				enable: {
-					name: "开启",
+					name: "開啟",
 					init: true,
 				},
 			}),
@@ -2116,21 +2116,21 @@ export class Game extends GameCompatible {
 		}
 		if (object.editable !== false && lib.config.show_extensionmaker) {
 			extensionMenu.edit = {
-				name: "编辑此扩展",
+				name: "編輯此擴展",
 				clear: true,
 				onclick: () => {
 					if (game.editExtension && lib.extensionPack && lib.extensionPack[name]) game.editExtension(name);
-					else alert("无法编辑未启用的扩展，请启用此扩展并重启后重试");
+					else alert("無法編輯未啟用的擴展，請啟用此擴展並重啟後重試");
 				},
 			};
 		}
 		extensionMenu.delete = {
-			name: "删除此扩展",
+			name: "刪除此擴展",
 			clear: true,
 			onclick () {
-				if (this.innerHTML != "<span>确认删除</span>") {
-					this.innerHTML = "<span>确认删除</span>";
-					new Promise(resolve => setTimeout(resolve, 1000)).then(() => (this.innerHTML = "<span>删除此扩展</span>"));
+				if (this.innerHTML != "<span>確認刪除</span>") {
+					this.innerHTML = "<span>確認刪除</span>";
+					new Promise(resolve => setTimeout(resolve, 1000)).then(() => (this.innerHTML = "<span>刪除此擴展</span>"));
 					return;
 				}
 				const page = this.parentNode,
@@ -2144,7 +2144,7 @@ export class Game extends GameCompatible {
 						pageInStart.remove();
 						if (active) {
 							start.firstChild.classList.add("active");
-							//并不是一个合理的解决方法，只是让它不容易报错了
+							//並不是一個合理的解決方法，只是讓它不容易報錯了
 							game.editExtension();
 							//start.nextSibling.appendChild(start.firstChild.link);
 						}
@@ -2200,8 +2200,8 @@ export class Game extends GameCompatible {
 					lib.onprepare?.push(prepare);
 				}
 			} catch (e1) {
-				console.error(`加载《${name}》扩展的precontent时出现错误。`, e1);
-				if (!lib.config.extension_alert) alert(`加载《${name}》扩展的precontent时出现错误。\n该错误本身可能并不影响扩展运行。您可以在“设置→通用→无视扩展报错”中关闭此弹窗。\n${decodeURI(e1.stack)}`);
+				console.error(`加載《${name}》擴展的precontent時出現錯誤。`, e1);
+				if (!lib.config.extension_alert) alert(`加載《${name}》擴展的precontent時出現錯誤。\n該錯誤本身可能並不影響擴展運行。您可以在“設置→通用→無視擴展報錯”中關閉此彈窗。\n${decodeURI(e1.stack)}`);
 			}
 
 			if (content) lib.extensions.push([name, content, config, _status.evaluatingExtension, objectPackage ?? {}, object.connect, arenaReady]);
@@ -2212,49 +2212,49 @@ export class Game extends GameCompatible {
 		return name;
 	}
 	/**
-	 * 下载文件
+	 * 下載文件
 	 * @type { undefined | ((url: string, folder: string, onsuccess?: Function, onerror?: (e: Error) => void, dev?: 'nodev', onprogress?: Function) => void) }
 	 */
 	download;
 
 	/**
-	 * 检查指定的路径是否是一个文件
+	 * 檢查指定的路徑是否是一個文件
 	 *
-	 * @param {string} fileName - 需要查询的路径
-	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回调函数；接受的参数意义如下:
-	 *  - `-1`: 路径不存在或无法访问
-	 *  - `0`: 路径的内容不是文件
-	 *  - `1`: 路径的内容是文件
-	 * @param {(err: Error) => void} [onerror] - 接收错误的回调函数
-	 * @return {void} - 由于三端的异步需求和历史原因，文件管理必须为回调异步函数
+	 * @param {string} fileName - 需要查詢的路徑
+	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回調函數；接受的參數意義如下:
+	 *  - `-1`: 路徑不存在或無法訪問
+	 *  - `0`: 路徑的內容不是文件
+	 *  - `1`: 路徑的內容是文件
+	 * @param {(err: Error) => void} [onerror] - 接收錯誤的回調函數
+	 * @return {void} - 由於三端的異步需求和歷史原因，文件管理必須為回調異步函數
 	 */
 	checkFile;
 
 	/**
-	 * 检查指定的路径是否是一个目录
+	 * 檢查指定的路徑是否是一個目錄
 	 *
-	 * @param {string} dir - 需要查询的路径
-	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回调函数；接受的参数意义如下:
-	 *  - `-1`: 路径不存在或无法访问
-	 *  - `0`: 路径的内容不是目录
-	 *  - `1`: 路径的内容是目录
-	 * @param {(err: Error) => void} [onerror] - 接收错误的回调函数
-	 * @return {void} - 由于三端的异步需求和历史原因，文件管理必须为回调异步函数
+	 * @param {string} dir - 需要查詢的路徑
+	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回調函數；接受的參數意義如下:
+	 *  - `-1`: 路徑不存在或無法訪問
+	 *  - `0`: 路徑的內容不是目錄
+	 *  - `1`: 路徑的內容是目錄
+	 * @param {(err: Error) => void} [onerror] - 接收錯誤的回調函數
+	 * @return {void} - 由於三端的異步需求和歷史原因，文件管理必須為回調異步函數
 	 */
 	checkDir;
 
 	/**
-	 * 读取文件为arraybuffer
+	 * 讀取文件為arraybuffer
 	 * @type { undefined | ((filename: string, callback?: (data: Buffer | ArrayBuffer) => any, onerror?: (e: Error) => void) => void) }
 	 */
 	readFile;
 	/**
-	 * 读取文件为文本
+	 * 讀取文件為文本
 	 * @type { undefined | ((filename: string, callback?: (data: string) => any, onerror?: (e: Error) => void) => void) }
 	 */
 	readFileAsText;
 	/**
-	 * 将数据写入文件
+	 * 將數據寫入文件
 	 * @type { undefined | ((data: File | ArrayBuffer, path: string, name: string, callback?: (e: Error) => void) => void) }
 	 */
 	writeFile;
@@ -2264,22 +2264,22 @@ export class Game extends GameCompatible {
 	 */
 	removeFile;
 	/**
-	 * 获取文件列表
+	 * 獲取文件列表
 	 * @type { undefined | ((dir: string, success: (folders: string[], files: string[]) => any, failure?: (e: Error) => void) => void) }
 	 */
 	getFileList;
 	/**
-	 * 按路径依次创建文件夹
+	 * 按路徑依次創建文件夾
 	 * @type { undefined | ((list: string | string[], callback: Function, file?: boolean) => void) }
 	 */
 	ensureDirectory;
 	/**
-	 * 创建文件夹
+	 * 創建文件夾
 	 * @type { undefined | ((directory: string, successCallback?: Function, errorCallback?: Function) => void) }
 	 */
 	createDir;
 	/**
-	 * 删除文件夹
+	 * 刪除文件夾
 	 * @type { undefined | ((directory: string, successCallback?: Function, errorCallback?: Function) => void) }
 	 */
 	removeDir;
@@ -2292,10 +2292,10 @@ export class Game extends GameCompatible {
 	 */
 	checkForAssetUpdate;
 	async importExtension(data, finishLoad, exportExtension, extensionPackage) {
-		//by 来瓶可乐加冰、Rintim、Tipx-L、诗笺
+		//by 來瓶可樂加冰、Rintim、Tipx-L、詩箋
 		const zip = await get.promises.zip();
 		if (get.objtype(data) == "object") {
-			//导出
+			//導出
 			const _filelist = data._filelist,
 				filelist2 = _filelist || [];
 			if (_filelist) delete data._filelist;
@@ -2351,7 +2351,7 @@ export class Game extends GameCompatible {
 								fileWriter.write(blob);
 							})
 					)
-					.then(() => alert(`文件已导出至${directory}${fileNameToSaveAs}`));
+					.then(() => alert(`文件已導出至${directory}${fileNameToSaveAs}`));
 			} else {
 				const downloadLink = document.createElement("a");
 				downloadLink.download = fileNameToSaveAs;
@@ -2363,7 +2363,7 @@ export class Game extends GameCompatible {
 			if (typeof finishLoad == "function") finishLoad();
 			return;
 		}
-		//导入
+		//導入
 		const UHP = error => {
 			if (!(error instanceof Error)) error = new Error(error);
 			for (const [key, value] of Object.entries(Object.getOwnPropertyDescriptors(error))) {
@@ -2377,7 +2377,7 @@ export class Game extends GameCompatible {
 					);
 				}
 			}
-			alert(`导入失败：\n${JSON.stringify(error, null, "\t")}`);
+			alert(`導入失敗：\n${JSON.stringify(error, null, "\t")}`);
 			console.error(error);
 		};
 		try {
@@ -2393,8 +2393,8 @@ export class Game extends GameCompatible {
 			/** @type { string } */
 			// @ts-ignore
 			let str = extensionFile.asText();
-			if (str === "" || str === undefined) throw "你导入的不是扩展！请选择正确的文件";
-			// 编译ts扩展
+			if (str === "" || str === undefined) throw "你導入的不是擴展！請選擇正確的文件";
+			// 編譯ts擴展
 			if (isTsFile) {
 				if (typeof globalThis.ts === "undefined") {
 					await lib.init.promises.js("game", "typescript");
@@ -2417,24 +2417,24 @@ export class Game extends GameCompatible {
 			}
 			_status.importingExtension = true;
 			try {
-				// 导入普通扩展
+				// 導入普通擴展
 				security.eval(str);
-				// esm扩展可以不写game.import或许会导致_status.extensionLoading不存在
+				// esm擴展可以不寫game.import或許會導致_status.extensionLoading不存在
 				if (Array.isArray(_status.extensionLoading)) {
 					await Promise.allSettled(_status.extensionLoading);
 					delete _status.extensionLoading;
 				}
 			} catch (error) {
-				// 是模块扩展
+				// 是模塊擴展
 				if (
 					// @ts-ignore
 					error.message === "Cannot use import statement outside a module" ||
 					// @ts-ignore
 					error.message === "await is only valid in async functions and the top level bodies of modules"
 				) {
-					// 改为用info.json判断扩展名
+					// 改為用info.json判斷擴展名
 					const infoFile = zip.file("info.json");
-					if (!infoFile) throw new Error("未找到info.json,导入模块化扩展必须加入info.json！");
+					if (!infoFile) throw new Error("未找到info.json,導入模塊化擴展必須加入info.json！");
 					const info = JSON.parse(infoFile.asText());
 					if (typeof info.name == "string") {
 						await game.import("extension", () => {
@@ -2446,9 +2446,9 @@ export class Game extends GameCompatible {
 				}
 			}
 			_status.importingExtension = false;
-			if (!game.importedPack) throw "此压缩包不是一个扩展";
+			if (!game.importedPack) throw "此壓縮包不是一個擴展";
 			const extensionName = game.importedPack.name;
-			if (lib.config.all.plays.includes(extensionName)) throw "禁止安装游戏原生扩展";
+			if (lib.config.all.plays.includes(extensionName)) throw "禁止安裝遊戲原生擴展";
 			const extensions = lib.config.extensions;
 			if (extensions.includes(extensionName)) game.removeExtension(extensionName, true);
 			extensions.add(extensionName);
@@ -2465,8 +2465,8 @@ export class Game extends GameCompatible {
 					fileList = Object.keys(files)
 						.filter(key => !files[key].dir && !hiddenFileFlags.includes(key[0]))
 						.reverse();
-				//电脑端
-				//具备nodeJS环境
+				//電腦端
+				//具備nodeJS環境
 				if (lib.node && lib.node.fs) {
 					const writeFile = errnoException => {
 						if (errnoException) {
@@ -2475,8 +2475,8 @@ export class Game extends GameCompatible {
 							return;
 						}
 						if (fileList.length) {
-							//filename 数组 ...dir+/+file
-							//这里需要个创文件夹的函数
+							//filename 數組 ...dir+/+file
+							//這裡需要個創文件夾的函數
 							const zipDir = fileList.pop(),
 								fileName = zipDir.split("/"),
 								name = fileName.pop(),
@@ -2502,13 +2502,13 @@ export class Game extends GameCompatible {
 								)
 						)
 						.then(directoryEntry => {
-							//扩展文件夹
+							//擴展文件夾
 							const writeFile = () => {
 								if (!fileList.length) {
 									finishLoad();
 									return;
 								}
-								//filename 数组 ...dir+/+file
+								//filename 數組 ...dir+/+file
 								const zipDirectory = fileList.shift(),
 									fileName = zipDirectory.split("/"),
 									name = fileName.pop(),
@@ -2546,8 +2546,8 @@ export class Game extends GameCompatible {
 							return;
 						}
 						if (fileList.length) {
-							//filename 数组 ...dir+/+file
-							//这里需要个创文件夹的函数
+							//filename 數組 ...dir+/+file
+							//這裡需要個創文件夾的函數
 							const zipDir = fileList.pop(),
 								fileName = zipDir.split("/"),
 								name = fileName.pop(),
@@ -2608,7 +2608,7 @@ export class Game extends GameCompatible {
 				entry.getFile(fileNameToSaveAs, { create: true }, function (fileEntry) {
 					fileEntry.createWriter(function (fileWriter) {
 						fileWriter.onwriteend = function () {
-							alert("文件已导出至" + directory + fileNameToSaveAs);
+							alert("文件已導出至" + directory + fileNameToSaveAs);
 						};
 						fileWriter.write(textFileAsBlob);
 					});
@@ -2768,12 +2768,12 @@ export class Game extends GameCompatible {
 		next.setContent("playVideoContent");
 
 		next.custom.replace.target = function (player) {
-			if(ui.fakeme){//多控模式下存在的东西，故拿来做判断
+			if(ui.fakeme){//多控模式下存在的東西，故拿來做判斷
 				game.swapControl(player);
 				game.onSwapControl(player);
 			}
 			else game.swapPlayer(player);
-			ui.updateShiQiInfo();//可能切换阵营，更新高亮显示
+			ui.updateShiQiInfo();//可能切換陣營，更新高亮顯示
 		};
 		game.loop();
 	}
@@ -4129,7 +4129,7 @@ export class Game extends GameCompatible {
 		},
 		addPlayerOL: function (target,content) {
 			let character = content[0], character2 = content[1], isNext = content[2];
-			//从addPlayerOL函数改的，减少改动就这样吧，星杯里用不上的也没删
+			//從addPlayerOL函數改的，減少改動就這樣吧，星杯裡用不上的也沒刪
 			const addPlayer = function(target2, character3, character22, isNext2) {
 				const players2 = game.players.concat(game.dead);
 				ui.arena.setNumber(parseInt(ui.arena.dataset.number) + 1);
@@ -4145,7 +4145,7 @@ export class Game extends GameCompatible {
 				const player2 = ui.create.player(ui.arena);
 				player2.dataset.position = position;
 
-				//重新调整录像里的玩家位置记录，录像基于玩家位置调用玩家，所以必须调整
+				//重新調整錄像裡的玩家位置記錄，錄像基於玩家位置調用玩家，所以必須調整
 				game.players.push(player2);
 				let players3 = get.players(lib.sort.position);
 				for (var i = 0; i < players3.length; i++) {
@@ -4175,7 +4175,7 @@ export class Game extends GameCompatible {
 			}
 		},
 		removePlayerOL: function (player) {;
-			//从removePlayerOL函数改的，减少改动就这样吧
+			//從removePlayerOL函數改的，減少改動就這樣吧
 			const players = game.players.concat(game.dead);
 			player.style.left = `${player.getLeft()}px`;
 			player.style.top = `${player.getTop()}px`;
@@ -4208,7 +4208,7 @@ export class Game extends GameCompatible {
 			game.players.remove(player);
 			game.dead.remove(player);
 
-			//从上面复制下来的，变量名没进行改动
+			//從上面複製下來的，變量名沒進行改動
 			let players3 = get.players(lib.sort.position);
 			for (var i = 0; i < players3.length; i++) {
 				game.playerMap[players3[i].dataset.position] = players3[i];
@@ -4226,7 +4226,7 @@ export class Game extends GameCompatible {
 		},
 		setSide: function (player,side) {
 			player.side=side;
-			player.node.identity.firstChild.innerHTML=player.side === true ? '红' : '蓝';
+			player.node.identity.firstChild.innerHTML=player.side === true ? '紅' : '藍';
 			player.node.identity.dataset.color=player.side+'zhu';
 		}
 	};
@@ -4276,13 +4276,13 @@ export class Game extends GameCompatible {
 			thisWindow.destroy();
 			window.process.exit();
 		}
-		// android-cordova环境
+		// android-cordova環境
 		else if (lib.device === "android") {
 			if (navigator.app && navigator.app.exitApp) {
 				navigator.app.exitApp();
 			}
 		}
-		//ios-cordova环境或ios浏览器环境
+		//ios-cordova環境或ios瀏覽器環境
 		else if (lib.device === "ios" || (!lib.device && ios)) {
 			game.saveConfig("mode");
 			if (_status) {
@@ -4294,7 +4294,7 @@ export class Game extends GameCompatible {
 			}
 			window.location.reload();
 		}
-		//非ios的网页版
+		//非ios的網頁版
 		else if (!ios) {
 			window.onbeforeunload = null;
 			window.close();
@@ -4466,7 +4466,7 @@ export class Game extends GameCompatible {
 		let controls = ui.create.div(dialog);
 		let clickConfirm = function () {
 			if (noinput) {
-				//给一个返回值使promise化正常使用
+				//給一個返回值使promise化正常使用
 				callback(true);
 				promptContainer.remove();
 			} else {
@@ -4480,7 +4480,7 @@ export class Game extends GameCompatible {
 				promptContainer.remove();
 			}
 		};
-		let confirmNode = ui.create.div(".menubutton.large.disabled", "确定", controls, clickConfirm);
+		let confirmNode = ui.create.div(".menubutton.large.disabled", "確定", controls, clickConfirm);
 		if (!forced) {
 			ui.create.div(".menubutton.large", "取消", controls, clickCancel);
 		}
@@ -5092,72 +5092,72 @@ export class Game extends GameCompatible {
 	zsJinlongLineXy(path) {
 		game.zsPlayLineAnimationByName("jinlonglinexy", path);
 	}
-	// 先攻指示线
+	// 先攻指示線
 	zsXiangongLineXy(path) {
 		game.zsPlayLineAnimationByName("jianqilinexy", path);
 	}
 
-	// 竹杖指示线
+	// 竹杖指示線
 	zsZhuzhangLineXy(path) {
 		game.zsPlayLineAnimationByName("zhuzhanglinexy", path);
 	}
 
-	// 水墨指示线
+	// 水墨指示線
 	zsMohuaLineXy(path) {
 		game.zsPlayLineAnimationByName("mohualinexy", path);
 	}
 
-	// 神剑指示线
+	// 神劍指示線
 	zsShenjianLineXy(path) {
 		game.zsPlayLineAnimationByName("shenjianlinexy", path);
 	}
 
-	// 御剑指示线
+	// 御劍指示線
 	zsYujianLineXy(path) {
 		game.zsPlayLineAnimationByName("yujianlinexy", path);
 	}
 
-	// 暗黑指示线
+	// 暗黑指示線
 	zsAnheiLineXy(path) {
 		game.zsPlayLineAnimationByName("anheilinexy", path);
 	}
 
-	// 魔爪指示线
+	// 魔爪指示線
 	zsMozhuaLineXy(path) {
 		game.zsPlayLineAnimationByName("mozhualinexy", path);
 	}
 
-	// 剑锋指示线
+	// 劍鋒指示線
 	zsJianfengLineXy(path) {
 		game.zsPlayLineAnimationByName("jianfenglinexy", path);
 	}
 
-	// 金箭指示线
+	// 金箭指示線
 	zsJinjianLineXy(path) {
 		game.zsPlayLineAnimationByName("jinjianlinexy", path);
 	}
 
-	// 金龙指示线
+	// 金龍指示線
 	zsJinlongLineXy(path) {
 		game.zsPlayLineAnimationByName("jinlonglinexy", path);
 	}
 
-	// 落英指示线
+	// 落英指示線
 	zsLuoyingLineXy(path) {
 		game.zsPlayLineAnimationByName("luoyinglinexy", path);
 	}
 
-	// 星蝶指示线
+	// 星蝶指示線
 	zsXingdieLineXy(path) {
 		game.zsPlayLineAnimationByName("xingdielinexy", path);
 	}
 
-	// 月仙指示线
+	// 月仙指示線
 	zsYuexianLineXy(path) {
 		game.zsPlayLineAnimationByName("yuexianlinexy", path);
 	}
 
-	// 蛇杖指示线
+	// 蛇杖指示線
 	zsShezhangLineXy(path) {
 		game.zsPlayLineAnimationByName("shezhanglinexy", path);
 	}
@@ -5272,7 +5272,7 @@ export class Game extends GameCompatible {
 	 * @param { { extension: string, sex: Sex, group: string, hp: string | number, skills?: string[], tags?: any[], translate: string } } information
 	 */
 	addCharacter(name, information) {
-		//TODO: 这一坨也要改
+		//TODO: 這一坨也要改
 		const extensionName = _status.extension || information.extension,
 			character = [information.sex, information.group, information.hp, information.skills || [], [_status.evaluatingExtension ? `db:extension-${extensionName}:${name}.jpg` : `ext:${extensionName}/${name}.jpg`, `die:ext:${extensionName}/${name}.mp3`]];
 		if (information.tags) character[4] = character[4].concat(information.tags);
@@ -5288,10 +5288,10 @@ export class Game extends GameCompatible {
 	 * @param { string } [packagename]
 	 */
 	addCharacterPack(pack, packagename) {
-		let extname = _status.extension || "扩展";
+		let extname = _status.extension || "擴展";
 		let gzFlag = false;
 		packagename = packagename || extname;
-		//TODO: 把这里一大坨改成新写法
+		//TODO: 把這裡一大坨改成新寫法
 		for (let i in pack) {
 			if (i == "mode") {
 				if (pack[i] == "guozhan") gzFlag = true;
@@ -5327,7 +5327,7 @@ export class Game extends GameCompatible {
 					}
 				}
 				if (lib[i][j] == undefined) {
-					// 判断扩展武将包是否开启
+					// 判斷擴展武將包是否開啟
 					if (i == "character") {
 						// if (!game.hasExtension(extname) || !game.hasExtensionLoaded(extname)) continue;
 						if (lib.config[`extension_${extname}_characters_enable`] === undefined) {
@@ -5396,7 +5396,7 @@ export class Game extends GameCompatible {
 	 * @param { string } [packagename]
 	 */
 	addCardPack(pack, packagename) {
-		let extname = _status.extension || "扩展";
+		let extname = _status.extension || "擴展";
 		packagename = packagename || extname;
 		let packname = packagename;
 		lib.cardPack[packname] = [];
@@ -5437,7 +5437,7 @@ export class Game extends GameCompatible {
 					}
 				}
 				if (lib[i][j] == undefined) {
-					// 判断扩展卡牌包是否开启
+					// 判斷擴展卡牌包是否開啟
 					if (i == "card") {
 						// if (!game.hasExtension(extname) || !game.hasExtensionLoaded(extname)) continue;
 						if (lib.config[`extension_${extname}_cards_enable`] === undefined) {
@@ -5533,7 +5533,7 @@ export class Game extends GameCompatible {
 		}
 		game.broadcast(function(skill, player) {
 			lib.skill.global.add(skill);
-			/*未查询到globalmap的使用场景，暂时注释掉
+			/*未查詢到globalmap的使用場景，暫時註釋掉
 			if (player) {
 				if (!lib.skill.globalmap[skill]) {
 					lib.skill.globalmap[skill] = [];
@@ -5777,9 +5777,9 @@ export class Game extends GameCompatible {
 			dialog.forcebutton = true;
 			let result2 = arguments[1];
 			if (result2 == true) {
-				dialog.content.firstChild.innerHTML = "战斗胜利";
+				dialog.content.firstChild.innerHTML = "戰鬥勝利";
 			} else if (result2 == false) {
-				dialog.content.firstChild.innerHTML = "战斗失败";
+				dialog.content.firstChild.innerHTML = "戰鬥失敗";
 			}
 			ui.update();
 			dialog.add(ui.create.div(".placeholder"));
@@ -5817,9 +5817,9 @@ export class Game extends GameCompatible {
 				delete ui.giveup;
 			}
 			if (game.servermode) {
-				ui.exit.firstChild.innerHTML = "返回房间";
+				ui.exit.firstChild.innerHTML = "返回房間";
 				setTimeout(function () {
-					ui.exit.firstChild.innerHTML = "退出房间";
+					ui.exit.firstChild.innerHTML = "退出房間";
 					_status.roomtimeout = true;
 					lib.config.reconnect_info[2] = null;
 					game.saveConfig("reconnect_info", lib.config.reconnect_info);
@@ -5851,9 +5851,9 @@ export class Game extends GameCompatible {
 		if (typeof resultbool !== "boolean") {
 			resultbool = null;
 		}
-		if (result === true) result = "战斗胜利";
-		if (result === false) result = "战斗失败";
-		if (result == undefined) result = "战斗结束";
+		if (result === true) result = "戰鬥勝利";
+		if (result === false) result = "戰鬥失敗";
+		if (result == undefined) result = "戰鬥結束";
 		dialog = ui.create.dialog(result);
 		dialog.noforcebutton = true;
 		dialog.forcebutton = true;
@@ -5867,10 +5867,10 @@ export class Game extends GameCompatible {
 			tr = document.createElement("tr");
 			tr.appendChild(document.createElement("td"));
 			td = document.createElement("td");
-			td.innerHTML = "伤害";
+			td.innerHTML = "傷害";
 			tr.appendChild(td);
 			td = document.createElement("td");
-			td.innerHTML = "受伤";
+			td.innerHTML = "受傷";
 			tr.appendChild(td);
 			//td = document.createElement("td");
 			//td.innerHTML = "摸牌";
@@ -5879,20 +5879,20 @@ export class Game extends GameCompatible {
 			//td.innerHTML = "出牌";
 			//tr.appendChild(td);
 			td = document.createElement("td");
-			td.innerHTML = "产石";
+			td.innerHTML = "產石";
 			tr.appendChild(td);
 			//td = document.createElement("td");
-			//td.innerHTML = "杀敌";
+			//td.innerHTML = "殺敵";
 			//tr.appendChild(td);
 			td = document.createElement("td");
-			td.innerHTML = "士气输出";
+			td.innerHTML = "士氣輸出";
 			tr.appendChild(td);
 			td = document.createElement("td");
-			td.innerHTML = "士气亏损";
+			td.innerHTML = "士氣虧損";
 			tr.appendChild(td);
 
 			td = document.createElement("td");
-			td.innerHTML = "治疗给予";
+			td.innerHTML = "治療給予";
 			tr.appendChild(td);
 
 
@@ -5901,7 +5901,7 @@ export class Game extends GameCompatible {
 				tr = document.createElement("tr");
 
 				td = document.createElement("td");
-				td.innerHTML = get.translation(game.players[i]) + (game.players[i].ai.stratagem_camouflage ? "(被伪装)" : "");
+				td.innerHTML = get.translation(game.players[i]) + (game.players[i].ai.stratagem_camouflage ? "(被偽裝)" : "");
 				tr.appendChild(td);
 				
 				td = document.createElement("td");
@@ -5993,10 +5993,10 @@ export class Game extends GameCompatible {
 				tr = document.createElement("tr");
 				tr.appendChild(document.createElement("td"));
 				td = document.createElement("td");
-				td.innerHTML = "伤害";
+				td.innerHTML = "傷害";
 				tr.appendChild(td);
 				td = document.createElement("td");
-				td.innerHTML = "受伤";
+				td.innerHTML = "受傷";
 				tr.appendChild(td);
 				td = document.createElement("td");
 				td.innerHTML = "摸牌";
@@ -6005,14 +6005,14 @@ export class Game extends GameCompatible {
 				td.innerHTML = "出牌";
 				tr.appendChild(td);
 				td = document.createElement("td");
-				td.innerHTML = "杀敌";
+				td.innerHTML = "殺敵";
 				tr.appendChild(td);
 				table.appendChild(tr);
 			}
 			for (i = 0; i < game.dead.length; i++) {
 				tr = document.createElement("tr");
 				td = document.createElement("td");
-				td.innerHTML = get.translation(game.dead[i]) + (game.dead[i].ai.stratagem_camouflage ? "(被伪装)" : "");
+				td.innerHTML = get.translation(game.dead[i]) + (game.dead[i].ai.stratagem_camouflage ? "(被偽裝)" : "");
 				tr.appendChild(td);
 				td = document.createElement("td");
 				num = 0;
@@ -6160,7 +6160,7 @@ export class Game extends GameCompatible {
 				name: game.getVideoName(),
 				mode: lib.config.mode,
 				video: lib.video,
-				win: result == "战斗胜利",
+				win: result == "戰鬥勝利",
 				name1: me.name1 || me.name,
 				name2: me.name2,
 				time: lib.getUTC(new Date()),
@@ -6198,7 +6198,7 @@ export class Game extends GameCompatible {
 				newvid.name1 = newvid.name2.slice(10, newvid.name1.lastIndexOf("_"));
 			}
 			lib.videos.unshift(newvid);
-			// 清洗代理对象
+			// 清洗代理對象
 			newvid.video = structuredClone(newvid.video);
 			store.put(newvid);
 			ui.create.videoNode(newvid, true);
@@ -6246,7 +6246,7 @@ export class Game extends GameCompatible {
 		/*
 		if (!_status.brawl) {
 			if (lib.config.mode == "boss") {
-				ui.create.control("再战", function () {
+				ui.create.control("再戰", function () {
 					let pointer = game.boss;
 					let map = { boss: game.me == game.boss, links: [] };
 					for (let iwhile = 0; iwhile < 10; iwhile++) {
@@ -6265,7 +6265,7 @@ export class Game extends GameCompatible {
 				});
 			} else if (lib.config.mode == "versus") {
 				if (_status.mode == "standard" || _status.mode == "three") {
-					ui.create.control("再战", function () {
+					ui.create.control("再戰", function () {
 						game.saveConfig("continue_name_versus" + (_status.mode == "three" ? "_three" : ""), {
 							friend: _status.friendBackup,
 							enemy: _status.enemyBackup,
@@ -6277,7 +6277,7 @@ export class Game extends GameCompatible {
 					});
 				}
 			} else if (!_status.connectMode && get.config("continue_game") && !ui.continue_game && !_status.brawl && !game.no_continue_game) {
-				ui.continue_game = ui.create.control("再战", game.reloadCurrent);
+				ui.continue_game = ui.create.control("再戰", game.reloadCurrent);
 			}
 		}*/
 		if (!ui.restart) {
@@ -6286,7 +6286,7 @@ export class Game extends GameCompatible {
 					game.broadcastAll(function () {
 						if (ui.exit) {
 							ui.exit.stay = true;
-							ui.exit.firstChild.innerHTML = "返回房间";
+							ui.exit.firstChild.innerHTML = "返回房間";
 						}
 					});
 					game.saveConfig("tmp_owner_roomId", game.roomId);
@@ -6480,7 +6480,7 @@ export class Game extends GameCompatible {
 				player.node.action.show();
 				let dist = get.distance(game.me, player, "pure");
 				let dist2 = get.distance(game.me, player);
-				player.node.action.innerHTML = `距离：${dist2}/${dist}`;
+				player.node.action.innerHTML = `距離：${dist2}/${dist}`;
 				if (dist > 7) player.node.action.classList.add("thunder");
 				else player.node.action.classList.remove("thunder");
 			});
@@ -6496,7 +6496,7 @@ export class Game extends GameCompatible {
 
 		// if (ui.confirm && ui.confirm.lastChild.link == 'cancel') {
 		// 	if (_status.event.type == 'phase' && !_status.event.skill) {
-		// 		ui.confirm.lastChild.innerHTML = '结束';
+		// 		ui.confirm.lastChild.innerHTML = '結束';
 		// 	}
 		// 	else {
 		// 		ui.confirm.lastChild.innerHTML = '取消';
@@ -6586,7 +6586,7 @@ export class Game extends GameCompatible {
 				} else break;
 			}
 			if (prompt != false) {
-				game.log(player1, "将座位移至", player2, "后");
+				game.log(player1, "將座位移至", player2, "後");
 			}
 		} else {
 			game.addVideo("swapSeat", null, [player1.dataset.position, player2.dataset.position]);
@@ -6617,7 +6617,7 @@ export class Game extends GameCompatible {
 				}
 			}
 			if (prompt != false) {
-				game.log(player1, "和", player2, "交换了座位");
+				game.log(player1, "和", player2, "交換了座位");
 			}
 		}
 		if (noanimate) {
@@ -6845,7 +6845,7 @@ export class Game extends GameCompatible {
 				// esm模式
 				if (Object.keys(exports).length > 0) {
 					if (typeof exports.default !== "function") {
-						throw new Error(`导入的模式[${name}]格式不正确！`);
+						throw new Error(`導入的模式[${name}]格式不正確！`);
 					}
 					game.import("mode", exports.default);
 				}
@@ -6873,7 +6873,7 @@ export class Game extends GameCompatible {
 			}else if(lib.mode[name].connect){
 				if(lib.mode[name].info) content = lib.mode[name].info;
 			}
-			if (!content) throw new Error(`导入的模式[${name}]格式不正确！`);
+			if (!content) throw new Error(`導入的模式[${name}]格式不正確！`);
 			return content;
 		})();
 		if (callback) promise = promise.then(callback, onerror);
@@ -7263,7 +7263,7 @@ export class Game extends GameCompatible {
 					}
 					if (event.friendlist.length == event.config.num) {
 						event.deciding = false;
-						event.prompt("比赛即将开始");
+						event.prompt("比賽即將開始");
 						setTimeout(game.resume, 1000);
 					}
 					if (event.config.update) {
@@ -7296,7 +7296,7 @@ export class Game extends GameCompatible {
 					game.resume();
 				}
 			};
-			event.skipnode = ui.create.system("跳过", function () {
+			event.skipnode = ui.create.system("跳過", function () {
 				this.remove();
 				event._skiprest = true;
 				if (event.imchoosing) {
@@ -7305,7 +7305,7 @@ export class Game extends GameCompatible {
 			});
 			if (get.config("change_choice")) {
 				event.replacenode = ui.create.system(
-					"换将",
+					"換將",
 					function () {
 						event.promptbar.hide();
 						while (event.avatars.length) {
@@ -7330,7 +7330,7 @@ export class Game extends GameCompatible {
 			}
 			if (get.config("change_choice")) {
 				event.reselectnode = ui.create.system(
-					"重选",
+					"重選",
 					function () {
 						event.promptbar.hide();
 						event.list2 = event.list2.concat(event.friend).concat(event.enemy);
@@ -7374,12 +7374,12 @@ export class Game extends GameCompatible {
 						e.stopPropagation();
 						event.freechoosedialog.style.transform = "scale(0.8)";
 						if (event.replacing) {
-							event.prompt("用" + get.translation(event.replacing) + "替换一名武将");
+							event.prompt("用" + get.translation(event.replacing) + "替換一名武將");
 						} else {
 							if (event.side == 0) {
-								event.prompt("请选择两名武将");
+								event.prompt("請選擇兩名武將");
 							} else {
-								event.prompt("请选择一名武将");
+								event.prompt("請選擇一名武將");
 							}
 						}
 					});
@@ -7395,18 +7395,18 @@ export class Game extends GameCompatible {
 					if (event.replacing) {
 						delete event.replacing;
 						if (event.side == 0) {
-							event.prompt("请选择两名武将");
+							event.prompt("請選擇兩名武將");
 						} else {
-							event.prompt("请选择一名武将");
+							event.prompt("請選擇一名武將");
 						}
 					}
 				};
 				event.freechoosenode = ui.create.system(
-					"自由选将",
+					"自由選將",
 					function () {
 						if (this.classList.contains("hidden")) return;
 						if (!event.imchoosing) {
-							event.prompt("请等待敌方选将");
+							event.prompt("請等待敵方選將");
 							return;
 						}
 						delete event.replacing;
@@ -7483,9 +7483,9 @@ export class Game extends GameCompatible {
 			if (event.side < 2) {
 				event.imchoosing = true;
 				if (event.side == 0) {
-					event.prompt("请选择两名武将");
+					event.prompt("請選擇兩名武將");
 				} else {
-					event.prompt("请选择一名武将");
+					event.prompt("請選擇一名武將");
 					event.fast = get.time();
 				}
 				game.pause();
@@ -7548,7 +7548,7 @@ export class Game extends GameCompatible {
 			}
 			game.delay();
 			"step 5";
-			event.prompt("选择" + get.cnNumber(event.config.num) + "名出场武将");
+			event.prompt("選擇" + get.cnNumber(event.config.num) + "名出場武將");
 			event.enemylist = [];
 			for (let i = 0; i < event.avatars.length; i++) {
 				if (event.avatars[i].index > event.config.width) {
@@ -7738,8 +7738,8 @@ export class Game extends GameCompatible {
 						const info = get.info(name.slice(0, name.indexOf("_roundcount")));
 						if (info && info.addintro) str += info.addintro(storage, player);
 						const num = round - (game.roundNumber - storage);
-						if (num > 0) str += `${get.cnNumber(num)}轮后${info.roundtext || "技能重置"}`;
-						else str += "技能可发动";
+						if (num > 0) str += `${get.cnNumber(num)}輪後${info.roundtext || "技能重置"}`;
+						else str += "技能可發動";
 						return str;
 					},
 					markcount: (storage, player) => Math.max(round - (game.roundNumber - storage), 0),
@@ -8013,7 +8013,7 @@ export class Game extends GameCompatible {
 				}else if(value[0]=='['&&value[value.length-1]==']'){
 					str+=`<span style="color:skyblue;">${get.translation(value)}</span>`;
 					str2+=get.translation(value);
-				}else if(value=='宝石'){
+				}else if(value=='寶石'){
 					str+=`<span style="color:OrangeRed;">${get.translation(value)}</span>`;
 					str2+=get.translation(value);
 				}else if(value=='水晶'){
@@ -8470,7 +8470,7 @@ export class Game extends GameCompatible {
 		if (lib.version == lib.config.version && !_status.extensionChangeLog) return;
 		const ul = document.createElement("ul");
 		ul.style.textAlign = "left";
-		const caption = lib.version == lib.config.version ? "扩展更新" : `${lib.version}更新内容`;
+		const caption = lib.version == lib.config.version ? "擴展更新" : `${lib.version}更新內容`;
 		let players = null,
 			cards = null;
 		if (lib.version != lib.config.version)
@@ -8523,7 +8523,7 @@ export class Game extends GameCompatible {
 			hidden = true;
 		}
 		game.pause();
-		const control = ui.create.control("确定", () => {
+		const control = ui.create.control("確定", () => {
 			dialog.close();
 			control.close();
 			if (hidden) ui.auto.show();
@@ -8648,10 +8648,10 @@ export class Game extends GameCompatible {
 		return player;
 	}
 	/**
-	 * 添加一个新玩家到target的上家或下家（默认为上家）
+	 * 添加一個新玩家到target的上家或下家（默認為上家）
 	 * @param { Player } target 新玩家的下家
-	 * @param { string|undefined|null } [character] 新玩家主将
-	 * @param { string|undefined|null } [character2] 新玩家副将
+	 * @param { string|undefined|null } [character] 新玩家主將
+	 * @param { string|undefined|null } [character2] 新玩家副將
 	 * @param { boolean } [isNext] 是否添加到下家
 	 * @returns { Player }
 	 */
@@ -8724,7 +8724,7 @@ export class Game extends GameCompatible {
 		return player;
 	}
 	/**
-	 * 移除一名玩家，单机联机都可用
+	 * 移除一名玩家，單機聯機都可用
 	 * @param { Player } player 要移除的玩家
 	 * @returns { Player }
 	 */
@@ -9071,9 +9071,9 @@ export class Game extends GameCompatible {
 		});
 	}
 	/**
-	 * 此函数用于计算函数的时间消耗。
-	 * @param {function} 测试的函数
-	 * @returns {number} 消耗的时间
+	 * 此函數用於計算函數的時間消耗。
+	 * @param {function} 測試的函數
+	 * @returns {number} 消耗的時間
 	 */
 	testRunCost(func) {
 		let time = Date.now();
@@ -9083,11 +9083,11 @@ export class Game extends GameCompatible {
 		return past;
 	}
 	/**
-	 * 此方法用于对所有targets按顺序执行一个async函数。
+	 * 此方法用於對所有targets按順序執行一個async函數。
 	 *
-	 * @param { Player[] } targets 需要执行async方法的目标
-	 * @param { (player: Player, i: number) => Promise<any | void> } asyncFunc 需要执行的async方法
-	 * @param { (a: Player, b: Player) => number } sort 排序器，默认为lib.sort.seat
+	 * @param { Player[] } targets 需要執行async方法的目標
+	 * @param { (player: Player, i: number) => Promise<any | void> } asyncFunc 需要執行的async方法
+	 * @param { (a: Player, b: Player) => number } sort 排序器，默認為lib.sort.seat
 	 */
 	async doAsyncInOrder(targets, asyncFunc, sort) {
 		if (!sort) sort = lib.sort.seat;
@@ -9100,9 +9100,9 @@ export class Game extends GameCompatible {
 
 	//xingBie
 	/**
-	 * 设置卡牌的系别
+	 * 設置卡牌的系別
 	 * @param {*} item 卡牌
-	 * @param {string} xiBie 系别
+	 * @param {string} xiBie 系別
 	 * @returns 
 	 */
 	setXiBie(item,xiBie){
@@ -9110,7 +9110,7 @@ export class Game extends GameCompatible {
 		return item.xiBie;
 	}
 	/**
-	 * 设置卡牌的命格
+	 * 設置卡牌的命格
 	 * @param {*} item 卡牌
 	 * @param {string} mingGe 命格
 	 * @returns 
@@ -9120,10 +9120,10 @@ export class Game extends GameCompatible {
 		return item.mingGe;
 	}
 	/**
-	 * 更改士气
-	 * @param {number} num 士气改变值
-	 * @param {bool} side 阵营
-	 * @param {bool} log 是否输出日志
+	 * 更改士氣
+	 * @param {number} num 士氣改變值
+	 * @param {bool} side 陣營
+	 * @param {bool} log 是否輸出日誌
 	 */
 	changeShiQi(num,side,log){
 		var numx=num;
@@ -9131,10 +9131,10 @@ export class Game extends GameCompatible {
 			game.hongShiQi+=num;
 			if(log!=false){
 				if(num>0){
-					game.log('<span style="color:red;">红方</span>士气增加',num);
+					game.log('<span style="color:red;">紅方</span>士氣增加',num);
 				}else if(num<0){
 					num=-num;
-					game.log('<span style="color:red;">红方</span>士气减少',num);
+					game.log('<span style="color:red;">紅方</span>士氣減少',num);
 				}
 			}
 			
@@ -9142,10 +9142,10 @@ export class Game extends GameCompatible {
 			game.lanShiQi+=num;
 			if(log!=false){
 				if(num>0){
-					game.log('<span style="color:lightblue;">蓝方</span>士气增加',num);
+					game.log('<span style="color:lightblue;">藍方</span>士氣增加',num);
 				}else if(num<0){
 					num=-num;
-					game.log('<span style="color:lightblue;">蓝方</span>士气减少',num);
+					game.log('<span style="color:lightblue;">藍方</span>士氣減少',num);
 				}
 			}
 		}
@@ -9160,11 +9160,11 @@ export class Game extends GameCompatible {
 		return ui.shiQiInfo;
 	}
 	/**
-	 * 更改战绩星石
-	 * @param {string} xingShi 星石类别
-	 * @param {number} num 数量
-	 * @param {bool} side 阵营
-	 * @param {bool} log 是否输出日志
+	 * 更改戰績星石
+	 * @param {string} xingShi 星石類別
+	 * @param {number} num 數量
+	 * @param {bool} side 陣營
+	 * @param {bool} log 是否輸出日誌
 	 */
 	changeZhanJi(xingShi,num,side,log){
 		var numx=num;
@@ -9174,14 +9174,14 @@ export class Game extends GameCompatible {
 				for(let i=0;i<num;i++){
 					game.hongZhanJi.push(xingShi);
 					if(log!=false){
-						game.log('<span style="color:red;">红方</span>战绩区增加',name);
+						game.log('<span style="color:red;">紅方</span>戰績區增加',name);
 					}
 				}
 			}else if(side==false){
 				for(let i=0;i<num;i++){
 					game.lanZhanJi.push(xingShi);
 					if(log!=false){
-						game.log('<span style="color:lightblue;">蓝方</span>战绩区增加',name);
+						game.log('<span style="color:lightblue;">藍方</span>戰績區增加',name);
 					}
 				}
 			}
@@ -9193,7 +9193,7 @@ export class Game extends GameCompatible {
 					if (index !== -1) {  
 						game.hongZhanJi.splice(index, 1);
 						if(log!=false){
-							game.log('<span style="color:red;">红方</span>战绩区移除',name);
+							game.log('<span style="color:red;">紅方</span>戰績區移除',name);
 						}
 					}
 				}
@@ -9203,7 +9203,7 @@ export class Game extends GameCompatible {
 					if (index !== -1) {  
 						game.lanZhanJi.splice(index, 1);
 						if(log!=false){
-							game.log('<span style="color:lightblue;">蓝方</span>战绩区移除',name);
+							game.log('<span style="color:lightblue;">藍方</span>戰績區移除',name);
 						}
 					}
 				}
@@ -9222,7 +9222,7 @@ export class Game extends GameCompatible {
 		return ui.shiQiInfo;
 	}
 	/**
-	 * 更改星杯数量
+	 * 更改星杯數量
 	 * @param {number} num 
 	 * @param {bool} side 
 	 * @param {bool} log 
@@ -9233,10 +9233,10 @@ export class Game extends GameCompatible {
 			game.hongXingBei+=num;
 			if(log!=false){
 				if(num>0){
-					game.log('<span style="color:red;">红方</span>星杯数量增加',num);
+					game.log('<span style="color:red;">紅方</span>星杯數量增加',num);
 				}else if(num<0){
 					num=-num;
-					game.log('<span style="color:red;">红方</span>星杯数量减少',num);
+					game.log('<span style="color:red;">紅方</span>星杯數量減少',num);
 				}
 			}
 			
@@ -9244,10 +9244,10 @@ export class Game extends GameCompatible {
 			game.lanXingBei+=num;
 			if(log!=false){
 				if(num>0){
-					game.log('<span style="color:lightblue;">蓝方</span>星杯数量增加',num);
+					game.log('<span style="color:lightblue;">藍方</span>星杯數量增加',num);
 				}else if(num<0){
 					num=-num;
-					game.log('<span style="color:lightblue;">蓝方</span>星杯数量减少',num);
+					game.log('<span style="color:lightblue;">藍方</span>星杯數量減少',num);
 				}
 			}
 		}
@@ -9262,10 +9262,10 @@ export class Game extends GameCompatible {
 		return ui.shiQiInfo; 
 	}
 	/**
-	 * 魔弹重置数据
+	 * 魔彈重置數據
 	 */
 	resetMoDan(){
-		//结算后重置数据
+		//結算後重置數據
 		game.moDan=2;
 		game.broadcastAll(function(){
 			game.moDanFangXiang='you';
@@ -9284,7 +9284,7 @@ export class Game extends GameCompatible {
 				if (cards.length) {
 					uiintro.addSmall(cards, true);
 				} else {
-					uiintro.add("（无）");
+					uiintro.add("（無）");
 				}
 			}
 		}

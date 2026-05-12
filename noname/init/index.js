@@ -13,42 +13,42 @@ import { initializeSandboxRealms } from "../util/initRealms.js";
 import { ErrorManager } from "../util/error.js";
 import { rootURL } from "../../noname.js";
 
-// 判断是否从file协议切换到http/s协议
+// 判斷是否從file協議切換到http/s協議
 export function canUseHttpProtocol() {
 	// 如果是http了就不用
 	if (location.protocol.startsWith("http")) return false;
-	// 首次启动不更新(即还没进行过新手教程)
+	// 首次啟動不更新(即還沒進行過新手教程)
 	if (!config.get("new_tutorial")) return false;
 	if (typeof nonameInitialized == "string") {
-		// 手机端
+		// 手機端
 		if (window.cordova) {
-			// 直接确定包名
-			// 因为懒人包作者不一定会改成什么版本
+			// 直接確定包名
+			// 因為懶人包作者不一定會改成什麼版本
 			// @ts-ignore
 			if (nonameInitialized.endsWith("com.noname.shijian/") && window.noname_shijianInterfaces && typeof window.noname_shijianInterfaces.sendUpdate === "function") {
-				// 每个app自定义能升级的渠道，比如判断版本
+				// 每個app自定義能升級的渠道，比如判斷版本
 				// @ts-ignore
 				return window.noname_shijianInterfaces.getApkVersion() >= 16000;
 			}
-			// 由理版判断，后续所有app都通过此接口来升级协议
+			// 由理版判斷，後續所有app都通過此接口來升級協議
 			// @ts-ignore
 			if (window.NonameAndroidBridge && typeof window.NonameAndroidBridge.sendUpdate === "function") {
 				return true;
 			}
 		}
-		// 电脑端
+		// 電腦端
 		else if (typeof window.require == "function" && typeof window.process == "object") {
-			// 从json判断版本号
+			// 從json判斷版本號
 			const fs = require("fs");
 			const path = require("path");
 			if (fs.existsSync(path.join(__dirname, "package.json"))) {
 				// @ts-ignore
 				const json = require("./package.json");
-				// 诗笺电脑版的判断
+				// 詩箋電腦版的判斷
 				return json && Number(json.installerVersion) >= 1.7;
 			}
 		}
-		// 浏览器端
+		// 瀏覽器端
 		else {
 			return location.protocol.startsWith("http");
 		}
@@ -57,59 +57,59 @@ export function canUseHttpProtocol() {
 }
 
 /**
- * 传递升级完成的信息
- * @returns { string | void } 返回一个网址
+ * 傳遞升級完成的信息
+ * @returns { string | void } 返回一個網址
  */
 export function sendUpdate() {
-	// 手机端
+	// 手機端
 	if (window.cordova) {
-		// 直接确定包名
+		// 直接確定包名
 		// @ts-ignore
 		if (nonameInitialized && nonameInitialized.includes("com.noname.shijian") && window.noname_shijianInterfaces && typeof window.noname_shijianInterfaces.sendUpdate === "function") {
-			// 给诗笺版apk的java层传递升级完成的信息
+			// 給詩箋版apk的java層傳遞升級完成的信息
 			// @ts-ignore
 			const url = new URL(window.noname_shijianInterfaces.sendUpdate());
 			url.searchParams.set("sendUpdate", "true");
 			return url.toString();
 		}
-		// 由理版判断
+		// 由理版判斷
 		// @ts-ignore
 		if (window.NonameAndroidBridge && typeof window.NonameAndroidBridge.sendUpdate === "function") {
-			// 给由理版apk的java层传递升级完成的信息
+			// 給由理版apk的java層傳遞升級完成的信息
 			// @ts-ignore
 			const url = new URL(window.NonameAndroidBridge.sendUpdate());
 			url.searchParams.set("sendUpdate", "true");
 			return url.toString();
 		}
 	}
-	// 电脑端
+	// 電腦端
 	else if (typeof window.require == "function" && typeof window.process == "object") {
-		// 从json判断版本号
+		// 從json判斷版本號
 		const fs = require("fs");
 		const path = require("path");
 		if (fs.existsSync(path.join(__dirname, "package.json"))) {
 			// @ts-ignore
 			const json = require("./package.json");
-			// 诗笺电脑版的判断
+			// 詩箋電腦版的判斷
 			if (json && Number(json.installerVersion) >= 1.7) {
 				fs.writeFileSync(path.join(__dirname, "Home", "saveProtocol.txt"), "");
-				// 启动http
+				// 啟動http
 				const cp = require("child_process");
 				cp.exec(`start /min ${__dirname}\\noname-server.exe -platform=electron`, (err, stdout, stderr) => {});
 				return `http://localhost:8089/app.html?sendUpdate=true`;
 			}
 		}
 	}
-	// 浏览器端
+	// 瀏覽器端
 	else {
 		return location.href;
 	}
 }
 
-// 无名杀，启动！
+// 無名殺，啟動！
 export async function boot() {
 	leaveCompatibleEnvironment();
-	// 不想看，反正别动
+	// 不想看，反正別動
 	if (typeof __dirname === "string" && __dirname.length) {
 		const dirsplit = __dirname.split("/");
 		for (let i = 0; i < dirsplit.length; i++) {
@@ -121,12 +121,12 @@ export async function boot() {
 		lib.configprefix += "_";
 	}
 
-	// 加载polyfill内容
+	// 加載polyfill內容
 	await import("./polyfill.js");
 
-	// 设定游戏加载时间，超过时间未加载就提醒
+	// 設定遊戲加載時間，超過時間未加載就提醒
 	const configLoadTime = localStorage.getItem(lib.configprefix + "loadtime");
-	// 现在不暴露到全局变量里了，直接传给onload
+	// 現在不暴露到全局變量裡了，直接傳給onload
 	const resetGameTimeout = setTimeout(lib.init.reset, configLoadTime ? parseInt(configLoadTime) : 10000);
 
 	if (typeof window.cordovaLoadTimeout != "undefined") {
@@ -153,10 +153,10 @@ export async function boot() {
 	setWindowListener();
 	const promiseErrorHandler = await setOnError();
 
-	// 确认手机端平台
+	// 確認手機端平臺
 	Reflect.set(lib, "device", device);
 
-	// 在dom加载完后执行相应的操作
+	// 在dom加載完後執行相應的操作
 	const waitDomLoad = new Promise(resolve => {
 		if (document.readyState !== "complete") {
 			window.onload = resolve;
@@ -165,7 +165,7 @@ export async function boot() {
 
 	// 清瑤？過於先進以至於無法運行我們的落後本體，故也就不再檢測
 
-	// Electron平台
+	// Electron平臺
 	if (typeof window.require === "function") {
 		const { nodeReady } = await import("./node.js");
 		nodeReady();
@@ -183,8 +183,8 @@ export async function boot() {
 				});
 			});
 		} else {
-			//为其他自定义平台提供文件读写函数赋值的一种方式。
-			//但这种方式只允许修改game的文件读写函数。
+			//為其他自定義平臺提供文件讀寫函數賦值的一種方式。
+			//但這種方式只允許修改game的文件讀寫函數。
 			if (typeof window.initReadWriteFunction == "function") {
 				const g = {};
 				const ReadWriteFunctionName = ["download", "checkFile", "checkDir", "readFile", "readFileAsText", "writeFile", "removeFile", "getFileList", "ensureDirectory", "createDir", "removeDir"];
@@ -204,13 +204,13 @@ export async function boot() {
 				});
 				// @ts-ignore
 				await window.initReadWriteFunction(g).catch(e => {
-					console.error("文件读写函数初始化失败:", e);
+					console.error("文件讀寫函數初始化失敗:", e);
 				});
-				delete window.initReadWriteFunction; // 后续用不到了喵
+				delete window.initReadWriteFunction; // 後續用不到了喵
 			}
 			window.onbeforeunload = function () {
 				if (config.get("confirm_exit") && !_status.reloading) {
-					return "是否离开游戏？";
+					return "是否離開遊戲？";
 				} else {
 					return null;
 				}
@@ -223,11 +223,11 @@ export async function boot() {
 	await loadCssPromise;
 	const config2 = await loadConfigPromise;
 
-	// 读取模式
+	// 讀取模式
 	if (config2.mode) config.set("mode", config2.mode);
 	if (config.get("mode_config")[config.get("mode")] === undefined) config.get("mode_config")[config.get("mode")] = {};
 
-	// 复制共有模式设置
+	// 複製共有模式設置
 	for (const name in config.get("mode_config").global) {
 		if (config.get("mode_config")[config.get("mode")][name] === undefined) {
 			config.get("mode_config")[config.get("mode")][name] = config.get("mode_config").global[name];
@@ -332,11 +332,11 @@ export async function boot() {
 			var link = config.get("customBackgroundPack")[i];
 			lib.configMenu.appearence.config.image_background.item[link] = link.slice(link.indexOf("_") + 1);
 		}
-		lib.configMenu.appearence.config.image_background.item.default = "默认";
+		lib.configMenu.appearence.config.image_background.item.default = "默認";
 	}
 	if (pack.music) {
 		if (typeof lib.device != "undefined" || typeof window.require === "function") {
-			lib.configMenu.audio.config.background_music.item.music_custom = "自定义音乐";
+			lib.configMenu.audio.config.background_music.item.music_custom = "自定義音樂";
 		}
 		config.get("all").background_music = ["music_default"];
 		for (const name in pack.music) {
@@ -349,8 +349,8 @@ export async function boot() {
 				lib.configMenu.audio.config.background_music.item[name] = config.get("customBackgroundMusic")[name];
 			}
 		}
-		lib.configMenu.audio.config.background_music.item.music_random = "随机播放";
-		lib.configMenu.audio.config.background_music.item.music_off = "关闭";
+		lib.configMenu.audio.config.background_music.item.music_random = "隨機播放";
+		lib.configMenu.audio.config.background_music.item.music_off = "關閉";
 	}
 	if (pack.theme) {
 		for (const name in pack.theme) {
@@ -380,8 +380,8 @@ export async function boot() {
 		if (suitsFont) fontSheet.insertRule(`@font-face {font-family: 'Suits'; src: url('${lib.assetURL}font/suits.woff2');}`, 0);
 		fontSheet.insertRule(`@font-face {font-family: 'NonameSuits'; src: url('${lib.assetURL}font/suits.woff2');}`, 0);
 		fontSheet.insertRule(`@font-face {font-family: 'MotoyaLMaru'; src: url('${lib.assetURL}font/motoyamaru.woff2');}`, 0);
-		appearenceConfig.cardtext_font.item.default = "默认";
-		appearenceConfig.global_font.item.default = "默认";
+		appearenceConfig.cardtext_font.item.default = "默認";
+		appearenceConfig.global_font.item.default = "默認";
 	}
 
 	const ua = userAgentLowerCase;
@@ -398,7 +398,7 @@ export async function boot() {
 				} else if (Reflect.get(lib, "device") === "ios") {
 					game.saveConfig("show_statusbar_ios", "overlay");
 				}
-			} else if (confirm("是否切换到触屏模式？（触屏模式可提高触屏设备的响应速度，但无法使用鼠标）")) {
+			} else if (confirm("是否切換到觸屏模式？（觸屏模式可提高觸屏設備的響應速度，但無法使用鼠標）")) {
 				game.saveConfig("touchscreen", true);
 				if (ua.includes("iphone") || ua.includes("android")) {
 					game.saveConfig("phonelayout", true);
@@ -460,8 +460,8 @@ export async function boot() {
 		}
 	}
 
-	// 自动导入扩展
-	// 其实个人觉得直接加到这里会有问题，但至少现在能跑
+	// 自動導入擴展
+	// 其實個人覺得直接加到這裡會有問題，但至少現在能跑
 	const importExtensionPromise = autoImportExtensions(extensionlist);
 
 
@@ -492,10 +492,10 @@ export async function boot() {
 	}
 	delete _status.htmlbg;
 
-	// 无名杀更新日志
+	// 無名殺更新日誌
 	if (window.noname_update) {
 		Reflect.set(lib, "version", window.noname_update.version);
-		// 更全面的更新内容
+		// 更全面的更新內容
 		if (config.get(`version_description_v${window.noname_update.version}`)) {
 			try {
 				const description = config.get(`version_description_v${window.noname_update.version}`);
@@ -505,10 +505,10 @@ export async function boot() {
 				lib.changeLog.push(
 					html`
 						<div style="position: relative;width:50px;height:50px;border-radius:50px;background-image:url('${description.author.avatar_url}');background-size:cover;vertical-align:middle;"></div>
-						${description.author.login}于${description.published_at}发布
+						${description.author.login}於${description.published_at}發佈
 					`.trim(),
 					description.body.replaceAll("\n", "<br/>").replace(regex, function (match, p1, p2) {
-						// p1 是链接文本，p2 是链接地址
+						// p1 是鏈接文本，p2 是鏈接地址
 						return `<a href="${p2}">${p1}</a>`;
 					})
 				);
@@ -517,7 +517,7 @@ export async function boot() {
 				lib.changeLog.push(...window.noname_update.changeLog);
 			}
 		}
-		// 原更新内容
+		// 原更新內容
 		else {
 			lib.changeLog.push(...window.noname_update.changeLog);
 		}
@@ -530,7 +530,7 @@ export async function boot() {
 		delete window.noname_update;
 	}
 
-	// 虽然但是，我就暴露个import，应该没啥问题
+	// 雖然但是，我就暴露個import，應該沒啥問題
 	Reflect.set(window, "game", {
 		import: game.import.bind(null),
 	});
@@ -614,7 +614,7 @@ export async function boot() {
 		if (isFirstStartAfterUpdate && extErrorList.length) {
 			const stacktraces = extErrorList.map(e => (e instanceof Error ? e.stack : String(e))).join("\n\n");
 			// game.saveConfig("update_first_log", stacktraces);
-			if (confirm(`扩展加载出错！是否重新载入游戏？\n本次更新可能导致了扩展出现了错误：\n\n${stacktraces}`)) {
+			if (confirm(`擴展加載出錯！是否重新載入遊戲？\n本次更新可能導致了擴展出現了錯誤：\n\n${stacktraces}`)) {
 				game.reload();
 				clearTimeout(resetGameTimeout);
 				return;
@@ -900,9 +900,9 @@ async function loadCss() {
 }
 
 /**
- * `window.onload`触发时执行的函数
+ * `window.onload`觸發時執行的函數
  *
- * 目前无任何内容，预防以后出现需要的情况
+ * 目前無任何內容，預防以後出現需要的情況
  *
  * @deprecated
  * @return {Promise<void>}
@@ -961,17 +961,17 @@ async function setOnError() {
 	window.onerror = function (msg, src, line, column, err) {
 		if (promiseErrorHandler.onErrorPrepare) promiseErrorHandler.onErrorPrepare();
 		const winPath = window.__dirname ? "file:///" + (__dirname.replace(new RegExp("\\\\", "g"), "/") + "/") : "";
-		let str = `错误文件: ${typeof src == "string" ? decodeURI(src).replace(lib.assetURL, "").replace(winPath, "") : "未知文件"}`;
-		str += `\n错误信息: ${msg}`;
+		let str = `錯誤文件: ${typeof src == "string" ? decodeURI(src).replace(lib.assetURL, "").replace(winPath, "") : "未知文件"}`;
+		str += `\n錯誤信息: ${msg}`;
 		const tip = lib.getErrorTip(msg);
-		if (tip) str += `\n错误提示: ${tip}`;
-		str += `\n行号: ${line}`;
-		str += `\n列号: ${column}`;
+		if (tip) str += `\n錯誤提示: ${tip}`;
+		str += `\n行號: ${line}`;
+		str += `\n列號: ${column}`;
 		const version = typeof lib.version != "undefined" ? lib.version : "";
 		const reg = /[^\d.]/;
 		const match = version.match(reg) != null;
-		str += "\n" + `${match ? "游戏" : "无名杀"}版本: ${version || "未知版本"}`;
-		if (match) str += "\n⚠️您使用的游戏代码不是源于libnoname/noname无名杀官方仓库，请自行寻找您所使用的游戏版本开发者反馈！";
+		str += "\n" + `${match ? "遊戲" : "無名殺"}版本: ${version || "未知版本"}`;
+		if (match) str += "\n⚠️您使用的遊戲代碼不是源於libnoname/noname無名殺官方倉庫，請自行尋找您所使用的遊戲版本開發者反饋！";
 		if (_status && _status.event) {
 			let evt = _status.event;
 			str += `\nevent.name: ${evt.name}\nevent.step: ${evt.step}`;
@@ -987,7 +987,7 @@ async function setOnError() {
 				else str += "\nplayer: " + evt.player.name;
 				let distance = get.distance(_status.roundStart, evt.player, "absolute");
 				if (distance != Infinity) {
-					str += `\n座位号: ${distance + 1}`;
+					str += `\n座位號: ${distance + 1}`;
 				}
 			}
 			if (evt.target) {
@@ -1009,12 +1009,12 @@ async function setOnError() {
 		}
 		str += "\n-------------";
 		const errorReporter = ErrorManager.getErrorReporter(err);
-		if (errorReporter) game.print(errorReporter.report(str + "\n代码出现错误"));
+		if (errorReporter) game.print(errorReporter.report(str + "\n代碼出現錯誤"));
 		else {
 			if (typeof line == "number" && (typeof Reflect.get(game, "readFile") == "function" || location.origin != "file://")) {
 				/**
-				 * @param { string[] } lines 代码分割行数
-				 * @param { number } lines 代码报错行数
+				 * @param { string[] } lines 代碼分割行數
+				 * @param { number } lines 代碼報錯行數
 				 */
 				const createShowCode = function (lines, line) {
 					let showCode = "";
@@ -1033,7 +1033,7 @@ async function setOnError() {
 					}
 					return showCode;
 				};
-				// 解析step content的错误
+				// 解析step content的錯誤
 				if (
 					err &&
 					err.stack &&
@@ -1057,9 +1057,9 @@ async function setOnError() {
 						}
 					}
 				}
-				// 协议名须和html一致(网页端防跨域)，且文件是js
+				// 協議名須和html一致(網頁端防跨域)，且文件是js
 				else if (typeof src == "string" && src.startsWith(location.protocol) && src.endsWith(".js")) {
-					//获取代码
+					//獲取代碼
 					const codes = lib.init.reqSync("local:" + decodeURI(src).replace(lib.assetURL, "").replace(winPath, ""));
 					if (codes) {
 						const lines = codes.split("\n");
@@ -1088,7 +1088,7 @@ function setWindowListener() {
 		if (typeof ui.menuContainer == "undefined" || !ui.menuContainer.classList.contains("hidden")) {
 			if (e.keyCode == 116 || ((e.ctrlKey || e.metaKey) && e.keyCode == 82)) {
 				if (e.shiftKey) {
-					if (confirm("是否重置游戏？")) {
+					if (confirm("是否重置遊戲？")) {
 						var noname_inited = localStorage.getItem("noname_inited");
 						var onlineKey = localStorage.getItem(lib.configprefix + "key");
 						localStorage.clear();
@@ -1139,7 +1139,7 @@ function setWindowListener() {
 				}
 			} else if (e.keyCode == 116 || ((e.ctrlKey || e.metaKey) && e.keyCode == 82)) {
 				if (e.shiftKey) {
-					if (confirm("是否重置游戏？")) {
+					if (confirm("是否重置遊戲？")) {
 						var noname_inited = localStorage.getItem("noname_inited");
 						var onlineKey = localStorage.getItem(lib.configprefix + "key");
 						localStorage.clear();

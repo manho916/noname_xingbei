@@ -15,8 +15,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 		},
 
         characterIntro: {
-            si_moFaShaoNv:`小范围的区域伤害是魔法少女的特长，她更可以把魔弹随意的使用和施放。在积累了一定的能量之后，强大的“毁灭风暴”更是可以让所有对手都品尝到何为魔法的洗礼和冲击`,
-            si_moJianShi:"借助暗影之力的魔剑士，既无法使用法术，更是会受到黑暗的侵蚀。但这种双刃剑施放在对手身上的时候，又是无比的震撼和爽快，在烈火永生的黄泉面前，生与死只在一念之间",
+            si_moFaShaoNv:`小範圍的區域傷害是魔法少女的特長，她更可以把魔彈隨意的使用和施放。在積累了一定的能量之後，強大的“毀滅風暴”更是可以讓所有對手都品嚐到何為魔法的洗禮和衝擊`,
+            si_moJianShi:"藉助暗影之力的魔劍士，既無法使用法術，更是會受到黑暗的侵蝕。但這種雙刃劍施放在對手身上的時候，又是無比的震撼和爽快，在烈火永生的黃泉面前，生與死只在一念之間",
 		},
         skill:{
             si_moBaoChongJi:{
@@ -40,7 +40,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 content:function(){
                     'step 0'
                     var name=get.translation(player);
-                    target.chooseToDiscard(`弃置1张法术牌，否则${name}对你造成2点法术伤害③`,1,function(card){
+                    target.chooseToDiscard(`棄置1張法術牌，否則${name}對你造成2點法術傷害③`,1,function(card){
                         return get.type(card)=='faShu';
                     })
                     .set('showCards',true)
@@ -163,16 +163,16 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             //角色名字
             si_moFaShaoNv:"四版魔法少女",
             si_moFaShaoNv_prefix: "四版",
-            si_moJianShi:"四版魔剑士",
+            si_moJianShi:"四版魔劍士",
             si_moJianShi_prefix: "四版",
 
-            si_moBaoChongJi:'[法术]魔爆冲击',
-            si_moBaoChongJi_info:'<span class="tiaoJian">(弃1张法术牌[展示])</span>指定2名目标对手各弃一张法术牌[展示]，若其中有人不如此做，则对他造成2点法术伤害。只要有一名对手不如此做，我方【战绩区】+1[宝石]。你弃1张牌。',
+            si_moBaoChongJi:'[法術]魔爆衝擊',
+            si_moBaoChongJi_info:'<span class="tiaoJian">(棄1張法術牌[展示])</span>指定2名目標對手各棄一張法術牌[展示]，若其中有人不如此做，則對他造成2點法術傷害。只要有一名對手不如此做，我方【戰績區】+1[寶石]。你棄1張牌。',
 
-            san_anYingLiuXing:"[法术]暗影流星",
-            san_anYingLiuXing_info:"<span class='tiaoJian'>(仅【暗影形态】下发动，弃2张法术牌[展示])</span>对目标角色造成2点法术伤害③。",
-            si_huangQuanZhengChan:"[响应]黄泉震颤[回合限定]",
-            si_huangQuanZhengChan_info:"[宝石]<span class='tiaoJian'>(主动攻击前发动①)</span>本次攻击对手不能应战，<span class='tiaoJian'>(若命中②)</span>你将手牌调整为4[强制]。",
+            san_anYingLiuXing:"[法術]暗影流星",
+            san_anYingLiuXing_info:"<span class='tiaoJian'>(僅【暗影形態】下發動，棄2張法術牌[展示])</span>對目標角色造成2點法術傷害③。",
+            si_huangQuanZhengChan:"[響應]黃泉震顫[回合限定]",
+            si_huangQuanZhengChan_info:"[寶石]<span class='tiaoJian'>(主動攻擊前發動①)</span>本次攻擊對手不能應戰，<span class='tiaoJian'>(若命中②)</span>你將手牌調整為4[強制]。",
 		},
 	};
 });

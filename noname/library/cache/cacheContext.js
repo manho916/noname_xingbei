@@ -4,7 +4,7 @@ import { get } from "../../get/index.js";
 import { _status } from "../../status/index.js";
 import { hex_md5 } from "../crypt/md5.js";
 /**
- * 缓存上下文，用于在各种方法中暂时缓存值，以第一次获取的缓存值为准。
+ * 緩存上下文，用於在各種方法中暫時緩存值，以第一次獲取的緩存值為準。
  */
 export class CacheContext {
 	constructor() {
@@ -16,7 +16,7 @@ export class CacheContext {
 	}
 
 	/**
-	 * 设置当前是否处于缓存环境。当使用inject对类进行注入时，只在缓存环境下会返回缓存值。
+	 * 設置當前是否處於緩存環境。當使用inject對類進行注入時，只在緩存環境下會返回緩存值。
 	 * @param {boolean} cache
 	 */
 	static setInCacheEnvironment(cache) {
@@ -24,8 +24,8 @@ export class CacheContext {
 	}
 
 	/**
-	 * 设置一个公有的缓存上下文。缓存上下文持有期间，假设所缓存的函数在参数相同时，绝对不会（注意是绝对不会）返回不同的返回值。
-	 * 使用inject对类进行注入时，将应用公有的缓存上下文。
+	 * 設置一個公有的緩存上下文。緩存上下文持有期間，假設所緩存的函數在參數相同時，絕對不會（注意是絕對不會）返回不同的返回值。
+	 * 使用inject對類進行注入時，將應用公有的緩存上下文。
 	 * @param {CacheContext} context
 	 */
 	static setCacheContext(context) {
@@ -33,23 +33,23 @@ export class CacheContext {
 	}
 
 	/**
-	 * 返回当前公有的缓存上下文。
-	 * @returns {CacheContext} 缓存上下文
+	 * 返回當前公有的緩存上下文。
+	 * @returns {CacheContext} 緩存上下文
 	 */
 	static getCacheContext() {
 		return _status.cacheContext;
 	}
 
 	/**
-	 * 移除当前公有的缓存上下文。
+	 * 移除當前公有的緩存上下文。
 	 */
 	static removeCacheContext() {
 		delete _status.cacheContext;
 	}
 
 	/**
-	 * 返回公有的缓存上下文，没有就创建一个新的返回（不会设置为新的公有缓存上下文）。
-	 * @returns {CacheContext} 缓存上下文
+	 * 返回公有的緩存上下文，沒有就創建一個新的返回（不會設置為新的公有緩存上下文）。
+	 * @returns {CacheContext} 緩存上下文
 	 */
 	static requireCacheContext() {
 		let cache = CacheContext.getCacheContext();
@@ -60,10 +60,10 @@ export class CacheContext {
 	}
 
 	/**
-	 * 对一个对象进行代理，对象的所有函数都将按条件返回缓存结果。
-	 * 注意：以cache开头的方法依然保持原来的调用。
-	 * 如果所代理的对象拥有cacheSupportFunction方法（返回一个方法名数组），只有允许的方法才会返回缓存结果，剩余方法依然保持原来的调用。
-	 * @param {any} source 需要代理的对象
+	 * 對一個對象進行代理，對象的所有函數都將按條件返回緩存結果。
+	 * 注意：以cache開頭的方法依然保持原來的調用。
+	 * 如果所代理的對象擁有cacheSupportFunction方法（返回一個方法名數組），只有允許的方法才會返回緩存結果，剩餘方法依然保持原來的調用。
+	 * @param {any} source 需要代理的對象
 	 * @returns
 	 */
 	delegate(source) {
@@ -79,7 +79,7 @@ export class CacheContext {
 	}
 
 	/**
-	 * 对一个类进行注入。methods为可以返回缓存的所有方法。注入后，此类的相关方法会在公有缓存上下文下返回缓存值。
+	 * 對一個類進行注入。methods為可以返回緩存的所有方法。注入後，此類的相關方法會在公有緩存上下文下返回緩存值。
 	 * @param {any} source
 	 * @param {Array<string>} methods
 	 * @returns
@@ -169,7 +169,7 @@ export class CacheContext {
 		if (ret === undefined) {
 			ret = (typeof func == "function" ? func : source[key]).call(source, ...params);
 			funcCache[cacheKey] = ret;
-			//console.log('缓存未命中!'+key+":"+cacheKey+":"+params.length+":ret:"+ret);
+			//console.log('緩存未命中!'+key+":"+cacheKey+":"+params.length+":ret:"+ret);
 		} else {
 			//console.log(key+":"+cacheKey+":"+params.length+":ret:"+ret);
 		}

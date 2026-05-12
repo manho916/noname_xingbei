@@ -1,9 +1,9 @@
 import { PromiseErrorHandler } from "./struct/index.js";
 
 /**
- * 从浏览器名到不同浏览器下异步处理方式的映射
+ * 從瀏覽器名到不同瀏覽器下異步處理方式的映射
  *
- * `key`的值同`get.coreInfo`函数返回值的第一个元素
+ * `key`的值同`get.coreInfo`函數返回值的第一個元素
  *
  * @type {Record<"firefox" | "chrome" | "safari" | "other", new () => PromiseErrorHandler>}
  */

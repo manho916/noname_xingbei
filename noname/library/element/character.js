@@ -6,172 +6,172 @@ import { ui } from "../../ui/index.js";
 
 export class Character {
 	/**
-	 * 武将牌的性别
+	 * 武將牌的性別
 	 * @type { Sex | "" }
 	 **/
 	sex;
 	/**
-	 * 武将牌的体力值
+	 * 武將牌的體力值
 	 * @type { number }
 	 **/
 	hp;
 	/**
-	 * 武将牌的体力上限
+	 * 武將牌的體力上限
 	 * @type { number }
 	 **/
 	maxHp;
 	/**
-	 * 武将牌的护甲值
+	 * 武將牌的護甲值
 	 * @type { number }
 	 **/
 	zhiLiao = 0;
 	/**
-	 * 武将姓名
+	 * 武將姓名
 	 * @type { string|undefined }
 	 */
 	names;
 	/**
-	 * 武将牌的势力
+	 * 武將牌的勢力
 	 * @type { string }
 	 **/
 	group;
 	/**
-	 * 武将牌的势力边框颜色（如徐庶“身在曹营心在汉”）
+	 * 武將牌的勢力邊框顏色（如徐庶“身在曹營心在漢”）
 	 * @type { string|undefined }
 	 **/
 	groupBorder;
 	/**
-	 * 神武将牌在国战模式下的势力
+	 * 神武將牌在國戰模式下的勢力
 	 * @type { string|undefined }
 	 **/
 	groupInGuozhan;
 	/**
-	 * 武将牌拥有的技能
+	 * 武將牌擁有的技能
 	 * @type { string[] }
 	 **/
 	skills = [];
 	/**
-	 * 武将牌是否为常备主公
+	 * 武將牌是否為常備主公
 	 * @type { boolean }
 	 **/
 	isZhugong = false;
 	/**
-	 * 武将牌是否为隐藏武将
+	 * 武將牌是否為隱藏武將
 	 * @type { boolean }
 	 **/
 	isUnseen = false;
 	/**
-	 * 武将牌是否拥有隐匿技能
+	 * 武將牌是否擁有隱匿技能
 	 * @type { boolean }
 	 **/
 	hasHiddenSkill = false;
 	/**
-	 * 垃圾桶，用于存储原本Character[4]的垃圾数据
+	 * 垃圾桶，用於存儲原本Character[4]的垃圾數據
 	 * @type { any[] }
 	 **/
 	trashBin = [];
 	/**
-	 * 武将牌对应的另一半双面武将牌
+	 * 武將牌對應的另一半雙面武將牌
 	 * @type { string|undefined }
 	 **/
 	dualSideCharacter;
 	/**
-	 * 多势力武将牌的全部势力
+	 * 多勢力武將牌的全部勢力
 	 * @type { string[] }
 	 **/
 	doubleGroup = [];
 	/**
-	 * 武将牌是否为minskin
+	 * 武將牌是否為minskin
 	 * @type { boolean }
 	 **/
 	isMinskin = false;
 	/**
-	 * 武将牌是否为挑战模式下的BOSS
+	 * 武將牌是否為挑戰模式下的BOSS
 	 * @type { boolean }
 	 **/
 	isBoss = false;
 	/**
-	 * 武将牌是否为隐藏BOSS
+	 * 武將牌是否為隱藏BOSS
 	 * @type { boolean }
 	 **/
 	isHiddenBoss = false;
 	/**
-	 * 武将牌是否“仅点将可用”
+	 * 武將牌是否“僅點將可用”
 	 * @type { boolean }
 	 **/
 	isAiForbidden = false;
 	/**
-	 * 武将牌在炉石模式/挑战模式下的特殊信息
+	 * 武將牌在爐石模式/挑戰模式下的特殊信息
 	 * @type { any[]|undefined }
 	 **/
 	extraModeData;
 	/**
-	 * 武将牌是否为炉石模式下的随从
+	 * 武將牌是否為爐石模式下的隨從
 	 * @type { boolean }
 	 **/
 	isFellowInStoneMode = false;
 	/**
-	 * 武将牌是否为炉石模式下的隐藏武将
+	 * 武將牌是否為爐石模式下的隱藏武將
 	 * @type { boolean }
 	 **/
 	isHiddenInStoneMode = false;
 	/**
-	 * 武将牌是否为炉石模式下的特殊随从（可以使用装备和法术）
+	 * 武將牌是否為爐石模式下的特殊隨從（可以使用裝備和法術）
 	 * @type { boolean }
 	 **/
 	isSpecialInStoneMode = false;
 	/**
-	 * 武将牌是否为bossallowed
+	 * 武將牌是否為bossallowed
 	 * @type { boolean }
 	 **/
 	isBossAllowed = false;
 	/**
-	 * 武将牌是否为战旗模式下的BOSS
+	 * 武將牌是否為戰旗模式下的BOSS
 	 * @type { boolean }
 	 **/
 	isChessBoss = false;
 	/**
-	 * 武将牌是否为剑阁模式下的BOSS
+	 * 武將牌是否為劍閣模式下的BOSS
 	 * @type { boolean }
 	 **/
 	isJiangeBoss = false;
 	/**
-	 * 武将牌是否为剑阁模式下的机械
+	 * 武將牌是否為劍閣模式下的機械
 	 * @type { boolean }
 	 **/
 	isJiangeMech = false;
 	/**
-	 * 武将牌是否在国战模式下拥有独立的皮肤
+	 * 武將牌是否在國戰模式下擁有獨立的皮膚
 	 * @type { boolean }
 	 **/
 	hasSkinInGuozhan = false;
 	/**
-	 * 武将牌对应的全部宗族
+	 * 武將牌對應的全部宗族
 	 * @type { string[] }
 	 **/
 	clans = [];
 	/**
-	 * 武将牌的图片信息
+	 * 武將牌的圖片信息
 	 * @type {string | undefined}
 	 */
 	img;
 	/**
-	 * 武将牌拥有的全部阵亡语音
+	 * 武將牌擁有的全部陣亡語音
 	 * @type { string[] }
 	 **/
 	dieAudios = [];
 	/**
-	 * 武将牌“无法享受到的主公/地主红利”
+	 * 武將牌“無法享受到的主公/地主紅利”
 	 * @type { string[] }
 	 **/
 	initFilters = [];
 	/**
-	 * 武将牌的“临时名称”
+	 * 武將牌的“臨時名稱”
 	 * @type { string[] }
 	 */
 	tempname = [];
 	/**
-	 * 武将牌是否存在(get.character未找到武将使用)
+	 * 武將牌是否存在(get.character未找到武將使用)
 	 * @type { boolean }
 	 */
 	isNull = false;
@@ -284,7 +284,7 @@ export class Character {
 			} else if (item.startsWith("die:")) {
 				dieAudios.add(item.slice(4));
 			} else if (item.startsWith("die_audio:")) {
-				console.warn(`die_audio参数已废弃，请使用多个die参数。`);
+				console.warn(`die_audio參數已廢棄，請使用多個die參數。`);
 				dieAudios.addArray(item.slice(10).split(":"));
 			} else if (item.startsWith("tempname:")) {
 				this.tempname = item.slice(9).split(":");
@@ -341,7 +341,7 @@ export class Character {
 	}
 
 	/**
-	 * 把新格式下的数据转换回传统的屎山
+	 * 把新格式下的數據轉換回傳統的屎山
 	 * @deprecated
 	 */
 	get 4() {

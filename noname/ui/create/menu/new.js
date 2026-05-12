@@ -2,7 +2,7 @@ import { ui, game, get, lib, _status } from "../../../../noname.js";
 import { createApp, ref, reactive } from "../../../../game/vue.esm-browser.prod.js";
 import { startMenutabName, startMenuData } from "./startMenu.js";
 /**
- * 使字符串有html的代码提示
+ * 使字符串有html的代碼提示
  */
 const html = (strings, ...values) => String.raw({ raw: strings }, ...values);
 
@@ -23,7 +23,7 @@ export const defaultTemplate = {
 						<div v-for="data in leftPaneData" :mode="data.attrs.mode" @click="toggleLeftPaneName" class="new-menubutton large">{{ data.name }}</div>
 					</div>
 					<div class="right pane" ref="rightPane"></div>
-					<div class="menubutton round highlight" ref="startButton">启</div>
+					<div class="menubutton round highlight" ref="startButton">啟</div>
 				</div>
 			</div>
 		</div>
@@ -47,10 +47,10 @@ export const defaultTemplate = {
 					startMenutabName,
 					startMenuData,
 				],
-				["选项", startMenuData],
+				["選項", startMenuData],
 				["角色", startMenuData],
 				["卡牌", startMenuData],
-				["扩展", startMenuData],
+				["擴展", startMenuData],
 				["其它", startMenuData],
 			]),
 		};
@@ -73,7 +73,7 @@ export const defaultTemplate = {
 			const data = this.tabDataMap.get(target.innerText);
 			const leftPaneData = data?.initLeftPaneData?.(this.connectMenu);
 			this.leftPaneData = Array.isArray(leftPaneData) ? leftPaneData : [];
-			// 高亮默认元素
+			// 高亮默認元素
 			this.$nextTick(() => {
 				const ele = 
 					data?.getDefaultActive(this.connectMenu, Array.from(this.$refs.leftPane.children)) ||
@@ -99,7 +99,7 @@ export const defaultTemplate = {
 			if (this.rightPaneData.element?.parentElement) {
 				this.rightPaneData.element.remove();
 			}
-			// 缓存
+			// 緩存
 			if (rightPaneAppData) {
 				const parentElement = rightPaneAppData.element;
 				this.$refs.rightPane.appendChild(parentElement);
@@ -107,7 +107,7 @@ export const defaultTemplate = {
 				this.rightPaneData.app = rightPaneAppData.app;
 			}
 			else {
-				const rightPaneTemplate = data?.rightPaneTemplate || { template: html`<div>还未编写</div>` };
+				const rightPaneTemplate = data?.rightPaneTemplate || { template: html`<div>還未編寫</div>` };
 				data?.initConfigs?.(this.connectMenu, target, this.$refs.startButton);
 				/** @type { string } */
 				// @ts-ignore

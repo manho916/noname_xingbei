@@ -76,7 +76,7 @@ export class Click {
 			uiintro.refresh = function () {
 				if (button.focused) return;
 				uiintro.content.innerHTML = "";
-				uiintro.addText("创建约战");
+				uiintro.addText("創建約戰");
 				button.textnode = uiintro.content.lastChild.lastChild;
 				uiintro.add(
 					'<input type="text" style="width:calc(100% - 10px);resize: none;border: none;border-radius: 2px;box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;margin-top: -2px;margin-bottom: 2px;">'
@@ -105,9 +105,9 @@ export class Click {
 				if (currentDay == 0) currentDay = 7;
 				for (var i = 1; i <= 7; i++) {
 					if (i < currentDay) {
-						days.push([i.toString(), "下周" + get.cnNumber(i, true)]);
+						days.push([i.toString(), "下週" + get.cnNumber(i, true)]);
 					} else if (i == 7) {
-						days.push([i.toString(), "周日"]);
+						days.push([i.toString(), "週日"]);
 					} else if (i == currentDay) {
 						days.push([i.toString(), "今天"]);
 					} else {
@@ -123,16 +123,16 @@ export class Click {
 				daysselect.style.width = "55px";
 				var hours = [];
 				for (var i = 0; i < 24; i++) {
-					hours.push([i.toString(), i.toString() + "点"]);
+					hours.push([i.toString(), i.toString() + "點"]);
 				}
 				var hoursselect = ui.create.selectlist(hours, date.getHours().toString(), datenode);
 				hoursselect.style.marginLeft = "5px";
 				hoursselect.style.width = "55px";
-				var timeconfirm = ui.create.node("button", "确定", datenode);
+				var timeconfirm = ui.create.node("button", "確定", datenode);
 				timeconfirm.style.marginLeft = "5px";
 				timeconfirm.onclick = function () {
 					if (!button.input.value) {
-						alert("请填写约战标题");
+						alert("請填寫約戰標題");
 						return;
 					}
 					var date2 = new Date();
@@ -145,7 +145,7 @@ export class Click {
 					}
 					var utc = date2.getTime() + deltaday * 24 * 3600000;
 					if (utc < date.getTime()) {
-						alert("创建失败，时间已过");
+						alert("創建失敗，時間已過");
 						return;
 					}
 					if (get.is.banWords(button.input.value)) {
@@ -155,11 +155,11 @@ export class Click {
 								var that = this;
 								setTimeout(function () {
 									if (that.classList.contains("active")) {
-										if (confirm("确定要离开" + that.info.content + "？")) {
+										if (confirm("確定要離開" + that.info.content + "？")) {
 											that.classList.remove("active");
 										}
 									} else {
-										if (confirm("确定要加入" + that.info.content + "？")) {
+										if (confirm("確定要加入" + that.info.content + "？")) {
 											that.classList.add("active");
 										}
 									}
@@ -182,7 +182,7 @@ export class Click {
 						ui.create.div(".title", fakeinfo.content, eventnode);
 						var str;
 						if (fakeinfo.day < currentDay) {
-							str = "下周";
+							str = "下週";
 						} else {
 							str = "周";
 						}
@@ -201,17 +201,17 @@ export class Click {
 							} else {
 								str += "中午";
 							}
-							str += fakeinfo.hour + "点";
+							str += fakeinfo.hour + "點";
 						} else {
 							if (hour <= 17) {
 								str += "下午";
 							} else {
 								str += "晚上";
 							}
-							str += fakeinfo.hour - 12 + "点";
+							str += fakeinfo.hour - 12 + "點";
 						}
 						ui.create.div("", "已有" + fakeinfo.members.length + "人加入", eventnode);
-						ui.create.div("", "时间：" + str, eventnode);
+						ui.create.div("", "時間：" + str, eventnode);
 						if (fakeinfo.members.includes(game.onlineKey)) {
 							eventnode.classList.add("active");
 						}
@@ -251,11 +251,11 @@ export class Click {
 							if (typeof that.info.creator != "string") return;
 							setTimeout(function () {
 								if (that.classList.contains("active")) {
-									if (confirm("确定要离开" + that.info.content + "？")) {
+									if (confirm("確定要離開" + that.info.content + "？")) {
 										game.send("server", "events", that.info.id, game.onlineKey, "leave");
 									}
 								} else {
-									if (confirm("确定要加入" + that.info.content + "？")) {
+									if (confirm("確定要加入" + that.info.content + "？")) {
 										game.send("server", "events", that.info.id, game.onlineKey, "join");
 									}
 								}
@@ -268,7 +268,7 @@ export class Click {
 						ui.create.div(".title", button.info[i].content, eventnode);
 						var str;
 						if (button.info[i].day < currentDay) {
-							str = "下周";
+							str = "下週";
 						} else {
 							str = "周";
 						}
@@ -287,26 +287,26 @@ export class Click {
 							} else {
 								str += "中午";
 							}
-							str += button.info[i].hour + "点";
+							str += button.info[i].hour + "點";
 						} else {
 							if (hour <= 17) {
 								str += "下午";
 							} else {
 								str += "晚上";
 							}
-							str += button.info[i].hour - 12 + "点";
+							str += button.info[i].hour - 12 + "點";
 						}
-						ui.create.div("", "创建者：" + button.info[i].nickname, eventnode);
-						//ui.create.div('','创建者：'+(button.info[i].nickname)+'<br>ID：'+button.info[i].creator,eventnode);
+						ui.create.div("", "創建者：" + button.info[i].nickname, eventnode);
+						//ui.create.div('','創建者：'+(button.info[i].nickname)+'<br>ID：'+button.info[i].creator,eventnode);
 						ui.create.div("", "已有" + button.info[i].members.length + "人加入", eventnode);
-						ui.create.div("", "时间：" + str, eventnode);
+						ui.create.div("", "時間：" + str, eventnode);
 						if (button.info[i].members.includes(game.onlineKey)) {
 							eventnode.classList.add("active");
 						}
 					} else {
 						ui.create.div(".title", button.info[i].title, eventnode);
 						ui.create.div("", button.info[i].content, eventnode);
-						ui.create.div("", "创建者：" + button.info[i].nickname, eventnode);
+						ui.create.div("", "創建者：" + button.info[i].nickname, eventnode);
 					}
 				}
 				if (num >= 3) {
@@ -361,7 +361,7 @@ export class Click {
 			uiintro.refresh = function () {
 				if (button.focused) return;
 				uiintro.content.innerHTML = "";
-				uiintro.addText("发状态");
+				uiintro.addText("髮狀態");
 				button.textnode = uiintro.content.lastChild.lastChild;
 				uiintro.add(
 					'<input type="text" style="width:calc(100% - 10px);resize: none;border: none;border-radius: 2px;box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px 1px;margin-top: -2px;margin-bottom: 2px;">'
@@ -387,7 +387,7 @@ export class Click {
 						this.blur();
 						this.disabled = true;
 						this.style.opacity = 0.6;
-						button.textnode.innerHTML = "发状态(10)";
+						button.textnode.innerHTML = "髮狀態(10)";
 						button.intervaltext = button.textnode.innerHTML;
 						var num = 10;
 						var that = this;
@@ -397,10 +397,10 @@ export class Click {
 						button.interval = setInterval(function () {
 							num--;
 							if (num > 0) {
-								button.textnode.innerHTML = "发状态(" + num + ")";
+								button.textnode.innerHTML = "髮狀態(" + num + ")";
 								button.intervaltext = button.textnode.innerHTML;
 							} else {
-								button.textnode.innerHTML = "发状态";
+								button.textnode.innerHTML = "髮狀態";
 								button.input.disabled = false;
 								button.input.style.opacity = "";
 								clearInterval(button.interval);
@@ -419,16 +419,16 @@ export class Click {
 					if (button.info[i][4] == game.wsid) {
 						ui.create.div(
 							".name",
-							'<span class="thundertext thunderauto">' + (button.info[i][0] || "无名玩家"),
+							'<span class="thundertext thunderauto">' + (button.info[i][0] || "無名玩家"),
 							node
 						);
 						node.isme = true;
 					} else if (button.info[i][2]) {
-						ui.create.div(".name", button.info[i][0] || "无名玩家", node);
+						ui.create.div(".name", button.info[i][0] || "無名玩家", node);
 					} else {
 						ui.create.div(
 							".name",
-							'<span style="opacity:0.6">' + (button.info[i][0] || "无名玩家"),
+							'<span style="opacity:0.6">' + (button.info[i][0] || "無名玩家"),
 							node
 						);
 					}
@@ -756,8 +756,8 @@ export class Click {
 			}
 		} else {
 			if (get.mode() == "guozhan") {
-				list = { wei: "魏", shu: "蜀", wu: "吴", qun: "群", jin: "晋" };
-				if (_status.forceKey) list.key = "键";
+				list = { wei: "魏", shu: "蜀", wu: "吳", qun: "群", jin: "晉" };
+				if (_status.forceKey) list.key = "鍵";
 			}
 			var list2 = get.copy(list);
 			if (game.getIdentityList2) {
@@ -941,18 +941,18 @@ export class Click {
 		} else {
 			num = ui.cardPile.childNodes.length;
 		}
-		uiintro.add('剩余 <span style="font-family:' + "xinwei" + '">' + num);
+		uiintro.add('剩餘 <span style="font-family:' + "xinwei" + '">' + num);
 
 		if (_status.connectMode) return uiintro;
 		uiintro.add(
-			'<div class="text center">轮数 <span style="font-family:xinwei">' +
+			'<div class="text center">輪數 <span style="font-family:xinwei">' +
 				game.roundNumber +
 				'</span>&nbsp;&nbsp;&nbsp;&nbsp;洗牌 <span style="font-family:xinwei">' +
 				game.shuffleNumber +
 				"</div>"
 		);
 		/*
-		uiintro.add('<div class="text center">弃牌堆</div>');
+		uiintro.add('<div class="text center">棄牌堆</div>');
 		if (ui.discardPile.childNodes.length) {
 			var list = [];
 			for (var i = 0; i < ui.discardPile.childNodes.length; i++) {
@@ -960,7 +960,7 @@ export class Click {
 			}
 			uiintro.addSmall([list, "card"]);
 		} else {
-			uiintro.add('<div class="text center" style="padding-bottom:3px">无</div>');
+			uiintro.add('<div class="text center" style="padding-bottom:3px">無</div>');
 		}*/
 		return uiintro;
 	}
@@ -1003,7 +1003,7 @@ export class Click {
 			}
 		} else {
 			list._chatempty = true;
-			list.appendChild(ui.create.div(".text.center", "无聊天记录"));
+			list.appendChild(ui.create.div(".text.center", "無聊天記錄"));
 		}
 		uiintro.add(list);
 		uiintro.style.height = uiintro.content.offsetHeight + "px";
@@ -1059,7 +1059,7 @@ export class Click {
 		};
 		uiintro._heightfixed = true;
 		var emotionTitle = ui.create.div(".text.center", "聊天表情", function () {
-			if (emotionTitle.innerHTML == "快捷语音") {
+			if (emotionTitle.innerHTML == "快捷語音") {
 				emotionTitle.innerHTML = "聊天表情";
 				list2.remove();
 				list3.remove();
@@ -1068,7 +1068,7 @@ export class Click {
 					list2.firstChild.remove();
 				}
 			} else {
-				emotionTitle.innerHTML = "快捷语音";
+				emotionTitle.innerHTML = "快捷語音";
 				list1.remove();
 				list2.remove();
 				uiintro.add(list3);
@@ -1196,13 +1196,13 @@ export class Click {
 			e.stopPropagation();
 		});
 		
-		// 背景音乐音量控制
-		uiintro.add("背景音乐");
+		// 背景音樂音量控制
+		uiintro.add("背景音樂");
 		var vol1 = ui.click.createVolumeSlider(lib.config.volumn_background, ui.click.volumn_background);
 		uiintro.add(vol1);
 		
-		// 游戏音效音量控制
-		uiintro.add("游戏音效");
+		// 遊戲音效音量控制
+		uiintro.add("遊戲音效");
 		var vol2 = ui.click.createVolumeSlider(lib.config.volumn_audio, ui.click.volumn_audio);
 		uiintro.add(vol2);
 		
@@ -1213,16 +1213,16 @@ export class Click {
 	createVolumeSlider(currentValue, callback) {
 		var container = ui.create.div(".volumn");
 		
-		// 创建滑条容器
+		// 創建滑條容器
 		var slider = ui.create.div(".volume-slider");
 		
-		// 创建音量轨道
+		// 創建音量軌道
 		var track = ui.create.div(".volume-track");
 		
-		// 创建拖拽手柄
+		// 創建拖拽手柄
 		var handle = ui.create.div(".volume-handle");
 		
-		// 创建刻度标记
+		// 創建刻度標記
 		var marks = ui.create.div(".volume-marks");
 		container._markElements = [];
 		for (var i = 0; i <= 8; i++) {
@@ -1233,29 +1233,29 @@ export class Click {
 			marks.appendChild(mark);
 		}
 		
-		// 创建数值显示
+		// 創建數值顯示
 		var valueDisplay = ui.create.div(".volume-value");
 		
-		// 音量级别描述
-		var volumeLabels = ["静音", "一", "二", "三", "四", "五", "六", "七", "八"];
+		// 音量級別描述
+		var volumeLabels = ["靜音", "一", "二", "三", "四", "五", "六", "七", "八"];
 		
 		var updateValueDisplay = function(value) {
-			valueDisplay.innerHTML = value + (value === 0 ? " (静音)" : "");
+			valueDisplay.innerHTML = value + (value === 0 ? " (靜音)" : "");
 		};
 		
 		updateValueDisplay(currentValue);
 		
-		// 组装滑条
+		// 組裝滑條
 		slider.appendChild(track);
 		slider.appendChild(marks);
 		slider.appendChild(handle);
 		container.appendChild(slider);
 		container.appendChild(valueDisplay);
 		
-		// 存储当前值
+		// 存儲當前值
 		container._currentValue = currentValue;
 		
-		// 更新滑条显示
+		// 更新滑條顯示
 		var updateSlider = function(value) {
 			container._currentValue = value;
 			var percentage = value / 8 * 100;
@@ -1263,7 +1263,7 @@ export class Click {
 			handle.style.left = percentage + "%";
 			updateValueDisplay(value);
 			
-			// 更新刻度标记的激活状态
+			// 更新刻度標記的激活狀態
 			if (container._markElements) {
 				container._markElements.forEach(function(mark, index) {
 					if (index <= value) {
@@ -1275,10 +1275,10 @@ export class Click {
 			}
 		};
 		
-		// 初始化显示
+		// 初始化顯示
 		updateSlider(currentValue);
 		
-		// 处理点击和拖拽事件
+		// 處理點擊和拖拽事件
 		var isDragging = false;
 		
 		var getValueFromPosition = function(clientX) {
@@ -1296,31 +1296,31 @@ export class Click {
 			var clientX = e.touches ? e.touches[0].clientX : e.clientX;
 			var newValue = getValueFromPosition(clientX);
 			
-			// 只有值发生变化时才更新
+			// 只有值發生變化時才更新
 			if (newValue !== container._currentValue) {
-				// 更新显示
+				// 更新顯示
 				updateSlider(newValue);
 				
-				// 创建模拟事件对象
+				// 創建模擬事件對象
 				var fakeEvent = {
 					stopPropagation: function() {},
 					preventDefault: function() {}
 				};
 				
-				// 创建模拟元素对象
+				// 創建模擬元素對象
 				var fakeElement = {
 					link: newValue,
 					parentNode: container
 				};
 				
-				// 触发回调
+				// 觸發回調
 				callback.call(fakeElement, fakeEvent);
 			}
 		};
 		
-		// 鼠标事件
+		// 鼠標事件
 		var handleMouseDown = function(e) {
-			if (e.button !== 0) return; // 只处理左键
+			if (e.button !== 0) return; // 只處理左鍵
 			isDragging = true;
 			handleInteraction(e);
 			
@@ -1340,7 +1340,7 @@ export class Click {
 			document.addEventListener("mouseup", handleMouseUp);
 		};
 		
-		// 触摸事件（手机端）
+		// 觸摸事件（手機端）
 		var handleTouchStart = function(e) {
 			isDragging = true;
 			handleInteraction(e);
@@ -1361,12 +1361,12 @@ export class Click {
 			slider.addEventListener("touchend", handleTouchEnd, { passive: false });
 		};
 		
-		// 绑定事件
+		// 綁定事件
 		slider.addEventListener("mousedown", handleMouseDown);
 		handle.addEventListener("mousedown", handleMouseDown);
 		slider.addEventListener("touchstart", handleTouchStart, { passive: false });
 		handle.addEventListener("touchstart", handleTouchStart, { passive: false });	
-		// 存储更新函数供外部调用
+		// 存儲更新函數供外部調用
 		container._updateSlider = updateSlider;
 		
 		return container;
@@ -1375,7 +1375,7 @@ export class Click {
 		if (_status.dragged) return;
 		var volume = this.link;
 		
-		// 支持0-8的9个挡位
+		// 支持0-8的9個擋位
 		if (volume < 0) volume = 0;
 		if (volume > 8) volume = 8;
 		
@@ -1385,7 +1385,7 @@ export class Click {
 		// 更新lib.config中的值
 		lib.config.volumn_background = volume;
 		
-		// 更新UI显示
+		// 更新UI顯示
 		if (this.parentNode && this.parentNode._updateSlider) {
 			this.parentNode._updateSlider(volume);
 		}
@@ -1396,7 +1396,7 @@ export class Click {
 		if (_status.dragged) return;
 		var volume = this.link;
 		
-		// 支持0-8的9个挡位
+		// 支持0-8的9個擋位
 		if (volume < 0) volume = 0;
 		if (volume > 8) volume = 8;
 		
@@ -1405,7 +1405,7 @@ export class Click {
 		// 更新lib.config中的值
 		lib.config.volumn_audio = volume;
 		
-		// 更新UI显示
+		// 更新UI顯示
 		if (this.parentNode && this.parentNode._updateSlider) {
 			this.parentNode._updateSlider(volume);
 		}
@@ -2879,11 +2879,11 @@ export class Click {
 			_status._connectroomTouchTs = Date.now();
 		}
 		if (!game.ws) {
-			alert("未连接到大厅，请返回后重新进入联机。");
+			alert("未連接到大廳，請返回後重新進入聯機。");
 			return;
 		}
 		if (game.observe) {
-			alert("当前为旁观模式，无法加入房间。请重新进入联机。");
+			alert("當前為旁觀模式，無法加入房間。請重新進入聯機。");
 			return;
 		}
 		if (_status.enteringroom) {
@@ -2896,18 +2896,18 @@ export class Click {
 			_status.enteringroom = false;
 		}
 		if (this.roomfull) {
-			alert("房间已满");
+			alert("房間已滿");
 		} else if (this.roomgaming && !game.onlineID) {
 			if (this.config && this.config.observe) {
-				alert("房间暂时不可旁观");
+				alert("房間暫時不可旁觀");
 			} else {
-				alert("房间不允许旁观");
+				alert("房間不允許旁觀");
 			}
 		} else if (!this.roomempty && this.version != lib.versionOL) {
 			if (this.version > lib.versionOL) {
-				alert("加入失败：你的游戏版本过低");
+				alert("加入失敗：你的遊戲版本過低");
 			} else {
-				alert("加入失败：房主的游戏版本过低");
+				alert("加入失敗：房主的遊戲版本過低");
 			}
 		} else {
 			_status.enteringroom = true;
@@ -2959,7 +2959,7 @@ export class Click {
 					if (confirm("是否踢出" + this.nickname + "？")) {
 						var onlineKey = this.ws.onlineKey;
 						if (onlineKey) {
-							if (confirm("是否永久踢出(加入黑名单)？")) {
+							if (confirm("是否永久踢出(加入黑名單)？")) {
 								var banBlacklist = lib.config.banBlacklist === undefined ? [] : lib.config.banBlacklist;
 								banBlacklist.push(onlineKey);
 								game.saveConfig("banBlacklist", banBlacklist);
@@ -3000,7 +3000,7 @@ export class Click {
 		}
 		_status.clicked = true;
 		var custom = _status.event.custom;
-		if (custom && custom.replace.target) {//观战模式下切换视角的代码
+		if (custom && custom.replace.target) {//觀戰模式下切換視角的代碼
 			custom.replace.target(this, e);
 			return;
 		}
@@ -3367,7 +3367,7 @@ export class Click {
 			gzbool = true;
 		}
 		var changeskin = function () {
-			var node = ui.create.div(".changeskin", "可换肤", playerbg);
+			var node = ui.create.div(".changeskin", "可換膚", playerbg);
 			var avatars = ui.create.div(".avatars", playerbg);
 			changeskinfunc = function () {
 				playerbg.classList.add("scroll");
@@ -3516,11 +3516,11 @@ export class Click {
 				fav.classList.add("active");
 			}
 
-			const recentMatch = ui.create.div(".menubutton.large.match.character", uiintro, "最近对局", function (e) {
+			const recentMatch = ui.create.div(".menubutton.large.match.character", uiintro, "最近對局", function (e) {
 				if (this.classList.contains("unselectable")) return;
 				const button = this;
 
-				// 弹出层与弹窗
+				// 彈出層與彈窗
 				const layer = ui.create.div(".poplayer", ui.window);
 				const uiintro2 = ui.create.dialog("hidden", "notouchscroll");
 				button.classList.add("active");
@@ -3548,20 +3548,20 @@ export class Click {
 				uiintro2.style.maxHeight = get.is.phoneLayout() ? "70%" : "75%";
 				uiintro2.contentContainer.style.overflow = "auto";
 
-				// 标题
-				uiintro2.addText("最近七天对局（" + get.translation(name) + "）");
+				// 標題
+				uiintro2.addText("最近七天對局（" + get.translation(name) + "）");
 
-				// 容器与占位
+				// 容器與佔位
 				const list = ui.create.div("", uiintro2.content);
 				list.style.paddingTop = "4px";
 				list.style.paddingBottom = "6px";
-				const loadingNode = ui.create.div(".text.center", "加载中...", uiintro2.content);
+				const loadingNode = ui.create.div(".text.center", "加載中...", uiintro2.content);
 				ui.window.appendChild(uiintro2);
 
-				// 格式化时间
+				// 格式化時間
 				const formatTime = function (val) {
 					try {
-						if (!val) return "未知时间";
+						if (!val) return "未知時間";
 						const d = new Date(typeof val === "number" ? val : (""+val).replace("T"," ").replace("Z",""));
 						if (isNaN(d.getTime())) return (""+val);
 						const y=d.getFullYear(), m=d.getMonth()+1, dd=d.getDate();
@@ -3571,7 +3571,7 @@ export class Click {
 					} catch(e) { return (""+val); }
 				};
 
-				// 拉取最近七天对局
+				// 拉取最近七天對局
 				const fetchCharacterRecentMatches = async function (cid) {
 					const params = new URLSearchParams({ days: 7 });
 					try {
@@ -3581,7 +3581,7 @@ export class Click {
 						});
 						return await response.json();
 					} catch (error) {
-						console.error('获取角色对局数据失败:', error);
+						console.error('獲取角色對局數據失敗:', error);
 						return [];
 					}
 				};
@@ -3592,14 +3592,14 @@ export class Click {
 					loadingNode.remove();
 
 					if (!Array.isArray(data) || data.length === 0) {
-						ui.create.div(".text.center", "最近七天暂无对局数据", uiintro2.content);
+						ui.create.div(".text.center", "最近七天暫無對局數據", uiintro2.content);
 						return;
 					}
 
 					uiintro2.content.classList.add("recent-matches-dialog");
 					list.classList.add("recent-matches-list");
 
-					// 录像基础地址
+					// 錄像基礎地址
 					const replayBase = "https://agdatabase.ssyy.tech:50000";
 					
 					data.forEach(function (rec) {
@@ -3609,33 +3609,33 @@ export class Click {
 						const me = players.find(function(p){ return p.character_id === name; }) || players[0] || {};
 
 						const ts = match.uploaded_at;
-						// 时间戳处理
+						// 時間戳處理
 						const formattedString = ts.replace(/([+-])(\d{2})(\d{2})$/, '$1$2:$3');
 						const date = new Date(formattedString);
 						const timestamp = date.getTime();
 
-						const win = (typeof me.is_winner === "boolean") ? (me.is_winner ? "胜" : "负") : "";
+						const win = (typeof me.is_winner === "boolean") ? (me.is_winner ? "勝" : "負") : "";
 						const mode = match.mode || "";
 						const room = match.id != null ? match.id : "";
 
 						const titleText = formatTime(ts);
 
-						// 每条记录的容器
+						// 每條記錄的容器
 						const item = ui.create.div(".menubutton.videotext.pointerdiv recent-match-item", list);
 
-						// 标题
+						// 標題
 						const titleNode = ui.create.div(".time", titleText, item);
 						const winNode = ui.create.div(".win", win, item);
 
 						// 次要信息
 						const meta = ui.create.div(".meta", "", item);
 						if (mode) ui.create.div(".meta-line", "模式：" + mode, meta);
-						if (room !== "") ui.create.div(".meta-line", "对局号：" + room, meta);
+						if (room !== "") ui.create.div(".meta-line", "對局號：" + room, meta);
 
 						const heroName = (typeof get !== "undefined" && get.translation) ? get.translation(me.character_id || "") : (me.character_id || "");
 						if (heroName) ui.create.div(".meta-line", "使用：" + heroName + (me.is_ai ? "（AI）" : ""), meta);
 
-							// 数据行
+							// 數據行
 							const dmg     = (me.damage != null) ? me.damage : "-";
 							const taken   = (me.damaged != null) ? me.damaged : "-";
 							const heal    = (me.add_zhiliao != null) ? me.add_zhiliao : 0;
@@ -3643,14 +3643,14 @@ export class Click {
 							const shiqiUp = (me.change_shiqi != null) ? me.change_shiqi : 0;
 							const shiqiDn = (me.changed_shiqi != null) ? me.changed_shiqi : 0;
 
-							const statLine = "伤害 " + dmg + "/-" + taken + "，治疗 " + heal +
-										"，产石 +" + zhanji + "，士气 +" + shiqiUp + "/-" + shiqiDn;
+							const statLine = "傷害 " + dmg + "/-" + taken + "，治療 " + heal +
+										"，產石 +" + zhanji + "，士氣 +" + shiqiUp + "/-" + shiqiDn;
 							ui.create.div(".stats", statLine, item);
 
-							// 保存录像按钮
+							// 保存錄像按鈕
 							const actions = ui.create.div(".actions", "", item);
 							if (rec.has_replay && rec.replay_url) {
-							const btn = ui.create.div(".button", "保存录像", actions, async function () {
+							const btn = ui.create.div(".button", "保存錄像", actions, async function () {
 								const replayUrl = replayBase ? (replayBase + rec.replay_url) : rec.replay_url;
 								let data;
 								try {
@@ -3660,7 +3660,7 @@ export class Click {
 									});
 									data = await response.json();
 								} catch (error) {
-									console.error('获取角色对局数据失败:', error);
+									console.error('獲取角色對局數據失敗:', error);
 									return;
 								}
 								if (!data) return;
@@ -3682,13 +3682,13 @@ export class Click {
 										}
 										for (let i = 0; i < lib.videos.length; i++) {
 											if (lib.videos[i].time == newvid.time) {
-												alert("录像已存在，请勿重复保存");
+												alert("錄像已存在，請勿重複保存");
 												return;
 											}
 										}
 										lib.videos=[];
 										store.put(newvid);
-										alert("录像保存成功");
+										alert("錄像保存成功");
 									}
 								};
 								
@@ -3702,7 +3702,7 @@ export class Click {
 		}
 
 		
-		// 样式二
+		// 樣式二
 		if (
 			lib.config.show_characternamepinyin == "showPinyin2" ||
 			lib.config.show_skillnamepinyin == "showPinyin2" ||
@@ -3758,7 +3758,7 @@ export class Click {
 					characterintroinfo;
 			}
 			
-			// 添加台词部分
+			// 添加臺詞部分
 			let dieAudios = get.Audio.die({ player: audioName }).audioList.map(i => i.text).filter(Boolean);
 			if(!dieAudios.length) dieAudios = get.Audio.die({ player: name }).audioList.map(i => i.text).filter(Boolean);
 			const skillAudioMap = new Map();
@@ -3790,7 +3790,7 @@ export class Click {
 				if (skillAudioMap.size > 0) {
 					const skillNameSpan = document.createElement("span");
 					skillNameSpan.style.lineHeight = "1.7";
-					skillNameSpan.innerHTML = `• 技能台词<br>`;
+					skillNameSpan.innerHTML = `• 技能臺詞<br>`;
 					intro.appendChild(skillNameSpan);
 					skillAudioMap.forEach((texts, skill) => {
 						const skillNameSpan1 = document.createElement("span"),
@@ -3811,7 +3811,7 @@ export class Click {
 				if (derivationSkillAudioMap.size > 0) {
 					const derivationSkillNameSpan = document.createElement("span");
 					derivationSkillNameSpan.style.lineHeight = "1.7";
-					derivationSkillNameSpan.innerHTML = `• 衍生技能台词<br>`;
+					derivationSkillNameSpan.innerHTML = `• 衍生技能臺詞<br>`;
 					intro.appendChild(derivationSkillNameSpan);
 					derivationSkillAudioMap.forEach((texts, skill) => {
 						const derivationSkillNameSpan1 = document.createElement("span"),
@@ -3855,7 +3855,7 @@ export class Click {
 				if (this.link != "dieAudios") {
 					var skillname = get.translation(this.link);
 					var skilltranslationinfo = get.skillInfoTranslation(this.link);
-					if ((lib.config.show_skillnamepinyin == "showPinyin2" || lib.config.show_skillnamepinyin == "showCodeIdentifier2") && skillname != "阵亡") {
+					if ((lib.config.show_skillnamepinyin == "showPinyin2" || lib.config.show_skillnamepinyin == "showCodeIdentifier2") && skillname != "陣亡") {
 						var skillpinyin = lib.config.show_skillnamepinyin == "showCodeIdentifier2" ? this.link : get.pinyin(skillname);
 						intro2.innerHTML = '<span style="font-weight:bold;margin-right:5px">' + skillname + "</span>" + '<span style="font-size:14px;font-family:SimHei,STHeiti,sans-serif">' + "[" + skillpinyin + "]" + "</span>" + "  " + skilltranslationinfo;
 					} else {
@@ -3886,9 +3886,9 @@ export class Click {
 						intro2.innerHTML += '<br><br><div class="hrefnode skillversion"></div>';
 						var skillversionnode = intro2.querySelector(".hrefnode.skillversion");
 						if (lib.config.vintageSkills.includes(skill)) {
-							skillversionnode.innerHTML = "切换至新版";
+							skillversionnode.innerHTML = "切換至新版";
 						} else {
-							skillversionnode.innerHTML = "切换至旧版";
+							skillversionnode.innerHTML = "切換至舊版";
 						}
 						skillversionnode.listen(function () {
 							if (lib.config.vintageSkills.includes(skill)) {
@@ -3919,7 +3919,7 @@ export class Click {
 					}
 				} else {
 					let dieAudios = this.dieAudios;
-					intro2.innerHTML = '<span style="font-weight:bold;margin-right:5px">阵亡台词</span>';
+					intro2.innerHTML = '<span style="font-weight:bold;margin-right:5px">陣亡臺詞</span>';
 					dieAudios.forEach((text, index) => {
 						const dieTextSpan = document.createElement("span");
 						dieTextSpan.style.fontSize = "15.2px";
@@ -3943,8 +3943,8 @@ export class Click {
 				}
 			};
 		} else {
-			// 样式一
-			//TODO: 这里的数据也暂时没有改成新格式，需要后续的修改
+			// 樣式一
+			//TODO: 這裡的數據也暫時沒有改成新格式，需要後續的修改
 			const nameInfo = get.character(name);
 			const introduction = ui.create.div(".characterintro", uiintro),
 				showCharacterNamePinyin = lib.config.show_characternamepinyin;
@@ -4081,7 +4081,7 @@ export class Click {
 			htmlParser.innerHTML = get.characterIntro(name);
 			Array.from(htmlParser.childNodes).forEach((value) => introduction.appendChild(value));
 			
-			// 添加台词部分
+			// 添加臺詞部分
 			let dieAudios = get.Audio.die({ player: audioName }).audioList.map(i => i.text).filter(Boolean);
 			if(!dieAudios.length) dieAudios = get.Audio.die({ player: name }).audioList.map(i => i.text).filter(Boolean);
 			const skillAudioMap = new Map();
@@ -4111,7 +4111,7 @@ export class Click {
 
 				if (skillAudioMap.size > 0) {
 					const skillNameSpan = document.createElement("span");
-					skillNameSpan.innerHTML = `技能台词<br>`;
+					skillNameSpan.innerHTML = `技能臺詞<br>`;
 					introduction.appendChild(skillNameSpan);
 
 					skillAudioMap.forEach((texts, skill) => {
@@ -4130,7 +4130,7 @@ export class Click {
 
 				if (derivationSkillAudioMap.size > 0) {
 					const derivationSkillNameSpan = document.createElement("span");
-					derivationSkillNameSpan.innerHTML = `<br>衍生技能台词<br>`;
+					derivationSkillNameSpan.innerHTML = `<br>衍生技能臺詞<br>`;
 					introduction.appendChild(derivationSkillNameSpan);
 					derivationSkillAudioMap.forEach((texts, skill) => {
 						const derivationSkillNameSpan1 = document.createElement("span"),
@@ -4176,7 +4176,7 @@ export class Click {
 						skillName = get.translation(link);
 					skillNameSpan.innerHTML = skillName;
 					const showSkillNamePinyin = lib.config.show_skillnamepinyin;
-					if (showSkillNamePinyin != "doNotShow" && skillName != "阵亡") {
+					if (showSkillNamePinyin != "doNotShow" && skillName != "陣亡") {
 						const ruby = document.createElement("ruby");
 						ruby.appendChild(skillNameSpan);
 						const leftParenthesisRP = document.createElement("rp");
@@ -4242,9 +4242,9 @@ export class Click {
 						ui.create.div(".hrefnode.skillversion", introduction2);
 						var skillversionnode = introduction2.querySelector(".hrefnode.skillversion");
 						if (lib.config.vintageSkills.includes(skill)) {
-							skillversionnode.innerHTML = "切换至新版";
+							skillversionnode.innerHTML = "切換至新版";
 						} else {
-							skillversionnode.innerHTML = "切换至旧版";
+							skillversionnode.innerHTML = "切換至舊版";
 						}
 						skillversionnode.listen(function () {
 							if (lib.config.vintageSkills.includes(skill)) {
@@ -4275,7 +4275,7 @@ export class Click {
 					}
 				} else {
 					let dieAudios = this.dieAudios;
-					introduction2.innerHTML = '<span style="font-weight:bold;margin-right:5px">阵亡台词</span>';
+					introduction2.innerHTML = '<span style="font-weight:bold;margin-right:5px">陣亡臺詞</span>';
 					dieAudios.forEach((text, index) => {
 						const dieTextSpan = document.createElement("span");
 						dieTextSpan.style.fontSize = "15.2px";
@@ -4345,7 +4345,7 @@ export class Click {
 		let dieAudios = get.Audio.die({ player: audioName }).audioList.map(i => i.text).filter(Boolean);
 		if(!dieAudios.length) dieAudios = get.Audio.die({ player: name }).audioList.map(i => i.text).filter(Boolean);
 		if (dieAudios.length) {
-			let dieaudio = ui.create.div(".menubutton.large", skills, clickSkill, "阵亡");
+			let dieaudio = ui.create.div(".menubutton.large", skills, clickSkill, "陣亡");
 			dieaudio.style.backgroundColor = "rgb(0, 0, 0, 1)";
 			dieaudio.link = "dieAudios";
 			dieaudio.dieAudios = dieAudios;
@@ -4354,7 +4354,7 @@ export class Click {
 		}
 		if (lib.characterSubstitute[name]) {
 			let avatars2 = ui.create.div(".avatars", playerbg);
-			let skin = ui.create.div(".changeskin2", "查看其他皮肤", playerbg, function() {
+			let skin = ui.create.div(".changeskin2", "查看其他皮膚", playerbg, function() {
 				playerbg.classList.add("scroll");
 				if (skin._created) {
 					return;
@@ -4533,7 +4533,7 @@ export class Click {
 				game.send("auto");
 			} else if (_status.connectMode) {
 				game.broadcastAll(function (player) {
-					player.setNickname(player.nickname + " - 托管");
+					player.setNickname(player.nickname + " - 託管");
 				}, game.me);
 			}
 		} else {

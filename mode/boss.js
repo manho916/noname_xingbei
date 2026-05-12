@@ -23,7 +23,7 @@ export default () => {
 						game.playVideoContent(e.target.result.video);
 					}
 					else{
-						alert('播放失败：找不到录像');
+						alert('播放失敗：找不到錄像');
 						game.reload();
 					}
 				}
@@ -32,7 +32,7 @@ export default () => {
 			}
 			if(_status.connectMode){
 				lib.configOL.guDingRenShu=true;
-				game.waitForPlayer(function(){//联机人数确定
+				game.waitForPlayer(function(){//聯機人數確定
 					if(lib.configOL.phaseswap) lib.configOL.number=2;
 					else{
                         lib.configOL.number=4;
@@ -59,10 +59,10 @@ export default () => {
                     var players=game.players;
                     for(var i=0;i<players.length;i++){
                         if(players[i].side==true){
-                            players[i].node.identity.firstChild.innerHTML='红';
+                            players[i].node.identity.firstChild.innerHTML='紅';
                         }
                         else{
-                            players[i].node.identity.firstChild.innerHTML='蓝';
+                            players[i].node.identity.firstChild.innerHTML='藍';
                         }
                     }
                 },];
@@ -79,7 +79,7 @@ export default () => {
 				});
 			}
 			_status.videoInited=true;
-            if(get.phaseswap()||_status.boss==game.me) info.push(true);//记录为多控
+            if(get.phaseswap()||_status.boss==game.me) info.push(true);//記錄為多控
             game.addVideo('init',null,info);
 			event.trigger('gameStart');
             'step 3'
@@ -116,15 +116,15 @@ export default () => {
 			},
 
 			getRoomInfo:function(uiintro){
-				var last=uiintro.add('<div class="text chat">难度：'+get.translation(lib.configOL.difficulty));
-				var last=uiintro.add('<div class="text chat">侯选角色数：'+lib.configOL.choose_number);
+				var last=uiintro.add('<div class="text chat">難度：'+get.translation(lib.configOL.difficulty));
+				var last=uiintro.add('<div class="text chat">侯選角色數：'+lib.configOL.choose_number);
 				if(!lib.configOL.phaseswap){
 					switch(lib.configOL.viewHandcard){
-						case true:uiintro.add('<div class="text chat">可见队友手牌：是');break;
-						case false:uiintro.add('<div class="text chat">可见队友手牌：否');break;
+						case true:uiintro.add('<div class="text chat">可見隊友手牌：是');break;
+						case false:uiintro.add('<div class="text chat">可見隊友手牌：否');break;
 					}
 				}
-				var last=uiintro.add('<div class="text chat">出牌时限：'+lib.configOL.choose_timeout+'秒');
+				var last=uiintro.add('<div class="text chat">出牌時限：'+lib.configOL.choose_timeout+'秒');
 				if(lib.configOL.banned.length){
 					last=uiintro.add('<div class="text chat">禁用角色：'+get.translation(lib.configOL.banned));
 				}
@@ -145,8 +145,8 @@ export default () => {
 				}else{
 					var str=get.translation(game.me.name1);
 				}
-				if(game.me.side==true) str+='（红方）';
-				else str+='（蓝方）';
+				if(game.me.side==true) str+='（紅方）';
+				else str+='（藍方）';
 
 				return [str,str2];
 			},
@@ -227,16 +227,16 @@ export default () => {
 						ref=ref.next;
 					}
 					for(var i=0;i<number;i++){
-						ref.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						ref.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						ref=ref.next;
 					}
 
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
@@ -247,14 +247,14 @@ export default () => {
 					list=get.characterGets(list);
 					event.list=list;
 
-					var basestr='选择角色';
+					var basestr='選擇角色';
 					if(_status.firstAct==game.me){
 						var basenum=1;
 						_status.characterChoice=event.bossList;
 					}else{
 						if(get.config('phaseswap')){
 							var basenum=3;
-							basestr='选择你和队友的角色<br>按顺位选择';
+							basestr='選擇你和隊友的角色<br>按順位選擇';
 							event.phaseswap=true;
 						}else{
 							var basenum=1;
@@ -263,7 +263,7 @@ export default () => {
 					}
 
 					var addSetting=function(dialog){
-						dialog.add('选择座位').classList.add('add-setting');
+						dialog.add('選擇座位').classList.add('add-setting');
 						var seats=document.createElement('table');
 						seats.classList.add('add-setting');
 						seats.style.margin='0';
@@ -297,7 +297,7 @@ export default () => {
 								_status.boss=firstChoose;
 								
 	
-								//切换顺位后更换角色列表，避免选择界面闪烁
+								//切換順位後更換角色列表，避免選擇界面閃爍
 								_status.event.parent.swapnodialog = function (dialog, list,str) {
 									var buttons = ui.create.div(".buttons");
 									var node = dialog.buttons[0].parentNode;
@@ -362,7 +362,7 @@ export default () => {
 					}
 					ui.create.cheat=function(){
 						_status.createControl=ui.cheat2;
-						ui.cheat=ui.create.control('更换',function(){
+						ui.cheat=ui.create.control('更換',function(){
 							if(ui.cheat2&&ui.cheat2.dialog==_status.event.dialog){
 								return;
 							}
@@ -378,7 +378,7 @@ export default () => {
 						delete _status.createControl;
 					};
 					ui.create.cheat2=function(){
-						ui.cheat2=ui.create.control('自由选角',function(){
+						ui.cheat2=ui.create.control('自由選角',function(){
 							if(this.dialog==_status.event.dialog){
 								this.dialog.close();
 								_status.event.dialog=this.backup;
@@ -435,7 +435,7 @@ export default () => {
 					
 					if(_status.boss==game.me){
 						game.me.init(result.links[0]);
-						//其他玩家随机角色
+						//其他玩家隨機角色
 						for(var i=0;i<game.players.length;i++){
 							if(game.players[i].side==false){
 								game.players[i].init(event.list.randomRemove());
@@ -461,7 +461,7 @@ export default () => {
 					}
 					'step 2'
 					if(_status.boss==game.me||event.phaseswap){
-						//调整布局
+						//調整佈局
 						ui.arena.setNumber(game.players.length+1);
 						for (var i = 0; i < game.players.length; i++) {
 							game.players[i].dataset.position = parseInt(game.players[i].dataset.position) + 1;
@@ -473,7 +473,7 @@ export default () => {
 						ui.me.appendChild(ui.fakeme);
 						game.onSwapControl();
 
-						//显示手牌
+						//顯示手牌
 						game.broadcastAll(function(func){
 							if (lib.config.show_handcardbutton) {
 								ui.versushs = ui.create.system("手牌", null, true);
@@ -481,10 +481,10 @@ export default () => {
 							}
 						},game.versusHoverHandcards);
 
-						//增加切换控制权的技能
+						//增加切換控制權的技能
 						game.addGlobalSkill('autoswap');
 					}
-					//清除选角时的布局
+					//清除選角時的佈局
 					setTimeout(function(){
 						ui.arena.classList.remove('choose-character');
 					},500);
@@ -512,16 +512,16 @@ export default () => {
 					}
 					
 					for(var i=0;i<game.players.length;i++){
-						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						firstChoose=firstChoose.next;
 					}
 
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
@@ -574,11 +574,11 @@ export default () => {
 						let buttonList=[];
 						buttonList.push(player);
 						let configList=[];
-						if(player.side==true) configList.push('选择对应的BOSS');
+						if(player.side==true) configList.push('選擇對應的BOSS');
 						else{
 							if(get.phaseswap()){
-								configList.push('请按顺位选择角色');
-							}else configList.push('请选择角色');
+								configList.push('請按順位選擇角色');
+							}else configList.push('請選擇角色');
 						}
 						if(player.side==true){
 							configList.push([event.bossList,'characterx']);
@@ -670,9 +670,9 @@ export default () => {
 
 		},
 		translate:{
-			easy:'简单',
-			normal:'标准',
-			hard:'困难',
+			easy:'簡單',
+			normal:'標準',
+			hard:'困難',
 		},
 		get:{
 			rawAttitude:function(from,to){

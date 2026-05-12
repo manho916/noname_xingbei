@@ -19,7 +19,7 @@ export class Get extends GetCompatible {
 	promises = new Promises();
 	Audio = Audio;
 	/**
-	 * 获取当前事件是由何skill/card事件衍生并生成相应的卡牌信息提示
+	 * 獲取當前事件是由何skill/card事件衍生並生成相應的卡牌信息提示
 	 * @param {Player} player
 	 * @param {GameEventPromise} sourceEvent
 	 * @returns {GameEvent|string}
@@ -120,7 +120,7 @@ export class Get extends GetCompatible {
 		if (sourceEvent) return false;
 		switch (name) {
 			case "chooseToCompare": {
-				eventInfo += "拼点";
+				eventInfo += "拼點";
 				break;
 			}
 			case "phaseJudge": {
@@ -136,20 +136,20 @@ export class Get extends GetCompatible {
 			case "lose": {
 				let event = _status.event,
 					evt = event.getParent();
-				if (event.type && event.type == "discard") eventInfo += "弃置";
-				else if (event.getParent(2).name == "recast" && event.getParent(3).name != "_recasting") eventInfo += "重铸";
+				if (event.type && event.type == "discard") eventInfo += "棄置";
+				else if (event.getParent(2).name == "recast" && event.getParent(3).name != "_recasting") eventInfo += "重鑄";
 				break;
 			}
 			case "loseAsync": {
 				let event = _status.event;
-				if (event.type && event.type == "discard") eventInfo += "弃置";
+				if (event.type && event.type == "discard") eventInfo += "棄置";
 				break;
 			}
 			case "useSkill": {
 				let skill = _status.event.skill;
 				if (!skill || typeof skill != "string") {
 				} else if (skill == "_chongzhu") {
-					//eventInfo+="重铸"
+					//eventInfo+="重鑄"
 				}
 				break;
 			}
@@ -166,7 +166,7 @@ export class Get extends GetCompatible {
 		return eventInfo;
 	}
 	/**
-	 * 返回牌名“【XXX】”形式的数组
+	 * 返回牌名“【XXX】”形式的數組
 	 * @param { Function } [filter]
 	 * @returns { string[] }
 	 */
@@ -183,7 +183,7 @@ export class Get extends GetCompatible {
 		return list.filter(filter).map(c => `【${get.translation(c)}】`);
 	}
 	/**
-	 * 获取装备牌对应的技能
+	 * 獲取裝備牌對應的技能
 	 * @param { Card[]|VCard[] } cards
 	 * @returns { any[] }
 	 */
@@ -201,7 +201,7 @@ export class Get extends GetCompatible {
 		}, []);
 	}
 	/**
-	 * 将一个传统格式的character转化为Character对象格式
+	 * 將一個傳統格式的character轉化為Character對象格式
 	 * @param { Array|Object|import("../library/element/character").Character } data
 	 * @returns {import("../library/element/character").Character}
 	 */
@@ -210,7 +210,7 @@ export class Get extends GetCompatible {
 		return data;
 	}
 	/**
-	 * 返回 VCard[] 形式的所有牌，用于印卡将遍历
+	 * 返回 VCard[] 形式的所有牌，用於印卡將遍歷
 	 * @param {Function} [filter]
 	 * @returns {string[][]}
 	 */
@@ -230,13 +230,13 @@ export class Get extends GetCompatible {
 		return list;
 	}
 	/**
-	 * 根据(Player的)座次数n（从1开始）获取对应的“n号位”翻译
+	 * 根據(Player的)座次數n（從1開始）獲取對應的“n號位”翻譯
 	 * @param {number | Player} seat
 	 * @returns { string }
 	 */
 	seatTranslation(seat) {
 		if (get.itemtype(seat) === "player") seat = seat.getSeatNum() - 1;
-		return `${get.cnNumber(seat + 1, true)}号位`;
+		return `${get.cnNumber(seat + 1, true)}號位`;
 	}
 	/**
 	 * @param {number} numberOfPlayers
@@ -281,7 +281,7 @@ export class Get extends GetCompatible {
 	/**
 	 * Generate an object URL from the Base64-encoded octet stream
 	 *
-	 * 从Base64编码的八位字节流生成对象URL
+	 * 從Base64編碼的八位字節流生成對象URL
 	 */
 	objectURL(octetStream) {
 		const objectURLMap = lib.objectURL;
@@ -293,7 +293,7 @@ export class Get extends GetCompatible {
 	/**
 	 * Get the card name length
 	 *
-	 * 获取此牌的字数
+	 * 獲取此牌的字數
 	 * @param { Card } card
 	 * @param { Player } [player]
 	 * @returns { number }
@@ -304,11 +304,11 @@ export class Get extends GetCompatible {
 		return (actualCardName.has(name) ? actualCardName.get(name) : name).length;
 	}
 	//Yingbian
-	//应变
+	//應變
 	/**
 	 * Get the Yingbian conditions (of the card)
 	 *
-	 * 获取（此牌的）应变条件
+	 * 獲取（此牌的）應變條件
 	 */
 	yingbianConditions(card) {
 		return get.complexYingbianConditions(card).concat(get.simpleYingbianConditions(card));
@@ -324,7 +324,7 @@ export class Get extends GetCompatible {
 	/**
 	 * Get the Yingbian effects (of the card)
 	 *
-	 * 获取（此牌的）应变效果
+	 * 獲取（此牌的）應變效果
 	 */
 	yingbianEffects(card) {
 		const yingbianEffects = Array.from(lib.yingbian.effect.keys());
@@ -333,14 +333,14 @@ export class Get extends GetCompatible {
 	/**
 	 * Get the default Yingbian effect of the card
 	 *
-	 * 获取此牌的默认应变效果
+	 * 獲取此牌的默認應變效果
 	 */
 	defaultYingbianEffect(card) {
 		const info = get.info(card);
 		return (info && info.defaultYingbianEffect) || null;
 	}
 	/**
-	 * 优先度判断
+	 * 優先度判斷
 	 * @param { string } skill
 	 * @returns { number }
 	 */
@@ -362,11 +362,11 @@ export class Get extends GetCompatible {
 		return priority;
 	}
 	/**
-	 * 新装备栏相关
+	 * 新裝備欄相關
 	 *
-	 * 获取一张装备牌实际占用的装备栏(君曹操六龙)
+	 * 獲取一張裝備牌實際佔用的裝備欄(君曹操六龍)
 	 *
-	 * 用法同{@link subtype}，返回数组
+	 * 用法同{@link subtype}，返回數組
 	 *
 	 * @param { string | Card | VCard | CardBaseUIData } obj
 	 * @param { false | Player } [player]
@@ -389,7 +389,7 @@ export class Get extends GetCompatible {
 		}
 		return [];
 	}
-	//装备栏 END
+	//裝備欄 END
 	/**
 	 * @param {string} chinese
 	 * @param {boolean|undefined} withTone
@@ -413,12 +413,12 @@ export class Get extends GetCompatible {
 	 * @returns { string }
 	 */
 	yunmu(str) {
-		//部分整体认读音节特化处理
+		//部分整體認讀音節特化處理
 		//@ts-ignore
 		if (lib.pinyins._metadata.zhengtirendu.includes(pinyinPro.convert(str, { format: "toneNone" }))) {
 			return "-" + str[str.length - 1];
 		}
-		//排除声母
+		//排除聲母
 		for (let i of lib.pinyins._metadata.shengmu) {
 			if (str.startsWith(i)) {
 				str = str.slice(i.length);
@@ -442,7 +442,7 @@ export class Get extends GetCompatible {
 		return str;
 	}
 	/**
-	 * 用于将参数转换为字符串，作为缓存的key。
+	 * 用於將參數轉換為字符串，作為緩存的key。
 	 */
 	paramToCacheKey() {
 		var str = "";
@@ -496,25 +496,25 @@ export class Get extends GetCompatible {
 		const list = [],
 			info = get.info(skill);
 		if (!info) return list;
-		if (get.is.locked(skill, player)) list.add("锁定技");
+		if (get.is.locked(skill, player)) list.add("鎖定技");
 		if (info.zhuSkill) list.add("主公技");
 		if (info.limited) list.add("限定技");
-		if (info.juexingji) list.add("觉醒技");
-		if (get.is.zhuanhuanji(skill, player)) list.add("转换技");
-		if (info.hiddenSkill) list.add("隐匿技");
+		if (info.juexingji) list.add("覺醒技");
+		if (get.is.zhuanhuanji(skill, player)) list.add("轉換技");
+		if (info.hiddenSkill) list.add("隱匿技");
 		if (info.clanSkill) list.add("宗族技");
-		if (info.groupSkill) list.add("势力技");
+		if (info.groupSkill) list.add("勢力技");
 		if (info.dutySkill) list.add("使命技");
 		if (info.chargeSkill) list.add("蓄力技");
-		if (info.zhenfa) list.add("阵法技");
-		if (info.mainSkill) list.add("主将技");
-		if (info.viceSkill) list.add("副将技");
+		if (info.zhenfa) list.add("陣法技");
+		if (info.mainSkill) list.add("主將技");
+		if (info.viceSkill) list.add("副將技");
 		if (info.lordSkill) list.add("君主技");
 		if (info.chargingSkill) list.add("蓄能技");
 		if (info.charlotte) list.add("Charlotte");
-		if (info.sunbenSkill) list.add("昂扬技");
-		if (info.persevereSkill) list.add("持恒技");
-		if (info.comboSkill) list.add("连招技");
+		if (info.sunbenSkill) list.add("昂揚技");
+		if (info.persevereSkill) list.add("持恆技");
+		if (info.comboSkill) list.add("連招技");
 		if (info.feedPigSkill) list.add("威主技");
 		if (info.categories) list.addArray(info.categories(skill, player));
 		return list;
@@ -523,10 +523,10 @@ export class Get extends GetCompatible {
 		return obj.filter(element => element == item).length;
 	}
 	connectNickname() {
-		return typeof lib.config.connect_nickname == "string" ? lib.config.connect_nickname.slice(0, 12) : "无名玩家";
+		return typeof lib.config.connect_nickname == "string" ? lib.config.connect_nickname.slice(0, 12) : "無名玩家";
 	}
 	/**
-	 * 返回智囊牌名组成的数组
+	 * 返回智囊牌名組成的數組
 	 * @param { Function | boolean } [filter]
 	 * @returns { String[] }
 	 */
@@ -539,11 +539,11 @@ export class Get extends GetCompatible {
 		return get.inpile("trick", "trick").randomGets(3);
 	}
 	/**
-	 * 用于获取武将的姓氏和名字
-	 * @param { string } str 武将ID
-	 * @param { string | undefined } defaultSurname 默认姓氏
-	 * @param { string | undefined } defaultName 默认名字，为空则设“某”
-	 * @returns { Array } 返回由[姓氏, 名字]组成的数组
+	 * 用於獲取武將的姓氏和名字
+	 * @param { string } str 武將ID
+	 * @param { string | undefined } defaultSurname 默認姓氏
+	 * @param { string | undefined } defaultName 默認名字，為空則設“某”
+	 * @returns { Array } 返回由[姓氏, 名字]組成的數組
 	 */
 	characterSurname(str, defaultSurname, defaultName) {
 		const info = get.character(str).names;
@@ -566,11 +566,11 @@ export class Get extends GetCompatible {
 		return names;
 	}
 	/**
-	 * 返回角色对应的原角色
+	 * 返回角色對應的原角色
 	 * @param { string } str
 	 * @returns { string }
 	 * @example
-	 * //以界曹操为例
+	 * //以界曹操為例
 	 * get.sourceCharacter("re_caocao") == "caocao"
 	 */
 	sourceCharacter(str) {
@@ -582,7 +582,7 @@ export class Get extends GetCompatible {
 		return str;
 	}
 	/**
-	 * 返回玩家是否处于幸运星状态
+	 * 返回玩家是否處於幸運星狀態
 	 * @param { Player } player
 	 * @returns { boolean }
 	 */
@@ -637,10 +637,10 @@ export class Get extends GetCompatible {
 		return 0;
 	}
 	/**
-	 * 获取牌堆底的牌
-	 * @param { number } [num = 1] 默认为1
+	 * 獲取牌堆底的牌
+	 * @param { number } [num = 1] 默認為1
 	 * @param { boolean } [putBack] 是否放回牌堆底
-	 * @returns { Card[] | Card } num为0返回Card，否则返回Cards
+	 * @returns { Card[] | Card } num為0返回Card，否則返回Cards
 	 */
 	bottomCards(num, putBack) {
 		if (_status.waitingForCards) {
@@ -671,7 +671,7 @@ export class Get extends GetCompatible {
 		return list;
 	}
 	/**
-	 * 返回本回合在进入弃牌堆且还在弃牌堆的牌
+	 * 返回本回合在進入棄牌堆且還在棄牌堆的牌
 	 * @returns { Card[] }
 	 */
 	discarded() {
@@ -719,7 +719,7 @@ export class Get extends GetCompatible {
 		}
 	}
 	autoViewAs(card, cards, owner) {
-		if (arguments.length === 1 && card instanceof lib.element.VCard) return card; //阻止无限嵌套
+		if (arguments.length === 1 && card instanceof lib.element.VCard) return card; //阻止無限嵌套
 		return new lib.element.VCard(card, cards, void 0, void 0, owner);
 	}
 	/**
@@ -855,7 +855,7 @@ export class Get extends GetCompatible {
 		return info.initFilters || [];
 	}
 	/**
-	 * 返回武将介绍
+	 * 返回武將介紹
 	 * @param { string } name
 	 * @returns { string }
 	 */
@@ -873,7 +873,7 @@ export class Get extends GetCompatible {
 			name = name.slice(name.indexOf("_") + 1);
 		}
 		if (lib.characterIntro[name]) return lib.characterIntro[name];
-		return "暂无角色介绍";
+		return "暫無角色介紹";
 	}
 	bordergroup(info, raw) {
 		if (typeof info == "string") info = get.character(info);
@@ -891,9 +891,9 @@ export class Get extends GetCompatible {
 	/**
 	 * Get the source of the skill or event
 	 *
-	 * 获取一个技能或事件的某个属性的源技能
-	 * @param { string | Object } skill - 传入的技能或事件
-	 * @param { string } text - 要获取的属性（不填写默认获取sourceSkill）
+	 * 獲取一個技能或事件的某個屬性的源技能
+	 * @param { string | Object } skill - 傳入的技能或事件
+	 * @param { string } text - 要獲取的屬性（不填寫默認獲取sourceSkill）
 	 * @returns { string }
 	 */
 	sourceSkillFor(skill, text) {
@@ -908,7 +908,7 @@ export class Get extends GetCompatible {
 		return skill;
 	}
 	/**
-	 * 判定数字的正负，若num大于0，返回1，若num小于0，返回-1，若num等于0，返回0
+	 * 判定數字的正負，若num大於0，返回1，若num小於0，返回-1，若num等於0，返回0
 	 * @param { number } num
 	 * @returns { 1 | -1 | 0 }
 	 */
@@ -918,7 +918,7 @@ export class Get extends GetCompatible {
 		return 0;
 	}
 	/**
-	 * 生成随机数，若存在num2，返回num到num2之间的随机数，否则返回0到num之间的随机数
+	 * 生成隨機數，若存在num2，返回num到num2之間的隨機數，否則返回0到num之間的隨機數
 	 * @param { number } num
 	 * @param { number } [num2]
 	 * @returns { number }
@@ -934,7 +934,7 @@ export class Get extends GetCompatible {
 		return method == "seat" ? arr.sortBySeat(arg) : void 0;
 	}
 	/**
-	 * 返回一个按座次排序的玩家数组
+	 * 返回一個按座次排序的玩家數組
 	 * @param { Player[] } arr
 	 * @param { Player } target
 	 * @returns { Player[] }
@@ -979,9 +979,9 @@ export class Get extends GetCompatible {
 			if (target == player) {
 				str += "（你）";
 			}
-			return "是否对" + str + "发动【" + get.skillTranslation(skill, player) + "】？";
+			return "是否對" + str + "發動【" + get.skillTranslation(skill, player) + "】？";
 		} else {
-			return "是否发动【" + get.skillTranslation(skill, player) + "】？";
+			return "是否發動【" + get.skillTranslation(skill, player) + "】？";
 		}
 	}
 	prompt2(skill, target, player) {
@@ -1052,7 +1052,7 @@ export class Get extends GetCompatible {
 		console.log("time2: " + (toc - tic));
 	}
 	/**
-	 * 此方法仅用作将技能/卡牌代码转为字符串，返回值无法直接进行反序列化
+	 * 此方法僅用作將技能/卡牌代碼轉為字符串，返回值無法直接進行反序列化
 	 * @param { any } obj
 	 * @param { number } [level = 0]
 	 */
@@ -1111,19 +1111,19 @@ export class Get extends GetCompatible {
 		}
 	}
 	/**
-	 * 深拷贝函数（虽然只处理了部分情况）
+	 * 深拷貝函數（雖然只處理了部分情況）
 	 *
-	 * 除了普通的Object和NullObject，均不考虑自行赋值的数据，但会原样将Symbol复制过去
+	 * 除了普通的Object和NullObject，均不考慮自行賦值的數據，但會原樣將Symbol複製過去
 	 *
 	 * @template T
-	 * @param {T} obj - 要复制的对象，若不是对象则直接返回原值
-	 * @param {boolean} [copyKeyDeep = false] - 是否深复制`Map`的`key`
-	 * @param {WeakMap<object, unknown>} [map] - 拷贝用的临时存储，用于处理循环引用（请勿自行赋值）
-	 * @returns {T} - 深拷贝后的对象，若传入值不是对象则为传入值
+	 * @param {T} obj - 要複製的對象，若不是對象則直接返回原值
+	 * @param {boolean} [copyKeyDeep = false] - 是否深複製`Map`的`key`
+	 * @param {WeakMap<object, unknown>} [map] - 拷貝用的臨時存儲，用於處理循環引用（請勿自行賦值）
+	 * @returns {T} - 深拷貝後的對象，若傳入值不是對象則為傳入值
 	 */
 	copy(obj, copyKeyDeep = false, map = new WeakMap()) {
-		// 参考[这里](https://juejin.cn/post/7315612852890026021)实现深拷贝
-		// 不再判断是否能structuredClone是因为structuredClone会把Symbol给毙了
+		// 參考[這裡](https://juejin.cn/post/7315612852890026021)實現深拷貝
+		// 不再判斷是否能structuredClone是因為structuredClone會把Symbol給斃了
 		const getType = obj => Object.prototype.toString.call(obj);
 
 		const canTranverse = {
@@ -1142,9 +1142,9 @@ export class Get extends GetCompatible {
 
 		const constructor = obj.constructor;
 		// @ts-ignore
-		// 这四类数据处理单独处理
-		// （实际上需要处理的只有Map和Set）
-		// 除此之外的就只能祝愿有拷贝构造函数了
+		// 這四類數據處理單獨處理
+		// （實際上需要處理的只有Map和Set）
+		// 除此之外的就只能祝願有拷貝構造函數了
 		const target = constructor
 			? Array.isArray(obj) || obj instanceof Map || obj instanceof Set || constructor === Object
 				? // @ts-ignore
@@ -1196,7 +1196,7 @@ export class Get extends GetCompatible {
 	}
 	plainTextMap = new Map();
 	/**
-	 * 用于将HTML代码转换为纯文本。
+	 * 用於將HTML代碼轉換為純文本。
 	 * @param { string } htmlContent
 	 * @returns { string }
 	 */
@@ -1712,7 +1712,7 @@ export class Get extends GetCompatible {
 		if (vid in lib.vcardOL) {
 			// @ts-ignore
 			const vcard = lib.vcardOL[vid];
-			//TODO: 这里暂时偷懒 直接用了delete和直接赋值 不妥
+			//TODO: 這裡暫時偷懶 直接用了delete和直接賦值 不妥
 			Object.keys(vcard).forEach(entry => {
 				delete vcard[entry];
 			});
@@ -1792,7 +1792,7 @@ export class Get extends GetCompatible {
 	#asyncHeadPattern = /^async[\s\*\(]/;
 	/**
 	 * ```plain
-	 * 测试一段代码是否为函数参数列表
+	 * 測試一段代碼是否為函數參數列表
 	 * ```
 	 *
 	 * @param {string} paramstr
@@ -1811,7 +1811,7 @@ export class Get extends GetCompatible {
 	}
 	/**
 	 * ```plain
-	 * 测试一段代码是否为函数体
+	 * 測試一段代碼是否為函數體
 	 * ```
 	 *
 	 * @typedef {"async"|"generator"|"agenerator"|"any"|null} FunctionType
@@ -1826,7 +1826,7 @@ export class Get extends GetCompatible {
 		if (type == "any") {
 			return (
 				["async", "generator", "agenerator", null]
-					// @ts-ignore // 突然发现ts-ignore也挺方便的喵
+					// @ts-ignore // 突然發現ts-ignore也挺方便的喵
 					.some(t => get.isFunctionBody(code, t))
 			);
 		}
@@ -1852,7 +1852,7 @@ export class Get extends GetCompatible {
 	}
 	/**
 	 * ```plain
-	 * 清洗函数体代码
+	 * 清洗函數體代碼
 	 * ```
 	 *
 	 * @param {string} str
@@ -1862,37 +1862,37 @@ export class Get extends GetCompatible {
 	pureFunctionStr(str, log = false) {
 		const emptyFunction = "function () {}";
 		str = str.trim();
-		// 对于特殊的箭头函数特殊处理: identifier => ...
+		// 對於特殊的箭頭函數特殊處理: identifier => ...
 		const specialMatch = get.#specialHeadPattern.exec(str);
 		if (specialMatch) {
 			let body = str.slice(specialMatch[0].length).trim();
 			if (body.startsWith("{") && body.endsWith("}")) body = body.slice(1, -1);
 			else body = `return ${body}`;
 			if (!get.isFunctionBody(body, "any")) {
-				if (log) console.warn("发现无法识别的远程代码:", str);
+				if (log) console.warn("發現無法識別的遠程代碼:", str);
 				return emptyFunction;
 			}
 			return `${specialMatch[0]}{${body}}`;
 		}
-		// 匹配函数头
+		// 匹配函數頭
 		const functionHead = get.#functionHeadPattern.exec(str);
 		if (!functionHead) {
-			if (log) console.warn("发现无法识别的远程代码:", str);
+			if (log) console.warn("發現無法識別的遠程代碼:", str);
 			return emptyFunction;
 		}
-		// 检查非法函数头
+		// 檢查非法函數頭
 		if (get.#illegalFunctionHeadPattern.test(functionHead[0])) {
-			if (log) console.warn("发现无法识别的远程代码:", str);
+			if (log) console.warn("發現無法識別的遠程代碼:", str);
 			return emptyFunction;
 		}
-		// 遍历字符串来寻找参数列表的关闭括号
+		// 遍歷字符串來尋找參數列表的關閉括號
 		const headLen = functionHead[0].length;
 		let start = headLen;
 		let foundClose;
 		let verifiedParams = null;
 		while ((foundClose = str.indexOf(")", start)) >= 0) {
 			const tempParams = str.slice(headLen, foundClose);
-			// 检查收集到的参数列表是否是有效的
+			// 檢查收集到的參數列表是否是有效的
 			if (get.isFunctionParam(tempParams)) {
 				verifiedParams = tempParams;
 				break;
@@ -1900,23 +1900,23 @@ export class Get extends GetCompatible {
 			start = foundClose + 1;
 		}
 		if (verifiedParams == null) {
-			if (log) console.warn("发现无法识别的远程代码:", str);
+			if (log) console.warn("發現無法識別的遠程代碼:", str);
 			return emptyFunction;
 		}
-		// 检查函数连接
+		// 檢查函數連接
 		const neckStart = str.slice(foundClose);
 		const neckMatch = get.#functionNeckPattern.exec(neckStart);
 		if (!neckMatch) {
-			if (log) console.warn("发现无法识别的远程代码:", str);
+			if (log) console.warn("發現無法識別的遠程代碼:", str);
 			return emptyFunction;
 		}
-		// 箭头函数分流检查
+		// 箭頭函數分流檢查
 		if (neckMatch[0].includes("=>")) {
 			let funcHead = functionHead[0];
 			let idMatch;
 			while ((idMatch = get.#identifierPattern.exec(funcHead))) {
 				if (idMatch[0] != "async") {
-					if (log) console.warn("发现无法识别的远程代码:", str);
+					if (log) console.warn("發現無法識別的遠程代碼:", str);
 					return emptyFunction;
 				}
 				funcHead = funcHead.slice(idMatch.index + idMatch[0].length);
@@ -1929,35 +1929,35 @@ export class Get extends GetCompatible {
 				funcHead = funcHead.slice(idMatch.index + idMatch[0].length);
 			}
 			if (!idMatch) {
-				if (log) console.warn("发现无法识别的远程代码:", str);
+				if (log) console.warn("發現無法識別的遠程代碼:", str);
 				return emptyFunction;
 			}
 		}
-		// 块类型分流
+		// 塊類型分流
 		const isBlock = neckMatch[0].endsWith("{");
 		let funcBody;
 		if (isBlock) {
 			if (!str.endsWith("}")) {
-				if (log) console.warn("发现无法识别的远程代码:", str);
+				if (log) console.warn("發現無法識別的遠程代碼:", str);
 				return emptyFunction;
 			}
 			funcBody = "{" + str.slice(foundClose + neckMatch[0].length);
 		} else {
-			// 将表达式函数体转换成块函数体
+			// 將表達式函數體轉換成塊函數體
 			funcBody = `{ return ${str.slice(foundClose + neckMatch[0].length)}; }`;
 		}
-		// 收集函数类型
+		// 收集函數類型
 		let funcType = 0;
 		if (functionHead[0].includes("*")) funcType |= 1;
 		if (get.#asyncHeadPattern.test(functionHead[0])) funcType |= 2;
-		// 检查函数体
+		// 檢查函數體
 		const checkType = [null, "generator", "async", "agenerator"][funcType];
 		// @ts-ignore
 		if (!get.isFunctionBody(funcBody, checkType)) {
-			if (log) console.warn("发现无法识别的远程代码:", str);
+			if (log) console.warn("發現無法識別的遠程代碼:", str);
 			return emptyFunction;
 		}
-		// 开始构造最终的函数
+		// 開始構造最終的函數
 		let finalStr = ` (${verifiedParams}) ${funcBody}`;
 		if (funcType & 1) finalStr = "*" + finalStr;
 		finalStr = "function" + finalStr;
@@ -1969,11 +1969,11 @@ export class Get extends GetCompatible {
 			if (func._filter_args) {
 				return "_noname_func:" + JSON.stringify(get.stringifiedResult(func._filter_args, 3));
 			}
-			// 沙盒在封装函数时，为了保存源代码会另外存储函数的源代码
+			// 沙盒在封裝函數時，為了保存源代碼會另外存儲函數的源代碼
 			/** @type {(func: Function) => string} */
 			const decompileFunction = security.isSandboxRequired() ? security.importSandbox().Marshal.decompileFunction : Function.prototype.call.bind(Function.prototype.toString);
 			const str = decompileFunction(func);
-			// js内置的函数
+			// js內置的函數
 			if (/\{\s*\[native code\]\s*\}/.test(str)) return "_noname_func:function () {}";
 			return "_noname_func:" + get.pureFunctionStr(str);
 		}
@@ -1982,15 +1982,15 @@ export class Get extends GetCompatible {
 	infoFuncOL(info) {
 		let func;
 		if ("sandbox" in window) console.log("[infoFuncOL] info:", info);
-		const str = get.pureFunctionStr(info.slice(13), true); // 清洗函数并阻止注入
+		const str = get.pureFunctionStr(info.slice(13), true); // 清洗函數並阻止注入
 		if ("sandbox" in window) console.log("[infoFuncOL] pured:", str);
 		try {
-			// js内置的函数
+			// js內置的函數
 			if (/\{\s*\[native code\]\s*\}/.test(str)) return function () {};
 			if (security.isSandboxRequired()) {
 				const loadStr = `return (${str});`;
 				const box = security.currentSandbox();
-				if (!box) throw new ReferenceError("没有找到当前沙盒");
+				if (!box) throw new ReferenceError("沒有找到當前沙盒");
 				func = box.exec(loadStr);
 				ErrorManager.setCodeSnippet(func, new CodeSnippet(str, 5));
 			} else {
@@ -2065,7 +2065,7 @@ export class Get extends GetCompatible {
 		if (vid in lib.vcardOL) {
 			// @ts-ignore
 			const vcard = lib.vcardOL[vid];
-			//TODO: 这里暂时偷懒 直接用了delete和直接赋值 不妥
+			//TODO: 這裡暫時偷懶 直接用了delete和直接賦值 不妥
 			Object.keys(vcard).forEach(entry => {
 				delete vcard[entry];
 			});
@@ -2196,7 +2196,7 @@ export class Get extends GetCompatible {
 		return str2;
 	}
 	/**
-	 * 作用修改：只读前缀 不读_ab
+	 * 作用修改：只讀前綴 不讀_ab
 	 */
 	rawName2(str) {
 		let str2 = lib.translate[str];
@@ -2211,7 +2211,7 @@ export class Get extends GetCompatible {
 		if (!slimName) return "";
 		const prefix = lib.translate[`${str}_prefix`];
 		if (prefix && slimName.startsWith(prefix)) {
-			//兼容版特化处理
+			//兼容版特化處理
 			if (lib.compatibleEdition) return `${get.prefixSpan(prefix, str)}<span>${slimName.slice(prefix.length)}　</span>`;
 			return `${get.prefixSpan(prefix, str)}<span>${slimName.slice(prefix.length)}</span>`;
 		}
@@ -2361,7 +2361,7 @@ export class Get extends GetCompatible {
 		return 0;
 	}
 	/**
-	 * 返回对象的实际类型
+	 * 返回對象的實際類型
 	 * @overload
 	 * @param { Array } obj
 	 * @returns { 'array' }
@@ -2405,7 +2405,7 @@ export class Get extends GetCompatible {
 		if (Object.prototype.toString.call(obj) === "[object DocumentFragment]") return "fragment";
 	}
 	/**
-	 * 返回牌的类型
+	 * 返回牌的類型
 	 * @overload
 	 * @param { Card | string } obj
 	 * @param { 'trick' | null} [method]
@@ -2430,7 +2430,7 @@ export class Get extends GetCompatible {
 		return get.type(card, player);
 	}
 	/**
-	 * 返回牌的副类型
+	 * 返回牌的副類型
 	 * @param { string | Card | VCard | CardBaseUIData } obj
 	 * @param { false | Player } [player]
 	 * @returns { string | undefined }
@@ -2464,7 +2464,7 @@ export class Get extends GetCompatible {
 		return card.name;
 	}
 	/**
-	 * 返回牌的系别
+	 * 返回牌的系別
 	 * @param {Card | VCard | Card[] | VCard[]} card
 	 * @param {false | Player} [player]
 	 * @returns {string | undefined }
@@ -2489,7 +2489,7 @@ export class Get extends GetCompatible {
 		}
 	}
 	/**
-	 * 返回牌的颜色
+	 * 返回牌的顏色
 	 * @param {Card | VCard | Card[] | VCard[]} card
 	 * @param {false | Player} [player]
 	 * @returns {string | undefined }
@@ -2548,7 +2548,7 @@ export class Get extends GetCompatible {
 		return mingGe;
 	}
 	/**
-	 * 返回一张杀的属性。如有多种属性则用`lib.natureSeparator`分割开来。例：火雷【杀】的返回值为`fire|thunder`
+	 * 返回一張殺的屬性。如有多種屬性則用`lib.natureSeparator`分割開來。例：火雷【殺】的返回值為`fire|thunder`
 	 * @param {string | string[] | Card | VCard} card
 	 * @param {false | Player} [player]
 	 * @returns {string}
@@ -2566,7 +2566,7 @@ export class Get extends GetCompatible {
 		return duYou;
 	}
 	/**
-	 * 返回包含所有属性的数组
+	 * 返回包含所有屬性的數組
 	 * @param {string[] | string} card
 	 * @param {false | Player} [player]
 	 * @returns {string[]}
@@ -2580,10 +2580,10 @@ export class Get extends GetCompatible {
 		return natures.split(lib.natureSeparator);
 	}
 	/**
-	 * 返回牌堆顶的牌
-	 * @param { number } [num = 1] 默认为1
-	 * @param { boolean } [putBack] 是否放回牌堆顶
-	 * @returns { Card[] | Card } num为0返回Card，否则返回Cards
+	 * 返回牌堆頂的牌
+	 * @param { number } [num = 1] 默認為1
+	 * @param { boolean } [putBack] 是否放回牌堆頂
+	 * @returns { Card[] | Card } num為0返回Card，否則返回Cards
 	 */
 	cards(num, putBack) {
 		if (_status.waitingForCards) {
@@ -2719,7 +2719,7 @@ export class Get extends GetCompatible {
 			const info = (() => {
 				const info = lib.skill[item];
 				if (!info) {
-					console.warn(`孩子，你的技能${item}是不是忘写了什么？！`);
+					console.warn(`孩子，你的技能${item}是不是忘寫了什麼？！`);
 					return {};
 				}
 				return info;
@@ -2772,9 +2772,9 @@ export class Get extends GetCompatible {
 	 */
 	event(key) {
 		if (key) {
-			// 能跑起来的东西还是不要去动它比较好 --Spmario233
-			// 跑起来没问题的东西就不要乱动！ --Spmario233
-			// console.warn(`get.event("${key}")写法即将被废弃，请更改为get.event().${key}`);
+			// 能跑起來的東西還是不要去動它比較好 --Spmario233
+			// 跑起來沒問題的東西就不要亂動！ --Spmario233
+			// console.warn(`get.event("${key}")寫法即將被廢棄，請更改為get.event().${key}`);
 			return _status.event[key];
 		}
 		return _status.event;
@@ -2783,10 +2783,10 @@ export class Get extends GetCompatible {
 		return _status.event.player;
 	}
 	/**
-	 * 返回玩家的数组
+	 * 返回玩家的數組
 	 * @param {*} [sort]
 	 * @param { boolean } [dead] 包含死人
-	 * @param { boolean } [out] 包含移除游戏的人
+	 * @param { boolean } [out] 包含移除遊戲的人
 	 * @returns { Player[] }
 	 */
 	players(sort, dead, out) {
@@ -2801,7 +2801,7 @@ export class Get extends GetCompatible {
 	}
 
 	/**
-	 * 返回指定角色所有的id，用于统一双将和单将的检查
+	 * 返回指定角色所有的id，用於統一雙將和單將的檢查
 	 *
 	 * @author tangXins
 	 * @param {Player} player
@@ -2810,7 +2810,7 @@ export class Get extends GetCompatible {
 	nameList(player) {
 		let type;
 		if (typeof player == "undefined" || ((type = typeof player), type != "object") || ((type = get.itemtype(player)), type != "player")) {
-			throw new Error(`函数接受了一个不是Player的东西: ${type}: ${player}`);
+			throw new Error(`函數接受了一個不是Player的東西: ${type}: ${player}`);
 		}
 
 		return ["name", "name1", "name2"]
@@ -2820,7 +2820,7 @@ export class Get extends GetCompatible {
 	}
 
 	position(card, ordering) {
-		//哪个大聪明在返回牌位置的函数写返回玩家位置的功能
+		//哪個大聰明在返回牌位置的函數寫返回玩家位置的功能
 		if (get.itemtype(card) == "player") return parseInt(card.dataset.position);
 		if (!card) return null;
 		if (get.itemtype(card) == "vcard") {
@@ -2883,8 +2883,8 @@ export class Get extends GetCompatible {
 			}
 		}else result=get.translation(str);
 
-		//针对作为启动附属技能，去除括号等，避免日志带有歧义
-		if(result&&result.includes('启动')&&get.info(str).type!='qiDong'){
+		//針對作為啟動附屬技能，去除括號等，避免日誌帶有歧義
+		if(result&&result.includes('啟動')&&get.info(str).type!='qiDong'){
 			var reg=new RegExp(/[\[\(\)].{1,5}[\]\)]/g,'g');
 			if(result.replace){
 				result=result.replace(reg,'');
@@ -2902,15 +2902,15 @@ export class Get extends GetCompatible {
 		})();
 		if (typeof str === "string") return str;
 		else {
-			console.warn(`孩子，你${name}的翻译传的是什么？！`);
+			console.warn(`孩子，你${name}的翻譯傳的是什麼？！`);
 			return "";
 		}
-		// return str.replace(/锁定技/g,'<span class="yellowtext">锁定技</span>').
+		// return str.replace(/鎖定技/g,'<span class="yellowtext">鎖定技</span>').
 		// 	replace(/限定技/g,'<span class="yellowtext">限定技</span>').
-		// 	replace(/觉醒技/g,'<span class="greentext">觉醒技</span>').
-		// 	replace(/主将技/g,'<span class="bluetext">主将技</span>').
-		// 	replace(/副将技/g,'<span class="bluetext">副将技</span>').
-		// 	replace(/阵法技/g,'<span class="bluetext">阵法技</span>').
+		// 	replace(/覺醒技/g,'<span class="greentext">覺醒技</span>').
+		// 	replace(/主將技/g,'<span class="bluetext">主將技</span>').
+		// 	replace(/副將技/g,'<span class="bluetext">副將技</span>').
+		// 	replace(/陣法技/g,'<span class="bluetext">陣法技</span>').
 		// 	replace(/主公技/g,'<span class="firetext">主公技</span>');
 	}
 	/**
@@ -3001,9 +3001,9 @@ export class Get extends GetCompatible {
 		return game.menuZoom;
 	}
 	/**
-	 * 返回数字在扑克牌中的表示形式
+	 * 返回數字在撲克牌中的表示形式
 	 * @param { number } num
-	 * @param { boolean } [forced] 未获取点数字母对应元素时，若此参数不为false，则返回字符串格式
+	 * @param { boolean } [forced] 未獲取點數字母對應元素時，若此參數不為false，則返回字符串格式
 	 * @returns { string }
 	 */
 	strNumber(num, forced) {
@@ -3013,9 +3013,9 @@ export class Get extends GetCompatible {
 		return result;
 	}
 	/**
-	 * 返回扑克牌中的表示形式对应的数字
+	 * 返回撲克牌中的表示形式對應的數字
 	 * @param { string } str
-	 * @param { boolean } [forced] 未获取字母点数对应元素时，若此参数不为false，则返回数字格式
+	 * @param { boolean } [forced] 未獲取字母點數對應元素時，若此參數不為false，則返回數字格式
 	 * @returns { number }
 	 */
 	numString(str, forced) {
@@ -3028,7 +3028,7 @@ export class Get extends GetCompatible {
 		return result;
 	}
 	/**
-	 * 将阿拉伯数字转换为中文的表达形式
+	 * 將阿拉伯數字轉換為中文的表達形式
 	 * @param { number } num
 	 * @param { boolean } [ordinal]
 	 * @returns { string }
@@ -3044,8 +3044,8 @@ export class Get extends GetCompatible {
 		const units = ["", "十", "百", "千"];
 
 		if (numStr.length <= 2) {
-			//两位数以下单独处理保证效率
-			if (numStr.length === 1) return !ordinal && num === 2 ? "两" : chars[num];
+			//兩位數以下單獨處理保證效率
+			if (numStr.length === 1) return !ordinal && num === 2 ? "兩" : chars[num];
 			return `${numStr[0] === "1" ? "" : chars[numStr[0]]}十${numStr[1] === "0" ? "" : chars[numStr[1]]}`;
 		}
 
@@ -3059,7 +3059,7 @@ export class Get extends GetCompatible {
 			return result;
 		};
 		const _transform = str => {
-			if (str === "2" && !ordinal) return "两";
+			if (str === "2" && !ordinal) return "兩";
 			let result = "";
 			for (let i = 0; i < str.length; i++) {
 				const part = str[str.length - 1 - i];
@@ -3067,7 +3067,7 @@ export class Get extends GetCompatible {
 				let unit = units[i];
 				if (char === "零") unit = "";
 				else if (char === "一" && i === 1 && str.length === 2) char = "";
-				else if (char === "二" && i > 1 && !ordinal) char = "两";
+				else if (char === "二" && i > 1 && !ordinal) char = "兩";
 				result = char + unit + result;
 			}
 			result = handleZero(result);
@@ -3080,10 +3080,10 @@ export class Get extends GetCompatible {
 			let char = _transform(part);
 			let unit = "";
 			if (i % 2) {
-				[unit, tempYi] = ["万" + tempYi, ""];
+				[unit, tempYi] = ["萬" + tempYi, ""];
 				if (char === "零") unit = "";
 			} else {
-				unit = "亿".repeat(i / 2);
+				unit = "億".repeat(i / 2);
 				if (char === "零") [unit, tempYi] = ["", unit];
 			}
 			result = char + unit + result;
@@ -3092,7 +3092,7 @@ export class Get extends GetCompatible {
 		return result;
 	}
 	/**
-	 * 遍历子元素
+	 * 遍歷子元素
 	 * @param {HTMLElement} node
 	 * @returns {Iterable<HTMLElement>} 迭代器
 	 */
@@ -3105,8 +3105,8 @@ export class Get extends GetCompatible {
 		}
 	}
 	/**
-	 * 返回可以选择的按钮
-	 * @param {((a: Button, b: Button) => number)} [sort] 排序函数
+	 * 返回可以選擇的按鈕
+	 * @param {((a: Button, b: Button) => number)} [sort] 排序函數
 	 * @returns { Button[] }
 	 */
 	selectableButtons(sort) {
@@ -3124,8 +3124,8 @@ export class Get extends GetCompatible {
 		return selectable;
 	}
 	/**
-	 * 返回可以选择的牌
-	 * @param {((a: Card, b: Card) => number)} [sort] 排序函数
+	 * 返回可以選擇的牌
+	 * @param {((a: Card, b: Card) => number)} [sort] 排序函數
 	 * @returns { Card[] }
 	 */
 	selectableCards(sort) {
@@ -3143,7 +3143,7 @@ export class Get extends GetCompatible {
 		return selectable;
 	}
 	/**
-	 * @returns { string[] } 技能名数组
+	 * @returns { string[] } 技能名數組
 	 */
 	skills() {
 		var skills = [];
@@ -3214,8 +3214,8 @@ export class Get extends GetCompatible {
 		return list;
 	}
 	/**
-	 * 返回可以选择的目标
-	 * @param {((a: Player, b: Player) => number)} [sort] 排序函数
+	 * 返回可以選擇的目標
+	 * @param {((a: Player, b: Player) => number)} [sort] 排序函數
 	 * @returns { Player[] }
 	 */
 	selectableTargets(sort) {
@@ -3293,7 +3293,7 @@ export class Get extends GetCompatible {
 		return result;
 	}
 	/**
-	 * 返回玩家本回合牌的使用次数
+	 * 返回玩家本回合牌的使用次數
 	 * @overload
 	 * @param { true } card
 	 * @param { Player } [player = _status.event.player]
@@ -3328,7 +3328,7 @@ export class Get extends GetCompatible {
 		return num;
 	}
 	/**
-	 * 返回玩家本回合某个主动技的使用次数
+	 * 返回玩家本回合某個主動技的使用次數
 	 * @param { string } skill 技能ID
 	 * @param { Player } [player = _status.event.player]
 	 * @returns { number }
@@ -3441,19 +3441,19 @@ export class Get extends GetCompatible {
 		}
 	}
 	/**
-	 * 从指定区域获得一张牌
-	 * @param { function | string | object | true } name 牌的筛选条件或名字，true为任意一张牌
-	 * @param { string | boolean } [position] 筛选区域，默认牌堆+弃牌堆：
+	 * 從指定區域獲得一張牌
+	 * @param { function | string | object | true } name 牌的篩選條件或名字，true為任意一張牌
+	 * @param { string | boolean } [position] 篩選區域，默認牌堆+棄牌堆：
 	 *
-	 * cardPile: 仅牌堆；discardPile: 仅弃牌堆；filed: 牌堆+弃牌堆+场上
+	 * cardPile: 僅牌堆；discardPile: 僅棄牌堆；filed: 牌堆+棄牌堆+場上
 	 *
-	 * 若为true且name为string | object类型，则在筛选区域内没有找到卡牌时创建一张name条件的牌
+	 * 若為true且name為string | object類型，則在篩選區域內沒有找到卡牌時創建一張name條件的牌
 	 *
-	 * @param { string } [start] 遍历方式。默认top
+	 * @param { string } [start] 遍歷方式。默認top
 	 *
-	 * top: 从牌堆/弃牌堆顶自顶向下遍历
-	 * bottom: 从牌堆/弃牌堆底自底向上遍历
-	 * random: 随机位置遍历
+	 * top: 從牌堆/棄牌堆頂自頂向下遍歷
+	 * bottom: 從牌堆/棄牌堆底自底向上遍歷
+	 * random: 隨機位置遍歷
 	 * @returns { Card | ChildNode | null }
 	 */
 	cardPile(name, position, start = "top") {
@@ -3474,7 +3474,7 @@ export class Get extends GetCompatible {
 			};
 			if (position === true) create = true;
 		} else {
-			console.error("调用Get.cardPile()时未传入符合条件的参数name！");
+			console.error("調用Get.cardPile()時未傳入符合條件的參數name！");
 			return null;
 		}
 		if (start === "bottom") {
@@ -3539,26 +3539,26 @@ export class Get extends GetCompatible {
 		return null;
 	}
 	/**
-	 * 从牌堆获得一张牌
-	 * @param { function | string | object | true } name 牌的筛选条件或名字，true为任意一张牌
-	 * @param { string } [start] 遍历方式。默认top
+	 * 從牌堆獲得一張牌
+	 * @param { function | string | object | true } name 牌的篩選條件或名字，true為任意一張牌
+	 * @param { string } [start] 遍歷方式。默認top
 	 *
-	 * top：从牌堆顶自顶向下遍历
-	 * bottom：从牌堆底自底向上遍历
-	 * random: 随机位置遍历
+	 * top：從牌堆頂自頂向下遍歷
+	 * bottom：從牌堆底自底向上遍歷
+	 * random: 隨機位置遍歷
 	 * @returns { Card | ChildNode | null }
 	 */
 	cardPile2(name, start) {
 		return get.cardPile(name, "cardPile", start || "top");
 	}
 	/**
-	 * 从弃牌堆获得一张牌
-	 * @param { function | string | object | true } name 牌的筛选条件或名字，true为任意一张牌
-	 * @param { string } [start] 遍历方式。默认top
+	 * 從棄牌堆獲得一張牌
+	 * @param { function | string | object | true } name 牌的篩選條件或名字，true為任意一張牌
+	 * @param { string } [start] 遍歷方式。默認top
 	 *
-	 * top：从弃牌堆顶自顶向下遍历
-	 * bottom：从弃牌堆底自底向上遍历
-	 * random: 随机位置遍历
+	 * top：從棄牌堆頂自頂向下遍歷
+	 * bottom：從棄牌堆底自底向上遍歷
+	 * random: 隨機位置遍歷
 	 * @returns { Card | ChildNode | null }
 	 */
 	discardPile(name, start) {
@@ -3602,9 +3602,9 @@ export class Get extends GetCompatible {
 	}
 	intro(name) {
 		var info = lib.character[name];
-		var str = "性别：" + get.translation(info[0]) + "<br/>";
-		str += "势力：" + get.translation(info[1]) + "<br/>";
-		str += "体力：" + get.translation(info[2]) + "<br/>";
+		var str = "性別：" + get.translation(info[0]) + "<br/>";
+		str += "勢力：" + get.translation(info[1]) + "<br/>";
+		str += "體力：" + get.translation(info[2]) + "<br/>";
 		str += "技能：";
 		if (info[3].length) {
 			str += get.translation(info[3][0]);
@@ -3619,37 +3619,37 @@ export class Get extends GetCompatible {
 			case 'zhiShiWu': 
 			case "mark": {
 				if (content > 0) {
-					let str="共有" + content + "个标记"
+					let str="共有" + content + "個標記"
 					let max=player.getZhiShiWuLimit(skill);
-					if(max) str+="，上限为"+max;
+					if(max) str+="，上限為"+max;
 					return str;
 				}
 				return false;
 			}
 			case "turn": {
 				if (content > 0) {
-					return "剩余" + content + "个回合";
+					return "剩餘" + content + "個回合";
 				}
 				return false;
 			}
 			case "time": {
 				if (content > 0) {
-					return "剩余" + content + "次";
+					return "剩餘" + content + "次";
 				}
 				return false;
 			}
 			case "limited": {
 				if (content) {
-					return "已发动";
+					return "已發動";
 				}
-				return "未发动";
+				return "未發動";
 			}
 			case "info": {
 				return lib.translate[skill + "_info"];
 			}
 			case "cardCount": {
 				if (Array.isArray(content)) {
-					return "共有" + get.cnNumber(content.length) + "张牌";
+					return "共有" + get.cnNumber(content.length) + "張牌";
 				}
 				return false;
 			}
@@ -3657,11 +3657,11 @@ export class Get extends GetCompatible {
 				content = player.getCards("x", function (card) {
 					return card.hasGaintag(skill);
 				});
-				if(dialog) dialog.addText("基础效果");
+				if(dialog) dialog.addText("基礎效果");
 				if (dialog && content.length) {
 					dialog.addAuto(content);
 				} else {
-					return "没有卡牌";
+					return "沒有卡牌";
 				}
 				return false;
 			}
@@ -3672,7 +3672,7 @@ export class Get extends GetCompatible {
 				if (dialog && content.length) {
 					dialog.addAuto(content);
 				} else {
-					return "没有卡牌";
+					return "沒有卡牌";
 				}
 				return false;
 			}
@@ -3689,7 +3689,7 @@ export class Get extends GetCompatible {
 					}
 				}
 				if (Array.isArray(content) && !content.length) {
-					return "没有卡牌";
+					return "沒有卡牌";
 				}
 				return false;
 			}
@@ -3729,16 +3729,16 @@ export class Get extends GetCompatible {
 				});
 				let info=get.info(skill);
 				var show=info&&info.intro&&info.intro.show;
-				if(show) var str='角色专有展示盖牌';
-				else var str='角色专有盖牌';
+				if(show) var str='角色專有展示蓋牌';
+				else var str='角色專有蓋牌';
 				if(dialog) dialog.addText(str);
 				if(dialog&&content.length){
 					if(player.isUnderControl(true)||show){
 						dialog.addAuto(content);
 					}else{
-						return '共有'+content.length+'张牌';
+						return '共有'+content.length+'張牌';
 					}
-				}else return "没有卡牌";
+				}else return "沒有卡牌";
 				return false;
 			}
 			default: {
@@ -3782,7 +3782,7 @@ export class Get extends GetCompatible {
 			let capt = get.translation(node.name);
 			const characterInfo = get.character(node.name),
 				sex = node.sex || characterInfo[0];
-			if (sex && sex != "unknown" && lib.config.show_sex) capt += `&nbsp;&nbsp;${sex == "none" ? "无" : get.translation(sex)}`;
+			if (sex && sex != "unknown" && lib.config.show_sex) capt += `&nbsp;&nbsp;${sex == "none" ? "無" : get.translation(sex)}`;
 			const group = node.group;
 			if (group && group != "unknown" && lib.config.show_group) capt += `&nbsp;&nbsp;${get.translation(group)}`;
 			uiintro.add(capt);
@@ -3848,15 +3848,15 @@ export class Get extends GetCompatible {
 					if (node.forbiddenSkills[skills[i]]) {
 						var forbidstr = '<div style="opacity:0.5"><div class="skill">' + translation + "</div><div>";
 						if (node.forbiddenSkills[skills[i]].length) {
-							forbidstr += "（与" + get.translation(node.forbiddenSkills[skills[i]]) + "冲突）<br>";
+							forbidstr += "（與" + get.translation(node.forbiddenSkills[skills[i]]) + "衝突）<br>";
 						} else {
-							forbidstr += "（双将禁用）<br>";
+							forbidstr += "（雙將禁用）<br>";
 						}
 						forbidstr += get.skillInfoTranslation(skills[i], node) + "</div></div>";
 						uiintro.add(forbidstr);
 					} else if (!skills2.includes(skills[i])) {
 						if (lib.skill[skills[i]].preHidden && get.mode() == "guozhan") {
-							uiintro.add('<div><div class="skill" style="opacity:0.5">' + translation + '</div><div><span style="opacity:0.5">' + get.skillInfoTranslation(skills[i], node) + '</span><br><div class="underlinenode on gray" style="position:relative;padding-left:0;padding-top:7px">预亮技能</div></div></div>');
+							uiintro.add('<div><div class="skill" style="opacity:0.5">' + translation + '</div><div><span style="opacity:0.5">' + get.skillInfoTranslation(skills[i], node) + '</span><br><div class="underlinenode on gray" style="position:relative;padding-left:0;padding-top:7px">預亮技能</div></div></div>');
 							var underlinenode = uiintro.content.lastChild.querySelector(".underlinenode");
 							if (_status.prehidden_skills.includes(skills[i])) {
 								underlinenode.classList.remove("on");
@@ -3866,7 +3866,7 @@ export class Get extends GetCompatible {
 						} else uiintro.add('<div style="opacity:0.5"><div class="skill">' + translation + "</div><div>" + get.skillInfoTranslation(skills[i], node) + "</div></div>");
 					} else if (lib.skill[skills[i]].temp || !node.skills.includes(skills[i]) || lib.skill[skills[i]].thundertext) {
 						if (lib.skill[skills[i]].frequent || lib.skill[skills[i]].subfrequent) {
-							uiintro.add('<div><div class="skill thundertext thunderauto">' + translation + '</div><div class="thundertext thunderauto">' + get.skillInfoTranslation(skills[i], node) + '<br><div class="underlinenode on gray" style="position:relative;padding-left:0;padding-top:7px">自动发动</div></div></div>');
+							uiintro.add('<div><div class="skill thundertext thunderauto">' + translation + '</div><div class="thundertext thunderauto">' + get.skillInfoTranslation(skills[i], node) + '<br><div class="underlinenode on gray" style="position:relative;padding-left:0;padding-top:7px">自動發動</div></div></div>');
 							var underlinenode = uiintro.content.lastChild.querySelector(".underlinenode");
 							if (lib.skill[skills[i]].frequent) {
 								if (lib.config.autoskilllist.includes(skills[i])) {
@@ -3889,7 +3889,7 @@ export class Get extends GetCompatible {
 							uiintro.add('<div><div class="skill thundertext thunderauto">' + translation + '</div><div class="thundertext thunderauto">' + get.skillInfoTranslation(skills[i], node) + "</div></div>");
 						}
 					} else if (lib.skill[skills[i]].frequent || lib.skill[skills[i]].subfrequent) {
-						uiintro.add('<div><div class="skill">' + translation + "</div><div>" + get.skillInfoTranslation(skills[i], node) + '<br><div class="underlinenode on gray" style="position:relative;padding-left:0;padding-top:7px">自动发动</div></div></div>');
+						uiintro.add('<div><div class="skill">' + translation + "</div><div>" + get.skillInfoTranslation(skills[i], node) + '<br><div class="underlinenode on gray" style="position:relative;padding-left:0;padding-top:7px">自動發動</div></div></div>');
 						var underlinenode = uiintro.content.lastChild.querySelector(".underlinenode");
 						if (lib.skill[skills[i]].frequent) {
 							if (lib.config.autoskilllist.includes(skills[i])) {
@@ -3909,7 +3909,7 @@ export class Get extends GetCompatible {
 						underlinenode.link = skills[i];
 						underlinenode.listen(ui.click.autoskill2);
 					} else if (lib.skill[skills[i]].clickable && node.isIn() && node.isUnderControl(true)) {
-						var intronode = uiintro.add('<div><div class="skill">' + translation + "</div><div>" + get.skillInfoTranslation(skills[i], node) + '<br><div class="menubutton skillbutton" style="position:relative;margin-top:5px">点击发动</div></div></div>').querySelector(".skillbutton");
+						var intronode = uiintro.add('<div><div class="skill">' + translation + "</div><div>" + get.skillInfoTranslation(skills[i], node) + '<br><div class="menubutton skillbutton" style="position:relative;margin-top:5px">點擊發動</div></div></div>').querySelector(".skillbutton");
 						if (!_status.gameStarted || (lib.skill[skills[i]].clickableFilter && !lib.skill[skills[i]].clickableFilter(node))) {
 							intronode.classList.add("disabled");
 							intronode.style.opacity = 0.5;
@@ -3954,16 +3954,16 @@ export class Get extends GetCompatible {
 				tr = document.createElement("tr");
 				table.appendChild(tr);
 				//td = document.createElement("td");
-				//td.innerHTML = "距离";
+				//td.innerHTML = "距離";
 				//tr.appendChild(td);
 				td = document.createElement("td");
 				td.innerHTML = "手牌";
 				tr.appendChild(td);
 				td = document.createElement("td");
-				td.innerHTML = "行动";
+				td.innerHTML = "行動";
 				tr.appendChild(td);
 				td = document.createElement("td");
-				td.innerHTML = "伤害";
+				td.innerHTML = "傷害";
 				tr.appendChild(td);
 				
 				tr = document.createElement("tr");
@@ -4060,14 +4060,14 @@ export class Get extends GetCompatible {
 						});
 					}
 					if (markCoutainer.childElementCount) {
-						uiintro.addText("标记");
+						uiintro.addText("標記");
 						uiintro.add(markCoutainer);
 					}
 				}
 			}
 			if (!game.observe && _status.gameStarted && game.me && node != game.me) {
 				ui.throwEmotion = [];
-				uiintro.addText("发送交互表情");
+				uiintro.addText("發送交互表情");
 				var click = function () {
 					if (_status.dragged) return;
 					if (_status.justdragged) return;
@@ -4142,7 +4142,7 @@ export class Get extends GetCompatible {
 					var createButtons = function (num, avatar2) {
 						if (!introadded) {
 							introadded = true;
-							uiintro.add('<div class="text center">更改皮肤</div>');
+							uiintro.add('<div class="text center">更改皮膚</div>');
 						}
 						var buttons = ui.create.div(".buttons.smallzoom.scrollbuttons");
 						lib.setMousewheel(buttons);
@@ -4261,13 +4261,13 @@ export class Get extends GetCompatible {
 			}
 			if (typeof info.id == "string" && info.id.startsWith("subplayer") && player.isUnderControl(true) && player.storage[info.id] && !_status.video) {
 				var storage = player.storage[info.id];
-				uiintro.addText("当前体力：" + storage.hp + "/" + storage.maxHp);
+				uiintro.addText("當前體力：" + storage.hp + "/" + storage.maxHp);
 				if (storage.hs.length) {
-					uiintro.addText("手牌区");
+					uiintro.addText("手牌區");
 					uiintro.addSmall(storage.hs);
 				}
 				if (storage.es.length) {
-					uiintro.addText("装备区");
+					uiintro.addText("裝備區");
 					uiintro.addSmall(storage.es);
 				}
 			}
@@ -4306,7 +4306,7 @@ export class Get extends GetCompatible {
 			}
 			uiintro.add(ui.create.div(".placeholder.slim"));
 		} else if (node.classList.contains("card")) {
-			//卡牌长按介绍
+			//卡牌長按介紹
 			if (ui.arena.classList.contains("observe") && node.parentNode.classList.contains("handcards")) {
 				return;
 			}
@@ -4382,7 +4382,7 @@ export class Get extends GetCompatible {
 				var page = ui.create.div(".menu-buttons.configpopped", uiintro.content);
 				var banall = false;
 				for (var i = 0; i < list.length; i++) {
-					var cfg = ui.create.div(".config", list[i] == "zhinang_tricks" ? "设为智囊" : lib.translate[list[i]] + "模式", page);
+					var cfg = ui.create.div(".config", list[i] == "zhinang_tricks" ? "設為智囊" : lib.translate[list[i]] + "模式", page);
 					cfg.classList.add("toggle");
 					if (list[i] == "zhinang_tricks") {
 						cfg.bannedname = (node._banning == "offline" ? "" : "connect_") + "zhinang_tricks";
@@ -4399,14 +4399,14 @@ export class Get extends GetCompatible {
 						banall = true;
 					}
 				}
-				ui.create.div(".menubutton.pointerdiv", banall ? "全部禁用" : "全部启用", uiintro.content, function () {
+				ui.create.div(".menubutton.pointerdiv", banall ? "全部禁用" : "全部啟用", uiintro.content, function () {
 					if (this.innerHTML == "全部禁用") {
 						for (var i = 0; i < page.childElementCount; i++) {
 							if (page.childNodes[i].bannedname.indexOf("zhinang_tricks") == -1 && page.childNodes[i].bannedname && page.childNodes[i].classList.contains("on")) {
 								clickBanned.call(page.childNodes[i]);
 							}
 						}
-						this.innerHTML = "全部启用";
+						this.innerHTML = "全部啟用";
 					} else {
 						for (var i = 0; i < page.childElementCount; i++) {
 							if (page.childNodes[i].bannedname.indexOf("zhinang_tricks") == -1 && page.childNodes[i].bannedname && !page.childNodes[i].classList.contains("on")) {
@@ -4422,9 +4422,9 @@ export class Get extends GetCompatible {
 					if (!uiintro.nosub) {
 						if (lib.card[name] && lib.card[name].derivation) {
 							if (typeof lib.card[name].derivation == "string") {
-								uiintro.add('<div class="text center">来源：' + get.translation(lib.card[name].derivation) + "</div>");
+								uiintro.add('<div class="text center">來源：' + get.translation(lib.card[name].derivation) + "</div>");
 							} else if (lib.card[name].derivationpack) {
-								uiintro.add('<div class="text center">来源：' + get.translation(lib.card[name].derivationpack + "_card_config") + "包</div>");
+								uiintro.add('<div class="text center">來源：' + get.translation(lib.card[name].derivationpack + "_card_config") + "包</div>");
 							}
 						}
 						let typeinfo = "";
@@ -4450,9 +4450,9 @@ export class Get extends GetCompatible {
 						}
 						if (lib.card[name].unique && lib.card[name].type == "equip") {
 							if (lib.cardPile.guozhan && lib.cardPack.guozhan.includes(name)) {
-								uiintro.add('<div class="text center">专属装备</div>').style.marginTop = "-5px";
+								uiintro.add('<div class="text center">專屬裝備</div>').style.marginTop = "-5px";
 							} else {
-								uiintro.add('<div class="text center">特殊装备</div>').style.marginTop = "-5px";
+								uiintro.add('<div class="text center">特殊裝備</div>').style.marginTop = "-5px";
 							}
 						}
 						if (lib.card[name] && lib.card[name].addinfomenu) {
@@ -4464,11 +4464,11 @@ export class Get extends GetCompatible {
 								var dist = lib.card[node.name].distance;
 								if (dist.attackFrom) {
 									added = true;
-									uiintro.add('<div class="text center">攻击范围：' + (-dist.attackFrom + 1) + "</div>");
+									uiintro.add('<div class="text center">攻擊範圍：' + (-dist.attackFrom + 1) + "</div>");
 								}
 							}
 							if (!added) {
-								uiintro.add('<div class="text center">攻击范围：1</div>');
+								uiintro.add('<div class="text center">攻擊範圍：1</div>');
 							}
 						}
 					}
@@ -4490,7 +4490,7 @@ export class Get extends GetCompatible {
 							const defaultYingbianEffect = get.defaultYingbianEffect(node.link || node);
 							if (lib.yingbian.prompt.has(defaultYingbianEffect)) yingbianEffects.push(defaultYingbianEffect);
 						}
-						if (yingbianEffects.length && showCardIntro) uiintro.add(`<div class="text" style="font-family: yuanli">应变：${yingbianEffects.map(value => lib.yingbian.prompt.get(value)).join("；")}</div>`);
+						if (yingbianEffects.length && showCardIntro) uiintro.add(`<div class="text" style="font-family: yuanli">應變：${yingbianEffects.map(value => lib.yingbian.prompt.get(value)).join("；")}</div>`);
 					}
 					if (lib.translate[name + "_append"]) {
 						uiintro.add('<div class="text" style="display:inline">' + lib.translate[name + "_append"] + "</div>");
@@ -4504,7 +4504,7 @@ export class Get extends GetCompatible {
 			let capt = get.translation(character);
 			if (characterInfo) {
 				const infoSex = characterInfo[0];
-				if (infoSex && lib.config.show_sex) capt += `&nbsp;&nbsp;${infoSex == "none" ? "无" : lib.translate[infoSex]}`;
+				if (infoSex && lib.config.show_sex) capt += `&nbsp;&nbsp;${infoSex == "none" ? "無" : lib.translate[infoSex]}`;
 				const infoGroup = characterInfo[1];
 				if (infoGroup && lib.config.show_group) {
 					const group = get.is.double(character, true);
@@ -4564,14 +4564,14 @@ export class Get extends GetCompatible {
 					if(lib.config.all.nogamemode.includes(modeorder[i])) continue;
 					if (lib.config.all.mode.includes(modeorder[i])) {
 						list.push(modeorder[i]);
-						//在图鉴模式下可以操纵联机ban
+						//在圖鑑模式下可以操縱聯機ban
 						if(get.mode()=='illustration'&&lib.mode[modeorder[i]].connect) list.push("connect_"+modeorder[i]);
 					}
 				}
 				var page = ui.create.div(".menu-buttons.configpopped", uiintro.content);
 				var banall = false;
 				for (var i = 0; i < list.length; i++) {
-					if(list[i].startsWith("connect_")) var str = "联机-" + lib.translate[list[i].slice(8)];
+					if(list[i].startsWith("connect_")) var str = "聯機-" + lib.translate[list[i].slice(8)];
 					else var str=lib.translate[list[i]];
 					str += "模式";
 					var cfg = ui.create.div(".config", str, page);
@@ -4590,7 +4590,7 @@ export class Get extends GetCompatible {
 					}
 				}
 				if (node._banning == "offline") {
-					var cfg = ui.create.div(".config", "随机选将可用", page);
+					var cfg = ui.create.div(".config", "隨機選將可用", page);
 					cfg.classList.add("toggle");
 					cfg.listen(function () {
 						this.classList.toggle("on");
@@ -4606,14 +4606,14 @@ export class Get extends GetCompatible {
 						cfg.classList.add("on");
 					}
 				}
-				ui.create.div(".menubutton.pointerdiv", banall ? "全部禁用" : "全部启用", uiintro.content, function () {
+				ui.create.div(".menubutton.pointerdiv", banall ? "全部禁用" : "全部啟用", uiintro.content, function () {
 					if (this.innerHTML == "全部禁用") {
 						for (var i = 0; i < page.childElementCount; i++) {
 							if (page.childNodes[i].bannedname && page.childNodes[i].classList.contains("on")) {
 								clickBanned.call(page.childNodes[i]);
 							}
 						}
-						this.innerHTML = "全部启用";
+						this.innerHTML = "全部啟用";
 					} else {
 						for (var i = 0; i < page.childElementCount; i++) {
 							if (page.childNodes[i].bannedname && !page.childNodes[i].classList.contains("on")) {
@@ -4679,7 +4679,7 @@ export class Get extends GetCompatible {
 						if (!num) return;
 						if (!introadded) {
 							introadded = true;
-							uiintro.add('<div class="text center">更改皮肤</div>');
+							uiintro.add('<div class="text center">更改皮膚</div>');
 						}
 						var buttons = ui.create.div(".buttons.smallzoom.scrollbuttons");
 						lib.setMousewheel(buttons);
@@ -4729,7 +4729,7 @@ export class Get extends GetCompatible {
 			}
 		} else if (node.classList.contains("equips") && ui.arena.classList.contains("selecting")) {
 			(function () {
-				uiintro.add("选择装备");
+				uiintro.add("選擇裝備");
 				uiintro.addSmall(
 					Array.from(node.childNodes).filter(node => !node.classList.contains("emptyequip") && !node.classList.contains("feichu")),
 					true
@@ -4765,7 +4765,7 @@ export class Get extends GetCompatible {
 				buttoncontainer.style.display = "block";
 				confirmbutton = ui.create.div(
 					".menubutton.large.pointerdiv",
-					"确定",
+					"確定",
 					function () {
 						if (ui.confirm && ui.confirm.str && ui.confirm.str.includes("o")) {
 							uiintro._clickintro();
@@ -4789,19 +4789,19 @@ export class Get extends GetCompatible {
 			uiintro.add('<div class="text center" style="padding-bottom:5px">' + lib.translate["_" + career + "_skill_info"] + "</div>");
 		} else if (node.classList.contains("skillbar")) {
 			if (node == ui.friendBar) {
-				uiintro.add("友方怒气值");
+				uiintro.add("友方怒氣值");
 				uiintro.add('<div class="text center" style="padding-bottom:5px">' + _status.friendRage + "/100</div>");
 			} else if (node == ui.enemyBar) {
-				uiintro.add("敌方怒气值");
+				uiintro.add("敵方怒氣值");
 				uiintro.add('<div class="text center" style="padding-bottom:5px">' + _status.enemyRage + "/100</div>");
 			}
 		} else if (node.parentNode == ui.historybar) {
 			if (node.dead) {
 				if (!node.source || node.source == node.player) {
-					uiintro.add('<div class="text center">' + get.translation(node.player) + "阵亡</div>");
+					uiintro.add('<div class="text center">' + get.translation(node.player) + "陣亡</div>");
 					uiintro.addSmall([node.player]);
 				} else {
-					uiintro.add('<div class="text center">' + get.translation(node.player) + "被" + get.translation(node.source) + "杀害</div>");
+					uiintro.add('<div class="text center">' + get.translation(node.player) + "被" + get.translation(node.source) + "殺害</div>");
 					uiintro.addSmall([node.source]);
 				}
 			}
@@ -4810,7 +4810,7 @@ export class Get extends GetCompatible {
 				uiintro._place_text = uiintro.add('<div class="text" style="display:inline">' + get.translation(node.skill, "info") + "</div>");
 			}
 			if (node.targets && get.itemtype(node.targets) == "players") {
-				uiintro.add('<div class="text center">目标</div>');
+				uiintro.add('<div class="text center">目標</div>');
 				uiintro.addSmall(node.targets);
 			}
 			if (node.players && node.players.length > 1) {
@@ -4841,7 +4841,7 @@ export class Get extends GetCompatible {
 	}
 	linkintro(dialog, content, player) {
 		dialog.content.firstChild.remove();
-		dialog.add('<div class="text center">已横置</div>');
+		dialog.add('<div class="text center">已橫置</div>');
 		var list = [];
 		for (var i = 0; i < game.players.length; i++) {
 			if (game.players[i].isLinked() && game.players[i].name && !game.players[i].name.startsWith("unknown")) {
@@ -5089,7 +5089,7 @@ export class Get extends GetCompatible {
 			} else return 0;
 		}
 		if (typeof value == "number") return value;
-		//此处是否需要将实体牌改为虚拟牌呢？暂时不确定
+		//此處是否需要將實體牌改為虛擬牌呢？暫時不確定
 		if (typeof value == "function") return value(card, player, null, "raw2");
 		return 0;
 	}
@@ -5568,8 +5568,8 @@ export class Get extends GetCompatible {
 	}
 	/**
 	 *
-	 * @param {any} source 如果参数是function，执行此函数并返回结果，传参为此方法剩余的参数。如果参数不是function，直接返回结果。
-	 * @returns 返回的结果
+	 * @param {any} source 如果參數是function，執行此函數並返回結果，傳參為此方法剩餘的參數。如果參數不是function，直接返回結果。
+	 * @returns 返回的結果
 	 */
 	dynamicVariable(source) {
 		if (typeof source == "function") {
@@ -5638,7 +5638,7 @@ export class Get extends GetCompatible {
 	/**
 	 * Get the number of a skill's item's length
 	 *
-	 * 获取一个转换技的转换项数
+	 * 獲取一個轉換技的轉換項數
 	 * @param {string} skill 技能名
 	 * @param {Player} player
 	 * @returns {number}
@@ -5654,32 +5654,32 @@ export class Get extends GetCompatible {
 		return 2;
 	}
 	/**
-	 * 将URL转换成相对于无名杀根目录的路径
+	 * 將URL轉換成相對於無名殺根目錄的路徑
 	 *
 	 * ---
 	 *
-	 * 在无名杀正式过渡到http协议前，无名杀的路径在不同端拥有不同的情况:
-	 * - 网页端: 除了`db`外，没任何可能
-	 * - 电脑端(electron): 和`node.js`保持一致
-	 * - 手机端(cordova): 需要使用`cordova`的`cordova-plugin-file`插件实现，有较为严格的限制
+	 * 在無名殺正式過渡到http協議前，無名殺的路徑在不同端擁有不同的情況:
+	 * - 網頁端: 除了`db`外，沒任何可能
+	 * - 電腦端(electron): 和`node.js`保持一致
+	 * - 手機端(cordova): 需要使用`cordova`的`cordova-plugin-file`插件實現，有較為嚴格的限制
 	 *
-	 * 故之前的路径API基本如下:
-	 * - 网页端完全不考虑
-	 * - 使用`lib.assetURL + <relative path>`的形式，其中`lib.assetURL`的值为:
-	 *   - 在网页端和电脑端为空字符串
-	 *   - 在手机端为无名杀包的`externalApplicationStorageDirectory`里（也就是`Android/data/<app-id>/`）
+	 * 故之前的路徑API基本如下:
+	 * - 網頁端完全不考慮
+	 * - 使用`lib.assetURL + <relative path>`的形式，其中`lib.assetURL`的值為:
+	 *   - 在網頁端和電腦端為空字符串
+	 *   - 在手機端為無名殺包的`externalApplicationStorageDirectory`裡（也就是`Android/data/<app-id>/`）
 	 *
-	 * 现在无名杀即将踏入http协议，也早已用上了ES Module，故活用`import.meta.url`来提供路径理应被重视，`URL`也理应成为路径的主要构成
+	 * 現在無名殺即將踏入http協議，也早已用上了ES Module，故活用`import.meta.url`來提供路徑理應被重視，`URL`也理應成為路徑的主要構成
 	 *
-	 * 然而由于之前的API混乱且针对多端有不同的情况，故需要提供函数，来方便提供调用旧API的情况
+	 * 然而由於之前的API混亂且針對多端有不同的情況，故需要提供函數，來方便提供調用舊API的情況
 	 *
-	 * @param {URL} url - 需要转换的URL对象
-	 * @param {boolean} [addAssetURL=false] - 是否需要在函数内加上`lib.assetURL`，
-	 * 默认为`false`，当为`true`时会在协议为`file`时增加`lib.assetURL`
+	 * @param {URL} url - 需要轉換的URL對象
+	 * @param {boolean} [addAssetURL=false] - 是否需要在函數內加上`lib.assetURL`，
+	 * 默認為`false`，當為`true`時會在協議為`file`時增加`lib.assetURL`
 	 * @returns {string}
 	 *
 	 * @example
-	 * // 当前文件以"noname/get/index.js"举例
+	 * // 當前文件以"noname/get/index.js"舉例
 	 * let parsedPath = get.relativePath(import.meta.url, true);
 	 * console.assert(parsedPath == `${lib.assetURL}noname/get/index.js`);
 	 */
@@ -5692,11 +5692,11 @@ export class Get extends GetCompatible {
 	}
 
 	/**
-	 * 通过`FileReader`，将Blob转换成对应内容的[Data URL](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)
+	 * 通過`FileReader`，將Blob轉換成對應內容的[Data URL](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)
 	 *
 	 * @async
-	 * @param {Blob} blob - 需要转换的内容
-	 * @returns {Promise<URL>} 对应Blob内容的
+	 * @param {Blob} blob - 需要轉換的內容
+	 * @returns {Promise<URL>} 對應Blob內容的
 	 *
 	 * @example
 	 * let text = "Hello, World!";
@@ -5716,20 +5716,20 @@ export class Get extends GetCompatible {
 	}
 
 	/**
-	 * 通过`Get#blobFromUrl`读取data URL的内容，转换成Blob后返回生成的blob URL
+	 * 通過`Get#blobFromUrl`讀取data URL的內容，轉換成Blob後返回生成的blob URL
 	 *
-	 * > 实际上所有的URL都能通过此方法读取
+	 * > 實際上所有的URL都能通過此方法讀取
 	 *
-	 * 该方法具有缓存，同一data URL仅会返回同一blob URL
+	 * 該方法具有緩存，同一data URL僅會返回同一blob URL
 	 *
-	 * 该方法相比`get.objectURL`，会保留文件的类型
+	 * 該方法相比`get.objectURL`，會保留文件的類型
 	 *
 	 * ---
 	 *
-	 * > 其实我不确定`get.objectURL`是否有实际意义上的需求，我也不确定`get.objectURL`不保留类型是否是刚需，但既然原先就存在，那么就不要动
+	 * > 其實我不確定`get.objectURL`是否有實際意義上的需求，我也不確定`get.objectURL`不保留類型是否是剛需，但既然原先就存在，那麼就不要動
 	 *
 	 * @async
-	 * @param {string | URL} dataUrl - 需要转换的data URL
+	 * @param {string | URL} dataUrl - 需要轉換的data URL
 	 * @returns {Promise<URL>}
 	 */
 	async objectUrlAsync(dataUrl) {
@@ -5744,12 +5744,12 @@ export class Get extends GetCompatible {
 	}
 
 	/**
-	 * 读取给定的URL，将其中的内容转换成Blob
+	 * 讀取給定的URL，將其中的內容轉換成Blob
 	 *
-	 * 在File协议下通过无名杀自带的文件处理函数读取内容，其他协议通过`fetch`读取内容
+	 * 在File協議下通過無名殺自帶的文件處理函數讀取內容，其他協議通過`fetch`讀取內容
 	 *
 	 * @async
-	 * @param {string | URL} url - 需要读取的URL
+	 * @param {string | URL} url - 需要讀取的URL
 	 * @returns {Promise<Blob>}
 	 */
 	blobFromUrl(url) {
@@ -5854,13 +5854,13 @@ export class Get extends GetCompatible {
 		if(target.hasExpansions('_xuRuo')){
 			return 2;
 		}
-		//封印师
+		//封印師
 		for(var xiaoGuo of game.jiChuXiaoGuo['fengYinShi_xiaoGuo']){
 			if(target.hasExpansions(xiaoGuo)){
 				return 1;
 			}
 		}
-		//赐福
+		//賜福
 		for(var xiaoGuo of game.jiChuXiaoGuo['qiDaoShi_xiaoGuo']){
 			if(target.hasExpansions(xiaoGuo)){
 				return -1;

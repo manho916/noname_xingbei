@@ -70,20 +70,20 @@ export function nodeReady() {
 	};
 
 	/**
-	 * 检查指定的路径是否是一个文件
+	 * 檢查指定的路徑是否是一個文件
 	 *
-	 * @param {string} fileName - 需要查询的路径
-	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回调函数；接受的参数意义如下:
-	 *  - `-1`: 路径不存在或无法访问
-	 *  - `0`: 路径的内容不是文件
-	 *  - `1`: 路径的内容是文件
-	 * @param {(err: Error) => void} [onerror] - 接收错误的回调函数
-	 * @return {void} - 由于三端的异步需求和历史原因，文件管理必须为回调异步函数
+	 * @param {string} fileName - 需要查詢的路徑
+	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回調函數；接受的參數意義如下:
+	 *  - `-1`: 路徑不存在或無法訪問
+	 *  - `0`: 路徑的內容不是文件
+	 *  - `1`: 路徑的內容是文件
+	 * @param {(err: Error) => void} [onerror] - 接收錯誤的回調函數
+	 * @return {void} - 由於三端的異步需求和歷史原因，文件管理必須為回調異步函數
 	 */
 	game.checkFile = function (fileName, callback, onerror) {
 		let filePath = __dirname + "/" + fileName;
 
-		// 如果路径不存在，则无需再尝试获取信息
+		// 如果路徑不存在，則無需再嘗試獲取信息
 		if (!lib.node.fs.existsSync(filePath)) {
 			callback?.(-1);
 			return;
@@ -91,9 +91,9 @@ export function nodeReady() {
 
 		lib.node.fs.stat(filePath, (err, stat) => {
 			if (err) {
-				// 如果是无法访问的情况，则按照函数需求返回-1
+				// 如果是無法訪問的情況，則按照函數需求返回-1
 				if (err.code === "EACCES") callback?.(-1);
-				// 反之则直接将err传入onerror
+				// 反之則直接將err傳入onerror
 				else onerror?.(err);
 				return;
 			}
@@ -103,20 +103,20 @@ export function nodeReady() {
 	}
 
 	/**
-	 * 检查指定的路径是否是一个目录
+	 * 檢查指定的路徑是否是一個目錄
 	 *
-	 * @param {string} dir - 需要查询的路径
-	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回调函数；接受的参数意义如下:
-	 *  - `-1`: 路径不存在或无法访问
-	 *  - `0`: 路径的内容不是目录
-	 *  - `1`: 路径的内容是目录
-	 * @param {(err: Error) => void} [onerror] - 接收错误的回调函数
-	 * @return {void} - 由于三端的异步需求和历史原因，文件管理必须为回调异步函数
+	 * @param {string} dir - 需要查詢的路徑
+	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回調函數；接受的參數意義如下:
+	 *  - `-1`: 路徑不存在或無法訪問
+	 *  - `0`: 路徑的內容不是目錄
+	 *  - `1`: 路徑的內容是目錄
+	 * @param {(err: Error) => void} [onerror] - 接收錯誤的回調函數
+	 * @return {void} - 由於三端的異步需求和歷史原因，文件管理必須為回調異步函數
 	 */
 	game.checkDir = function (dir, callback, onerror) {
 		let dirPath = __dirname + "/" + dir;
 
-		// 如果路径不存在，则无需再尝试获取信息
+		// 如果路徑不存在，則無需再嘗試獲取信息
 		if (!lib.node.fs.existsSync(dirPath)) {
 			callback?.(-1);
 			return;
@@ -124,9 +124,9 @@ export function nodeReady() {
 
 		lib.node.fs.stat(dirPath, (err, stat) => {
 			if (err) {
-				// 如果是无法访问的情况，则按照函数需求返回-1
+				// 如果是無法訪問的情況，則按照函數需求返回-1
 				if (err.code === "EACCES") callback?.(-1);
-				// 反之则直接将err传入onerror
+				// 反之則直接將err傳入onerror
 				else onerror?.(err);
 				return;
 			}
@@ -251,7 +251,7 @@ export function nodeReady() {
 	game.createDir = (directory, successCallback, errorCallback) => {
 		const target = lib.node.path.join(__dirname, directory);
 		if (lib.node.fs.existsSync(target)) {
-			// 修改逻辑，路径存在且是文件才会报错
+			// 修改邏輯，路徑存在且是文件才會報錯
 			if (!lib.node.fs.lstatSync(target).isDirectory()){
 				if (typeof errorCallback == "function") errorCallback(new Error(`${target}文件已存在`)); 
 				else if (typeof successCallback == "function") successCallback();
@@ -295,7 +295,7 @@ export function nodeReady() {
 			}
 		} else if (!lib.node.fs.lstatSync(target).isDirectory()) {
 			if (typeof errorCallback == "function") {
-				errorCallback(new Error(`${target}不是文件夹`));
+				errorCallback(new Error(`${target}不是文件夾`));
 			}
 		} else if (checkVersion(process.versions.node, "12.10.0") > -1) {
 			lib.node.fs.rmdir(target, { recursive: true }, (e) => {

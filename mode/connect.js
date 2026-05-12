@@ -9,12 +9,12 @@ export default () => {
 		start() {
 			var directstartmode = lib.config.directstartmode;
 			ui.create.menu(true);
-			event.textnode = ui.create.div("", "输入联机地址");
+			event.textnode = ui.create.div("", "輸入聯機地址");
 			var createNode = function () {
 				if (event.created) return;
 				if (directstartmode && lib.node) {
 					ui.exitroom = ui.create.system(
-						"退出房间",
+						"退出房間",
 						function () {
 							game.saveConfig("directstartmode");
 							game.reload();
@@ -26,7 +26,7 @@ export default () => {
 				}
 				if (lib.node && window.require) {
 					ui.startServer = ui.create.system(
-						"启动服务器",
+						"啟動服務器",
 						function (e) {
 							ui.click.shortcut(false);
 							e.stopPropagation();
@@ -54,7 +54,7 @@ export default () => {
 				node.style.overflow = "hidden";
 
 				var connect = function (e) {
-					event.textnode.textContent = "正在连接...";
+					event.textnode.textContent = "正在連接...";
 					clearTimeout(event.timeout);
 					if (e) e.preventDefault();
 					const ip = node.textContent;
@@ -70,8 +70,8 @@ export default () => {
 							return;
 						}
 						if (event.textnode) {
-							alert("连接失败");
-							event.textnode.textContent = "输入联机地址";
+							alert("連接失敗");
+							event.textnode.textContent = "輸入聯機地址";
 						}
 					});
 				};
@@ -96,7 +96,7 @@ export default () => {
 				ui.window.appendChild(text);
 				ui.iptext = text;
 
-				var button = ui.create.div(".menubutton.highlight.large.pointerdiv", "连接", connect);
+				var button = ui.create.div(".menubutton.highlight.large.pointerdiv", "連接", connect);
 				button.style.width = "70px";
 				button.style.left = "calc(50% - 35px)";
 				button.style.top = "calc(50% + 60px)";
@@ -104,7 +104,7 @@ export default () => {
 				ui.ipbutton = button;
 
 				ui.hall_button = ui.create.system(
-					"联机大厅",
+					"聯機大廳",
 					function () {
 						node.textContent = get.config("hall_ip") || lib.hallURL;
 						connect();
@@ -114,7 +114,7 @@ export default () => {
 				if (!get.config("hall_button")) {
 					ui.hall_button.style.display = "none";
 				}
-				ui.recentIP = ui.create.system("最近连接", null, true);
+				ui.recentIP = ui.create.system("最近連接", null, true);
 				var clickLink = function () {
 					node.textContent = this.textContent;
 					connect();
@@ -150,15 +150,15 @@ export default () => {
 						try {
 							var text2 = text.split("\n")[2];
 							var ip = text2.slice(5);
-							if (ip.length > 0 && text2.startsWith("联机地址:") && (ced || confirm("是否根据剪贴板的邀请链接以进入联机地址和房间？"))) {
+							if (ip.length > 0 && text2.startsWith("聯機地址:") && (ced || confirm("是否根據剪貼板的邀請鏈接以進入聯機地址和房間？"))) {
 								node.innerHTML = ip;
-								event.textnode.innerHTML = "正在连接...";
+								event.textnode.innerHTML = "正在連接...";
 								clearTimeout(event.timeout);
 								game.saveConfig("last_ip", node.innerHTML);
 								game.connect(node.innerHTML, function (success) {
 									if (!success && event.textnode) {
-										alert("邀请链接解析失败");
-										event.textnode.innerHTML = "输入联机地址";
+										alert("邀請鏈接解析失敗");
+										event.textnode.innerHTML = "輸入聯機地址";
 									}
 									if (success) _status.read_clipboard_text = text;
 								});
@@ -180,9 +180,9 @@ export default () => {
 						input.blur();
 						ui.window.removeChild(input);
 						if (result || input.value.length > 0) read(input.value);
-						else if (confirm("是否输入邀请链接以进入联机地址和房间？")) {
+						else if (confirm("是否輸入邀請鏈接以進入聯機地址和房間？")) {
 							ced = true;
-							var text = prompt("请输入邀请链接");
+							var text = prompt("請輸入邀請鏈接");
 							if (typeof text == "string" && text.length > 0) read(text);
 						}
 					}

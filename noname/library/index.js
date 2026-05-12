@@ -32,7 +32,7 @@ import dedent from "../../game/dedent.js"
 import { h } from "../../game/vue.esm-browser.prod.js";
 
 export class Library {
-	// 数据库相关
+	// 數據庫相關
 	dbURL = 'https://agdatabase.ssyy.tech:50000';
 
 	configprefix = "noname_0.9_";
@@ -67,7 +67,7 @@ export class Library {
 			},
 			set(target, prop, newValue) {
 				if (typeof prop == "string") {
-					// 新增武将包，且不是“收藏”和“禁用”
+					// 新增武將包，且不是“收藏”和“禁用”
 					if (!["mode_favourite", "mode_banned"].includes(prop) && !Reflect.has(target, prop)) {
 						Promise.resolve().then(() => {
 							ui.updateCharacterPackMenu.forEach(fun => fun(prop));
@@ -233,7 +233,7 @@ export class Library {
 	 * } }
 	 */
 	node;
-	// 谁写的值类型是string，这也太离谱了喵
+	// 誰寫的值類型是string，這也太離譜了喵
 	/**
 	 * @type { { [key: string]: Player } }
 	 */
@@ -242,49 +242,49 @@ export class Library {
 	 * @type { IDBRequest<IDBDatabase> }
 	 */
 	db;
-	//函数钩子
+	//函數鉤子
 	/**
-	 * 你可以往这里加入{钩子名:函数数组}，并在数组里增加你的自定义函数
+	 * 你可以往這裡加入{鉤子名:函數數組}，並在數組裡增加你的自定義函數
 	 *
-	 * 这样当某个地方调用game.callHook(钩子名,[...函数参数])时，就会按顺序将对应数组中的每个函数运行一遍（传参为callHook的第二个参数）。
+	 * 這樣當某個地方調用game.callHook(鉤子名,[...函數參數])時，就會按順序將對應數組中的每個函數運行一遍（傳參為callHook的第二個參數）。
 	 *
-	 * 你可以将hook机制类比为event.trigger()，但是这里只能放同步代码
+	 * 你可以將hook機制類比為event.trigger()，但是這裡只能放同步代碼
 	 */
 	hooks = freezeButExtensible({ ...defaultHooks });
 
 	/**
-	 * **无名杀频道推送机制**
+	 * **無名殺頻道推送機制**
 	 *
-	 * 鉴于`Javascript`的特性及自身对所需功能的思考，这是一个参考`Golang`的`channel`设计的、完全和`go channel`不一样的异步消息传递对象
+	 * 鑑於`Javascript`的特性及自身對所需功能的思考，這是一個參考`Golang`的`channel`設計的、完全和`go channel`不一樣的異步消息傳遞對象
 	 *
-	 * 当且仅当接收方和发送方均存在时进行消息传递，完全保证信息传递的单一性（发送方/接收方一旦确定则无法更改）和准确性（发送方必然将消息发送给接收方）
+	 * 當且僅當接收方和發送方均存在時進行消息傳遞，完全保證信息傳遞的單一性（發送方/接收方一旦確定則無法更改）和準確性（發送方必然將消息發送給接收方）
 	 *
-	 * 若存在发送方/接收方时调用`send`/`receive`，将报错
+	 * 若存在發送方/接收方時調用`send`/`receive`，將報錯
 	 *
-	 * 若需要异步/不报错发送信息，请等待`lib.actor`
+	 * 若需要異步/不報錯發送信息，請等待`lib.actor`
 	 *
 	 * @example
-	 * // 创建一个频道
+	 * // 創建一個頻道
 	 * const channel = new lib.channel();
 	 *
-	 * // 从某个角落接收channel发出的消息，若无消息则等待
+	 * // 從某個角落接收channel發出的消息，若無消息則等待
 	 * const message = await channel.receive();
 	 *
-	 * // 从某个角落向channel发消息，若无消息接收则等待
+	 * // 從某個角落向channel發消息，若無消息接收則等待
 	 * await channel.send(item);
 	 */
 	channel = Channel;
 
 	/**
-	 * **无名杀消息推送库**
+	 * **無名殺消息推送庫**
 	 *
-	 * 通过`EventTarget`机制，实现消息推送和接收的解耦，
-	 * 从而使消息接收方无需依赖发布方，发布方也无需考虑接收方
+	 * 通過`EventTarget`機制，實現消息推送和接收的解耦，
+	 * 從而使消息接收方無需依賴發佈方，發佈方也無需考慮接收方
 	 *
-	 * > `lib.announce`不是`actor`模型，若不存在订阅者，则消息发送将无意义
+	 * > `lib.announce`不是`actor`模型，若不存在訂閱者，則消息發送將無意義
 	 *
 	 * @example
-	 * // 甲扩展（如《千幻聆音》）在角色皮肤切换后，调用：
+	 * // 甲擴展（如《千幻聆音》）在角色皮膚切換後，調用：
 	 * lib.announce.publish("skinChange", {
 	 * 	player,
 	 * 	playerName: "zhangfei",
@@ -292,12 +292,12 @@ export class Library {
 	 * 	currentSkin: "image/yyy.jpg"
 	 * });
 	 *
-	 * // 乙扩展监听此`skinChange`事件，并修改自己扩展相关界面的图片：
+	 * // 乙擴展監聽此`skinChange`事件，並修改自己擴展相關界面的圖片：
 	 * const method = lib.announce.subscribe("skinChange", (e) => {
 	 * 	div.setBackgroundImage(e.currentSkin);
 	 * });
 	 *
-	 * // 若此时乙扩展不想继续订阅`skinChange`事件，可以通过`unsubscribe`解除订阅
+	 * // 若此時乙擴展不想繼續訂閱`skinChange`事件，可以通過`unsubscribe`解除訂閱
 	 * lib.announce.unsubscribe("skinChange", method);
 	 */
 	announce = new Announce(new EventTarget(), new WeakMap());
@@ -323,7 +323,7 @@ export class Library {
 				一麻: ["a", "ia", "ua"],
 				二波: ["o", "e", "uo"],
 				三皆: ["ie", "üe"],
-				四开: ["ai", "uai"],
+				四開: ["ai", "uai"],
 				五微: ["ei", "ui"],
 				六豪: ["ao", "iao"],
 				七尤: ["ou", "iu"],
@@ -331,7 +331,7 @@ export class Library {
 				九文: ["en", "in", "un", "ün"],
 				十唐: ["ang", "iang", "uang"],
 				十一庚: ["eng", "ing", "ong", "ung"],
-				十二齐: ["i", "er", "ü"],
+				十二齊: ["i", "er", "ü"],
 				十三支: ["-i"],
 				十四姑: ["u"],
 			},
@@ -340,7 +340,7 @@ export class Library {
 	/**
 	 * Yingbian
 	 *
-	 * 应变
+	 * 應變
 	 */
 	yingbian = {
 		condition: {
@@ -368,8 +368,8 @@ export class Library {
 								if (skillState) player.applySkills(skillState);
 								var type = get.type2(card),
 									str = get.translation(source);
-								if (targets && targets.length) str += `对${get.translation(targets)}`;
-								str += `使用了${get.translation(card)}，是否弃置一张${get.translation(type)}为其助战？`;
+								if (targets && targets.length) str += `對${get.translation(targets)}`;
+								str += `使用了${get.translation(card)}，是否棄置一張${get.translation(type)}為其助戰？`;
 								player.chooseCard({
 									filterCard: (card, player) => get.type2(card) == type && lib.filter.cardDiscardable(card, player),
 									prompt: str,
@@ -464,7 +464,7 @@ export class Library {
 								var yingbianCondition = event.name.slice(8).toLowerCase(),
 									yingbianConditionTag = `yingbian_${yingbianCondition}_tag`;
 								target.popup(yingbianConditionTag, lib.yingbian.condition.color.get(yingbianCondition));
-								game.log(target, "响应了", player, "发起的", yingbianConditionTag);
+								game.log(target, "響應了", player, "發起的", yingbianConditionTag);
 								target.addExpose(0.2);
 								event.result = {
 									bool: true,
@@ -503,7 +503,7 @@ export class Library {
 				() => {
 					if (typeof trigger.baseDamage != "number") trigger.baseDamage = 1;
 					trigger.baseDamage++;
-					game.log(card, "的伤害值基数+1");
+					game.log(card, "的傷害值基數+1");
 				},
 			],
 			[
@@ -523,31 +523,31 @@ export class Library {
 				"hit",
 				() => {
 					trigger.directHit.addArray(game.players).addArray(game.dead);
-					game.log(card, "不可被响应");
+					game.log(card, "不可被響應");
 				},
 			],
 			[
 				"all",
 				() => {
 					card.yingbian_all = true;
-					game.log(card, "执行所有选项");
+					game.log(card, "執行所有選項");
 				},
 			],
 		]),
 		prompt: new Map([
-			["add", "目标+1"],
-			["remove", "目标-1"],
-			["damage", "伤害+1"],
-			["draw", "摸一张牌"],
-			["gain", "获得响应的牌"],
-			["hit", "此牌不可被响应"],
-			["all", "无视条件执行所有选项"],
+			["add", "目標+1"],
+			["remove", "目標-1"],
+			["damage", "傷害+1"],
+			["draw", "摸一張牌"],
+			["gain", "獲得響應的牌"],
+			["hit", "此牌不可被響應"],
+			["all", "無視條件執行所有選項"],
 		]),
 	};
 	/**
 	 * Stratagem buff
 	 *
-	 * 谋攻强化
+	 * 謀攻強化
 	 */
 	stratagemBuff = {
 		cost: new Map([
@@ -562,14 +562,14 @@ export class Library {
 				"sha",
 				(event, option) => {
 					if (event.step != 0 || option.state != "end") return;
-					game.log(event.player, "触发了强化效果");
+					game.log(event.player, "觸發了強化效果");
 					game.log(
 						event.card,
 						"抵消所需要的",
 						new lib.element.VCard({
 							name: "shan",
 						}),
-						"数+1"
+						"數+1"
 					);
 					const map = event.customArgs;
 					game.players.concat(game.dead).forEach(current => {
@@ -584,11 +584,11 @@ export class Library {
 				"shan",
 				(event, option) => {
 					if (event.step != 0 || option.state != "end") return;
-					game.log(event.player, "触发了强化效果");
+					game.log(event.player, "觸發了強化效果");
 					game.log(
 						"使用",
 						event.card,
-						"时视为两张",
+						"時視為兩張",
 						new lib.element.VCard({
 							name: "shan",
 						}),
@@ -606,8 +606,8 @@ export class Library {
 				"juedou",
 				(event, option) => {
 					if (event.step != 0 || option.state != "end") return;
-					game.log(event.player, "触发了强化效果");
-					game.log("对", event.card, "的目标造成伤害时，伤害+1");
+					game.log(event.player, "觸發了強化效果");
+					game.log("對", event.card, "的目標造成傷害時，傷害+1");
 					event.player
 						.when({
 							source: "damageBegin1",
@@ -622,8 +622,8 @@ export class Library {
 				"huogong",
 				(event, option) => {
 					if (event.step != 0 || option.state != "end") return;
-					game.log(event.player, "触发了强化效果");
-					game.log(event.card, "造成的伤害+1");
+					game.log(event.player, "觸發了強化效果");
+					game.log(event.card, "造成的傷害+1");
 					event.increase("baseDamage", 1);
 				},
 			],
@@ -631,8 +631,8 @@ export class Library {
 				"tao",
 				(event, option) => {
 					if (event.step != 0 || option.state != "end") return;
-					game.log(event.player, "触发了强化效果");
-					game.log(event.card, "回复的体力+1");
+					game.log(event.player, "觸發了強化效果");
+					game.log(event.card, "回覆的體力+1");
 					event.increase("baseDamage", 1);
 				},
 			],
@@ -643,28 +643,28 @@ export class Library {
 				/**
 				 * @type {() => string}
 				 */
-				() => `抵消所需要的【${get.translation("shan")}】数+1。`,
+				() => `抵消所需要的【${get.translation("shan")}】數+1。`,
 			],
 			[
 				"shan",
 				/**
 				 * @type {() => string}
 				 */
-				() => `使用时视为两张【${get.translation("shan")}】的效果。`,
+				() => `使用時視為兩張【${get.translation("shan")}】的效果。`,
 			],
-			["juedou", () => "对此牌的目标造成伤害时，伤害+1。"],
-			["huogong", () => "造成的伤害+1。"],
-			["tao", () => "回复的体力+1。"],
+			["juedou", () => "對此牌的目標造成傷害時，傷害+1。"],
+			["huogong", () => "造成的傷害+1。"],
+			["tao", () => "回覆的體力+1。"],
 		]),
 	};
 	/**
 	 * The actual card name
 	 *
-	 * 实际的卡牌名称
+	 * 實際的卡牌名稱
 	 */
 	actualCardName = new Map([
-		["挟令", "挟天子以令诸侯"],
-		["霹雳投石车", "霹雳车"],
+		["挾令", "挾天子以令諸侯"],
+		["霹靂投石車", "霹靂車"],
 	]);
 	characterDialogGroup = {
 		收藏: function (name, capt) {
@@ -695,15 +695,15 @@ export class Library {
 			config: {
 				/*
 				mount_combine: {
-					name: "合并坐骑栏",
+					name: "合併坐騎欄",
 					init: false,
-					intro: "<li>将进攻坐骑栏和防御坐骑栏合并为同一个位置（重启后生效）。",
+					intro: "<li>將進攻坐騎欄和防禦坐騎欄合併為同一個位置（重啟後生效）。",
 					restart: true,
 				},*/
 				low_performance: {
-					name: "流畅模式",
+					name: "流暢模式",
 					init: false,
-					intro: "减少部分游戏特效，提高游戏速度",
+					intro: "減少部分遊戲特效，提高遊戲速度",
 					onclick(bool) {
 						game.saveConfig("low_performance", bool);
 						if (bool) {
@@ -716,7 +716,7 @@ export class Library {
 				compatiblemode: {
 					name: "兼容模式",
 					init: false,
-					intro: "开启兼容模式可防止扩展使游戏卡死并提高对旧扩展的兼容性，但对游戏速度有一定影响，若无不稳定或不兼容的扩展建议关闭",
+					intro: "開啟兼容模式可防止擴展使遊戲卡死並提高對舊擴展的兼容性，但對遊戲速度有一定影響，若無不穩定或不兼容的擴展建議關閉",
 					onclick(bool) {
 						game.saveConfig("compatiblemode", bool);
 						if (bool) {
@@ -727,16 +727,16 @@ export class Library {
 					},
 				},
 				confirm_exit: {
-					name: "确认退出",
+					name: "確認退出",
 					init: false,
 					unfrequent: true,
-					intro: "离开游戏前弹出确认对话框",
+					intro: "離開遊戲前彈出確認對話框",
 				},
 				keep_awake: {
 					name: "屏幕常亮",
 					init: false,
 					unfrequent: true,
-					intro: "防止屏幕自动关闭<br>注：旧版本通过NoSleep.js实现的屏幕常亮可能会影响外置音频的音量",
+					intro: "防止屏幕自動關閉<br>注：舊版本通過NoSleep.js實現的屏幕常亮可能會影響外置音頻的音量",
 					onclick(bool) {
 						game.saveConfig("keep_awake", bool);
 						if (bool) {
@@ -758,106 +758,106 @@ export class Library {
 					},
 				},
 				auto_confirm: {
-					name: "自动确认",
+					name: "自動確認",
 					init: true,
 					unfrequent: true,
-					intro: "当候选目标只有1个时，点击目标后无需再点击确认",
+					intro: "當候選目標只有1個時，點擊目標後無需再點擊確認",
 				},
 				/*
 				skip_shan: {
-					name: "无闪自动取消",
+					name: "無閃自動取消",
 					init: false,
 					unfrequent: true,
-					intro: "当自己需要使用或打出【闪】时，若自己没有【闪】，则跳过该步骤",
+					intro: "當自己需要使用或打出【閃】時，若自己沒有【閃】，則跳過該步驟",
 				},
 				unauto_choose: {
-					name: "拆顺手牌选择",
+					name: "拆順手牌選擇",
 					init: false,
 					unfrequent: true,
-					intro: "拆牌或者顺牌时，就算只能选择对方的手牌依然手动选择",
+					intro: "拆牌或者順牌時，就算只能選擇對方的手牌依然手動選擇",
 				},
 				wuxie_self: {
-					name: "不无懈自己",
+					name: "不無懈自己",
 					init: true,
 					unfrequent: true,
-					intro: "自己使用的单目标普通锦囊即将生效时，不询问无懈",
+					intro: "自己使用的單目標普通錦囊即將生效時，不詢問無懈",
 				},
 				tao_enemy: {
-					name: "不对敌方出桃",
+					name: "不對敵方出桃",
 					init: false,
-					intro: "双方阵营明确的模式中（如对决），敌方角色濒死时不询问出桃",
+					intro: "雙方陣營明確的模式中（如對決），敵方角色瀕死時不詢問出桃",
 					unfrequent: true,
 				},*/
 				enable_drag: {
-					name: "启用拖拽",
+					name: "啟用拖拽",
 					init: true,
-					intro: "按住卡牌后可将卡牌拖至目标",
+					intro: "按住卡牌後可將卡牌拖至目標",
 					unfrequent: true,
 				},
 				enable_dragline: {
-					name: "拖拽指示线",
+					name: "拖拽指示線",
 					init: true,
 					unfrequent: true,
-					intro: "拖拽时显示虚线，可能降低游戏速度",
+					intro: "拖拽時顯示虛線，可能降低遊戲速度",
 				},
 				enable_touchdragline: {
-					name: "拖拽指示线",
+					name: "拖拽指示線",
 					init: false,
 					unfrequent: true,
-					intro: "拖拽时显示虚线，可能降低游戏速度",
+					intro: "拖拽時顯示虛線，可能降低遊戲速度",
 				},
 				// enable_pressure:{
-				// 	name:'启用压感',
+				// 	name:'啟用壓感',
 				// 	init:false,
-				// 	intro:'开启后可通过按压执行操作',
+				// 	intro:'開啟後可通過按壓執行操作',
 				// 	unfrequent:true,
 				// },
 				// pressure_taptic:{
-				// 	name:'触觉反馈',
+				// 	name:'觸覺反饋',
 				// 	init:false,
-				// 	intro:'开启后按压操作执行时将产生震动',
+				// 	intro:'開啟後按壓操作執行時將產生震動',
 				// 	unfrequent:true,
 				// },
 				// pressure_click:{
-				// 	name:'按压操作',
+				// 	name:'按壓操作',
 				// 	init:'pause',
-				// 	intro:'在空白区域按压时的操作',
+				// 	intro:'在空白區域按壓時的操作',
 				// 	unfrequent:true,
 				// 	item:{
-				// 		pause:'暂停',
-				// 		config:'选项',
-				// 		auto:'托管',
+				// 		pause:'暫停',
+				// 		config:'選項',
+				// 		auto:'託管',
 				// 	}
 				// },
 				touchscreen: {
-					name: "触屏模式",
+					name: "觸屏模式",
 					init: false,
 					restart: true,
 					unfrequent: true,
-					intro: "开启后可使触屏设备反应更快，但无法使用鼠标操作",
+					intro: "開啟後可使觸屏設備反應更快，但無法使用鼠標操作",
 					onclick(bool) {
 						if (get.is.nomenu("touchscreen", bool)) return false;
 						game.saveConfig("touchscreen", bool);
 					},
 				},
 				swipe: {
-					name: "滑动手势",
+					name: "滑動手勢",
 					init: true,
 					unfrequent: true,
-					intro: "在非滚动区域向四个方向滑动可执行对应操作",
+					intro: "在非滾動區域向四個方向滑動可執行對應操作",
 				},
 				swipe_down: {
-					name: "下划操作",
+					name: "下劃操作",
 					init: "menu",
 					unfrequent: true,
-					intro: "向下滑动时执行的操作",
+					intro: "向下滑動時執行的操作",
 					item: {
-						system: "显示按钮",
-						menu: "打开菜单",
-						pause: "切换暂停",
-						auto: "切换托管",
-						chat: "显示聊天",
-						off: "关闭",
+						system: "顯示按鈕",
+						menu: "打開菜單",
+						pause: "切換暫停",
+						auto: "切換託管",
+						chat: "顯示聊天",
+						off: "關閉",
 					},
 					onclick(item) {
 						if (get.is.nomenu("swipe_down", item)) return false;
@@ -865,17 +865,17 @@ export class Library {
 					},
 				},
 				swipe_up: {
-					name: "上划操作",
-					intro: "向上滑动时执行的操作",
+					name: "上劃操作",
+					intro: "向上滑動時執行的操作",
 					init: "auto",
 					unfrequent: true,
 					item: {
-						system: "显示按钮",
-						menu: "打开菜单",
-						pause: "切换暂停",
-						auto: "切换托管",
-						chat: "显示聊天",
-						off: "关闭",
+						system: "顯示按鈕",
+						menu: "打開菜單",
+						pause: "切換暫停",
+						auto: "切換託管",
+						chat: "顯示聊天",
+						off: "關閉",
 					},
 					onclick(item) {
 						if (get.is.nomenu("swipe_up", item)) return false;
@@ -883,17 +883,17 @@ export class Library {
 					},
 				},
 				swipe_left: {
-					name: "左划操作",
-					intro: "向左滑动时执行的操作",
+					name: "左劃操作",
+					intro: "向左滑動時執行的操作",
 					init: "system",
 					unfrequent: true,
 					item: {
-						system: "显示按钮",
-						menu: "打开菜单",
-						pause: "切换暂停",
-						auto: "切换托管",
-						chat: "显示聊天",
-						off: "关闭",
+						system: "顯示按鈕",
+						menu: "打開菜單",
+						pause: "切換暫停",
+						auto: "切換託管",
+						chat: "顯示聊天",
+						off: "關閉",
 					},
 					onclick(item) {
 						if (get.is.nomenu("swipe_left", item)) return false;
@@ -901,17 +901,17 @@ export class Library {
 					},
 				},
 				swipe_right: {
-					name: "右划操作",
-					intro: "向右滑动时执行的操作",
+					name: "右劃操作",
+					intro: "向右滑動時執行的操作",
 					init: "system",
 					unfrequent: true,
 					item: {
-						system: "显示按钮",
-						menu: "打开菜单",
-						pause: "切换暂停",
-						auto: "切换托管",
-						chat: "显示聊天",
-						off: "关闭",
+						system: "顯示按鈕",
+						menu: "打開菜單",
+						pause: "切換暫停",
+						auto: "切換託管",
+						chat: "顯示聊天",
+						off: "關閉",
 					},
 					onclick(item) {
 						if (get.is.nomenu("swipe_right", item)) return false;
@@ -919,15 +919,15 @@ export class Library {
 					},
 				},
 				round_menu_func: {
-					name: "触屏按钮操作",
-					intro: "点击屏幕中圆形按钮时执行的操作",
+					name: "觸屏按鈕操作",
+					intro: "點擊屏幕中圓形按鈕時執行的操作",
 					init: "system",
 					unfrequent: true,
 					item: {
-						system: "显示按钮",
-						menu: "打开菜单",
-						pause: "切换暂停",
-						auto: "切换托管",
+						system: "顯示按鈕",
+						menu: "打開菜單",
+						pause: "切換暫停",
+						auto: "切換託管",
 					},
 					onclick(item) {
 						if (get.is.nomenu("round_menu_func", item)) return false;
@@ -935,48 +935,48 @@ export class Library {
 					},
 				},
 				show_splash: {
-					name: "显示开始界面",
-					intro: "游戏开始前进入模式选择画面",
+					name: "顯示開始界面",
+					intro: "遊戲開始前進入模式選擇畫面",
 					init: "init",
 					item: {
-						off: "关闭",
-						init: "首次启动",
-						always: "保持开启",
+						off: "關閉",
+						init: "首次啟動",
+						always: "保持開啟",
 					},
 				},
 				game_speed: {
-					name: "游戏速度",
+					name: "遊戲速度",
 					init: "mid",
 					item: {
 						vslow: "慢",
-						slow: "较慢",
+						slow: "較慢",
 						mid: "中",
-						fast: "较快",
+						fast: "較快",
 						vfast: "快",
 						vvfast: "很快",
 					},
-					intro: "设置不同游戏操作间的时间间隔",
+					intro: "設置不同遊戲操作間的時間間隔",
 				},
 				sync_speed: {
-					name: "限制结算速度",
-					intro: "在动画结算完成前不执行下一步操作，开启后游戏操作的间隔更长但画面更流畅，在游戏较卡时建议开启",
+					name: "限制結算速度",
+					intro: "在動畫結算完成前不執行下一步操作，開啟後遊戲操作的間隔更長但畫面更流暢，在遊戲較卡時建議開啟",
 					init: true,
 				},
 				enable_vibrate: {
-					name: "开启震动",
-					intro: "回合开始时使手机震动",
+					name: "開啟震動",
+					intro: "回合開始時使手機震動",
 					init: false,
 				},
 				right_click: {
-					name: "右键操作",
+					name: "右鍵操作",
 					init: "pause",
-					intro: "在空白区域点击右键时的操作",
+					intro: "在空白區域點擊右鍵時的操作",
 					unfrequent: true,
 					item: {
-						pause: "暂停",
+						pause: "暫停",
 						shortcut: "工具",
-						config: "选项",
-						auto: "托管",
+						config: "選項",
+						auto: "託管",
 					},
 					onclick(item) {
 						if (get.is.nomenu("right_click", item)) return false;
@@ -984,36 +984,36 @@ export class Library {
 					},
 				},
 				longpress_info: {
-					name: "长按显示信息",
+					name: "長按顯示信息",
 					init: true,
 					unfrequent: true,
 					restart: true,
-					intro: "长按后弹出菜单",
+					intro: "長按後彈出菜單",
 				},
 				right_info: {
-					name: "右键显示信息",
+					name: "右鍵顯示信息",
 					init: true,
 					unfrequent: true,
 					restart: true,
-					intro: "右键点击后弹出菜单",
+					intro: "右鍵點擊後彈出菜單",
 				},
 				hover_all: {
-					name: "悬停显示信息",
+					name: "懸停顯示信息",
 					init: true,
 					unfrequent: true,
 					restart: true,
-					intro: "悬停后弹出菜单",
+					intro: "懸停後彈出菜單",
 				},
 				hover_handcard: {
-					name: "悬停手牌显示信息",
+					name: "懸停手牌顯示信息",
 					init: true,
 					unfrequent: true,
-					intro: "悬停手牌后弹出菜单",
+					intro: "懸停手牌後彈出菜單",
 				},
 				hoveration: {
-					name: "悬停菜单弹出时间",
+					name: "懸停菜單彈出時間",
 					unfrequent: true,
-					intro: "鼠标移至目标到弹出菜单的时间间隔",
+					intro: "鼠標移至目標到彈出菜單的時間間隔",
 					init: "1000",
 					item: {
 						500: "0.5秒",
@@ -1024,29 +1024,29 @@ export class Library {
 					},
 				},
 				doubleclick_intro: {
-					name: "双击显示角色资料",
+					name: "雙擊顯示角色資料",
 					init: true,
 					unfrequent: true,
-					intro: "双击角色头像后显示其资料卡",
+					intro: "雙擊角色頭像後顯示其資料卡",
 				},
 				video: {
-					name: "保存录像",
+					name: "保存錄像",
 					init: "20",
-					intro: "游戏结束后保存录像在最大条数，超过后将从最早的录像开始删除（已收藏的录像不计入条数）",
+					intro: "遊戲結束後保存錄像在最大條數，超過後將從最早的錄像開始刪除（已收藏的錄像不計入條數）",
 					item: {
-						0: "关闭",
+						0: "關閉",
 						5: "五局",
 						10: "十局",
 						20: "二十局",
 						50: "五十局",
-						10000: "无限",
+						10000: "無限",
 					},
 					unfrequent: true,
 				},
 				video_default_play_speed: {
-					name: "默认录像播放速度",
+					name: "默認錄像播放速度",
 					init: "1x",
-					intro: "设置播放游戏录像时默认的播放速度",
+					intro: "設置播放遊戲錄像時默認的播放速度",
 					item: {
 						"0.25x": "0.25倍速",
 						"0.5x": "0.5倍速",
@@ -1058,8 +1058,8 @@ export class Library {
 					unfrequent: true,
 				},
 				max_loadtime: {
-					name: "最长载入时间",
-					intro: "设置游戏从启动到完成载入所需的最长时间，超过此时间未完成载入会报错，若设备较慢或安装了较多扩展可适当延长此时间",
+					name: "最長載入時間",
+					intro: "設置遊戲從啟動到完成載入所需的最長時間，超過此時間未完成載入會報錯，若設備較慢或安裝了較多擴展可適當延長此時間",
 					init: "5000",
 					unfrequent: true,
 					item: {
@@ -1078,10 +1078,10 @@ export class Library {
 					},
 				},
 				mousewheel: {
-					name: "滚轮控制手牌",
+					name: "滾輪控制手牌",
 					init: true,
 					unfrequent: true,
-					intro: "开启后滚轮可使手牌横向滚动，在mac等可横向滚动的设备上建议关闭",
+					intro: "開啟後滾輪可使手牌橫向滾動，在mac等可橫向滾動的設備上建議關閉",
 					onclick(bool) {
 						game.saveConfig("mousewheel", bool);
 						if (lib.config.touchscreen) return;
@@ -1095,20 +1095,20 @@ export class Library {
 					},
 				},
 				auto_check_update: {
-					name: "自动检查游戏更新",
-					intro: "进入游戏时检查更新",
+					name: "自動檢查遊戲更新",
+					intro: "進入遊戲時檢查更新",
 					init: false,
 					unfrequent: true,
 				},
 				lucky_star: {
-					name: "幸运星模式",
-					intro: "在涉及随机数等的技能中，必定得到效果最好的结果。（联机模式无效）",
+					name: "幸運星模式",
+					intro: "在涉及隨機數等的技能中，必定得到效果最好的結果。（聯機模式無效）",
 					init: false,
 					unfrequent: true,
 				},
 				dev: {
-					name: "开发者模式",
-					intro: "开启后可使用浏览器控制台控制游戏，同时可更新到开发版",
+					name: "開發者模式",
+					intro: "開啟後可使用瀏覽器控制台控制遊戲，同時可更新到開發版",
 					init: false,
 					onclick(bool) {
 						game.saveConfig("dev", bool);
@@ -1130,13 +1130,13 @@ export class Library {
 					unfrequent: true,
 				},
 				extension_auto_import: {
-					name: "自动导入扩展",
+					name: "自動導入擴展",
 					intro: dedent`
-						开启后无名杀会自动导入扩展目录下的扩展（以此法导入的扩展默认关闭）
+						開啟後無名殺會自動導入擴展目錄下的擴展（以此法導入的擴展默認關閉）
 						<br />
-						※ 如果你的运行环境不支持文件操作，则该选项无效
+						※ 如果你的運行環境不支持文件操作，則該選項無效
 						<br />
-						※ 鉴于不同平台下文件操作的性能区别，开启后可能会降低加载速度
+						※ 鑑於不同平臺下文件操作的性能區別，開啟後可能會降低加載速度
 					`,
 					init: false,
 					async onclick(bool) {
@@ -1145,12 +1145,12 @@ export class Library {
 					unfrequent: true,
 				},
 				extension_alert: {
-					name: "无视扩展报错",
+					name: "無視擴展報錯",
 					init: false,
 					unfrequent: true,
 				},
 				fuck_sojson: {
-					name: "检测加密扩展",
+					name: "檢測加密擴展",
 					init: false,
 					unfrequent: true,
 				},
@@ -1163,28 +1163,28 @@ export class Library {
 						github: "GitHub",
 						gitcode: "GitCode",
 					},
-					intro: "GitHub可同时下载离线(无素材)更新包和完整包，但网络条件要求较高；GitCode仅更新无离线更新包，素材更新请使用单独的‘检测素材更新’；安卓启动器只能下载完整包，win启动器都可。",
+					intro: "GitHub可同時下載離線(無素材)更新包和完整包，但網絡條件要求較高；GitCode僅更新無離線更新包，素材更新請使用單獨的‘檢測素材更新’；安卓啟動器只能下載完整包，win啟動器都可。",
 					onclick(item) {
 						game.saveConfig("update_link", item);
 						lib.updateURL = lib.updateURLS[item] || lib.updateURLS.coding;
 					},
 				},
 				extension_source: {
-					name: "获取扩展地址",
+					name: "獲取擴展地址",
 					init: "GitCode",
 					unfrequent: true,
 					item: {},
-					intro: () => `获取在线扩展时的地址。当前地址：${document.createElement("br").outerHTML}${lib.config.extension_sources[lib.config.extension_source]}`,
+					intro: () => `獲取在線擴展時的地址。當前地址：${document.createElement("br").outerHTML}${lib.config.extension_sources[lib.config.extension_source]}`,
 				},
 				extension_create: {
-					name: "添加获取扩展地址",
+					name: "添加獲取擴展地址",
 					clear: true,
 					unfrequent: true,
 					onclick() {
-						game.prompt("请输入地址名称", function (str) {
+						game.prompt("請輸入地址名稱", function (str) {
 							if (str) {
 								var map = lib.config.extension_sources;
-								game.prompt("请输入" + str + "的地址", function (str2) {
+								game.prompt("請輸入" + str + "的地址", function (str2) {
 									if (str2) {
 										delete map[str];
 										map[str] = str2;
@@ -1217,7 +1217,7 @@ export class Library {
 										});
 										textMenu._link = str;
 										nodezz.item[name] = str;
-										alert("已添加扩展地址：" + str);
+										alert("已添加擴展地址：" + str);
 									}
 								});
 							}
@@ -1225,7 +1225,7 @@ export class Library {
 					},
 				},
 				extension_delete: {
-					name: "删除当前扩展地址",
+					name: "刪除當前擴展地址",
 					clear: true,
 					unfrequent: true,
 					onclick() {
@@ -1238,7 +1238,7 @@ export class Library {
 							}
 						}
 						if (!bool) {
-							alert("不能删除最后一个扩展地址！");
+							alert("不能刪除最後一個擴展地址！");
 							return;
 						}
 						var name = lib.config.extension_source;
@@ -1256,7 +1256,7 @@ export class Library {
 							}
 						}
 						delete nodezz.item[name];
-						alert("已删除扩展地址：" + name);
+						alert("已刪除擴展地址：" + name);
 					},
 				},
 				update: function (config, map) {
@@ -1355,10 +1355,10 @@ export class Library {
 			},
 		},
 		appearence: {
-			name: "外观",
+			name: "外觀",
 			config: {
 				theme: {
-					name: "主题",
+					name: "主題",
 					init: "music",
 					item: {},
 					visualMenu: function (node, link) {
@@ -1392,14 +1392,14 @@ export class Library {
 					},
 				},
 				layout: {
-					name: "布局",
+					name: "佈局",
 					init: "nova",
 					item: {
-						//default:'旧版',
-						//newlayout: "对称",
-						//mobile: "默认",
-						//long: "宽屏",
-						//long2: "手杀",
+						//default:'舊版',
+						//newlayout: "對稱",
+						//mobile: "默認",
+						//long: "寬屏",
+						//long2: "手殺",
 						nova: "新版",
 					},
 					visualMenu: function (node, link) {
@@ -1544,11 +1544,11 @@ export class Library {
 					},
 				},
 				splash_style: {
-					name: "启动页",
+					name: "啟動頁",
 					init: "style1",
 					item: {
-						style1: "样式一",
-						style2: "样式二",
+						style1: "樣式一",
+						style2: "樣式二",
 					},
 					visualMenu: async (node, link) => {
 						let splash = lib.onloadSplashes.find(item => item.id == link);
@@ -1558,12 +1558,12 @@ export class Library {
 					},
 				},
 				// fewplayer:{
-				//     name:'启用人数',
-				// 	intro:'设置启用新版布局的最小人数（不足时切换至默认布局）',
+				//     name:'啟用人數',
+				// 	intro:'設置啟用新版佈局的最小人數（不足時切換至默認佈局）',
 				//     init:'3',
 				//     // unfrequent:true,
 				//     item:{
-				//      			'2':'两人',
+				//      			'2':'兩人',
 				//      			'3':'三人',
 				//      			'4':'四人',
 				//      			'5':'五人',
@@ -1594,7 +1594,7 @@ export class Library {
 					name: "角色高度",
 					init: "short",
 					item: {
-						// auto:'自动',
+						// auto:'自動',
 						short: "矮",
 						default: "中",
 						long: "高",
@@ -1618,7 +1618,7 @@ export class Library {
 				// 	name:'背景色',
 				// 	init:'black',
 				// 	item:{
-				// 		blue:'蓝色',
+				// 		blue:'藍色',
 				// 		black:'黑色',
 				// 	},
 				// 	onclick(color){
@@ -1630,7 +1630,7 @@ export class Library {
 				// 	name:'背景色',
 				// 	init:'blue',
 				// 	item:{
-				// 		blue:'蓝色',
+				// 		blue:'藍色',
 				// 		black:'黑色',
 				// 	},
 				// 	onclick(color){
@@ -1639,10 +1639,10 @@ export class Library {
 				// 	}
 				// },
 				// theme_color_music:{
-				// 	name:'主题色',
+				// 	name:'主題色',
 				// 	init:'black',
 				// 	item:{
-				// 		blue:'蓝色',
+				// 		blue:'藍色',
 				// 		black:'黑色',
 				// 	},
 				// 	onclick(color){
@@ -1651,7 +1651,7 @@ export class Library {
 				// 	}
 				// },
 				ui_zoom: {
-					name: "界面缩放",
+					name: "界面縮放",
 					unfrequent: true,
 					init: "big",
 					item: {
@@ -1709,7 +1709,7 @@ export class Library {
 					},
 				},
 				image_background: {
-					name: "游戏背景",
+					name: "遊戲背景",
 					init: "default",
 					item: {},
 					visualBar: function (node, item, create) {
@@ -1760,9 +1760,9 @@ export class Library {
 										var str;
 										if (this.classList.contains("active")) {
 											if (link.startsWith("custom_") || link.startsWith("cdv_")) {
-												str = "删除";
+												str = "刪除";
 											} else {
-												str = "隐藏";
+												str = "隱藏";
 											}
 										} else {
 											str = item[link];
@@ -1772,7 +1772,7 @@ export class Library {
 								}
 							}
 						};
-						ui.create.div(".menubutton", "编辑背景", node, editbg);
+						ui.create.div(".menubutton", "編輯背景", node, editbg);
 					},
 					visualMenu: function (node, link, name, config) {
 						node.className = "button character";
@@ -1807,12 +1807,12 @@ export class Library {
 					onclick(background, node) {
 						if (node && node.firstChild) {
 							var menu = node.parentNode;
-							if (node.firstChild.innerHTML == get.verticalStr("隐藏")) {
+							if (node.firstChild.innerHTML == get.verticalStr("隱藏")) {
 								menu.parentNode.noclose = true;
 								node.remove();
 								menu.updateBr();
 								if (!lib.config.prompt_hidebg) {
-									alert("隐藏的背景可通过选项-其它-重置隐藏内容恢复");
+									alert("隱藏的背景可通過選項-其它-重置隱藏內容恢復");
 									game.saveConfig("prompt_hidebg", true);
 								}
 								lib.config.hiddenBackgroundPack.add(background);
@@ -1820,14 +1820,14 @@ export class Library {
 								delete lib.configMenu.appearence.config.image_background.item[background];
 								if (lib.config.image_background == background) {
 									background = "default";
-									this.lastChild.innerHTML = "默认";
+									this.lastChild.innerHTML = "默認";
 								} else {
 									this.lastChild.innerHTML = lib.configMenu.appearence.config.image_background.item[lib.config.image_background];
 									return;
 								}
-							} else if (node.firstChild.innerHTML == get.verticalStr("删除")) {
+							} else if (node.firstChild.innerHTML == get.verticalStr("刪除")) {
 								menu.parentNode.noclose = true;
-								if (confirm("是否删除此背景？（此操作不可撤销）")) {
+								if (confirm("是否刪除此背景？（此操作不可撤銷）")) {
 									node.remove();
 									menu.updateBr();
 									lib.config.customBackgroundPack.remove(background);
@@ -1840,7 +1840,7 @@ export class Library {
 									delete lib.configMenu.appearence.config.image_background.item[background];
 									if (lib.config.image_background == background) {
 										background = "default";
-										this.lastChild.innerHTML = "默认";
+										this.lastChild.innerHTML = "默認";
 									} else {
 										this.lastChild.innerHTML = lib.configMenu.appearence.config.image_background.item[lib.config.image_background];
 										return;
@@ -1854,7 +1854,7 @@ export class Library {
 					},
 				},
 				image_background_random: {
-					name: "随机背景",
+					name: "隨機背景",
 					init: false,
 					onclick(bool) {
 						game.saveConfig("image_background_random", bool);
@@ -1878,7 +1878,7 @@ export class Library {
 					},
 				},
 				phonelayout: {
-					name: "触屏布局",
+					name: "觸屏佈局",
 					init: false,
 					onclick(bool) {
 						if (get.is.nomenu("phonelayout", bool)) return false;
@@ -1893,21 +1893,21 @@ export class Library {
 					},
 				},
 				change_skin: {
-					name: "开启换肤",
+					name: "開啟換膚",
 					init: true,
-					intro: "在角色的右键菜单中换肤，皮肤可在选项-文件-图片文件-皮肤图片中添加",
+					intro: "在角色的右鍵菜單中換膚，皮膚可在選項-文件-圖片文件-皮膚圖片中添加",
 				},
 				change_skin_auto: {
-					name: "自动换肤",
+					name: "自動換膚",
 					init: "off",
 					item: {
-						off: "关闭",
-						30000: "半分钟",
-						60000: "一分钟",
-						120000: "两分钟",
-						300000: "五分钟",
+						off: "關閉",
+						30000: "半分鐘",
+						60000: "一分鐘",
+						120000: "兩分鐘",
+						300000: "五分鐘",
 					},
-					intro: "游戏每进行一段时间自动为一个随机角色更换皮肤",
+					intro: "遊戲每進行一段時間自動為一個隨機角色更換皮膚",
 					onclick(item) {
 						game.saveConfig("change_skin_auto", item);
 						clearTimeout(_status.skintimeout);
@@ -1917,17 +1917,17 @@ export class Library {
 					},
 				},
 				card_style: {
-					name: "卡牌样式",
+					name: "卡牌樣式",
 					init: "default",
-					intro: "设置正面朝上的卡牌的样式",
+					intro: "設置正面朝上的卡牌的樣式",
 					item: {
-						wood: "木纹",
-						music: "音乐",
+						wood: "木紋",
+						music: "音樂",
 						simple: "原版",
-						//ol: "手杀",
+						//ol: "手殺",
 						// new:'新版',
 						custom: "自定",
-						default: "默认",
+						default: "默認",
 					},
 					visualBar: function (node, item, create, switcher) {
 						if (node.created) {
@@ -1944,7 +1944,7 @@ export class Library {
 						}
 						node.created = true;
 						var deletepic;
-						ui.create.filediv(".menubutton", "添加图片", node, function (file) {
+						ui.create.filediv(".menubutton", "添加圖片", node, function (file) {
 							if (file) {
 								game.putDB("image", "card_style", file, function () {
 									game.getDB("image", "card_style", function (fileToLoad) {
@@ -1961,15 +1961,15 @@ export class Library {
 								});
 							}
 						}).inputNode.accept = "image*";
-						deletepic = ui.create.div(".menubutton.deletebutton", "删除图片", node, function () {
-							if (confirm("确定删除自定义图片？（此操作不可撤销）")) {
+						deletepic = ui.create.div(".menubutton.deletebutton", "刪除圖片", node, function () {
+							if (confirm("確定刪除自定義圖片？（此操作不可撤銷）")) {
 								game.deleteDB("image", "card_style");
 								button.style.backgroundImage = "none";
 								button.className = "button character dashedmenubutton";
 								node.classList.remove("showdelete");
 								if (lib.config.card_style == "custom") {
 									lib.configMenu.appearence.config.card_style.onclick("default");
-									switcher.lastChild.innerHTML = "默认";
+									switcher.lastChild.innerHTML = "默認";
 								}
 								button.classList.add("transparent");
 							}
@@ -2048,20 +2048,20 @@ export class Library {
 					unfrequent: true,
 				},
 				cardback_style: {
-					name: "卡背样式",
-					intro: "设置背面朝上的卡牌的样式",
+					name: "卡背樣式",
+					intro: "設置背面朝上的卡牌的樣式",
 					init: "xingBei",
 					item: {
-						// wood:'木纹',
-						// music:'音乐',
+						// wood:'木紋',
+						// music:'音樂',
 						//official: "原版",
 						// new:'新版',
-						//feicheng: "废城",
+						//feicheng: "廢城",
 						//liusha: "流沙",
-						//ol: "手杀",
+						//ol: "手殺",
 						xingBei: "星杯",
 						custom: "自定",
-						default: "默认",
+						default: "默認",
 					},
 					visualBar: function (node, item, create, switcher) {
 						if (node.created) {
@@ -2078,7 +2078,7 @@ export class Library {
 						}
 						node.created = true;
 						var deletepic;
-						ui.create.filediv(".menubutton", "添加图片", node, function (file) {
+						ui.create.filediv(".menubutton", "添加圖片", node, function (file) {
 							if (file) {
 								game.putDB("image", "cardback_style", file, function () {
 									game.getDB("image", "cardback_style", function (fileToLoad) {
@@ -2095,15 +2095,15 @@ export class Library {
 								});
 							}
 						}).inputNode.accept = "image/*";
-						ui.create.filediv(".menubutton.deletebutton.addbutton", "添加翻转图片", node, function (file) {
+						ui.create.filediv(".menubutton.deletebutton.addbutton", "添加翻轉圖片", node, function (file) {
 							if (file) {
 								game.putDB("image", "cardback_style2", file, function () {
 									node.classList.add("hideadd");
 								});
 							}
 						}).inputNode.accept = "image/*";
-						deletepic = ui.create.div(".menubutton.deletebutton", "删除图片", node, function () {
-							if (confirm("确定删除自定义图片？（此操作不可撤销）")) {
+						deletepic = ui.create.div(".menubutton.deletebutton", "刪除圖片", node, function () {
+							if (confirm("確定刪除自定義圖片？（此操作不可撤銷）")) {
 								game.deleteDB("image", "cardback_style");
 								game.deleteDB("image", "cardback_style2");
 								button.style.backgroundImage = "none";
@@ -2112,7 +2112,7 @@ export class Library {
 								node.classList.remove("hideadd");
 								if (lib.config.cardback_style == "custom") {
 									lib.configMenu.appearence.config.cardback_style.onclick("default");
-									switcher.lastChild.innerHTML = "默认";
+									switcher.lastChild.innerHTML = "默認";
 								}
 								button.classList.add("transparent");
 							}
@@ -2223,16 +2223,16 @@ export class Library {
 					unfrequent: true,
 				},
 				hp_style: {
-					name: "治疗样式",
+					name: "治療樣式",
 					init: "default",
 					item: {
-						default: "默认",
+						default: "默認",
 						// official:'勾玉',
 						//emotion: "表情",
 						//glass: "勾玉",
-						//round: "国战",
-						//ol: "手杀",
-						//xinglass: "双鱼",
+						//round: "國戰",
+						//ol: "手殺",
+						//xinglass: "雙魚",
 						//xinround: "OL",
 						xingBei: "星杯",
 						custom: "自定",
@@ -2252,7 +2252,7 @@ export class Library {
 						}
 						node.created = true;
 						var deletepic;
-						ui.create.filediv(".menubutton.addbutton", "添加图片", node, function (file) {
+						ui.create.filediv(".menubutton.addbutton", "添加圖片", node, function (file) {
 							if (file && node.currentDB) {
 								game.putDB("image", "hp_style" + node.currentDB, file, function () {
 									game.getDB("image", "hp_style" + node.currentDB, function (fileToLoad) {
@@ -2275,8 +2275,8 @@ export class Library {
 								});
 							}
 						}).inputNode.accept = "image/*";
-						deletepic = ui.create.div(".menubutton.deletebutton", "删除图片", node, function () {
-							if (confirm("确定删除自定义图片？（此操作不可撤销）")) {
+						deletepic = ui.create.div(".menubutton.deletebutton", "刪除圖片", node, function () {
+							if (confirm("確定刪除自定義圖片？（此操作不可撤銷）")) {
 								game.deleteDB("image", "hp_style1");
 								game.deleteDB("image", "hp_style2");
 								game.deleteDB("image", "hp_style3");
@@ -2288,7 +2288,7 @@ export class Library {
 								node.classList.remove("hideadd");
 								if (lib.config.hp_style == "custom") {
 									lib.configMenu.appearence.config.hp_style.onclick("default");
-									switcher.lastChild.innerHTML = "默认";
+									switcher.lastChild.innerHTML = "默認";
 								}
 								button.classList.add("transparent");
 								button.classList.remove("shown");
@@ -2409,13 +2409,13 @@ export class Library {
 				player_style: {
 					name: "角色背景",
 					init: "default",
-					intro: "设置角色的背景图片",
+					intro: "設置角色的背景圖片",
 					item: {
-						wood: "木纹",
-						music: "音乐",
-						simple: "简约",
+						wood: "木紋",
+						music: "音樂",
+						simple: "簡約",
 						custom: "自定",
-						default: "默认",
+						default: "默認",
 					},
 					visualBar: function (node, item, create, switcher) {
 						if (node.created) {
@@ -2432,7 +2432,7 @@ export class Library {
 						}
 						node.created = true;
 						var deletepic;
-						ui.create.filediv(".menubutton", "添加图片", node, function (file) {
+						ui.create.filediv(".menubutton", "添加圖片", node, function (file) {
 							if (file) {
 								game.putDB("image", "player_style", file, function () {
 									game.getDB("image", "player_style", function (fileToLoad) {
@@ -2450,15 +2450,15 @@ export class Library {
 								});
 							}
 						}).inputNode.accept = "image/*";
-						deletepic = ui.create.div(".menubutton.deletebutton", "删除图片", node, function () {
-							if (confirm("确定删除自定义图片？（此操作不可撤销）")) {
+						deletepic = ui.create.div(".menubutton.deletebutton", "刪除圖片", node, function () {
+							if (confirm("確定刪除自定義圖片？（此操作不可撤銷）")) {
 								game.deleteDB("image", "player_style");
 								button.style.backgroundImage = "none";
 								button.className = "button character dashedmenubutton";
 								node.classList.remove("showdelete");
 								if (lib.config.player_style == "custom") {
 									lib.configMenu.appearence.config.player_style.onclick("default");
-									switcher.lastChild.innerHTML = "默认";
+									switcher.lastChild.innerHTML = "默認";
 								}
 								button.classList.add("transparent");
 							}
@@ -2538,24 +2538,24 @@ export class Library {
 					unfrequent: true,
 				},
 				zhishixian: {
-					name: "指示线",
-					intro: "设置卡牌、技能的指示特效",
+					name: "指示線",
+					intro: "設置卡牌、技能的指示特效",
 					init: "default",
 					unfrequent: true,
 					item: {
-						default: "默认",
+						default: "默認",
 						Mohua: "水墨",
 						Xiangong: "先攻",
 						Zhuzhang: "竹杖",
 						Shuimo: "幻彩",
 						Anhei: "黑暗",
 						Mozhua: "魔爪",
-						Shenjian: "神剑",
-						Yujian: "御剑",
-						Jianfeng: "剑锋",
+						Shenjian: "神劍",
+						Yujian: "御劍",
+						Jianfeng: "劍鋒",
 						Jinjian: "金箭",
-						Jinlong: "金龙",
-						Yuexian: "乐仙",
+						Jinlong: "金龍",
+						Yuexian: "樂仙",
 						Xingdie: "星蝶",
 						Luoying: "落英",
 						Shezhang: "蛇杖",
@@ -2570,20 +2570,20 @@ export class Library {
 					},
 				},
 				border_style: {
-					name: "角色边框",
+					name: "角色邊框",
 					init: "default",
-					intro: "设置角色边框的样式，当设为自动时，样式将随着一局游戏中伤害或击杀的数量自动改变",
+					intro: "設置角色邊框的樣式，當設為自動時，樣式將隨著一局遊戲中傷害或擊殺的數量自動改變",
 					item: {
 						gold: "金框",
-						silver: "银框",
-						bronze: "铜框",
-						dragon_gold: "金龙",
-						dragon_silver: "银龙",
-						dragon_bronze: "玉龙",
+						silver: "銀框",
+						bronze: "銅框",
+						dragon_gold: "金龍",
+						dragon_silver: "銀龍",
+						dragon_bronze: "玉龍",
 						custom: "自定",
-						side:'队伍',
-						auto: "自动",
-						default: "无",
+						side:'隊伍',
+						auto: "自動",
+						default: "無",
 					},
 					visualBar: function (node, item, create, switcher) {
 						if (node.created) {
@@ -2600,7 +2600,7 @@ export class Library {
 						}
 						node.created = true;
 						var deletepic;
-						ui.create.filediv(".menubutton", "添加图片", node, function (file) {
+						ui.create.filediv(".menubutton", "添加圖片", node, function (file) {
 							if (file) {
 								game.putDB("image", "border_style", file, function () {
 									game.getDB("image", "border_style", function (fileToLoad) {
@@ -2618,15 +2618,15 @@ export class Library {
 								});
 							}
 						}).inputNode.accept = "image/*";
-						deletepic = ui.create.div(".menubutton.deletebutton", "删除图片", node, function () {
-							if (confirm("确定删除自定义图片？（此操作不可撤销）")) {
+						deletepic = ui.create.div(".menubutton.deletebutton", "刪除圖片", node, function () {
+							if (confirm("確定刪除自定義圖片？（此操作不可撤銷）")) {
 								game.deleteDB("image", "border_style");
 								button.style.backgroundImage = "none";
 								button.className = "button character dashedmenubutton";
 								node.classList.remove("showdelete");
 								if (lib.config.border_style == "custom") {
 									lib.configMenu.appearence.config.border_style.onclick("default");
-									switcher.lastChild.innerHTML = "默认";
+									switcher.lastChild.innerHTML = "默認";
 								}
 								button.classList.add("transparent");
 							}
@@ -2705,36 +2705,36 @@ export class Library {
 					unfrequent: true,
 				},
 				autoborder_count: {
-					name: "边框升级方式",
-					intro: "<strong>伤害</strong> 每造成两点伤害，边框提升一级<br>",
+					name: "邊框升級方式",
+					intro: "<strong>傷害</strong> 每造成兩點傷害，邊框提升一級<br>",
 					init: "damage",
 					item: {
-						//kill: "击杀",
-						damage: "伤害",
+						//kill: "擊殺",
+						damage: "傷害",
 						//mix: "混合",
 					},
 					unfrequent: true,
 				},
 				autoborder_start: {
-					name: "基础边框颜色",
+					name: "基礎邊框顏色",
 					init: "bronze",
 					item: {
-						bronze: "铜",
-						silver: "银",
+						bronze: "銅",
+						silver: "銀",
 						gold: "金",
 					},
 					unfrequent: true,
 				},
 				player_border: {
-					name: "边框宽度",
+					name: "邊框寬度",
 					init: "normal",
-					intro: "设置角色的边框宽度",
+					intro: "設置角色的邊框寬度",
 					unfrequent: true,
 					item: {
-						slim: "细",
+						slim: "細",
 						narrow: "窄",
 						normal: "中",
-						wide: "宽",
+						wide: "寬",
 					},
 					onclick(item) {
 						game.saveConfig("player_border", item);
@@ -2762,14 +2762,14 @@ export class Library {
 					},
 				},
 				menu_style: {
-					name: "菜单背景",
+					name: "菜單背景",
 					init: "default",
 					item: {
-						wood: "木纹",
-						music: "音乐",
-						simple: "简约",
+						wood: "木紋",
+						music: "音樂",
+						simple: "簡約",
 						custom: "自定",
-						default: "默认",
+						default: "默認",
 					},
 					visualBar: function (node, item, create, switcher) {
 						if (node.created) {
@@ -2786,7 +2786,7 @@ export class Library {
 						}
 						node.created = true;
 						var deletepic;
-						ui.create.filediv(".menubutton", "添加图片", node, function (file) {
+						ui.create.filediv(".menubutton", "添加圖片", node, function (file) {
 							if (file) {
 								game.putDB("image", "menu_style", file, function () {
 									game.getDB("image", "menu_style", function (fileToLoad) {
@@ -2804,8 +2804,8 @@ export class Library {
 								});
 							}
 						}).inputNode.accept = "image/*";
-						deletepic = ui.create.div(".menubutton.deletebutton", "删除图片", node, function () {
-							if (confirm("确定删除自定义图片？（此操作不可撤销）")) {
+						deletepic = ui.create.div(".menubutton.deletebutton", "刪除圖片", node, function () {
+							if (confirm("確定刪除自定義圖片？（此操作不可撤銷）")) {
 								game.deleteDB("image", "menu_style");
 								button.style.backgroundImage = "none";
 								button.style.backgroundSize = "auto";
@@ -2813,7 +2813,7 @@ export class Library {
 								node.classList.remove("showdelete");
 								if (lib.config.menu_style == "custom") {
 									lib.configMenu.appearence.config.menu_style.onclick("default");
-									switcher.lastChild.innerHTML = "默认";
+									switcher.lastChild.innerHTML = "默認";
 								}
 								button.classList.add("transparent");
 							}
@@ -2892,14 +2892,14 @@ export class Library {
 					unfrequent: true,
 				},
 				control_style: {
-					name: "按钮背景",
+					name: "按鈕背景",
 					init: "default",
 					item: {
-						wood: "木纹",
-						music: "音乐",
-						simple: "简约",
+						wood: "木紋",
+						music: "音樂",
+						simple: "簡約",
 						custom: "自定",
-						default: "默认",
+						default: "默認",
 					},
 					visualBar: function (node, item, create, switcher) {
 						if (node.created) {
@@ -2916,7 +2916,7 @@ export class Library {
 						}
 						node.created = true;
 						var deletepic;
-						ui.create.filediv(".menubutton", "添加图片", node, function (file) {
+						ui.create.filediv(".menubutton", "添加圖片", node, function (file) {
 							if (file) {
 								game.putDB("image", "control_style", file, function () {
 									game.getDB("image", "control_style", function (fileToLoad) {
@@ -2933,15 +2933,15 @@ export class Library {
 								});
 							}
 						}).inputNode.accept = "image/*";
-						deletepic = ui.create.div(".menubutton.deletebutton", "删除图片", node, function () {
-							if (confirm("确定删除自定义图片？（此操作不可撤销）")) {
+						deletepic = ui.create.div(".menubutton.deletebutton", "刪除圖片", node, function () {
+							if (confirm("確定刪除自定義圖片？（此操作不可撤銷）")) {
 								game.deleteDB("image", "control_style");
 								button.style.backgroundImage = "none";
 								button.className = "button character controlbutton dashedmenubutton";
 								node.classList.remove("showdelete");
 								if (lib.config.control_style == "custom") {
 									lib.configMenu.appearence.config.control_style.onclick("default");
-									switcher.lastChild.innerHTML = "默认";
+									switcher.lastChild.innerHTML = "默認";
 								}
 								button.classList.add("transparent");
 							}
@@ -3023,7 +3023,7 @@ export class Library {
 					unfrequent: true,
 				},
 				custom_button: {
-					name: "自定义按钮高度",
+					name: "自定義按鈕高度",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -3053,7 +3053,7 @@ export class Library {
 					},
 				},
 				custom_button_system_top: {
-					name: "菜单上部高度",
+					name: "菜單上部高度",
 					init: "0x",
 					item: {
 						"-5x": "-5px",
@@ -3061,7 +3061,7 @@ export class Library {
 						"-3x": "-3px",
 						"-2x": "-2px",
 						"-1x": "-1px",
-						"0x": "默认",
+						"0x": "默認",
 						"1x": "1px",
 						"2x": "2px",
 						"3x": "3px",
@@ -3075,7 +3075,7 @@ export class Library {
 					},
 				},
 				custom_button_system_bottom: {
-					name: "菜单下部高度",
+					name: "菜單下部高度",
 					init: "0x",
 					item: {
 						"-5x": "-5px",
@@ -3083,7 +3083,7 @@ export class Library {
 						"-3x": "-3px",
 						"-2x": "-2px",
 						"-1x": "-1px",
-						"0x": "默认",
+						"0x": "默認",
 						"1x": "1px",
 						"2x": "2px",
 						"3x": "3px",
@@ -3105,7 +3105,7 @@ export class Library {
 						"-3x": "-3px",
 						"-2x": "-2px",
 						"-1x": "-1px",
-						"0x": "默认",
+						"0x": "默認",
 						"1x": "1px",
 						"2x": "2px",
 						"3x": "3px",
@@ -3127,7 +3127,7 @@ export class Library {
 						"-3x": "-3px",
 						"-2x": "-2px",
 						"-1x": "-1px",
-						"0x": "默认",
+						"0x": "默認",
 						"1x": "1px",
 						"2x": "2px",
 						"3x": "3px",
@@ -3141,12 +3141,12 @@ export class Library {
 					},
 				},
 				radius_size: {
-					name: "圆角大小",
+					name: "圓角大小",
 					init: "default",
 					item: {
-						off: "关闭",
-						reduce: "减小",
-						default: "默认",
+						off: "關閉",
+						reduce: "減小",
+						default: "默認",
 						increase: "增大",
 					},
 					unfrequent: true,
@@ -3156,14 +3156,14 @@ export class Library {
 					},
 				},
 				glow_phase: {
-					name: "当前回合角色高亮",
+					name: "當前回合角色高亮",
 					unfrequent: true,
 					init: "yellow",
-					intro: "设置当前回合角色的边框颜色",
+					intro: "設置當前回合角色的邊框顏色",
 					item: {
-						none: "无",
-						yellow: "黄色",
-						green: "绿色",
+						none: "無",
+						yellow: "黃色",
+						green: "綠色",
 						purple: "紫色",
 					},
 					onclick(bool) {
@@ -3173,31 +3173,31 @@ export class Library {
 				},
 				/*
 				equip_span: {
-					name: "装备牌占位",
-					intro: "打开后，没有装备的装备区将在装备栏占据空白位置。",
+					name: "裝備牌佔位",
+					intro: "打開後，沒有裝備的裝備區將在裝備欄佔據空白位置。",
 					init: false,
 					unfrequent: false,
 				},*/
 				fold_card: {
-					name: "折叠手牌",
+					name: "摺疊手牌",
 					init: true,
 					unfrequent: true,
 				},
 				fold_mode: {
-					name: "折叠模式菜单",
-					intro: "关闭后模式菜单中“更多”内的项目将直接展开",
+					name: "摺疊模式菜單",
+					intro: "關閉後模式菜單中“更多”內的項目將直接展開",
 					init: true,
 					unfrequent: true,
 				},
 				seperate_control: {
-					name: "分离选项条",
+					name: "分離選項條",
 					init: true,
 					unfrequent: true,
-					intro: "开启后玩家在进行选择时不同的选项将分开，而不是连在一起",
+					intro: "開啟後玩家在進行選擇時不同的選項將分開，而不是連在一起",
 				},
 				blur_ui: {
 					name: "模糊效果",
-					intro: "在暂停或打开菜单时开启模糊效果",
+					intro: "在暫停或打開菜單時開啟模糊效果",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -3210,8 +3210,8 @@ export class Library {
 					},
 				},
 				glass_ui: {
-					name: "玻璃主题",
-					intro: "为游戏主题打开玻璃效果（手机暂不支持）",
+					name: "玻璃主題",
+					intro: "為遊戲主題打開玻璃效果（手機暫不支持）",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -3224,14 +3224,14 @@ export class Library {
 					},
 				},
 				damage_shake: {
-					name: "伤害抖动",
-					intro: "角色受到伤害时的抖动效果",
+					name: "傷害抖動",
+					intro: "角色受到傷害時的抖動效果",
 					init: true,
 					unfrequent: true,
 				},
 				button_press: {
-					name: "按钮效果",
-					intro: "选项条被按下时将有按下效果",
+					name: "按鈕效果",
+					intro: "選項條被按下時將有按下效果",
 					init: true,
 					unfrequent: true,
 				},
@@ -3242,57 +3242,57 @@ export class Library {
 					unfrequent: true,
 				},*/
 				animation: {
-					name: "游戏特效",
-					intro: "开启后出现部分情况时会显示动画",
+					name: "遊戲特效",
+					intro: "開啟後出現部分情況時會顯示動畫",
 					init: false,
 					unfrequent: true,
 				},
 				separateEnergyAndMarkers: {
-					name: "独立显示能量和红蓝专属",
+					name: "獨立顯示能量和紅藍專屬",
 					init: false,
-					intro: "开启后将角色能量和红蓝专属指示物单独显示在角色下方",
+					intro: "開啟後將角色能量和紅藍專屬指示物單獨顯示在角色下方",
 					onclick(bool) {
 						game.saveConfig("separateEnergyAndMarkers", bool);
 						lib.init.background();
 					},
 				},
 				card_animation_info: {
-					name: "卡牌动画信息(Beta)",
-					intro: "开启后会在卡牌动画中显示一些信息来源并启用虚拟牌动画(Beta测试功能，如遇异常可关闭该功能)",
+					name: "卡牌動畫信息(Beta)",
+					intro: "開啟後會在卡牌動畫中顯示一些信息來源並啟用虛擬牌動畫(Beta測試功能，如遇異常可關閉該功能)",
 					init: false,
 					unfrequent: false,
 				},
 				skill_animation_type: {
 					name: "技能特效",
-					intro: "开启后发动部分技能将显示全屏文字",
+					intro: "開啟後發動部分技能將顯示全屏文字",
 					init: "default",
 					unfrequent: true,
 					item: {
-						default: "默认",
-						old: "旧版",
-						off: "关闭",
+						default: "默認",
+						old: "舊版",
+						off: "關閉",
 					},
 				},
 				/*
 				die_move: {
-					name: "阵亡效果",
-					intro: "阵亡后武将的显示效果",
+					name: "陣亡效果",
+					intro: "陣亡後武將的顯示效果",
 					init: "flip",
 					unfrequent: true,
 					item: {
-						off: "关闭",
-						move: "移动",
+						off: "關閉",
+						move: "移動",
 						flip: "翻面",
 					},
 				},*/
 				target_shake: {
-					name: "目标效果",
-					intro: "一名玩家成为卡牌或技能的目标时的显示效果",
+					name: "目標效果",
+					intro: "一名玩家成為卡牌或技能的目標時的顯示效果",
 					init: "off",
 					item: {
-						off: "关闭",
-						zoom: "缩放",
-						shake: "抖动",
+						off: "關閉",
+						zoom: "縮放",
+						shake: "抖動",
 					},
 					unfrequent: true,
 					onclick(bool) {
@@ -3303,7 +3303,7 @@ export class Library {
 				/*
 				turned_style: {
 					name: "翻面文字",
-					intro: "角色被翻面时显示“翻面”",
+					intro: "角色被翻面時顯示“翻面”",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -3316,14 +3316,14 @@ export class Library {
 					},
 				},
 				link_style2: {
-					name: "横置样式",
-					intro: "设置角色被横置时的样式",
+					name: "橫置樣式",
+					intro: "設置角色被橫置時的樣式",
 					init: "rotate",
 					unfrequent: true,
 					item: {
-						//chain: "铁索",
-						rotate: "横置",
-						//mark: "标记",
+						//chain: "鐵索",
+						rotate: "橫置",
+						//mark: "標記",
 					},
 					onclick(style) {
 						var list = [];
@@ -3351,13 +3351,13 @@ export class Library {
 					},
 				},*/
 				cardshape: {
-					name: "手牌显示",
-					intro: "将手牌设置为正方形或长方形",
+					name: "手牌顯示",
+					intro: "將手牌設置為正方形或長方形",
 					init: "default",
 					unfrequent: true,
 					item: {
-						default: "默认",
-						oblong: "长方",
+						default: "默認",
+						oblong: "長方",
 					},
 					onclick(item) {
 						/*
@@ -3386,14 +3386,14 @@ export class Library {
 					},
 				},
 				cardtempname: {
-					name: "视为卡牌名称显示",
-					intro: "显示强制视为类卡牌（如武魂），包括拆顺对话框内的判定牌（国色）转换等名称的显示方式",
+					name: "視為卡牌名稱顯示",
+					intro: "顯示強制視為類卡牌（如武魂），包括拆順對話框內的判定牌（國色）轉換等名稱的顯示方式",
 					init: "image",
 					unfrequent: true,
 					item: {
-						default: "纵向",
-						horizon: "横向",
-						image: "图片",
+						default: "縱向",
+						horizon: "橫向",
+						image: "圖片",
 						off: "禁用",
 					},
 					onclick(item) {
@@ -3417,11 +3417,11 @@ export class Library {
 					},
 				},
 				/*textequip:{
-					name:'装备显示',
+					name:'裝備顯示',
 					init:'image',
 					unfrequent:true,
 					item:{
-						image:'图片',
+						image:'圖片',
 						text:'文字',
 					},
 					onclick(item){
@@ -3435,32 +3435,32 @@ export class Library {
 					}
 				},*/
 				buttoncharacter_style: {
-					name: "选角样式",
+					name: "選角樣式",
 					init: "default",
 					item: {
-						default: "默认",
-						simple: "精简",
-						old: "旧版",
+						default: "默認",
+						simple: "精簡",
+						old: "舊版",
 					},
 					unfrequent: true,
 				},
 				buttoncharacter_prefix: {
-					name: "角色前缀",
+					name: "角色前綴",
 					init: "default",
 					item: {
-						default: "默认",
-						simple: "不显示颜色",
-						off: "不显示前缀",
+						default: "默認",
+						simple: "不顯示顏色",
+						off: "不顯示前綴",
 					},
 					unfrequent: true,
 				},
 				cursor_style: {
-					name: "鼠标指针",
+					name: "鼠標指針",
 					init: "auto",
-					intro: "设置为固定后鼠标指针将不随移动到的区域而变化",
+					intro: "設置為固定後鼠標指針將不隨移動到的區域而變化",
 					unfrequent: true,
 					item: {
-						auto: "自动",
+						auto: "自動",
 						pointer: "固定",
 					},
 					onclick(item) {
@@ -3473,7 +3473,7 @@ export class Library {
 					},
 				},
 				name_font: {
-					name: "人名字体",
+					name: "人名字體",
 					init: "xingkai",
 					unfrequent: true,
 					item: {},
@@ -3489,7 +3489,7 @@ export class Library {
 					},
 				},
 				identity_font: {
-					name: "身份字体",
+					name: "身份字體",
 					init: "huangcao",
 					unfrequent: true,
 					item: {},
@@ -3505,7 +3505,7 @@ export class Library {
 					},
 				},
 				cardtext_font: {
-					name: "卡牌字体",
+					name: "卡牌字體",
 					init: "default",
 					unfrequent: true,
 					item: {},
@@ -3521,7 +3521,7 @@ export class Library {
 					},
 				},
 				global_font: {
-					name: "界面字体",
+					name: "界面字體",
 					init: "default",
 					unfrequent: true,
 					item: {},
@@ -3539,10 +3539,10 @@ export class Library {
 					},
 				},
 				suits_font: {
-					name: "替换花色字体",
+					name: "替換花色字體",
 					init: true,
 					unfrequent: true,
-					intro: "使用全角字符的花色替代系统自带的花色（重启游戏后生效）",
+					intro: "使用全角字符的花色替代系統自帶的花色（重啟遊戲後生效）",
 					onclick(bool) {
 						game.saveConfig("suits_font", bool);
 					},
@@ -3628,7 +3628,7 @@ export class Library {
 			},
 		},
 		view: {
-			name: "显示",
+			name: "顯示",
 			config: {
 				update: function (config, map) {
 					//if (lib.config.mode == "versus" || lib.config.mode == "chess" || lib.config.mode == "tafang" || lib.config.mode == "boss") {
@@ -3718,12 +3718,12 @@ export class Library {
 					}
 				},
 				show_history: {
-					name: "出牌记录栏",
+					name: "出牌記錄欄",
 					init: "off",
-					intro: "在屏幕左侧或右侧显示出牌记录",
+					intro: "在屏幕左側或右側顯示出牌記錄",
 					unfrequent: true,
 					item: {
-						off: "关闭",
+						off: "關閉",
 						left: "靠左",
 						right: "靠右",
 					},
@@ -3744,17 +3744,17 @@ export class Library {
 					},
 				},
 				pop_logv: {
-					name: "自动弹出记录",
+					name: "自動彈出記錄",
 					init: false,
 					unfrequent: true,
 				},
 				show_log: {
-					name: "历史记录栏",
+					name: "歷史記錄欄",
 					init: "off",
-					intro: "在屏幕中部显示出牌文字记录",
+					intro: "在屏幕中部顯示出牌文字記錄",
 					unfrequent: true,
 					item: {
-						off: "关闭",
+						off: "關閉",
 						left: "靠左",
 						center: "居中",
 						right: "靠右",
@@ -3771,20 +3771,20 @@ export class Library {
 					},
 				},
 				clear_log: {
-					name: "自动清除历史记录",
+					name: "自動清除歷史記錄",
 					init: false,
 					unfrequent: true,
-					intro: "开启后将定时清除历史记录栏的条目（而不是等记录栏满后再清除）",
+					intro: "開啟後將定時清除歷史記錄欄的條目（而不是等記錄欄滿後再清除）",
 				},
 				log_highlight: {
-					name: "历史记录高亮",
+					name: "歷史記錄高亮",
 					init: true,
 					unfrequent: true,
-					intro: "开启后历史记录不同类别的信息将以不同颜色显示",
+					intro: "開啟後歷史記錄不同類別的信息將以不同顏色顯示",
 				},
 				show_time: {
-					name: "显示时间",
-					intro: "在屏幕顶部显示当前时间",
+					name: "顯示時間",
+					intro: "在屏幕頂部顯示當前時間",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -3797,8 +3797,8 @@ export class Library {
 					},
 				},
 				show_time2: {
-					name: "显示时间",
-					intro: "在触屏按钮处显示当前时间",
+					name: "顯示時間",
+					intro: "在觸屏按鈕處顯示當前時間",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -3811,12 +3811,12 @@ export class Library {
 					},
 				},
 				watchface: {
-					name: "表盘样式",
+					name: "錶盤樣式",
 					init: "none",
 					unfrequent: true,
 					item: {
-						none: "默认",
-						simple: "简约",
+						none: "默認",
+						simple: "簡約",
 					},
 					onclick(item) {
 						game.saveConfig("watchface", item);
@@ -3824,12 +3824,12 @@ export class Library {
 					},
 				},
 				show_time3: {
-					name: "显示游戏时间",
+					name: "顯示遊戲時間",
 					init: false,
 					unfrequent: true,
 				},
 				show_statusbar_android: {
-					name: "显示状态栏",
+					name: "顯示狀態欄",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -3846,14 +3846,14 @@ export class Library {
 					},
 				},
 				show_statusbar_ios: {
-					name: "显示状态栏",
+					name: "顯示狀態欄",
 					init: "off",
 					unfrequent: true,
 					item: {
-						default: "默认",
+						default: "默認",
 						overlay: "嵌入",
-						auto: "自动",
-						off: "关闭",
+						auto: "自動",
+						off: "關閉",
 					},
 					onclick(bool) {
 						game.saveConfig("show_statusbar_ios", bool);
@@ -3876,50 +3876,50 @@ export class Library {
 					},
 				},
 				show_card_prompt: {
-					name: "显示出牌信息",
-					intro: "出牌时在使用者上显示卡牌名称",
+					name: "顯示出牌信息",
+					intro: "出牌時在使用者上顯示卡牌名稱",
 					init: true,
 					unfrequent: true,
 				},
 				/*
 				hide_card_prompt_basic: {
-					name: "隐藏基本牌信息",
-					intro: "不显示基本牌名称",
+					name: "隱藏基本牌信息",
+					intro: "不顯示基本牌名稱",
 					init: false,
 					unfrequent: true,
 				},
 				hide_card_prompt_equip: {
-					name: "隐藏装备牌信息",
-					intro: "不显示装备牌名称",
+					name: "隱藏裝備牌信息",
+					intro: "不顯示裝備牌名稱",
 					init: false,
 					unfrequent: true,
 				},*/
 				show_phase_prompt: {
-					name: "显示阶段信息",
-					intro: "在当前回合不同阶段开始时显示阶段名称",
+					name: "顯示階段信息",
+					intro: "在當前回合不同階段開始時顯示階段名稱",
 					init: true,
 					unfrequent: true,
 				},
 				show_phaseuse_prompt: {
-					name: "行动阶段提示",
-					intro: "在你出牌时显示提示文字",
+					name: "行動階段提示",
+					intro: "在你出牌時顯示提示文字",
 					init: true,
 					unfrequent: true,
 				},
 				auto_popped_config: {
-					name: "自动弹出选项",
-					intro: "鼠标移至选项按钮时弹出模式选择菜单",
+					name: "自動彈出選項",
+					intro: "鼠標移至選項按鈕時彈出模式選擇菜單",
 					init: true,
 					unfrequent: true,
 				},
 				auto_popped_history: {
-					name: "自动弹出历史",
-					intro: "鼠标移至暂停按钮时弹出历史记录菜单",
+					name: "自動彈出歷史",
+					intro: "鼠標移至暫停按鈕時彈出歷史記錄菜單",
 					init: false,
 					unfrequent: true,
 				},
 				show_round_menu: {
-					name: "显示触屏按钮",
+					name: "顯示觸屏按鈕",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -3929,13 +3929,13 @@ export class Library {
 							ui.roundmenu.style.display = "";
 						} else {
 							ui.roundmenu.style.display = "none";
-							alert("关闭触屏按钮后可通过手势打开菜单（默认为下划）");
+							alert("關閉觸屏按鈕後可通過手勢打開菜單（默認為下劃）");
 						}
 					},
 				},
 				remember_round_button: {
-					name: "记住按钮位置",
-					intro: "重新开始后触屏按钮将保存的上一局的位置",
+					name: "記住按鈕位置",
+					intro: "重新開始後觸屏按鈕將保存的上一局的位置",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -3946,8 +3946,8 @@ export class Library {
 					},
 				},
 				remember_dialog: {
-					name: "记住对话框位置",
-					intro: "移动对话框后新的对话框也将在移动后的位置显示",
+					name: "記住對話框位置",
+					intro: "移動對話框後新的對話框也將在移動後的位置顯示",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -3970,9 +3970,9 @@ export class Library {
 					},
 				},
 				transparent_dialog: {
-					name: "堆叠对话框虚化",
+					name: "堆疊對話框虛化",
 					init: false,
-					intro: "当具有static属性的对话框堆叠（如五谷丰登对话框中提示无懈可击）时，将后方的对话框变为半透明",
+					intro: "當具有static屬性的對話框堆疊（如五穀豐登對話框中提示無懈可擊）時，將後方的對話框變為半透明",
 					onclick(bool) {
 						game.saveConfig("transparent_dialog", bool);
 						if (bool) {
@@ -3991,9 +3991,9 @@ export class Library {
 					},
 				},
 				show_rarity: {
-					name: "显示角色评级",
+					name: "顯示角色評級",
 					init: false,
-					intro: "仅供娱乐，重启后生效",
+					intro: "僅供娛樂，重啟後生效",
 					unfrequent: true,
 					onclick(bool) {
 						game.saveConfig("show_rarity", bool);
@@ -4001,18 +4001,18 @@ export class Library {
 				},
 				/*
 				mark_identity_style: {
-					name: "标记身份操作",
-					intro: "设置单击身份按钮时的操作",
+					name: "標記身份操作",
+					intro: "設置單擊身份按鈕時的操作",
 					unfrequent: true,
 					init: "menu",
 					item: {
-						menu: "菜单",
-						click: "单击",
+						menu: "菜單",
+						click: "單擊",
 					},
 				},*/
 				character_dialog_tool: {
-					name: "自由选角显示",
-					intro: "点击自由选角时默认显示的条目",
+					name: "自由選角顯示",
+					intro: "點擊自由選角時默認顯示的條目",
 					init: "最近",
 					item: {
 						收藏: "收藏",
@@ -4023,7 +4023,7 @@ export class Library {
 				},
 				recent_character_number: {
 					name: "最近使用角色",
-					intro: "自由选角对话框中最近使用角色的数量",
+					intro: "自由選角對話框中最近使用角色的數量",
 					init: "12",
 					item: {
 						5: "5",
@@ -4036,8 +4036,8 @@ export class Library {
 					unfrequent: true,
 				},
 				showMax_character_number: {
-					name: "最大角色数显示",
-					intro: "设置自由选角对话框一页显示的最大角色数<br><span class=firetext>注意事项：<br><li>更改此选项后，需要重启游戏以使用新选项配置<br><li>推荐将此选项设置为偏小数值，可降低加载过多角色时导致的性能损耗</span>",
+					name: "最大角色數顯示",
+					intro: "設置自由選角對話框一頁顯示的最大角色數<br><span class=firetext>注意事項：<br><li>更改此選項後，需要重啟遊戲以使用新選項配置<br><li>推薦將此選項設置為偏小數值，可降低加載過多角色時導致的性能損耗</span>",
 					init: "10",
 					item: {
 						5: "5",
@@ -4052,63 +4052,63 @@ export class Library {
 				},
 				/*
 				popequip: {
-					name: "触屏装备选择",
-					intro: "设置触屏布局中选择装备的方式",
+					name: "觸屏裝備選擇",
+					intro: "設置觸屏佈局中選擇裝備的方式",
 					init: true,
 					unfrequent: true,
 				},*/
 				filternode_button: {
-					name: "触屏筛选按钮",
-					intro: "设置自由选角对话框中筛选按钮的样式",
+					name: "觸屏篩選按鈕",
+					intro: "設置自由選角對話框中篩選按鈕的樣式",
 					init: true,
 					unfrequent: true,
 				},
 				show_charactercard: {
-					name: "显示角色资料",
-					intro: "在角色界面单击时弹出角色资料卡",
+					name: "顯示角色資料",
+					intro: "在角色界面單擊時彈出角色資料卡",
 					init: true,
 					unfrequent: true,
 				},
 				show_favourite: {
-					name: "显示添加收藏",
-					intro: "在角色的右键菜单中显示添加收藏",
+					name: "顯示添加收藏",
+					intro: "在角色的右鍵菜單中顯示添加收藏",
 					init: false,
 					unfrequent: true,
 				},
 				show_favmode: {
-					name: "显示模式收藏",
-					intro: "快捷菜单中显示收藏模式",
+					name: "顯示模式收藏",
+					intro: "快捷菜單中顯示收藏模式",
 					init: true,
 					unfrequent: true,
 				},
 				show_favourite_menu: {
-					name: "显示收藏菜单",
-					intro: "在选项-角色中显示收藏一栏",
+					name: "顯示收藏菜單",
+					intro: "在選項-角色中顯示收藏一欄",
 					init: true,
 					unfrequent: true,
 				},
 				show_ban_menu: {
-					name: "显示禁角菜单",
-					intro: "在选项-角色中显示禁角一栏",
+					name: "顯示禁角菜單",
+					intro: "在選項-角色中顯示禁角一欄",
 					init: true,
 					unfrequent: true,
 				},
 				
 				right_range: {
-					name: "显示角色信息",
-					intro: "在角色的右键菜单中显示信息",
+					name: "顯示角色信息",
+					intro: "在角色的右鍵菜單中顯示信息",
 					init: true,
 					unfrequent: true,
 				},
 				hide_card_image: {
-					name: "隐藏卡牌背景",
-					intro: "所有卡牌将使用文字作为背景",
+					name: "隱藏卡牌背景",
+					intro: "所有卡牌將使用文字作為背景",
 					init: false,
 					unfrequent: true,
 					restart: true,
 				},
 				show_name: {
-					name: "显示角色名称",
+					name: "顯示角色名稱",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -4121,19 +4121,19 @@ export class Library {
 					},
 				},
 				show_sex: {
-					name: "显示角色名字",
-					intro: "在角色的右键菜单中显示角色名字",
+					name: "顯示角色名字",
+					intro: "在角色的右鍵菜單中顯示角色名字",
 					init: true,
 					unfrequent: true,
 				},
 				show_group: {
-					name: "显示角色势力",
-					intro: "在角色的右键菜单中显示角色势力",
+					name: "顯示角色勢力",
+					intro: "在角色的右鍵菜單中顯示角色勢力",
 					init: true,
 					unfrequent: true,
 				},
 				show_replay: {
-					name: "显示重来按钮",
+					name: "顯示重來按鈕",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -4147,7 +4147,7 @@ export class Library {
 				},
 				/*
 				show_playerids: {
-					name: "显示身份按钮",
+					name: "顯示身份按鈕",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -4160,7 +4160,7 @@ export class Library {
 					},
 				},*/
 				show_sortcard: {
-					name: "显示整理手牌按钮",
+					name: "顯示整理手牌按鈕",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -4173,7 +4173,7 @@ export class Library {
 					},
 				},
 				show_pause: {
-					name: "显示暂停按钮",
+					name: "顯示暫停按鈕",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -4186,7 +4186,7 @@ export class Library {
 					},
 				},
 				show_auto: {
-					name: "显示托管按钮",
+					name: "顯示託管按鈕",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -4199,7 +4199,7 @@ export class Library {
 					},
 				},
 				show_volumn: {
-					name: "显示音量按钮",
+					name: "顯示音量按鈕",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -4212,7 +4212,7 @@ export class Library {
 					},
 				},
 				show_cardpile: {
-					name: "显示牌堆按钮",
+					name: "顯示牌堆按鈕",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -4225,7 +4225,7 @@ export class Library {
 					},
 				},
 				show_cardpile_number: {
-					name: "显示剩余牌数",
+					name: "顯示剩餘牌數",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -4238,8 +4238,8 @@ export class Library {
 					},
 				},
 				show_handcardbutton: {
-					name: "显示手牌按钮",
-					intro: "在多控情况下右上角显示所有我方角色手牌",
+					name: "顯示手牌按鈕",
+					intro: "在多控情況下右上角顯示所有我方角色手牌",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -4248,7 +4248,7 @@ export class Library {
 				},
 				/*
 				show_giveup: {
-					name: "显示投降按钮",
+					name: "顯示投降按鈕",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
@@ -4256,7 +4256,7 @@ export class Library {
 					},
 				},*/
 				show_tip: {
-					name: "显示tip标记",
+					name: "顯示tip標記",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -4266,12 +4266,12 @@ export class Library {
 				},
 				/*
 				show_deckMonitor: {
-					name: "显示记牌器",
+					name: "顯示記牌器",
 					init: true,
 					unfrequent: true,
 					onclick(bool) {
 						if (_status.connectMode) {
-							if (confirm("当前为联机模式，修改此设置需重启，是否重启？")) {
+							if (confirm("當前為聯機模式，修改此設置需重啟，是否重啟？")) {
 								game.saveConfig("show_deckMonitor", bool);
 								game.reload();
 							} else this.classList.toggle("on");
@@ -4286,13 +4286,13 @@ export class Library {
 					},
 				},
 				show_deckMonitor_online: {
-					name: "联机显示记牌器",
-					intro: "如果你是房主，此设置对所有人生效",
+					name: "聯機顯示記牌器",
+					intro: "如果你是房主，此設置對所有人生效",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
 						if (_status.connectMode) {
-							if (confirm("当前为联机模式，修改此设置须重启，是否重启？")) {
+							if (confirm("當前為聯機模式，修改此設置須重啟，是否重啟？")) {
 								game.saveConfig("show_deckMonitor_online", bool);
 								game.reload();
 							} else this.classList.toggle("on");
@@ -4303,8 +4303,8 @@ export class Library {
 				},*/
 				/*
 				show_wuxie: {
-					name: "显示无懈按钮",
-					intro: "在右上角显示不询问无懈",
+					name: "顯示無懈按鈕",
+					intro: "在右上角顯示不詢問無懈",
 					init: false,
 					unfrequent: true,
 					onclick(bool) {
@@ -4317,37 +4317,37 @@ export class Library {
 					},
 				},
 				wuxie_right: {
-					name: "无懈按钮靠左",
+					name: "無懈按鈕靠左",
 					init: true,
 					unfrequent: true,
 				},*/
 				/*
 				show_discardpile: {
-					name: "暂停时显示弃牌堆",
+					name: "暫停時顯示棄牌堆",
 					init: false,
 					unfrequent: true,
 				},*/
 				show_extensionmaker: {
-					name: "显示制作扩展",
+					name: "顯示製作擴展",
 					init: true,
 					unfrequent: true,
 				},
 				show_extensionshare: {
-					name: "显示分享扩展",
+					name: "顯示分享擴展",
 					init: true,
 					unfrequent: true,
 				},
 				show_characternamepinyin: {
-					name: "显示角色名注解",
-					intro: "在角色资料卡显示角色名及其注解、性别、势力、体力等信息",
+					name: "顯示角色名註解",
+					intro: "在角色資料卡顯示角色名及其註解、性別、勢力、體力等信息",
 					init: "showPinyin",
 					unfrequent: true,
 					item: {
-						doNotShow: "不显示",
-						showPinyin: "拼音(样式一)",
-						showCodeIdentifier: "代码ID(样式一)",
-						showPinyin2: "拼音(样式二)",
-						showCodeIdentifier2: "代码ID(样式二)",
+						doNotShow: "不顯示",
+						showPinyin: "拼音(樣式一)",
+						showCodeIdentifier: "代碼ID(樣式一)",
+						showPinyin2: "拼音(樣式二)",
+						showCodeIdentifier2: "代碼ID(樣式二)",
 					},
 					visualMenu: (node, link, name) => {
 						node.classList.add("button", "character");
@@ -4385,8 +4385,8 @@ export class Library {
 					},
 				},
 				show_skillnamepinyin: {
-					name: "显示技能名注解",
-					intro: "在角色资料卡显示技能名注解",
+					name: "顯示技能名註解",
+					intro: "在角色資料卡顯示技能名註解",
 					get init() {
 						return lib.configMenu.view.config.show_characternamepinyin.init;
 					},
@@ -4435,10 +4435,10 @@ export class Library {
 							if (!["music_off", "music_custom", "music_random"].concat(lib.config.all.background_music).includes(menu.childNodes[i]._link)) menu.childNodes[i].delete();
 						}
 					},
-					name: "背景音乐",
+					name: "背景音樂",
 					init: true,
 					item: {
-						music_default: "默认",
+						music_default: "默認",
 					},
 					onclick(item) {
 						game.saveConfig("background_music", item);
@@ -4446,11 +4446,11 @@ export class Library {
 					},
 				},
 				import_music: {
-					name: '<div style="white-space:nowrap;width:calc(100% - 5px)">' + '<input type="file" style="width:calc(100% - 40px)" accept="audio/*">' + '<button style="width:40px">确定</button></div>',
+					name: '<div style="white-space:nowrap;width:calc(100% - 5px)">' + '<input type="file" style="width:calc(100% - 40px)" accept="audio/*">' + '<button style="width:40px">確定</button></div>',
 					clear: true,
 				},
 				background_audio: {
-					name: "游戏音效",
+					name: "遊戲音效",
 					init: true,
 				},
 				background_speak: {
@@ -4459,11 +4459,11 @@ export class Library {
 				},
 				/*
 				equip_audio: {
-					name: "装备配音",
+					name: "裝備配音",
 					init: false,
 				},*/
 				repeat_audio: {
-					name: "播放重复语音",
+					name: "播放重複語音",
 					init: false,
 				},
 				volumn_audio: {
@@ -4485,7 +4485,7 @@ export class Library {
 					},
 				},
 				volumn_background: {
-					name: "背景音乐",
+					name: "背景音樂",
 					init: 1,
 					item: {
 						0: "〇",
@@ -4504,10 +4504,10 @@ export class Library {
 					},
 				},
 				clear_background_music: {
-					name: "清除自定义背景音乐",
+					name: "清除自定義背景音樂",
 					clear: true,
 					onclick() {
-						if (confirm("是否清除已导入的所有自定义背景音乐？（该操作不可撤销！）")) {
+						if (confirm("是否清除已導入的所有自定義背景音樂？（該操作不可撤銷！）")) {
 							for (var i in lib.config.customBackgroundMusic) {
 								lib.config.all.background_music.remove(i);
 								if (i.startsWith("cdv_")) {
@@ -4551,7 +4551,7 @@ export class Library {
 			name: "其它",
 			config: {
 				// reset_database:{
-				// 	name:'重置游戏',
+				// 	name:'重置遊戲',
 				// 	onclick(){
 				// 		var node=this;
 				// 		if(node._clearing){
@@ -4560,13 +4560,13 @@ export class Library {
 				// 			return;
 				// 		}
 				// 		node._clearing=true;
-				// 		node.innerHTML='单击以确认 (3)';
+				// 		node.innerHTML='單擊以確認 (3)';
 				// 		setTimeout(function(){
-				// 			node.innerHTML='单击以确认 (2)';
+				// 			node.innerHTML='單擊以確認 (2)';
 				// 			setTimeout(function(){
-				// 				node.innerHTML='单击以确认 (1)';
+				// 				node.innerHTML='單擊以確認 (1)';
 				// 				setTimeout(function(){
-				// 					node.innerHTML='重置游戏录像';
+				// 					node.innerHTML='重置遊戲錄像';
 				// 					delete node._clearing;
 				// 				},1000);
 				// 			},1000);
@@ -4575,7 +4575,7 @@ export class Library {
 				// 	clear:true
 				// },
 				reset_game: {
-					name: "重置游戏设置",
+					name: "重置遊戲設置",
 					onclick() {
 						var node = this;
 						if (node._clearing) {
@@ -4594,13 +4594,13 @@ export class Library {
 							return;
 						}
 						node._clearing = true;
-						node.firstChild.innerHTML = "单击以确认 (3)";
+						node.firstChild.innerHTML = "單擊以確認 (3)";
 						setTimeout(function () {
-							node.firstChild.innerHTML = "单击以确认 (2)";
+							node.firstChild.innerHTML = "單擊以確認 (2)";
 							setTimeout(function () {
-								node.firstChild.innerHTML = "单击以确认 (1)";
+								node.firstChild.innerHTML = "單擊以確認 (1)";
 								setTimeout(function () {
-									node.firstChild.innerHTML = "重置游戏设置";
+									node.firstChild.innerHTML = "重置遊戲設置";
 									delete node._clearing;
 								}, 1000);
 							}, 1000);
@@ -4609,7 +4609,7 @@ export class Library {
 					clear: true,
 				},
 				reset_hiddenpack: {
-					name: "重置隐藏内容",
+					name: "重置隱藏內容",
 					onclick() {
 						if (this.firstChild.innerHTML != "已重置") {
 							this.firstChild.innerHTML = "已重置";
@@ -4620,9 +4620,9 @@ export class Library {
 							game.saveConfig("hiddenBackgroundPack", []);
 							var that = this;
 							setTimeout(function () {
-								that.firstChild.innerHTML = "重置隐藏内容";
+								that.firstChild.innerHTML = "重置隱藏內容";
 								setTimeout(function () {
-									if (confirm("是否重新启动使改变生效？")) {
+									if (confirm("是否重新啟動使改變生效？")) {
 										game.reload();
 									}
 								});
@@ -4632,7 +4632,7 @@ export class Library {
 					clear: true,
 				},
 				reset_tutorial: {
-					name: "重置新手向导",
+					name: "重置新手嚮導",
 					onclick() {
 						if (this.firstChild.innerHTML != "已重置") {
 							this.firstChild.innerHTML = "已重置";
@@ -4641,29 +4641,29 @@ export class Library {
 							game.saveConfig("prompt_hidepack");
 							var that = this;
 							setTimeout(function () {
-								that.firstChild.innerHTML = "重置新手向导";
+								that.firstChild.innerHTML = "重置新手嚮導";
 							}, 500);
 						}
 					},
 					clear: true,
 				},
 				import_data: {
-					name: "导入游戏设置",
+					name: "導入遊戲設置",
 					onclick() {
 						ui.import_data_button.classList.toggle("hidden");
 					},
 					clear: true,
 				},
 				import_data_button: {
-					name: '<div style="white-space:nowrap;width:calc(100% - 10px)">' + '<input type="file" accept="*/*" style="width:calc(100% - 40px)">' + '<button style="width:40px">确定</button></div>',
+					name: '<div style="white-space:nowrap;width:calc(100% - 10px)">' + '<input type="file" accept="*/*" style="width:calc(100% - 40px)">' + '<button style="width:40px">確定</button></div>',
 					clear: true,
 				},
 				export_data: {
-					name: "导出游戏设置",
+					name: "導出遊戲設置",
 					onclick() {
 						var data;
 						var export_data = function (data) {
-							game.export(lib.init.encode(JSON.stringify(data)), "无名杀 - 数据 - " + new Date().toLocaleString());
+							game.export(lib.init.encode(JSON.stringify(data)), "無名殺 - 數據 - " + new Date().toLocaleString());
 						};
 						if (!lib.db) {
 							data = {};
@@ -4687,7 +4687,7 @@ export class Library {
 					clear: true,
 				},
 				redownload_game: {
-					name: "重新下载游戏",
+					name: "重新下載遊戲",
 					onclick() {
 						var node = this;
 						if (node._clearing) {
@@ -4696,13 +4696,13 @@ export class Library {
 							return;
 						}
 						node._clearing = true;
-						node.firstChild.innerHTML = "单击以确认 (3)";
+						node.firstChild.innerHTML = "單擊以確認 (3)";
 						setTimeout(function () {
-							node.firstChild.innerHTML = "单击以确认 (2)";
+							node.firstChild.innerHTML = "單擊以確認 (2)";
 							setTimeout(function () {
-								node.firstChild.innerHTML = "单击以确认 (1)";
+								node.firstChild.innerHTML = "單擊以確認 (1)";
 								setTimeout(function () {
-									node.firstChild.innerHTML = "重新下载游戏";
+									node.firstChild.innerHTML = "重新下載遊戲";
 									delete node._clearing;
 								}, 1000);
 							}, 1000);
@@ -4718,10 +4718,10 @@ export class Library {
 					}
 				},
 				// trim_game:{
-				// 	name:'隐藏非官方扩展包',
+				// 	name:'隱藏非官方擴展包',
 				// 	onclick(){
-				// 		if(this.innerHTML!='已隐藏'){
-				// 			this.innerHTML='已隐藏';
+				// 		if(this.innerHTML!='已隱藏'){
+				// 			this.innerHTML='已隱藏';
 				//      						 var pack=lib.config.all.cards.slice(0);
 				//      						 if(Array.isArray(lib.config.hiddenCardPack)){
 				//      									  for(var i=0;i<lib.config.hiddenCardPack.length;i++){
@@ -4763,7 +4763,7 @@ export class Library {
 				//
 				// 			var that=this;
 				// 			setTimeout(function(){
-				// 				that.innerHTML='隐藏非官方扩展包';
+				// 				that.innerHTML='隱藏非官方擴展包';
 				// 			},500);
 				// 		}
 				// 	},
@@ -4777,7 +4777,7 @@ export class Library {
 	};
 	mode = {
 		xingBei:{
-			name:'单机',
+			name:'單機',
 			connect:{
 				update:function(config,map){		
 					if(config.connect_phaseswap){
@@ -4801,7 +4801,7 @@ export class Library {
 						}else{
 							map.connect_BPchoose_number.hide();
 						}
-						if(config.connect_choose_mode=='多选1'){
+						if(config.connect_choose_mode=='多選1'){
 							map.connect_choose_number.show();
 						}else{
 							map.connect_choose_number.hide();
@@ -4811,12 +4811,12 @@ export class Library {
 				},
 				/*
 				connect_remark:{
-					name:'房间备注',
+					name:'房間備註',
 					input:true,
 					frequent:true,
 				},*/
 				connect_versus_mode:{
-					name:'游戏模式',
+					name:'遊戲模式',
 					init:'2v2',
 					item:{
 						//'1v1':'1v1',
@@ -4828,31 +4828,31 @@ export class Library {
 					frequent:true
 				},
 				connect_choose_mode:{
-					name:"选角模式",
-					init:"多选1",
+					name:"選角模式",
+					init:"多選1",
 					item:{
-						'多选1':'多选1',
+						'多選1':'多選1',
 						'CM01':"CM01",
 						'CM02':"CM02",
 						'BP01':"BP01",
 						'BP02':"BP02",
-						'jiuGuan':'酒馆',
+						'jiuGuan':'酒館',
 					},
 					frequent:true,
 				},
 				connect_team_sequence:{
-					name:"队伍顺序",
+					name:"隊伍順序",
 					init:"random",
 					item:{
-						'random':'随机',
+						'random':'隨機',
 						'crossed':'交叉',
-						'near':'临近',
+						'near':'臨近',
 						'CM':"CM",
 					},
 					frequent:true,
 				},
 				connect_choose_number:{
-					name:'候选角色数',
+					name:'候選角色數',
 					init:3,
 					item:{
 						1:'1',
@@ -4869,7 +4869,7 @@ export class Library {
 					frequent:true,
 				},
 				connect_BPchoose_number:{
-					name:'可选角色数',
+					name:'可選角色數',
 					init:16,
 					item:{
 						12:'12',
@@ -4881,7 +4881,7 @@ export class Library {
 					frequent:true,
 				},
 				connect_viewHandcard:{
-					name:'可见队友手牌',
+					name:'可見隊友手牌',
 					init:false,
 					onclick:function(bool){
 						game.saveConfig('connect_viewHandcard',bool,this._link.config.mode);
@@ -4889,7 +4889,7 @@ export class Library {
 					frequent:true,
 				},
 				connect_chooseSide:{
-					name:'手动选择队伍',
+					name:'手動選擇隊伍',
 					init:false,
 					onclick:function(bool){
 						game.saveConfig('connect_chooseSide',bool,this._link.config.mode);
@@ -4903,10 +4903,10 @@ export class Library {
 						game.saveConfig('connect_phaseswap',bool,this._link.config.mode);
 					},
 					frequent:true,
-					intro:'双人游玩，每个玩家操控多个角色，适合熟悉的玩家',
+					intro:'雙人遊玩，每個玩家操控多個角色，適合熟悉的玩家',
 				},
 				connect_shiQiMax:{
-					name:'士气最大值',
+					name:'士氣最大值',
 					init:15,
 					item:{
 						10:'10',
@@ -4917,7 +4917,7 @@ export class Library {
 					},
 				},
 				connect_zhanJiMax:{
-					name:'战绩最大值',
+					name:'戰績最大值',
 					init:5,
 					item:{
 						5:'5',
@@ -4937,16 +4937,16 @@ export class Library {
 					}
 				},
 				connect_AItiLian:{
-					name:'降低AI提炼数量',
+					name:'降低AI提煉數量',
 					init:true,
 					onclick:function(bool){
 						game.saveConfig('connect_AItiLian',bool,this._link.config.mode);
 					},
 				},
 				connect_onlyChooseCharacter:{
-					name:'仅选择角色',
+					name:'僅選擇角色',
 					init:false,
-					intro:'选择角色后不会开始游戏，适合推新时使用，方便新人通过手机了解其他玩家角色，房主不要关游戏',
+					intro:'選擇角色後不會開始遊戲，適合推新時使用，方便新人通過手機瞭解其他玩家角色，房主不要關遊戲',
 					onclick:function(bool){
 						game.saveConfig('connect_onlyChooseCharacter',bool,this._link.config.mode);
 					},
@@ -4955,7 +4955,7 @@ export class Library {
 			},
 			config:{
 				update:function(config,map){
-					if(config.choose_mode=='多选1'){
+					if(config.choose_mode=='多選1'){
 						map.choose_number.show();
 					}else{
 						map.choose_number.hide();
@@ -4974,7 +4974,7 @@ export class Library {
 					}
 				},
 				versus_mode:{
-					name:'游戏模式',
+					name:'遊戲模式',
 					init:'two',
 					item:{
 						three:'3v3',
@@ -4985,27 +4985,27 @@ export class Library {
 					frequent:true,
 				},
 				choose_mode:{
-					name:"选角模式",
-					init:"多选1",
+					name:"選角模式",
+					init:"多選1",
 					item:{
-						'多选1':'多选1',
+						'多選1':'多選1',
 						//'CM02':"CM02",
 					},
 					frequent:true,
 				},
 				team_sequence:{
-					name:"队伍顺序",
+					name:"隊伍順序",
 					init:"random",
 					item:{
-						random:'随机',
+						random:'隨機',
 						crossed:'交叉',
-						near:'临近',
+						near:'臨近',
 						CM:"CM",
 					},
 					frequent:true,
 				},
 				choose_number:{
-					name:'候选角色数',
+					name:'候選角色數',
 					init:3,
 					item:{
 						1:'1',
@@ -5018,7 +5018,7 @@ export class Library {
 					frequent:true,
 				},
 				viewHandcard:{
-					name:'可见队友手牌',
+					name:'可見隊友手牌',
 					init:false,
 					onclick:function(bool){
 						game.saveConfig('viewHandcard',bool,this._link.config.mode);
@@ -5039,11 +5039,11 @@ export class Library {
 						}
 					},
 					frequent:true,
-					intro:'玩家操控多个角色',
+					intro:'玩家操控多個角色',
 				},
 
 				free_choose:{
-					name:'自由选角',
+					name:'自由選角',
 					init:true,
 					onclick:function(bool){
 						game.saveConfig('free_choose',bool,this._link.config.mode);
@@ -5057,7 +5057,7 @@ export class Library {
 					}
 				},
 				change_identity:{
-					name:'自由选择座位',
+					name:'自由選擇座位',
 					init:true,
 					onclick:function(bool){
 						game.saveConfig('change_identity',bool,this._link.config.mode);
@@ -5074,7 +5074,7 @@ export class Library {
 					}
 				},
 				change_choice:{
-					name:'开启换角卡',
+					name:'開啟換角卡',
 					init:true,
 					onclick:function(bool){
 						game.saveConfig('change_choice',bool,this._link.config.mode);
@@ -5087,7 +5087,7 @@ export class Library {
 					},
 				},
 				shiQiMax:{
-					name:'士气最大值',
+					name:'士氣最大值',
 					init:15,
 					item:{
 						10:'10',
@@ -5098,7 +5098,7 @@ export class Library {
 					},
 				},
 				zhanJiMax:{
-					name:'战绩最大值',
+					name:'戰績最大值',
 					init:5,
 					item:{
 						5:'5',
@@ -5118,7 +5118,7 @@ export class Library {
 					}
 				},
 				AItiLian:{
-					name:'降低AI提炼数量',
+					name:'降低AI提煉數量',
 					init:true,
 					onclick:function(bool){
 						game.saveConfig('AItiLian',bool,this._link.config.mode);
@@ -5137,17 +5137,17 @@ export class Library {
 					}
 				},
 				difficulty:{
-					name:'难度',
+					name:'難度',
 					init:'normal',
 					item:{
-						easy:'简单',
-						normal:'标准',
-						hard:'困难',
+						easy:'簡單',
+						normal:'標準',
+						hard:'困難',
 					},
 					frequent:true,
 				},
 				choose_number:{
-					name:'候选角色数',
+					name:'候選角色數',
 					init:3,
 					item:{
 						1:'1',
@@ -5160,7 +5160,7 @@ export class Library {
 					frequent:true,
 				},
 				viewHandcard:{
-					name:'可见队友手牌',
+					name:'可見隊友手牌',
 					init:false,
 					onclick:function(bool){
 						game.saveConfig('viewHandcard',bool,this._link.config.mode);
@@ -5168,7 +5168,7 @@ export class Library {
 					frequent:true,
 				},
 				change_identity:{
-					name:'自由选择座位',
+					name:'自由選擇座位',
 					init:true,
 					onclick:function(bool){
 						game.saveConfig('change_identity',bool,this._link.config.mode);
@@ -5185,7 +5185,7 @@ export class Library {
 					}
 				},
 				free_choose: {
-					name: "自由选将",
+					name: "自由選將",
 					init: true,
 					onclick(bool) {
 						game.saveConfig("free_choose", bool, this._link.config.mode);
@@ -5198,7 +5198,7 @@ export class Library {
 					},
 				},
 				change_choice: {
-					name: "换角卡",
+					name: "換角卡",
 					init: true,
 					onclick(bool) {
 						game.saveConfig("change_choice", bool, this._link.config.mode);
@@ -5217,10 +5217,10 @@ export class Library {
 						game.saveConfig('phaseswap',bool,this._link.config.mode);
 					},
 					frequent:true,
-					intro:'玩家操控多个角色',
+					intro:'玩家操控多個角色',
 				},
 				viewHandcard:{
-					name:'可见队友手牌',
+					name:'可見隊友手牌',
 					init:false,
 					onclick:function(bool){
 						game.saveConfig('viewHandcard',bool,this._link.config.mode);
@@ -5237,7 +5237,7 @@ export class Library {
 					}
 				},
 				connect_choose_number:{
-					name:'候选角色数',
+					name:'候選角色數',
 					init:3,
 					item:{
 						1:'1',
@@ -5250,12 +5250,12 @@ export class Library {
 					frequent:true,
 				},
 				connect_difficulty:{
-					name:'难度',
+					name:'難度',
 					init:'normal',
 					item:{
-						easy:'简单',
-						normal:'标准',
-						hard:'困难',
+						easy:'簡單',
+						normal:'標準',
+						hard:'困難',
 					},
 					frequent:true,
 				},
@@ -5266,10 +5266,10 @@ export class Library {
 						game.saveConfig('connect_phaseswap',bool,this._link.config.mode);
 					},
 					frequent:true,
-					intro:'玩家操控多个角色',
+					intro:'玩家操控多個角色',
 				},
 				connect_viewHandcard:{
-					name:'可见队友手牌',
+					name:'可見隊友手牌',
 					init:false,
 					onclick:function(bool){
 						game.saveConfig('connect_viewHandcard',bool,this._link.config.mode);
@@ -5279,10 +5279,10 @@ export class Library {
 			},
 		},
 		connect: {
-			name: "联机",
+			name: "聯機",
 			config: {
 				connect_nickname: {
-					name: "联机昵称",
+					name: "聯機暱稱",
 					input: true,
 					frequent: true,
 					onclick(item) {
@@ -5291,7 +5291,7 @@ export class Library {
 					},
 				},
 				connect_avatar: {
-					name: "联机头像",
+					name: "聯機頭像",
 					init: "fengZhiJianSheng",
 					item: {},
 					frequent: true,
@@ -5301,12 +5301,12 @@ export class Library {
 					},
 				},
 				hall_ip: {
-					name: "联机大厅",
+					name: "聯機大廳",
 					input: true,
 					frequent: true,
 				},
 				hall_button: {
-					name: "联机大厅按钮",
+					name: "聯機大廳按鈕",
 					init: true,
 					frequent: true,
 					onclick(bool) {
@@ -5321,29 +5321,29 @@ export class Library {
 					},
 				},
 				wss_mode: {
-					name: "使用WSS协议",
+					name: "使用WSS協議",
 					init: true,
 					frequent: true,
-					intro: "在用户填写的IP地址没有直接指定使用WS/WSS协议的情况下，默认使用WSS协议，而非WS协议来连接到联机服务器。<br>请不要轻易勾选此项！",
+					intro: "在用戶填寫的IP地址沒有直接指定使用WS/WSS協議的情況下，默認使用WSS協議，而非WS協議來連接到聯機服務器。<br>請不要輕易勾選此項！",
 				},
 				read_clipboard: {
-					name: "读取邀请链接",
+					name: "讀取邀請鏈接",
 					init: false,
 					frequent: true,
-					intro: "读取剪贴板以解析邀请链接自动加入联机房间",
+					intro: "讀取剪貼板以解析邀請鏈接自動加入聯機房間",
 				},
 				check_versionLocal: {
-					name: "禁止不同版本玩家进房",
+					name: "禁止不同版本玩家進房",
 					init: false,
-					intro: "禁止与自己版本不同的玩家进入房间",
+					intro: "禁止與自己版本不同的玩家進入房間",
 				},
 				check_extension: {
-					name: "禁止扩展玩家进房",
+					name: "禁止擴展玩家進房",
 					init: false,
-					intro: "禁止开启了扩展的的玩家进入房间",
+					intro: "禁止開啟了擴展的的玩家進入房間",
 				},
 				reset_banBlacklist: {
-					name: "重置黑名单",
+					name: "重置黑名單",
 					onclick() {
 						if (this.firstChild.innerHTML != "已重置") {
 							this.firstChild.innerHTML = "已重置";
@@ -5351,7 +5351,7 @@ export class Library {
 							game.saveConfig("banBlacklist", banBlacklist);
 							var that = this;
 							setTimeout(function () {
-								that.firstChild.innerHTML = "重置黑名单";
+								that.firstChild.innerHTML = "重置黑名單";
 							}, 1000);
 						}
 					},
@@ -5360,7 +5360,7 @@ export class Library {
 			},
 		},
 		offlineChoose: {
-			name: "线下选角",
+			name: "線下選角",
 			config: {
 				update:function(config,map){
 					if(config.choose_mode=='CM02' || config.choose_mode=='CM01'){
@@ -5375,7 +5375,7 @@ export class Library {
 					}
 				},
 				versus_mode: {
-					name: "游戏模式",
+					name: "遊戲模式",
 					init: "three",
 					item: {
 						"two": "2v2",
@@ -5386,7 +5386,7 @@ export class Library {
 					restart: true,
 				},
 				choose_mode: {
-					name: "选角模式",
+					name: "選角模式",
 					init: "CM02",
 					item: {
 						'CM01': "CM01",
@@ -5398,19 +5398,19 @@ export class Library {
 					restart: true,
 				},
 				team_sequence:{
-					name:"队伍顺序",
+					name:"隊伍順序",
 					init:"random",
 					item:{
-						random:'随机',
+						random:'隨機',
 						crossed:'交叉',
-						near:'临近',
+						near:'臨近',
 						CM:"CM",
 					},
 					frequent:true,
 					restart:true,
 				},
 				BPchoose_number:{
-					name:'可选角色数',
+					name:'可選角色數',
 					init:16,
 					item:{
 						12:'12',
@@ -5424,7 +5424,7 @@ export class Library {
 			}
 		},
 		illustration:{
-			name:'图鉴',
+			name:'圖鑑',
 			config:{
 				viewAll:{
 					name:'查看所有角色',
@@ -5432,7 +5432,7 @@ export class Library {
 					onclick(bool){
 						game.saveConfig('viewAll',bool,this._link.config.mode);
 					},
-					intro:'关闭后仅能查看已启用的角色包',
+					intro:'關閉後僅能查看已啟用的角色包',
 					frequent:true,
 				},
 			}
@@ -5441,7 +5441,7 @@ export class Library {
 			name: "排行榜",
 			config:{
 				viewAll:{
-					name:'查看所有角色统计数据',
+					name:'查看所有角色統計數據',
 					init:true,
 					frequent:true,
 				},
@@ -5449,19 +5449,19 @@ export class Library {
 					name:'排行榜排序方式',
 					init:'null',
 					item:{
-						null:'无',
-						desc:'胜率↓',
-						asc:'胜率↑',
+						null:'無',
+						desc:'勝率↓',
+						asc:'勝率↑',
 					},
 					frequent:true,
 				}
 			}
 		},
 		tutorial:{
-			name:'新手向导',
+			name:'新手嚮導',
 			config:{
 				information:{
-					name:'相关信息在其他(右上角)->帮助-><br>关于游戏中查看',
+					name:'相關信息在其他(右上角)->幫助-><br>關於遊戲中查看',
 					frequent:true,
 				}
 			}
@@ -5478,17 +5478,17 @@ export class Library {
 		globalId: 0,
 	};
 	help = {
-		关于游戏: `<div style="margin:10px">关于无名星杯</div><ul style="margin-top:0">
-        <li>无名星杯官方发布地址仅有GitHub仓库！
-        <br><a href="https://github.com/RancherJie/noname_xingbei" target="_blank">点击前往Github仓库</a>
-        <br><li>无名星杯基于GPLv3开源协议。
-        <br><a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">点击查看GPLv3协议</a>
-        <br><li>无名星杯交流QQ群966951007
-        <br><li>视频教学BV1Mo4y1q717
-        <br><a href="https://www.bilibili.com/video/BV1Mo4y1q717/" target="_blank">点击前往B站教学视频</a>
-        <br><li>说明书
-        <br><a href="https://docs.qq.com/doc/DVEpvRXJzcWZPaVZP" target="_blank">点击查看说明书</a>`,
-		游戏操作: "<ul><li>长按/鼠标悬停/右键单击显示信息。<li>触屏模式中，双指点击切换暂停；下划显示菜单，上划切换托管。<li>键盘快捷键<br>" + "<table><tr><td>A<td>切换托管<tr><td>W<td>切换不询问无懈<tr><td>空格<td>暂停</table><li>编辑牌堆<br>在卡牌包中修改牌堆后，将自动创建一个临时牌堆，在所有模式中共用，当保存当前牌堆后，临时牌堆被清除。每个模式可设置不同的已保存牌堆，设置的牌堆优先级大于临时牌堆。</ul>",
+		關於遊戲: `<div style="margin:10px">關於無名星杯</div><ul style="margin-top:0">
+        <li>無名星杯官方發佈地址僅有GitHub倉庫！
+        <br><a href="https://github.com/RancherJie/noname_xingbei" target="_blank">點擊前往Github倉庫</a>
+        <br><li>無名星杯基於GPLv3開源協議。
+        <br><a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">點擊查看GPLv3協議</a>
+        <br><li>無名星杯交流QQ群966951007
+        <br><li>視頻教學BV1Mo4y1q717
+        <br><a href="https://www.bilibili.com/video/BV1Mo4y1q717/" target="_blank">點擊前往B站教學視頻</a>
+        <br><li>說明書
+        <br><a href="https://docs.qq.com/doc/DVEpvRXJzcWZPaVZP" target="_blank">點擊查看說明書</a>`,
+		遊戲操作: "<ul><li>長按/鼠標懸停/右鍵單擊顯示信息。<li>觸屏模式中，雙指點擊切換暫停；下劃顯示菜單，上劃切換託管。<li>鍵盤快捷鍵<br>" + "<table><tr><td>A<td>切換託管<tr><td>W<td>切換不詢問無懈<tr><td>空格<td>暫停</table><li>編輯牌堆<br>在卡牌包中修改牌堆後，將自動創建一個臨時牌堆，在所有模式中共用，當保存當前牌堆後，臨時牌堆被清除。每個模式可設置不同的已保存牌堆，設置的牌堆優先級大於臨時牌堆。</ul>",
 	};
 	/**
 	 * @type {import('path')}
@@ -5501,134 +5501,134 @@ export class Library {
 				msg = msg.toString();
 				if (typeof msg != "string") throw "err";
 			} catch (_) {
-				throw "传参错误:" + msg;
+				throw "傳參錯誤:" + msg;
 			}
 		}
 		if (msg.startsWith("Uncaught ")) msg = msg.slice(9);
 		let newMessage = msg;
 		if (/RangeError/.test(newMessage)) {
 			if (newMessage.includes("Maximum call stack size exceeded")) {
-				newMessage = "堆栈溢出";
+				newMessage = "堆棧溢出";
 			} else if (/argument must be between 0 and 20/.test(newMessage)) {
 				let funName = newMessage.slice(newMessage.indexOf("RangeError: ") + 12, newMessage.indexOf(")") + 1);
-				newMessage = funName + "参数必须在0和20之间";
+				newMessage = funName + "參數必須在0和20之間";
 			} else {
-				newMessage = "传递错误值到数值计算方法";
+				newMessage = "傳遞錯誤值到數值計算方法";
 			}
 		} else if (/ReferenceError/.test(newMessage)) {
 			let messageName;
 			if (newMessage.includes("is not defined")) {
 				messageName = newMessage.replace("ReferenceError: ", "").replace(" is not defined", "");
-				newMessage = "引用了一个未定义的变量：" + messageName;
+				newMessage = "引用了一個未定義的變量：" + messageName;
 			} else if (newMessage.includes("invalid assignment left-hand side")) {
-				newMessage = "赋值运算符或比较运算符不匹配";
+				newMessage = "賦值運算符或比較運算符不匹配";
 			} else if (newMessage.includes("Octal literals are not allowed in strict mode")) {
-				newMessage = "八进制字面量与八进制转义序列语法已经被废弃";
+				newMessage = "八進制字面量與八進制轉義序列語法已經被廢棄";
 			} else if (newMessage.includes("Illegal 'use strict' directive in function with non-simple parameter list")) {
-				newMessage = "'use strict'指令不能使用在带有‘非简单参数’列表的函数";
+				newMessage = "'use strict'指令不能使用在帶有‘非簡單參數’列表的函數";
 			} else if (newMessage.includes("Invalid left-hand side in assignment")) {
-				newMessage = "赋值中的左侧无效，即number，string等不可赋值的非变量数据";
+				newMessage = "賦值中的左側無效，即number，string等不可賦值的非變量數據";
 			}
 		} else if (/SyntaxError/.test(newMessage)) {
 			let messageName;
 			if (newMessage.includes("Unexpected token ")) {
 				messageName = newMessage.replace("SyntaxError: Unexpected token ", "");
-				newMessage = "使用了未定义或错误的语法 : (" + messageName + ")";
+				newMessage = "使用了未定義或錯誤的語法 : (" + messageName + ")";
 			} else if (newMessage.includes("Block-scoped declarations (let, const, function, class) not yet supported outside strict mode")) {
-				newMessage = "请在严格模式下运行let，const，class";
+				newMessage = "請在嚴格模式下運行let，const，class";
 			} else if (newMessage.includes("for-of loop variable declaration may not have an initializer.")) {
-				newMessage = "for...of 循环的头部包含有初始化表达式";
+				newMessage = "for...of 循環的頭部包含有初始化表達式";
 			} else if (newMessage.includes("for-in loop variable declaration may not have an initializer.")) {
-				newMessage = "for...in 循环的头部包含有初始化表达式";
+				newMessage = "for...in 循環的頭部包含有初始化表達式";
 			} else if (newMessage.includes("Delete of an unqualified identifier in strict mode.")) {
-				newMessage = "普通变量不能通过 delete 操作符来删除";
+				newMessage = "普通變量不能通過 delete 操作符來刪除";
 			} else if (newMessage.includes("Unexpected identifier")) {
-				newMessage = "不合法的标识符或错误的语法";
+				newMessage = "不合法的標識符或錯誤的語法";
 			} else if (newMessage.includes("Invalid or unexpected token")) {
-				newMessage = "非法的或者不期望出现的标记符号出现在不该出现的位置";
+				newMessage = "非法的或者不期望出現的標記符號出現在不該出現的位置";
 			} else if (newMessage.includes("Invalid regular expression flags")) {
-				newMessage = "无效的正则表达式的标记";
+				newMessage = "無效的正則表達式的標記";
 			} else if (newMessage.includes("missing ) after argument list")) {
-				newMessage = "参数列表后面缺少 ')' (丢失运算符或者转义字符等)";
+				newMessage = "參數列表後面缺少 ')' (丟失運算符或者轉義字符等)";
 			} else if (newMessage.includes("Invalid shorthand property initializer")) {
-				newMessage = "在定义一个{}对象时，应该使用':'而不是'='";
+				newMessage = "在定義一個{}對象時，應該使用':'而不是'='";
 			} else if (newMessage.includes("Missing initializer in const declaration")) {
-				newMessage = "在使用const定义一个对象时，必须指定初始值";
+				newMessage = "在使用const定義一個對象時，必須指定初始值";
 			} else if (newMessage.includes("Unexpected number") || newMessage.includes("Unexpected string")) {
-				newMessage = "在定义函数时，函数参数必须为合法标记符";
+				newMessage = "在定義函數時，函數參數必須為合法標記符";
 			} else if (newMessage.includes("Unexpected end of input")) {
-				newMessage = "遗漏了符号或符号顺序不对(小括号，花括号等)";
+				newMessage = "遺漏了符號或符號順序不對(小括號，花括號等)";
 			} else if (newMessage.includes("has already been declared")) {
 				messageName = newMessage.replace("SyntaxError: Identifier ", "").replace(" has already been declared", "");
-				newMessage = messageName + "变量已经被声明过，不能被重新声明";
+				newMessage = messageName + "變量已經被聲明過，不能被重新聲明";
 			} else if (newMessage.includes("Duplicate parameter name not allowed in this context")) {
-				newMessage = "参数名不允许重复";
+				newMessage = "參數名不允許重複";
 			} else if (newMessage.includes("Unexpected reserved word") || newMessage.includes("Unexpected strict mode reserved word")) {
-				newMessage = "保留字被用作标记符";
+				newMessage = "保留字被用作標記符";
 			}
 		} else if (/TypeError/.test(newMessage)) {
 			let messageName;
 			if (newMessage.includes(" is not a function")) {
 				messageName = newMessage.replace("TypeError: ", "").replace(" is not a function", "");
-				newMessage = messageName + "不是一个函数";
+				newMessage = messageName + "不是一個函數";
 			} else if (newMessage.includes(" is not a constructor")) {
 				messageName = newMessage.replace("TypeError: ", "").replace(" is not a constructor", "");
-				newMessage = messageName + "不是一个构造函数";
+				newMessage = messageName + "不是一個構造函數";
 			} else if (newMessage.includes("Cannot read property")) {
 				messageName = newMessage.replace("TypeError: Cannot read property ", "").replace(" of null", "").replace(" of undefined", "");
 				let ofName = newMessage.slice(newMessage.indexOf(" of ") + 4);
-				newMessage = "无法读取'" + ofName + "'的属性值" + messageName;
+				newMessage = "無法讀取'" + ofName + "'的屬性值" + messageName;
 			} else if (newMessage.includes("Cannot read properties")) {
 				messageName = newMessage.slice(newMessage.indexOf("reading '") + 9, -2);
 				let ofName = newMessage.slice(newMessage.indexOf(" of ") + 4, newMessage.indexOf("(") - 1);
-				newMessage = "无法读取'" + ofName + "'的属性值" + messageName;
+				newMessage = "無法讀取'" + ofName + "'的屬性值" + messageName;
 			} else if (newMessage.includes("Property description must be an object")) {
 				messageName = newMessage.replace("TypeError: Property description must be an object: ", "");
-				newMessage = messageName + "是非对象类型的值";
+				newMessage = messageName + "是非對象類型的值";
 			} else if (newMessage.includes("Cannot assign to read only property ")) {
 				messageName = newMessage.slice(47, newMessage.lastIndexOf(" of ") + 1);
-				newMessage = messageName + "属性禁止写入";
+				newMessage = messageName + "屬性禁止寫入";
 			} else if (newMessage.includes("Object prototype may only be an Object or null")) {
-				newMessage = messageName + "对象原型只能是对象或null";
+				newMessage = messageName + "對象原型只能是對象或null";
 			} else if (newMessage.includes("Cannot create property")) {
 				messageName = newMessage.slice(newMessage.indexOf("'") + 1);
 				messageName = messageName.slice(0, messageName.indexOf("'"));
 				let obj = newMessage.slice(newMessage.indexOf(messageName) + 16);
-				newMessage = obj + "不能添加或修改'" + messageName + "'属性，任何 Primitive 值都不允许有property";
+				newMessage = obj + "不能添加或修改'" + messageName + "'屬性，任何 Primitive 值都不允許有property";
 			} else if (newMessage.includes("Can't add property") && newMessage.includes("is not extensible")) {
-				newMessage = "对象不可添加属性（不可扩展）";
+				newMessage = "對象不可添加屬性（不可擴展）";
 			} else if (newMessage.includes("Cannot redefine property")) {
 				messageName = newMessage.slice(37);
 				newMessage = messageName + "不可配置";
 			} else if (newMessage.includes("Converting circular structure to JSON")) {
 				messageName = newMessage.slice(37);
-				newMessage = "JSON.stringify() 方法处理循环引用结构的JSON会失败";
+				newMessage = "JSON.stringify() 方法處理循環引用結構的JSON會失敗";
 			} else if (newMessage.includes("Cannot use 'in' operator to search for ")) {
-				newMessage = "in不能用来在字符串、数字或者其他基本类型的数据中进行检索";
+				newMessage = "in不能用來在字符串、數字或者其他基本類型的數據中進行檢索";
 			} else if (newMessage.includes("Right-hand side of 'instanceof' is not an object")) {
-				newMessage = "instanceof 操作符 希望右边的操作数为一个构造对象，即一个有 prototype 属性且可以调用的对象";
+				newMessage = "instanceof 操作符 希望右邊的操作數為一個構造對象，即一個有 prototype 屬性且可以調用的對象";
 			} else if (newMessage.includes("Assignment to constant variable")) {
-				newMessage = "const定义的变量不可修改";
+				newMessage = "const定義的變量不可修改";
 			} else if (newMessage.includes("Cannot delete property")) {
-				newMessage = "不可配置的属性不能删除";
+				newMessage = "不可配置的屬性不能刪除";
 			} else if (newMessage.includes("which has only a getter")) {
-				newMessage = "仅设置了getter特性的属性不可被赋值";
+				newMessage = "僅設置了getter特性的屬性不可被賦值";
 			} else if (newMessage.includes("called on incompatible receiver undefined")) {
-				newMessage = "this提供的绑定对象与预期的不匹配";
+				newMessage = "this提供的綁定對象與預期的不匹配";
 			}
 		} else if (/URIError/.test(newMessage)) {
-			newMessage = "一个不合法的URI";
+			newMessage = "一個不合法的URI";
 		} else if (/EvalError/.test(newMessage)) {
-			newMessage = "非法调用 eval()";
+			newMessage = "非法調用 eval()";
 		} else if (/InternalError/.test(newMessage)) {
 			if (newMessage.includes("too many switch cases")) {
-				newMessage = "过多case子句";
+				newMessage = "過多case子句";
 			} else if (newMessage.includes("too many parentheses in regular expression")) {
-				newMessage = "正则表达式中括号过多";
+				newMessage = "正則表達式中括號過多";
 			} else if (newMessage.includes("array initializer too large")) {
-				newMessage = "超出数组大小的限制";
+				newMessage = "超出數組大小的限制";
 			} else if (newMessage.includes("too much recursion")) {
-				newMessage = "递归过深";
+				newMessage = "遞歸過深";
 			}
 		}
 		if (newMessage != msg) {
@@ -5649,9 +5649,9 @@ export class Library {
 			hintOptions: { completeSingle: false },
 			theme: lib.config.codeMirror_theme || "mdn-like",
 			extraKeys: {
-				"Ctrl-Z": "undo", //撤销
-				"Ctrl-Y": "redo", //恢复撤销
-				//"Ctrl-A":"selectAll",//全选
+				"Ctrl-Z": "undo", //撤銷
+				"Ctrl-Y": "redo", //恢復撤銷
+				//"Ctrl-A":"selectAll",//全選
 			},
 		});
 		lib.setScroll(editor.querySelector(".CodeMirror-scroll"));
@@ -5665,13 +5665,13 @@ export class Library {
 			} else if (node.textarea) {
 				code = node.textarea.value;
 			}
-			//动态绑定文本
+			//動態綁定文本
 			if (code.length && change.origin == "+input" && /{|}|\s|=|;|:|,|，|。|？|！|!|\?|&|#|%|@|‘|’|；/.test(change.text[0]) == false && change.text.length == 1) {
-				//输入了代码，并且不包括空格，{}，=， ; ， : ， 逗号等，才可以自动提示
+				//輸入了代碼，並且不包括空格，{}，=， ; ， : ， 逗號等，才可以自動提示
 				node.editor.showHint();
 			}
 		});
-		//防止每次输出字符都创建以下元素
+		//防止每次輸出字符都創建以下元素
 		const event = _status.event;
 		const trigger = _status.event;
 		const player = ui.create.player().init("sunce");
@@ -5748,7 +5748,7 @@ export class Library {
 					return;
 				}
 			} else if (token && typeof token.string == "string") {
-				//非开发者模式下，提示这些单词
+				//非開發者模式下，提示這些單詞
 				list.addArray(["player", "card", "cards", "result", "trigger", "source", "target", "targets", "lib", "game", "ui", "get", "ai", "_status"]);
 			}
 			return {
@@ -5761,7 +5761,7 @@ export class Library {
 								var icon = document.createElement("span");
 								var className = "cm-completionIcon cm-completionIcon-";
 								if (obj) {
-									// 解决访问caller报错等问题
+									// 解決訪問caller報錯等問題
 									let type;
 									try {
 										type = typeof obj[text];
@@ -5817,7 +5817,7 @@ export class Library {
 				options
 			);
 		}
-		//覆盖原本的javascript提示
+		//覆蓋原本的javascript提示
 		CodeMirror.registerHelper("hint", "javascript", javascriptHint);
 		const stringProps = Object.getOwnPropertyNames(String.prototype);
 		const arrayProps = Object.getOwnPropertyNames(Array.prototype);
@@ -6016,7 +6016,7 @@ export class Library {
 	}
 	saveVideo() {
 		if (_status.videoToSave) {
-			game.export(lib.init.encode(JSON.stringify(_status.videoToSave)), "无名杀 - 录像 - " + _status.videoToSave.name[0] + " - " + _status.videoToSave.name[1]);
+			game.export(lib.init.encode(JSON.stringify(_status.videoToSave)), "無名殺 - 錄像 - " + _status.videoToSave.name[0] + " - " + _status.videoToSave.name[1]);
 		}
 	}
 	/**
@@ -6123,26 +6123,26 @@ export class Library {
 				},
 			},
 			inject(element, options) {
-				//处理id和class
+				//處理id和class
 				if (options.identity) {
 					for (const item of options.identity) {
 						if (item.startsWith("#")) element.id = item.slice(1);
 						else element.classList.add(item);
 					}
 				}
-				//处理属性
+				//處理屬性
 				if (options.attributes) {
 					for (const item in options.attributes) element.setAttribute(item, options.attributes[item]);
 				}
-				//处理样式
+				//處理樣式
 				if (options.style) {
 					for (const item in options.style) element.style[item] = options.style[item];
 				}
-				//处理内容
+				//處理內容
 				if (options.content) {
 					element.innerHTML = options.content;
 				}
-				//处理子元素
+				//處理子元素
 				if (options.childs) {
 					for (const item of options.childs) {
 						element.appendChild(item);
@@ -6203,7 +6203,7 @@ export class Library {
 	init = new LibInit();
 	cheat = {
 		/**
-		 * 将游戏内部的对象暴露到全局中
+		 * 將遊戲內部的對象暴露到全局中
 		 *
 		 * lib.cheat, game, ui, get, ai, lib, _status
 		 */
@@ -6217,7 +6217,7 @@ export class Library {
 			window._status = _status;
 		},
 		/**
-		 * 自己的下家(如果下家是主公身份则是下家的下家)立即死亡
+		 * 自己的下家(如果下家是主公身份則是下家的下家)立即死亡
 		 */
 		dy() {
 			let next = game.me.next;
@@ -6230,11 +6230,11 @@ export class Library {
 			next.die();
 		},
 		/**
-		 * 在控制台输出每个扩展文件夹内的所有文件
+		 * 在控制台輸出每個擴展文件夾內的所有文件
 		 *
-		 * 需要node环境
+		 * 需要node環境
 		 *
-		 * @param  { ...string } args 只需要显示的文件夹首字符
+		 * @param  { ...string } args 只需要顯示的文件夾首字符
 		 */
 		x(...args) {
 			/**
@@ -6299,7 +6299,7 @@ export class Library {
 			});
 		},
 		/**
-		 * 游戏设置变更为固定数据(不更改扩展设置)
+		 * 遊戲設置變更為固定數據(不更改擴展設置)
 		 */
 		cfg() {
 			const mode = lib.config.all.mode.slice(0);
@@ -6478,14 +6478,14 @@ export class Library {
 			game.reload();
 		},
 		/**
-		 * 移除旁观时的手牌暗置效果
+		 * 移除旁觀時的手牌暗置效果
 		 */
 		o() {
 			ui.arena.classList.remove("observe");
 		},
 		/**
-		 * 向牌堆顶添加牌(即创建一些卡牌添加到牌堆里)
-		 * @param  { ...string } list 卡牌名称数字
+		 * 向牌堆頂添加牌(即創建一些卡牌添加到牌堆裡)
+		 * @param  { ...string } list 卡牌名稱數字
 		 */
 		pt(...list) {
 			while (list.length) {
@@ -6494,9 +6494,9 @@ export class Library {
 			}
 		},
 		/**
-		 * 将卡牌的样式在simple和default之间切换
+		 * 將卡牌的樣式在simple和default之間切換
 		 *
-		 * 有参数时改为获得指定的牌
+		 * 有參數時改為獲得指定的牌
 		 *
 		 * @param { ...string } args
 		 */
@@ -6520,10 +6520,10 @@ export class Library {
 			ui.arena.classList.remove("tempnoe");
 		},
 		/**
-		 * 替换皮肤
-		 * @param { string } name 武将名称
-		 * @param { number | true } [i] 指定game.players的第几个元素，不填指定为自己的下家。为true时切换玩家布局
-		 * @param { string } [skin] 皮肤id
+		 * 替換皮膚
+		 * @param { string } name 武將名稱
+		 * @param { number | true } [i] 指定game.players的第幾個元素，不填指定為自己的下家。為true時切換玩家佈局
+		 * @param { string } [skin] 皮膚id
 		 */
 		p(name, i, skin) {
 			const list = ["swd", "hs", "pal", "gjqt", "ow", "gw"];
@@ -6549,7 +6549,7 @@ export class Library {
 			}
 			if (skin) {
 				lib.config.skin[name] = skin - 1;
-				// 换肤时skin - 1变成skin
+				// 換膚時skin - 1變成skin
 				ui.click.skin(target.node.avatar, name);
 			}
 			if (i === true) {
@@ -6562,12 +6562,12 @@ export class Library {
 		},
 		/**
 		 * @overload
-		 * @description 不传参数默认装备麒麟弓，八卦阵，的卢，赤兔，木牛
+		 * @description 不傳參數默認裝備麒麟弓，八卦陣，的盧，赤兔，木牛
 		 * @returns { void }
 		 */
 		/**
 		 * @overload
-		 * @description 指定的玩家或自己装备指定的牌
+		 * @description 指定的玩家或自己裝備指定的牌
 		 * @param  {...Player | string} args 玩家或卡牌名
 		 * @returns { void }
 		 */
@@ -6605,7 +6605,7 @@ export class Library {
 			}
 		},
 		/**
-		 * 检测当前游戏开启的武将数，卡堆的数量分布情况
+		 * 檢測當前遊戲開啟的武將數，卡堆的數量分佈情況
 		 */
 		c() {
 			const log = function (...args) {
@@ -6654,12 +6654,12 @@ export class Library {
 					}
 				}
 				log("技：" + (a - sa) + "/" + a);
-				log("咏：" + (b - sb) + "/" + b);
-				log("圣：" + (c - sc) + "/" + c);
+				log("詠：" + (b - sb) + "/" + b);
+				log("聖：" + (c - sc) + "/" + c);
 				log("血：" + (d - sd) + "/" + d);
 				log("幻：" + (e - se) + "/" + e);
-				log("龙：" + (f - sf) + "/" + f);
-				log("已启用：" + (a + b + c + d + e + f  - (sa + sb + sc + sd + se + sf )) + "/" + (a + b + c + d + e + f ));
+				log("龍：" + (f - sf) + "/" + f);
+				log("已啟用：" + (a + b + c + d + e + f  - (sa + sb + sc + sd + se + sf )) + "/" + (a + b + c + d + e + f ));
 			})();
 			(function () {
 				let a = 0,
@@ -6801,13 +6801,13 @@ export class Library {
 						}
 					}
 				}
-				let str = "攻击牌" + aa + "； " + "法术牌" + bb + "； " + "其它牌" + cc;
+				let str = "攻擊牌" + aa + "； " + "法術牌" + bb + "； " + "其它牌" + cc;
 				log(str);
-				str = "暗牌" + sa + "； " + "火牌" + sb + "； " + "风牌" + sc + "； " + "地牌" + sd + "； " + "雷牌" + se + "； " + "水牌" + sf + "； " + "光牌" + sh;
+				str = "暗牌" + sa + "； " + "火牌" + sb + "； " + "風牌" + sc + "； " + "地牌" + sd + "； " + "雷牌" + se + "； " + "水牌" + sf + "； " + "光牌" + sh;
 				log(str);
-				str = "技牌"+ji+"； "+"咏牌"+yong+"； "+"圣牌"+sheng+"； "+"血牌"+xue+"； "+"幻牌"+huan;
+				str = "技牌"+ji+"； "+"詠牌"+yong+"； "+"聖牌"+sheng+"； "+"血牌"+xue+"； "+"幻牌"+huan;
 				log(str);
-				str = "暗灭" + anMie + "； " + "火焰斩"+huoYanZhan+"； " + "风神斩"+fengShenZhan+"； " + "地裂斩"+diLieZhan+"； " + "水涟斩"+shuiLianZhan+"； " + "雷光斩"+leiGuangZhan+"； " + "魔弹"+moDan+"； " + "圣光"+shengGuang+"； " + "虚弱"+xuRuo+"； " + "中毒"+zhongDu;
+				str = "暗滅" + anMie + "； " + "火焰斬"+huoYanZhan+"； " + "風神斬"+fengShenZhan+"； " + "地裂斬"+diLieZhan+"； " + "水漣斬"+shuiLianZhan+"； " + "雷光斬"+leiGuangZhan+"； " + "魔彈"+moDan+"； " + "聖光"+shengGuang+"； " + "虛弱"+xuRuo+"； " + "中毒"+zhongDu;
 				log(str);
 				str="";
 				for (let i in dict) {
@@ -6818,16 +6818,16 @@ export class Library {
 			})();
 		},
 		/**
-		 * 显示场上所有的角色的身份
+		 * 顯示場上所有的角色的身份
 		 */
 		id() {
 			game.showIdentity();
 		},
 		/**
-		 * 替换dialog中待选择的卡牌(或其他东西)对应的真实卡牌(或其他东西)
+		 * 替換dialog中待選擇的卡牌(或其他東西)對應的真實卡牌(或其他東西)
 		 * ```js
-		 * // 在神吕蒙涉猎时使用:
-		 * // 涉猎如果选择l第一张牌，那你获得的是你创造的这张杀
+		 * // 在神呂蒙涉獵時使用:
+		 * // 涉獵如果選擇l第一張牌，那你獲得的是你創造的這張殺
 		 * lib.cheat.b(game.createCard('sha'));
 		 * ```
 		 */
@@ -6838,20 +6838,20 @@ export class Library {
 			}
 		},
 		/**
-		 * 炉石模式可用，使用'spell_yexinglanghun'卡牌
-		 * @param { boolean } [me] 决定是自己还是对手使用'spell_yexinglanghun'卡牌
+		 * 爐石模式可用，使用'spell_yexinglanghun'卡牌
+		 * @param { boolean } [me] 決定是自己還是對手使用'spell_yexinglanghun'卡牌
 		 */
 		uy(me) {
 			if (me) {
 				game.me.useCard({ name: "spell_yexinglanghun" }, game.me);
 			} else {
-				// player.getEnemy是炉石模式的函数
+				// player.getEnemy是爐石模式的函數
 				const enemy = game.me.getEnemy();
 				enemy.useCard({ name: "spell_yexinglanghun" }, enemy);
 			}
 		},
 		/**
-		 * 炉石模式可用，使用`spell_${name}`卡牌
+		 * 爐石模式可用，使用`spell_${name}`卡牌
 		 * @param { string } [name]
 		 * @param { boolean } [act]
 		 */
@@ -6869,7 +6869,7 @@ export class Library {
 			setTimeout(game.check, 300);
 		},
 		/**
-		 * 炉石模式可用，获得`stone_${name}_stonecharacter`卡牌
+		 * 爐石模式可用，獲得`stone_${name}_stonecharacter`卡牌
 		 * @param { string } [name]
 		 * @param { boolean } [act]
 		 */
@@ -6887,7 +6887,7 @@ export class Library {
 			setTimeout(game.check, 300);
 		},
 		/**
-		 * 进入/关闭快速自动测试模式(游戏速度最快)，只有游戏记录界面
+		 * 進入/關閉快速自動測試模式(遊戲速度最快)，只有遊戲記錄界面
 		 * @param { boolean | string } [bool]
 		 */
 		a(bool) {
@@ -6907,9 +6907,9 @@ export class Library {
 			game.reload();
 		},
 		/**
-		 * 临时去掉“自动测试模式”带来的css效果，
+		 * 臨時去掉“自動測試模式”帶來的css效果，
 		 *
-		 * 如果要彻底关闭，需要再执行一次lib.cheat.a
+		 * 如果要徹底關閉，需要再執行一次lib.cheat.a
 		 */
 		as() {
 			ui.window.classList.remove("testing");
@@ -6919,22 +6919,22 @@ export class Library {
 			}
 		},
 		/**
-		 * 装备麒麟弓，并且下家玩家对你发动借刀杀人,杀你的上家
+		 * 裝備麒麟弓，並且下家玩家對你發動借刀殺人,殺你的上家
 		 */
 		uj() {
 			lib.cheat.e("qilin");
 			game.me.next.useCard({ name: "jiedao" }, [game.me, game.me.previous]);
 		},
 		/**
-		 * 下家对你使用一张牌
+		 * 下家對你使用一張牌
 		 * @param  {...Player | Player[] | string | VCard } args
 		 *
 		 * @example
 		 * ```js
-		 * // 传入player是卡牌的使用者
-		 * // 传入player数组是卡牌的目标(没有则目标是game.me)
-		 * // 传入字符串设置卡牌名称
-		 * // 传入Vcard对象设置卡牌更具体的卡牌信息
+		 * // 傳入player是卡牌的使用者
+		 * // 傳入player數組是卡牌的目標(沒有則目標是game.me)
+		 * // 傳入字符串設置卡牌名稱
+		 * // 傳入Vcard對象設置卡牌更具體的卡牌信息
 		 * lib.cheat.u(player1, 'sha', [player2, player3]);
 		 * ```
 		 */
@@ -6950,7 +6950,7 @@ export class Library {
 				} else if (args instanceof lib.element.VCard) {
 					card = args[i];
 				} else if (typeof args[i] == "object" && args[i] != null && args[i].name) {
-					console.warn("lib.cheat.u: 以普通obj形式传入的类卡牌形式已经废弃");
+					console.warn("lib.cheat.u: 以普通obj形式傳入的類卡牌形式已經廢棄");
 					card = new lib.element.VCard(args[i]);
 				} else if (typeof args[i] == "string") {
 					card = new lib.element.VCard({ name: args[i] });
@@ -6960,8 +6960,8 @@ export class Library {
 			source.useCard(game.createCard(card.name, card.xiBie, card.mingGe, card.duYou), targets);
 		},
 		/**
-		 * 输出每个强度的武将数量、每个武将包的每个强度的武将数量、每个武将对应的id和翻译
-		 * @param { boolean } [bool] 为false不输出无名杀自带的武将id和翻译
+		 * 輸出每個強度的武將數量、每個武將包的每個強度的武將數量、每個武將對應的id和翻譯
+		 * @param { boolean } [bool] 為false不輸出無名殺自帶的武將id和翻譯
 		 */
 		r(bool) {
 			const log = function (...args) {
@@ -7004,18 +7004,18 @@ export class Library {
 			});
 		},
 		/**
-		 * 打印目标玩家的手牌
+		 * 打印目標玩家的手牌
 		 * @param { Player } player
 		 */
 		h(player) {
 			console.log(get.translation(player.getCards("h")));
 		},
 		/**
-		 * 给自己立刻添加手牌
+		 * 給自己立刻添加手牌
 		 *
 		 * @example
 		 * ```js
-		 * // 获得3张杀和1张闪
+		 * // 獲得3張殺和1張閃
 		 * lib.cheat.g('sha', 3, 'shan', 1)
 		 * ```
 		 */
@@ -7031,9 +7031,9 @@ export class Library {
 			}
 		},
 		/**
-		 * 立即获得指定类型的牌各一张
+		 * 立即獲得指定類型的牌各一張
 		 *
-		 * 会添加到不属于当前模式的牌和某些角色专属牌
+		 * 會添加到不屬於當前模式的牌和某些角色專屬牌
 		 *
 		 * @param { string } type
 		 */
@@ -7045,11 +7045,11 @@ export class Library {
 			}
 		},
 		/**
-		 *  给所有玩家立刻添加一张或多张指定的牌
+		 *  給所有玩家立刻添加一張或多張指定的牌
 		 * @param  {...string} args
 		 * @example
 		 * ```js
-		 * // 给所有玩家立刻添加一张杀和一张闪
+		 * // 給所有玩家立刻添加一張殺和一張閃
 		 * lib.cheat.gg('sha', 'shan');
 		 * ```
 		 */
@@ -7061,7 +7061,7 @@ export class Library {
 			});
 		},
 		/**
-		 * 给目标立即添加一张手牌
+		 * 給目標立即添加一張手牌
 		 * @param { string } name
 		 * @param { Player } target
 		 */
@@ -7078,25 +7078,25 @@ export class Library {
 			ui.updatehl();
 		},
 		/**
-		 * 创建卡牌
+		 * 創建卡牌
 		 *
-		 * 如果lib.card里没有对应卡牌名返回null
+		 * 如果lib.card裡沒有對應卡牌名返回null
 		 *
 		 * @param { string } name
 		 * @returns { Card }
 		 * @example
 		 * ```js
-		 * // 创建一个梅花杀
+		 * // 創建一個梅花殺
 		 * lib.cheat.gn('clubsha');
-		 * // 创建一个红色杀
+		 * // 創建一個紅色殺
 		 * lib.cheat.gn('redsha');
-		 * // 创建一个黑色杀
+		 * // 創建一個黑色殺
 		 * lib.cheat.gn('blacksha');
-		 * // 创建一个火杀
+		 * // 創建一個火殺
 		 * lib.cheat.gn('huosha');
-		 * // 创建一个雷杀
+		 * // 創建一個雷殺
 		 * lib.cheat.gn('leisha');
-		 * // 冰杀神杀刺杀没有
+		 * // 冰殺神殺刺殺沒有
 		 * ```
 		 */
 		gn(name) {
@@ -7120,7 +7120,7 @@ export class Library {
 			return game.createCard(name, xiBie, mingGe);
 		},
 		/**
-		 * 指定的玩家或自己立即获得诸葛连弩，青龙刀，八卦阵，的卢，赤兔，木牛
+		 * 指定的玩家或自己立即獲得諸葛連弩，青龍刀，八卦陣，的盧，赤兔，木牛
 		 * @param { Player } [target]
 		 */
 		ge(target) {
@@ -7141,7 +7141,7 @@ export class Library {
 			}
 		},
 		/**
-		 * 自己立即获得闪电，火山，洪水，乐不思蜀，鬼幽结
+		 * 自己立即獲得閃電，火山，洪水，樂不思蜀，鬼幽結
 		 */
 		gj() {
 			lib.cheat.g("shandian");
@@ -7152,7 +7152,7 @@ export class Library {
 			lib.cheat.g("guiyoujie");
 		},
 		/**
-		 * 自己立即获得所有食物牌各一张
+		 * 自己立即獲得所有食物牌各一張
 		 */
 		gf() {
 			for (let i in lib.card) {
@@ -7162,7 +7162,7 @@ export class Library {
 			}
 		},
 		/**
-		 * 自己立刻获取牌堆顶num张牌
+		 * 自己立刻獲取牌堆頂num張牌
 		 * @param { number } [num]
 		 * @param { Player } [target]
 		 */
@@ -7181,7 +7181,7 @@ export class Library {
 			}
 		},
 		/**
-		 * 给自己立刻添加一个或多个技能
+		 * 給自己立刻添加一個或多個技能
 		 * @param {...string} args 技能名
 		 */
 		s(...args) {
@@ -7195,9 +7195,9 @@ export class Library {
 			game.check();
 		},
 		/**
-		 * 弃置指定位置玩家的所有牌
+		 * 棄置指定位置玩家的所有牌
 		 *
-		 * 不传入num默认为弃置所有玩家的所有牌
+		 * 不傳入num默認為棄置所有玩家的所有牌
 		 *
 		 * @param { number | Player } [num]
 		 */
@@ -7218,7 +7218,7 @@ export class Library {
 			player.update();
 		},
 		/**
-		 *  自己以外的其他玩家弃置所有牌
+		 *  自己以外的其他玩家棄置所有牌
 		 */
 		to() {
 			game.players
@@ -7228,14 +7228,14 @@ export class Library {
 				});
 		},
 		/**
-		 * 弃置自己所有牌
+		 * 棄置自己所有牌
 		 */
 		tm() {
 			lib.cheat.t(game.me);
 		},
 		/**
-		 * 指定一个目标，弃置所有牌，血量变1，并且自己获得一张"juedou"
-		 * @param i 从自己开始算起，自己为0，不填默认1，即自己下家
+		 * 指定一個目標，棄置所有牌，血量變1，並且自己獲得一張"juedou"
+		 * @param i 從自己開始算起，自己為0，不填默認1，即自己下家
 		 */
 		k(i = 1) {
 			game.players[i].hp = 1;
@@ -7243,7 +7243,7 @@ export class Library {
 			lib.cheat.g("juedou");
 		},
 		/**
-		 * 重新设置当前的主公的武将牌，且血量上限+1(不论当局人数是否大于3)
+		 * 重新設置當前的主公的武將牌，且血量上限+1(不論當局人數是否大於3)
 		 * @param { string } name
 		 */
 		z(name) {
@@ -7295,21 +7295,21 @@ export class Library {
 		},
 	};
 	translate = {
-		flower: "鲜花",
-		egg: "鸡蛋",
+		flower: "鮮花",
+		egg: "雞蛋",
 		wine: "酒杯",
 		shoe: "拖鞋",
-		yuxisx: "玉玺",
-		jiasuo: "枷锁",
+		yuxisx: "玉璽",
+		jiasuo: "枷鎖",
 		junk: "平凡",
 		common: "普通",
 		rare: "精品",
-		epic: "史诗",
-		legend: "传说",
-		default: "默认",
+		epic: "史詩",
+		legend: "傳說",
+		default: "默認",
 		special: "特殊",
-		//zhenfa: "阵法",
-		//aozhan: "鏖战",
+		//zhenfa: "陣法",
+		//aozhan: "鏖戰",
 		mode_derivation_card_config: "衍生",
 		mode_banned_card_config: "禁卡",
 		mode_favourite_character_config: "收藏",
@@ -7319,28 +7319,28 @@ export class Library {
 		//spade: "♠︎",
 		//club: "♣︎",
 		//none: "◈",
-		//ghujia: "护甲",
+		//ghujia: "護甲",
 		//ghujia_bg: "甲",
-		//heart2: "红桃",
+		//heart2: "紅桃",
 		//diamond2: "方片",
 		//spade2: "黑桃",
 		//club2: "梅花",
-		//none2: "无色",
-		//red: "红色",
+		//none2: "無色",
+		//red: "紅色",
 		//black: "黑色",
-		//red2: "红色",
+		//red2: "紅色",
 		//black2: "黑色",
-		ok: "确定",
-		ok2: "确定",
+		ok: "確定",
+		ok2: "確定",
 		cancel: "取消",
 		cancel2: "取消",
-		restart: "重新开始",
-		setting: "设置",
-		start: "开始",
-		random: "随机",
-		_out: "无效",
+		restart: "重新開始",
+		setting: "設置",
+		start: "開始",
+		random: "隨機",
+		_out: "無效",
 		agree: "同意",
-		refuse: "拒绝",
+		refuse: "拒絕",
 		/*
 		fire: "火",
 		thunder: "雷",
@@ -7350,36 +7350,36 @@ export class Library {
 		stab: "刺",
 		wei: "魏",
 		shu: "蜀",
-		wu: "吴",
+		wu: "吳",
 		qun: "群",
 		shen: "神",
 		western: "西",
-		key: "键",
-		jin: "晋",
+		key: "鍵",
+		jin: "晉",
 		ye: "野",
-		double: "双",
-		wei2: "魏国",
-		shu2: "蜀国",
-		wu2: "吴国",
+		double: "雙",
+		wei2: "魏國",
+		shu2: "蜀國",
+		wu2: "吳國",
 		qun2: "群雄",
 		shen2: "神明",
 		western2: "西方",
 		key2: "KEY",
-		jin2: "晋朝",
+		jin2: "晉朝",
 		ye2: "野心家",
 		*/
-		double2: "双势力",
+		double2: "雙勢力",
 		male: "男",
 		female: "女",
-		mad: "混乱",
-		mad_bg: "疯",
+		mad: "混亂",
+		mad_bg: "瘋",
 		draw_card: "摸牌",
-		discard_card: "弃牌",
-		take_damage: "受伤害",
-		reset_character: "复原角色牌",
-		recover_hp: "回复体力",
-		lose_hp: "失去体力",
-		get_damage: "受伤害",
+		discard_card: "棄牌",
+		take_damage: "受傷害",
+		reset_character: "復原角色牌",
+		recover_hp: "回覆體力",
+		lose_hp: "失去體力",
+		get_damage: "受傷害",
 		/*
 		weiColor: "#b0d0e2",
 		shuColor: "#ffddb9",
@@ -7390,21 +7390,21 @@ export class Library {
 		jinColor: "#ffe14c",
 		keyColor: "#c9b1fd",
 		basic: "基本",
-		equip: "装备",
-		trick: "锦囊",
-		delay: "延时锦囊",
-		special_delay: "技能机制",
+		equip: "裝備",
+		trick: "錦囊",
+		delay: "延時錦囊",
+		special_delay: "技能機制",
 		*/
 		character: "角色",
 		/*
-		revive: "复活",
+		revive: "復活",
 		equip1: "武器",
 		equip2: "防具",
-		equip3: "防御马",
-		equip3_4: "坐骑",
-		equip4: "攻击马",
-		equip5: "宝物",
-		equip6: "特殊装备",
+		equip3: "防禦馬",
+		equip3_4: "坐騎",
+		equip4: "攻擊馬",
+		equip5: "寶物",
+		equip6: "特殊裝備",
 		*/
 		zero: "零",
 		one: "一",
@@ -7417,129 +7417,129 @@ export class Library {
 		eight: "八",
 		nine: "九",
 		ten: "十",
-		_recasting: "重铸",
-		_lianhuan: "连环",
-		_lianhuan2: "连环",
-		_kamisha: "神杀",
-		_icesha: "冰杀",
-		qianxing: "潜行",
+		_recasting: "重鑄",
+		_lianhuan: "連環",
+		_lianhuan2: "連環",
+		_kamisha: "神殺",
+		_icesha: "冰殺",
+		qianxing: "潛行",
 		mianyi: "免疫",
 		fengyin: "封印",
 		baiban: "白板",
-		_disableJudge: "判定区",
+		_disableJudge: "判定區",
 
 		xingBei_emotion: "星杯表情",
-		xiaowu_emotion: "小无表情",
+		xiaowu_emotion: "小無表情",
 		guojia_emotion: "郭嘉表情",
 		zhenji_emotion: "甄姬表情",
 		shibing_emotion: "士兵表情",
-		xiaosha_emotion: "小杀表情",
+		xiaosha_emotion: "小殺表情",
 		xiaotao_emotion: "小桃表情",
 		xiaojiu_emotion: "小酒表情",
-		xiaokuo_emotion: "小扩表情",
+		xiaokuo_emotion: "小擴表情",
 		biexiao_emotion: "憋笑表情",
 		chaijun_emotion: "柴郡表情",
-		huangdou_emotion: "黄豆表情",
-		maoshu_emotion: "猫鼠表情",
+		huangdou_emotion: "黃豆表情",
+		maoshu_emotion: "貓鼠表情",
 
-		pause: "暂停",
-		config: "选项",
-		auto: "托管",
+		pause: "暫停",
+		config: "選項",
+		auto: "託管",
 		/*
 		unknown: "未知",
-		unknown0: "一号位",
-		unknown1: "二号位",
-		unknown2: "三号位",
-		unknown3: "四号位",
-		unknown4: "五号位",
-		unknown5: "六号位",
-		unknown6: "七号位",
-		unknown7: "八号位",
-		unknown8: "九号位",
-		unknown9: "十号位",
-		unknown10: "十一号位",
-		unknown11: "十二号位",
+		unknown0: "一號位",
+		unknown1: "二號位",
+		unknown2: "三號位",
+		unknown3: "四號位",
+		unknown4: "五號位",
+		unknown5: "六號位",
+		unknown6: "七號位",
+		unknown7: "八號位",
+		unknown8: "九號位",
+		unknown9: "十號位",
+		unknown10: "十一號位",
+		unknown11: "十二號位",
 
-		feichu_equip1: "已废除",
-		feichu_equip1_info: "武器栏已废除",
-		feichu_equip2: "已废除",
-		feichu_equip2_info: "防具栏已废除",
-		feichu_equip3: "已废除",
-		feichu_equip3_info: "防御坐骑栏已废除",
-		feichu_equip4: "已废除",
-		feichu_equip4_info: "攻击坐骑栏已废除",
-		feichu_equip5: "已废除",
-		feichu_equip5_info: "宝物栏已废除",
-		feichu_equip6: "已废除",
-		feichu_equip6_info: "特殊装备栏已废除",
-		feichu_equip1_bg: "废",
-		feichu_equip2_bg: "废",
-		feichu_equip3_bg: "废",
-		feichu_equip4_bg: "废",
-		feichu_equip5_bg: "废",
-		feichu_equip6_bg: "废",
-		disable_judge: "已废除",
-		disable_judge_info: "判定区已废除",
-		disable_judge_bg: "废",
-		pss: "手势",
+		feichu_equip1: "已廢除",
+		feichu_equip1_info: "武器欄已廢除",
+		feichu_equip2: "已廢除",
+		feichu_equip2_info: "防具欄已廢除",
+		feichu_equip3: "已廢除",
+		feichu_equip3_info: "防禦坐騎欄已廢除",
+		feichu_equip4: "已廢除",
+		feichu_equip4_info: "攻擊坐騎欄已廢除",
+		feichu_equip5: "已廢除",
+		feichu_equip5_info: "寶物欄已廢除",
+		feichu_equip6: "已廢除",
+		feichu_equip6_info: "特殊裝備欄已廢除",
+		feichu_equip1_bg: "廢",
+		feichu_equip2_bg: "廢",
+		feichu_equip3_bg: "廢",
+		feichu_equip4_bg: "廢",
+		feichu_equip5_bg: "廢",
+		feichu_equip6_bg: "廢",
+		disable_judge: "已廢除",
+		disable_judge_info: "判定區已廢除",
+		disable_judge_bg: "廢",
+		pss: "手勢",
 		pss_paper: "布",
 		pss_scissor: "剪刀",
-		pss_stone: "石头",
-		pss_paper_info: "石头剪刀布时的一种手势。克制石头，但被剪刀克制。",
-		pss_scissor_info: "石头剪刀布时的一种手势。克制布，但被石头克制。",
-		pss_stone_info: "石头剪刀布时的一种手势。克制剪刀，但被布克制。",
-		renku: "仁库",
-		group_wei: "魏势力",
-		group_shu: "蜀势力",
-		group_wu: "吴势力",
-		group_qun: "群势力",
-		group_key: "键势力",
-		group_jin: "晋势力",
+		pss_stone: "石頭",
+		pss_paper_info: "石頭剪刀布時的一種手勢。剋制石頭，但被剪刀剋制。",
+		pss_scissor_info: "石頭剪刀布時的一種手勢。剋制布，但被石頭剋制。",
+		pss_stone_info: "石頭剪刀布時的一種手勢。剋制剪刀，但被布克制。",
+		renku: "仁庫",
+		group_wei: "魏勢力",
+		group_shu: "蜀勢力",
+		group_wu: "吳勢力",
+		group_qun: "群勢力",
+		group_key: "鍵勢力",
+		group_jin: "晉勢力",
 		group_wei_bg: "魏",
 		group_shu_bg: "蜀",
-		group_wu_bg: "吴",
+		group_wu_bg: "吳",
 		group_qun_bg: "群",
-		group_key_bg: "键",
-		group_jin_bg: "晋",
-		zhengsu: "整肃",
-		zhengsu_leijin: "擂进",
-		zhengsu_bianzhen: "变阵",
-		zhengsu_mingzhi: "鸣止",
-		zhengsu_leijin_info: "回合内所有于出牌阶段使用的牌点数递增且不少于三张。",
-		zhengsu_bianzhen_info: "回合内所有于出牌阶段使用的牌花色相同且不少于两张。",
-		zhengsu_mingzhi_info: "回合内所有于弃牌阶段弃置的牌花色均不相同且不少于两张。",
+		group_key_bg: "鍵",
+		group_jin_bg: "晉",
+		zhengsu: "整肅",
+		zhengsu_leijin: "擂進",
+		zhengsu_bianzhen: "變陣",
+		zhengsu_mingzhi: "鳴止",
+		zhengsu_leijin_info: "回合內所有於出牌階段使用的牌點數遞增且不少於三張。",
+		zhengsu_bianzhen_info: "回合內所有於出牌階段使用的牌花色相同且不少於兩張。",
+		zhengsu_mingzhi_info: "回合內所有於棄牌階段棄置的牌花色均不相同且不少於兩張。",
 		db_atk: "策略",
-		db_atk1: "全军出击",
-		db_atk2: "分兵围城",
+		db_atk1: "全軍出擊",
+		db_atk2: "分兵圍城",
 		db_def: "策略",
-		db_def1: "奇袭粮道",
-		db_def2: "开城诱敌",
+		db_def1: "奇襲糧道",
+		db_def2: "開城誘敵",
 		cooperation_damage: "同仇",
-		cooperation_damage_info: "双方累计造成至少4点伤害",
-		cooperation_draw: "并进",
-		cooperation_draw_info: "双方累计摸至少八张牌",
-		cooperation_discard: "疏财",
-		cooperation_discard_info: "双方累计弃置至少4种花色的牌",
+		cooperation_damage_info: "雙方累計造成至少4點傷害",
+		cooperation_draw: "並進",
+		cooperation_draw_info: "雙方累計摸至少八張牌",
+		cooperation_discard: "疏財",
+		cooperation_discard_info: "雙方累計棄置至少4種花色的牌",
 		cooperation_use: "戮力",
-		cooperation_use_info: "双方累计使用至少4种花色的牌",
+		cooperation_use_info: "雙方累計使用至少4種花色的牌",
 		charge: "蓄力值",
-		expandedSlots: "扩展装备栏",
-		stratagem_fury: "怒气",
-		_stratagem_add_buff: "强化",
+		expandedSlots: "擴展裝備欄",
+		stratagem_fury: "怒氣",
+		_stratagem_add_buff: "強化",
 		*/
-		phaseZhunbei: "准备阶段",
-		phaseJudge: "判定阶段",
-		phaseDraw: "摸牌阶段",
-		phaseUse: "出牌阶段",
-		phaseDiscard: "弃牌阶段",
-		phaseJieshu: "结束阶段",
+		phaseZhunbei: "準備階段",
+		phaseJudge: "判定階段",
+		phaseDraw: "摸牌階段",
+		phaseUse: "出牌階段",
+		phaseDiscard: "棄牌階段",
+		phaseJieshu: "結束階段",
 
-		xueGroup:"鲜血议会",
-		yongGroup:"咏歌城",
-		jiGroup:"战技殿堂",
-		shengGroup:"神圣教廷",
-		huanGroup:"幻影联盟",
-		longGroup:"龙魂帝国",
+		xueGroup:"鮮血議會",
+		yongGroup:"詠歌城",
+		jiGroup:"戰技殿堂",
+		shengGroup:"神聖教廷",
+		huanGroup:"幻影聯盟",
+		longGroup:"龍魂帝國",
 		DIY:"DIY",
 		xueGroupColor:"#7D0101",
 		yongGroupColor:"#C6813C",
@@ -7547,9 +7547,9 @@ export class Library {
 		shengGroupColor:"#22A3C3",
 		huanGroupColor:"#635282",
 		longGroupColor:"#4b4556ff",
-		jiuGuan:"酒馆",
+		jiuGuan:"酒館",
 
-		zhiLiao:"治疗",
+		zhiLiao:"治療",
 
 		FAQ:'FAQ',
 		'1xing':'1星',
@@ -7565,25 +7565,25 @@ export class Library {
 		trueColor:"zhu",
 		falseColor:"wei",
 
-		_wuFaXingDong:'无法行动',
-		_wuFaXingDong_qiDongQian:'无法行动-启动前',
-		_wuFaXingDong_qiDongHou:'无法行动-启动后',
+		_wuFaXingDong:'無法行動',
+		_wuFaXingDong_qiDongQian:'無法行動-啟動前',
+		_wuFaXingDong_qiDongHou:'無法行動-啟動後',
 		
 		//公共技能
-		_xuRuo:"虚弱",
+		_xuRuo:"虛弱",
 		_zhongDu:"中毒",
-		_shengDun:"圣盾",
-		//_shengGuang:"圣光",
-		//_yingZhan:"应战",
-		//_moDan:"魔弹",
+		_shengDun:"聖盾",
+		//_shengGuang:"聖光",
+		//_yingZhan:"應戰",
+		//_moDan:"魔彈",
 		_heCheng:"合成",
-		_gouMai:"购买",
-		_tiLian:"提炼",
-		//_gongJiXingShi:"攻击星石",
+		_gouMai:"購買",
+		_tiLian:"提煉",
+		//_gongJiXingShi:"攻擊星石",
 
-		_tiLian_backup:'提炼',
+		_tiLian_backup:'提煉',
 		_heCheng_backup:'合成',
-		baoShi:'宝石',
+		baoShi:'寶石',
 		shuiJing:'水晶',
 	};
 
@@ -7641,7 +7641,7 @@ export class Library {
 					_status.connectCallback(false);
 					delete _status.connectCallback;
 				} else {
-					alert("连接失败");
+					alert("連接失敗");
 				}
 			},
 			onclose: function () {
@@ -7834,7 +7834,7 @@ export class Library {
 		/**
 		 * Check if the card does not count toward the player's hand limit
 		 *
-		 * 检测此牌是否不计入此角色的手牌上限
+		 * 檢測此牌是否不計入此角色的手牌上限
 		 * @param { Card } card
 		 * @param { Player } player
 		 * @returns { boolean }
@@ -7843,7 +7843,7 @@ export class Library {
 		/**
 		 * Check if the card is giftable
 		 *
-		 * 检测此牌是否可赠予
+		 * 檢測此牌是否可贈予
 		 * @param { Card } card
 		 * @param { Player } player
 		 * @param { Player } target
@@ -7857,7 +7857,7 @@ export class Library {
 		/**
 		 * Check if the card is recastable
 		 *
-		 * 检查此牌是否可重铸
+		 * 檢查此牌是否可重鑄
 		 * @param { Card } card
 		 * @param { Player } player
 		 * @param { Player } [source]
@@ -7865,7 +7865,7 @@ export class Library {
 		 */
 		cardRecastable: (card, player = get.owner(card), source, strict) => {
 			if (!player) {
-				if (player === null) console.trace(`cardRecastable的player参数不应传入null,可以用void 0或undefined占位`);
+				if (player === null) console.trace(`cardRecastable的player參數不應傳入null,可以用void 0或undefined佔位`);
 				player = get.owner(card);
 			}
 			const mod = game.checkMod(card, player, source, "unchanged", "cardRecastable", player);
@@ -7878,7 +7878,7 @@ export class Library {
 			}
 			return true;
 		},
-		//装备栏相关
+		//裝備欄相關
 		/**
 		 * @param { Card } card
 		 * @param { Player } player
@@ -7889,7 +7889,7 @@ export class Library {
 			if (mod != "unchanged") return mod;
 			return true;
 		},
-		//装备栏 END
+		//裝備欄 END
 		buttonIncluded: function (button) {
 			return !(_status.event.excludeButton && _status.event.excludeButton.includes(button));
 		},
@@ -7947,7 +7947,7 @@ export class Library {
 			)
 				return false;
 			if (info.filter && !info.filter(event, player, triggername, indexedData)) return false;
-			//xingBei 针对启动技能，如果已经启动过了，就不能再启动了
+			//xingBei 針對啟動技能，如果已經啟動過了，就不能再啟動了
 			if(info.type=='qiDong' && event.qiDongGuo) return false;
 
 			if (event._notrigger.includes(player) && !lib.skill.global.includes(skill)) return false;
@@ -7993,16 +7993,16 @@ export class Library {
 				if (typeof enable === "function") return enable(event);
 				if (Array.isArray(enable)) return enable.some(i => checkEnable(i));
 				if (enable === "xingDong") return event.type === "phase";
-				if(enable==='wuFaXingDong') return event.firstAction === true;//专门无法行动设置启用参数
-				if(enable==='gongJiOrFaShu') return event.name=='gongJi' || event.name=='faShu' || event.name=='gongJiOrFaShu';//专门攻击或法术设置启用参数
-				if(enable=='faShu') return event.name=='faShu' || event.name=='gongJiOrFaShu';//专门法术设置启用参数
-				if(enable=='gongJi') return event.name=='gongJi' || event.name=='gongJiOrFaShu';//专门攻击设置启用参数
+				if(enable==='wuFaXingDong') return event.firstAction === true;//專門無法行動設置啟用參數
+				if(enable==='gongJiOrFaShu') return event.name=='gongJi' || event.name=='faShu' || event.name=='gongJiOrFaShu';//專門攻擊或法術設置啟用參數
+				if(enable=='faShu') return event.name=='faShu' || event.name=='gongJiOrFaShu';//專門法術設置啟用參數
+				if(enable=='gongJi') return event.name=='gongJi' || event.name=='gongJiOrFaShu';//專門攻擊設置啟用參數
 				if (typeof enable === "string") return enable === event.name;
 				return false;
 			};
 			if (!checkEnable(info.enable)) return false;
 			if (info.filter && !info.filter(event, player)) return false;
-			//teShu 针对特殊行动，如果不能使用特殊行动，就不能
+			//teShu 針對特殊行動，如果不能使用特殊行動，就不能
 			if(info.type=='teShu' && event.canTeShu==false) return false;
 
 			if (info.viewAs && typeof info.viewAs !== "function") {
@@ -8167,10 +8167,10 @@ export class Library {
 			return false;
 		},
 		/**
-		 * player的card在event事件中能否被自己弃置
-		 * @param { Card } card 要被弃置的牌
-		 * @param { Player } player 执行弃牌的角色
-		 * @param { string } [event] 弃置牌事件的名称
+		 * player的card在event事件中能否被自己棄置
+		 * @param { Card } card 要被棄置的牌
+		 * @param { Player } player 執行棄牌的角色
+		 * @param { string } [event] 棄置牌事件的名稱
 		 * @returns { boolean }
 		 */
 		cardDiscardable: function (card, player, event) {
@@ -8181,11 +8181,11 @@ export class Library {
 			return true;
 		},
 		/**
-		 * target的card在event事件中能否被player弃置
-		 * @param { Card } card 要被弃置的牌
-		 * @param { Player } player 执行弃牌的角色
-		 * @param { Player } target 被弃置牌的现持有者
-		 * @param { string } [event] 弃置牌事件的名称
+		 * target的card在event事件中能否被player棄置
+		 * @param { Card } card 要被棄置的牌
+		 * @param { Player } player 執行棄牌的角色
+		 * @param { Player } target 被棄置牌的現持有者
+		 * @param { string } [event] 棄置牌事件的名稱
 		 * @returns { boolean }
 		 */
 		canBeDiscarded: function (card, player, target, event) {
@@ -8196,11 +8196,11 @@ export class Library {
 			return true;
 		},
 		/**
-		 * target的card在event事件中能否被player获得
-		 * @param { Card } card 要被获得的牌
-		 * @param { Player } player 获得牌的角色
-		 * @param { Player } target 被获得牌的现持有者
-		 * @param { string } [event] 获得牌事件的名称
+		 * target的card在event事件中能否被player獲得
+		 * @param { Card } card 要被獲得的牌
+		 * @param { Player } player 獲得牌的角色
+		 * @param { Player } target 被獲得牌的現持有者
+		 * @param { string } [event] 獲得牌事件的名稱
 		 * @returns { boolean }
 		 */
 		canBeGained: function (card, player, target, event) {
@@ -8592,11 +8592,11 @@ export class Library {
 		stratagem_fury: {
 			marktext: "🔥",
 			intro: {
-				name: "怒气",
+				name: "怒氣",
 				content: (storage, player) => {
 					const stratagemFuryMax = _status.stratagemFuryMax,
 						fury = storage || 0;
-					return `当前怒气值：${typeof stratagemFuryMax == "number" ? `${fury}/${stratagemFuryMax}` : fury}`;
+					return `當前怒氣值：${typeof stratagemFuryMax == "number" ? `${fury}/${stratagemFuryMax}` : fury}`;
 				},
 			},
 		},
@@ -8736,10 +8736,10 @@ export class Library {
 					cost = stratagemBuff.cost;
 				stratagemBuff.prompt.forEach((prompt, cardName) => {
 					const li = document.createElement("li");
-					li.innerHTML = `【${get.translation(cardName)}】：${cost.get(cardName)}点怒气。${prompt()}`;
+					li.innerHTML = `【${get.translation(cardName)}】：${cost.get(cardName)}點怒氣。${prompt()}`;
 					span.appendChild(li);
 				});
-				return `当你需要使用位于“强化表”内的非虚拟卡牌时，你可以消耗对应数量的怒气将其强化并使用。${document.createElement("hr").outerHTML}${span.outerHTML}`;
+				return `當你需要使用位於“強化表”內的非虛擬卡牌時，你可以消耗對應數量的怒氣將其強化並使用。${document.createElement("hr").outerHTML}${span.outerHTML}`;
 			},
 			onuse: (result, player) => {
 				player.logSkill(result.skill);
@@ -8810,7 +8810,7 @@ export class Library {
 				},
 				content: function (storage, player) {
 					storage = player.expandedSlots;
-					if (!storage) return "当前没有扩展装备栏";
+					if (!storage) return "當前沒有擴展裝備欄";
 					const keys = Object.keys(storage).sort(),
 						combined = get.is.mountCombined();
 					let str = "";
@@ -8818,12 +8818,12 @@ export class Library {
 						const num = storage[key];
 						if (typeof num == "number" && num > 0) {
 							let trans = get.translation(key);
-							if (combined && key == "equip3") trans = "坐骑";
-							str += "<li>" + trans + "栏：" + num + "个<br>";
+							if (combined && key == "equip3") trans = "坐騎";
+							str += "<li>" + trans + "欄：" + num + "個<br>";
 						}
 					}
 					if (str.length) return str.slice(0, str.length - 4);
-					return "当前没有扩展装备栏";
+					return "當前沒有擴展裝備欄";
 				},
 			},
 		},
@@ -8832,7 +8832,7 @@ export class Library {
 			intro: {
 				content(storage, player) {
 					const max = player.getMaxCharge();
-					return `当前蓄力点数：${storage}/${max}`;
+					return `當前蓄力點數：${storage}/${max}`;
 				},
 			},
 		},
@@ -8898,7 +8898,7 @@ export class Library {
 					},
 					marktext: "仇",
 					intro: {
-						name: "协力 - 同仇",
+						name: "協力 - 同仇",
 						markcount: function (storage, player) {
 							return Math.max.apply(
 								Math,
@@ -8912,9 +8912,9 @@ export class Library {
 								storage = player.getStorage("cooperation");
 							for (var info of storage) {
 								if (info.type == "damage") {
-									str += "<br><li>协力角色：" + get.translation(info.target);
-									str += "<br><li>协力原因：" + get.translation(info.reason);
-									str += "<br><li>协力进度：";
+									str += "<br><li>協力角色：" + get.translation(info.target);
+									str += "<br><li>協力原因：" + get.translation(info.reason);
+									str += "<br><li>協力進度：";
 									var num = info.damage || 0;
 									str += num;
 									str += "/4";
@@ -8954,9 +8954,9 @@ export class Library {
 						}
 						player.markSkill("cooperation_draw");
 					},
-					marktext: "进",
+					marktext: "進",
 					intro: {
-						name: "协力 - 并进",
+						name: "協力 - 並進",
 						markcount: function (storage, player) {
 							return Math.max.apply(
 								Math,
@@ -8970,9 +8970,9 @@ export class Library {
 								storage = player.getStorage("cooperation");
 							for (var info of storage) {
 								if (info.type == "draw") {
-									str += "<br><li>协力角色：" + get.translation(info.target);
-									str += "<br><li>协力原因：" + get.translation(info.reason);
-									str += "<br><li>协力进度：";
+									str += "<br><li>協力角色：" + get.translation(info.target);
+									str += "<br><li>協力原因：" + get.translation(info.reason);
+									str += "<br><li>協力進度：";
 									var num = info.draw || 0;
 									str += num;
 									str += "/8";
@@ -9015,9 +9015,9 @@ export class Library {
 						}
 						player.markSkill("cooperation_discard");
 					},
-					marktext: "财",
+					marktext: "財",
 					intro: {
-						name: "协力 - 疏财",
+						name: "協力 - 疏財",
 						markcount: function (storage, player) {
 							return Math.max.apply(
 								Math,
@@ -9031,9 +9031,9 @@ export class Library {
 								storage = player.getStorage("cooperation");
 							for (var info of storage) {
 								if (info.type == "discard") {
-									str += "<br><li>协力角色：" + get.translation(info.target);
-									str += "<br><li>协力原因：" + get.translation(info.reason);
-									str += "<br><li>进度：";
+									str += "<br><li>協力角色：" + get.translation(info.target);
+									str += "<br><li>協力原因：" + get.translation(info.reason);
+									str += "<br><li>進度：";
 									var suits = info.discard || [];
 									var suits2 = [
 										["spade", "♠", "♤"],
@@ -9084,7 +9084,7 @@ export class Library {
 					},
 					marktext: "戮",
 					intro: {
-						name: "协力 - 戮力",
+						name: "協力 - 戮力",
 						markcount: function (storage, player) {
 							return Math.max.apply(
 								Math,
@@ -9098,9 +9098,9 @@ export class Library {
 								storage = player.getStorage("cooperation");
 							for (var info of storage) {
 								if (info.type == "use") {
-									str += "<br><li>协力角色：" + get.translation(info.target);
-									str += "<br><li>协力原因：" + get.translation(info.reason);
-									str += "<br><li>进度：";
+									str += "<br><li>協力角色：" + get.translation(info.target);
+									str += "<br><li>協力原因：" + get.translation(info.reason);
+									str += "<br><li>進度：";
 									var suits = info.used || [];
 									var suits2 = [
 										["spade", "♠", "♤"],
@@ -9134,7 +9134,7 @@ export class Library {
 				return zhengsus.some(zhengsu => player.storage[zhengsu]);
 			},
 			async content(event, trigger, player) {
-				await player.chooseDrawRecover(2, "整肃奖励：摸两张牌或回复1点体力", true);
+				await player.chooseDrawRecover(2, "整肅獎勵：摸兩張牌或回覆1點體力", true);
 			},
 			subSkill: {
 				leijin: {
@@ -9212,7 +9212,7 @@ export class Library {
 						player.markSkill("zhengsu_leijin");
 					},
 					intro: {
-						content: "<li>条件：回合内所有于出牌阶段使用的牌点数递增且不少于三张。",
+						content: "<li>條件：回合內所有於出牌階段使用的牌點數遞增且不少於三張。",
 					},
 				},
 				bianzhen: {
@@ -9266,7 +9266,7 @@ export class Library {
 						player.markSkill("zhengsu_bianzhen");
 					},
 					intro: {
-						content: "<li>条件：回合内所有于出牌阶段使用的牌花色相同且不少于两张。",
+						content: "<li>條件：回合內所有於出牌階段使用的牌花色相同且不少於兩張。",
 					},
 					ai: {
 						effect: {
@@ -9369,7 +9369,7 @@ export class Library {
 						player.markSkill("zhengsu_mingzhi");
 					},
 					intro: {
-						content: "<li>条件：回合内所有于弃牌阶段弃置的牌花色均不相同且不少于两张。",
+						content: "<li>條件：回合內所有於棄牌階段棄置的牌花色均不相同且不少於兩張。",
 					},
 				},
 			},
@@ -9380,11 +9380,11 @@ export class Library {
 					return _status.renku.length;
 				},
 				mark: function (dialog, content, player) {
-					if (!_status.renku.length) return "仁库中没有牌";
+					if (!_status.renku.length) return "仁庫中沒有牌";
 					else dialog.addAuto(_status.renku);
 				},
 				content: function () {
-					if (!_status.renku.length) return "仁库中没有牌";
+					if (!_status.renku.length) return "仁庫中沒有牌";
 					return get.translation(_status.renku);
 				},
 			},
@@ -9408,7 +9408,7 @@ export class Library {
 			//forced:true,
 			popup: false,
 			prompt: function (event, player) {
-				return "是否防止即将对" + get.translation(event.player) + "造成的伤害，改为令其减少" + get.cnNumber(event.num) + "点体力上限？";
+				return "是否防止即將對" + get.translation(event.player) + "造成的傷害，改為令其減少" + get.cnNumber(event.num) + "點體力上限？";
 			},
 			filter: function (event, player) {
 				return event.hasDuYou("kami") && event.num > 0;
@@ -9442,7 +9442,7 @@ export class Library {
 			content: function () {
 				"step 0";
 				player._groupChosen = "double";
-				player.chooseControl(get.is.double(player.name1, true)).set("prompt", "请选择你的势力");
+				player.chooseControl(get.is.double(player.name1, true)).set("prompt", "請選擇你的勢力");
 				"step 1";
 				player.changeGroup(result.control);
 			},
@@ -9473,7 +9473,7 @@ export class Library {
 						if (!player.countCards("hs", "tao")) return false;
 					},
 					position: "hs",
-					prompt: "将一张桃当杀使用或打出",
+					prompt: "將一張桃當殺使用或打出",
 					check: function () {
 						return 1;
 					},
@@ -9497,7 +9497,7 @@ export class Library {
 						name: "shan",
 						isCard: true,
 					},
-					prompt: "将一张桃当闪打出",
+					prompt: "將一張桃當閃打出",
 					check: function () {
 						return 1;
 					},
@@ -9535,7 +9535,7 @@ export class Library {
 				content: function (storage, player) {
 					if (typeof storage.intro2 == "string") return storage.intro2;
 					if (typeof storage.intro2 == "function") return storage.intro2(storage, player);
-					return "死亡前切换回主武将";
+					return "死亡前切換回主武將";
 				},
 				name: function (storage) {
 					return get.rawName(storage.name);
@@ -9594,13 +9594,13 @@ export class Library {
 							cfg[2] = player.maxHp;
 							player.reinit(cfg[0], cfg[3], [cfg[4], cfg[5]]);
 							player.unmarkSkill("dualside");
-							player.markSkillCharacter("dualside", { name: cfg[0] }, "正面", "当前体力：" + cfg[1] + "/" + cfg[2]);
+							player.markSkillCharacter("dualside", { name: cfg[0] }, "正面", "當前體力：" + cfg[1] + "/" + cfg[2]);
 						} else {
 							cfg[4] = player.hp;
 							cfg[5] = player.maxHp;
 							player.reinit(cfg[3], cfg[0], [cfg[1], cfg[2]]);
 							player.unmarkSkill("dualside");
-							player.markSkillCharacter("dualside", { name: cfg[3] }, "背面", "当前体力：" + cfg[4] + "/" + cfg[5]);
+							player.markSkillCharacter("dualside", { name: cfg[3] }, "背面", "當前體力：" + cfg[4] + "/" + cfg[5]);
 						}
 
 						if (trigger.name == "die") {
@@ -9638,7 +9638,7 @@ export class Library {
 								player.showCharacter(1);
 							}
 						}
-						player.markSkillCharacter("dualside", { name: cfg[3] }, "背面", "当前体力：" + cfg[4] + "/" + cfg[5]);
+						player.markSkillCharacter("dualside", { name: cfg[3] }, "背面", "當前體力：" + cfg[4] + "/" + cfg[5]);
 					},
 				},
 			},
@@ -9647,7 +9647,7 @@ export class Library {
 		fengyin: {
 			init: function (player, skill) {
 				player.addSkillBlocker(skill);
-				player.addTip(skill, "非锁定技失效");
+				player.addTip(skill, "非鎖定技失效");
 			},
 			onremove: function (player, skill) {
 				player.removeSkillBlocker(skill);
@@ -9664,7 +9664,7 @@ export class Library {
 						return lib.skill.fengyin.skillBlocker(i, player);
 					});
 					if (list.length) return "失效技能：" + get.translation(list);
-					return "无失效技能";
+					return "無失效技能";
 				},
 			},
 		},
@@ -9686,7 +9686,7 @@ export class Library {
 						return lib.skill.baiban.skillBlocker(i, player);
 					});
 					if (list.length) return "失效技能：" + get.translation(list);
-					return "无失效技能";
+					return "無失效技能";
 				},
 			},
 		},
@@ -9695,10 +9695,10 @@ export class Library {
 			mark: true,
 			nopop: true,
 			init: function (player) {
-				game.log(player, "获得了", "【潜行】");
+				game.log(player, "獲得了", "【潛行】");
 			},
 			intro: {
-				content: "锁定技，你不能成为其他角色的卡牌的目标",
+				content: "鎖定技，你不能成為其他角色的卡牌的目標",
 			},
 			mod: {
 				targetEnabled: function (card, player, target) {
@@ -9711,7 +9711,7 @@ export class Library {
 			mark: true,
 			forced: true,
 			init: function (player) {
-				game.log(player, "获得了", "【免疫】");
+				game.log(player, "獲得了", "【免疫】");
 			},
 			content: function () {
 				trigger.cancel();
@@ -9727,24 +9727,24 @@ export class Library {
 				},
 			},
 			intro: {
-				content: "防止一切伤害",
+				content: "防止一切傷害",
 			},
 		},
 		mad: {
 			mark: true,
 			locked: true,
 			intro: {
-				content: "已进入混乱状态",
-				name: "混乱",
+				content: "已進入混亂狀態",
+				name: "混亂",
 				onunmark: function (storage, player) {
-					game.log(player, "解除混乱状态");
+					game.log(player, "解除混亂狀態");
 				},
 			},
 		},
 		ghujia: {
 			intro: {
 				content: function (content, player) {
-					return "已有" + get.cnNumber(player.hujia) + "点护甲值";
+					return "已有" + get.cnNumber(player.hujia) + "點護甲值";
 				},
 			},
 			markimage: "image/card/shield.png",
@@ -9938,8 +9938,8 @@ export class Library {
 					return;
 				}
 				event.acted.push(player);
-				var str = get.translation(trigger.player) + "濒死，是否帮助？";
-				var str2 = "当前体力：" + trigger.player.hp;
+				var str = get.translation(trigger.player) + "瀕死，是否幫助？";
+				var str2 = "當前體力：" + trigger.player.hp;
 				if (lib.config.tao_enemy && event.dying.side != player.side && lib.config.mode != "identity" && lib.config.mode != "guozhan" && !event.dying.hasSkillTag("revertsave")) {
 					event._result = { bool: false };
 				} else if (player.canSave(event.dying)) {
@@ -10019,7 +10019,7 @@ export class Library {
 		_recasting: {
 			enable: "phaseUse",
 			logv: false,
-			prompt: "将要重铸的牌置入弃牌堆并摸一张牌",
+			prompt: "將要重鑄的牌置入棄牌堆並摸一張牌",
 			filter: (event, player) => player.hasCard(card => lib.skill._recasting.filterCard(card, player), lib.skill._recasting.position),
 			position: "he",
 			filterCard: (card, player) => player.canRecast(card, null, true),
@@ -10168,8 +10168,8 @@ export class Library {
 		_wuFaXingDong:{
 			filterx:function(event,player){
 				//console.log('--------------------------------');
-				//拥有挑衅直接false
-				//无可启动技跳过启动前后无法行动
+				//擁有挑釁直接false
+				//無可啟動技跳過啟動前後無法行動
 				if(event.name=='xingDong'){
 					if(event.canQiDong==false) return false;
 					var next=game.createEvent('gongJiOrFaShu',false);
@@ -10180,18 +10180,18 @@ export class Library {
 					}
 					next.set('canTeShu',event.canTeShu);
 				}
-				//获取所有技能
+				//獲取所有技能
 				var skills = game.expandSkills(player.getSkills("invisible").concat(lib.skill.global));
-				//判断是否有可触发的技能
+				//判斷是否有可觸發的技能
 				for(var i=0;i<skills.length;i++){
-					//排除提炼和无法行动（避免判断可触发时循环嵌套）
+					//排除提煉和無法行動（避免判斷可觸發時循環嵌套）
 					if(skills[i]=='_tiLian' || skills[i]=='_wuFaXingDong') continue;
 					if(event.name=='xingDong') var enable=lib.filter.filterEnable(next, player, skills[i]);
 					else var enable=lib.filter.filterEnable(event, player, skills[i]);
 					if(enable) return false;
 				}
 
-				//判断是否有可使用手牌
+				//判斷是否有可使用手牌
 				var cards=player.getCards('h').concat(player.getCards('s'));
 				for(var i=0;i<cards.length;i++){
 					if(player.hasUseTarget(cards[i])) return false;
@@ -10212,11 +10212,11 @@ export class Library {
 			},
 			contentx:function(){
 				"step 0"
-				event.dict={'认可':0,'否认':0};
+				event.dict={'認可':0,'否認':0};
 				event.targetsx=game.filterPlayer(i=>i!=player).sortBySeat(_status.currentPhase);
 				var name=get.translation(player.name);
-				event.contentx=[name+'宣言无法行动',player.getCards('h').slice()];
-				event.listx=['认可','否认'];
+				event.contentx=[name+'宣言無法行動',player.getCards('h').slice()];
+				event.listx=['認可','否認'];
 				event.trigger('wuFaXingDongBefore');
 				"step 1"
 				event.target=event.targetsx.shift();
@@ -10233,18 +10233,18 @@ export class Library {
 					});
 				}
 				"step 2"
-				if(result.control=='认可'){
-					event.target.popup('认可');
-					game.log(event.target,'认可');
+				if(result.control=='認可'){
+					event.target.popup('認可');
+					game.log(event.target,'認可');
 					event.dict[result.control]++;
-				}else if(result.control=='否认'){
-					event.target.popup('否认');
-					game.log(event.target,'否认');
+				}else if(result.control=='否認'){
+					event.target.popup('否認');
+					game.log(event.target,'否認');
 					event.dict[result.control]++;
 				}
 				if(event.targetsx.length>0) event.goto(1);
 				"step 3"
-				if(event.dict['认可']>=event.dict['否认']){
+				if(event.dict['認可']>=event.dict['否認']){
 					var num=player.getCards('h').length;
 					player.discard(player.getCards('h'));
 					player.draw(num);
@@ -10308,7 +10308,7 @@ export class Library {
 				}    
 			}
 		},
-		_gongJiXingShi:{//攻击获得星石
+		_gongJiXingShi:{//攻擊獲得星石
 			trigger:{source:'gongJiMingZhong'},
 			direct:true,
 			firstDo:true,
@@ -10333,15 +10333,15 @@ export class Library {
 				var canShengDun=trigger.canShengDun;
 				var canAnMie=trigger.canAnMie;
 
-				var str='本次攻击';
+				var str='本次攻擊';
 				if(canYingZhan==false&&canShengGuang==false&&canShengDun==false){
-					str+='强制命中';
+					str+='強制命中';
 				}else{
 					let list=[];
-					if(canYingZhan==false) list.push('无法被应战');
-					if(canAnMie==false) list.push('无法被【暗灭】应战');
-					if(canShengGuang==false) list.push('无法被【圣光】抵消');
-					if(canShengDun==false) list.push('无法被【圣盾】抵消');
+					if(canYingZhan==false) list.push('無法被應戰');
+					if(canAnMie==false) list.push('無法被【暗滅】應戰');
+					if(canShengGuang==false) list.push('無法被【聖光】抵消');
+					if(canShengDun==false) list.push('無法被【聖盾】抵消');
 					str+=list.join('，');
 				}
 				game.log(str);
@@ -10378,7 +10378,7 @@ export class Library {
 				}
 				
 
-				player.chooseControl(list).set('prompt','选择使用多少[治疗]，目前伤害量'+num).set('ai',function(){
+				player.chooseControl(list).set('prompt','選擇使用多少[治療]，目前傷害量'+num).set('ai',function(){
 					var num=_status.event.num;
 					return num;
 				}).set('num',zhiLiao);
@@ -10386,7 +10386,7 @@ export class Library {
 				var zhiLiaonum=result.control;
 				if(zhiLiaonum>0){
 					trigger.getParent().num-=zhiLiaonum;
-					game.log(player,'的','[治疗]','抵挡了'+zhiLiaonum+'点伤害');
+					game.log(player,'的','[治療]','抵擋了'+zhiLiaonum+'點傷害');
 					player.changeZhiLiao(-zhiLiaonum).type='damage';
 				}
 			}
@@ -10424,7 +10424,7 @@ export class Library {
 					event.finish();
 				}else if(num==1){
 					var list=['baoShi','shuiJing'];
-					player.chooseControl(list).set('prompt','选择获得的星石').set('ai',function(){return 0;});
+					player.chooseControl(list).set('prompt','選擇獲得的星石').set('ai',function(){return 0;});
 				}
 				'step 3'
 				if(result.control=='baoShi'){
@@ -10462,7 +10462,7 @@ export class Library {
 			},
 			chooseButton:{
 				dialog:function(event,player){
-					var dialog=ui.create.dialog('合成：选择星石','hidden');
+					var dialog=ui.create.dialog('合成：選擇星石','hidden');
 					var list=get.zhanJi(player.side);
 					var listx=[];
 					for(var i=0;i<list.length;i++){
@@ -10558,15 +10558,15 @@ export class Library {
 			subSkill:{
 				baoShi:{
 					intro:{
-						name:'宝石',
-						content:'你有拥有#个宝石能量',
+						name:'寶石',
+						content:'你有擁有#個寶石能量',
 					},
 					markimage:'image/card/xingShi/baoShi.png',
 				},
 				shuiJing:{
 					intro:{
 						name:'水晶',
-						content:'你有拥有#个水晶能量',
+						content:'你有擁有#個水晶能量',
 					},
 					markimage:'image/card/xingShi/shuiJing.png',
 				},
@@ -10581,7 +10581,7 @@ export class Library {
 			},
 			chooseButton:{
 				dialog:function(event,player){
-					var dialog=ui.create.dialog('提炼：选择星石','hidden');
+					var dialog=ui.create.dialog('提煉：選擇星石','hidden');
 					var list=get.zhanJi(player.side);
 					var listx=[];
 					for(var i=0;i<list.length;i++){
@@ -10653,7 +10653,7 @@ export class Library {
 						if(button.link=='shuiJing') return 5;
 						else return 2;
 					}
-					//既有水晶也有宝石
+					//既有水晶也有寶石
 					return 2;
 
 				}
@@ -10698,10 +10698,10 @@ export class Library {
 			}
 		},
 		_xuRuo:{
-			priority:1,//优先级大的先执行
+			priority:1,//優先級大的先執行
 			trigger:{player:'xingDongBefore'},
 			forced:true,
-			//marktext:"虚",
+			//marktext:"虛",
 			markimage:'image/card/xuRuo.png',
 			intro:{
 				content:'jiChuXiaoGuo',
@@ -10715,18 +10715,18 @@ export class Library {
 						game.playAudio('card','male','xuRuo');
 					}
 				});
-				var list=['选项一','选项二']; 
-				var choiceList=['摸三张牌','跳过行动阶段'];
-				var control=await player.chooseControl(list).set('choiceList',choiceList).set('prompt','虚弱：选择一项').set('ai',function(){
+				var list=['選項一','選項二']; 
+				var choiceList=['摸三張牌','跳過行動階段'];
+				var control=await player.chooseControl(list).set('choiceList',choiceList).set('prompt','虛弱：選擇一項').set('ai',function(){
 					var player=_status.event.player;
 					if(player.countCards('h')+3<=player.getHandcardLimit()) return 0;
 					return 1;
 				}).forResultControl();
-				if(control=='选项二'){
-					game.log(player,'选择了','跳过行动阶段');
+				if(control=='選項二'){
+					game.log(player,'選擇了','跳過行動階段');
 					trigger.xuRuo=true;
-				}else if(control=="选项一"){
-					game.log(player,'选择了','摸三张牌');
+				}else if(control=="選項一"){
+					game.log(player,'選擇了','摸三張牌');
 					await player.draw(3);
 				}
 				await player.discard(player.getExpansions('_xuRuo'),'_xuRuo').set('visible',true);
@@ -10835,14 +10835,14 @@ export class Library {
 				var propmt=`受到${name}的`;
 				propmt+=get.translation(get.xiBie(event.card))+'系';
 				if(event.yingZhan){
-					propmt+='应战攻击';
+					propmt+='應戰攻擊';
 				}else{
-					propmt+='主动攻击';
+					propmt+='主動攻擊';
 				}
 				var next=player.yingZhan(propmt);
 				next.set('filterCard',function(card,player,event){
 					if(get.type(card)=='gongJi'){
-						if(_status.event.canYingZhan==false) return false;//不能应战设置
+						if(_status.event.canYingZhan==false) return false;//不能應戰設置
 						if(_status.event.canAnMie==false){
 							if(get.xiBie(card)!=get.xiBie(_status.event.card)) return false;
 						}else{
@@ -10866,7 +10866,7 @@ export class Library {
 				next.set('canShengGuang',trigger.canShengGuang);
 				next.set('canAnMie',trigger.canAnMie);
 				next.set('oncard',function(card,player){
-					_status.event.yingZhan=true;//设置本次攻击为应战攻击
+					_status.event.yingZhan=true;//設置本次攻擊為應戰攻擊
 				});
 				'step 1'
 				if(result.bool){
@@ -10886,15 +10886,15 @@ export class Library {
 			},
 			content:function(){
 				'step 0'
-				//trigger.yingZhan=true;//设置本次攻击为应战攻击
+				//trigger.yingZhan=true;//設置本次攻擊為應戰攻擊
 
 				event.customArgs=trigger.getParent(5).customArgs;
-				event.source=trigger.getParent().source;//攻击来源
-				event.player=trigger.getParent().player;//应战者
-				event.yingZhan=trigger.getParent(2).yingZhan;//判断未命中的攻击是否为应战攻击
-				event.card=trigger.getParent().card;//攻击来源牌
+				event.source=trigger.getParent().source;//攻擊來源
+				event.player=trigger.getParent().player;//應戰者
+				event.yingZhan=trigger.getParent(2).yingZhan;//判斷未命中的攻擊是否為應戰攻擊
+				event.card=trigger.getParent().card;//攻擊來源牌
 				event.cause='yingZhan';
-				event.causeCard=trigger.card;//应战牌
+				event.causeCard=trigger.card;//應戰牌
 				'step 1'
 				event.trigger('gongJiWeiMingZhong');
 			}
@@ -10909,28 +10909,28 @@ export class Library {
 			content:function(){
 				'step 0'
 				event.customArgs=trigger.getParent(5).customArgs;
-				event.source=trigger.getParent().source;//攻击来源
-				event.player=trigger.getParent().player;//应战者
-				event.yingZhan=trigger.getParent(2).yingZhan;//判断未命中的攻击是否为应战攻击
-				event.card=trigger.getParent().card;//攻击来源牌
+				event.source=trigger.getParent().source;//攻擊來源
+				event.player=trigger.getParent().player;//應戰者
+				event.yingZhan=trigger.getParent(2).yingZhan;//判斷未命中的攻擊是否為應戰攻擊
+				event.card=trigger.getParent().card;//攻擊來源牌
 				event.cause='shengGuang';
-				event.causeCard=trigger.card;//圣光牌
+				event.causeCard=trigger.card;//聖光牌
 				'step 1'
 				event.trigger('gongJiWeiMingZhong');
 			}
 		},
 		_moDan:{
 			intro:{
-				name:'已魔弹',
+				name:'已魔彈',
 				nocount:true,
 			},
 			markimage:'image/card/moDan.png',
 			trigger:{target:'shouDaoMoDan'},
 			direct:true,
 			content:async function(event,trigger,player){
-				if(!player.hasMark('_moDan')) await player.addMark('_moDan',1,false);//是否已经被魔弹
+				if(!player.hasMark('_moDan')) await player.addMark('_moDan',1,false);//是否已經被魔彈
 
-				//所有玩家有魔弹标记重置标记
+				//所有玩家有魔彈標記重置標記
 				var num=game.filterPlayer(function(current){
 					return current.hasMark('_moDan');
 				}).length;
@@ -10941,7 +10941,7 @@ export class Library {
 				}
 
 				var name=get.translation(trigger.player);
-				var str='受到'+name+'的魔弹';
+				var str='受到'+name+'的魔彈';
 				var next=player.moDan(str,function(card,player,event){
 					if(!(get.name(card)=='moDan'||get.name(card)=='shengGuang')) return false;
 					return lib.filter.cardEnabled(card,player,'forceEnable');
@@ -10961,7 +10961,7 @@ export class Library {
 				if(player.hasMark('_moDan')) await player.removeMark('_moDan',player.countMark('_moDan'),false);
 			},
 			subSkill:{
-				before:{//第一个使用魔弹的角色增加魔弹标记
+				before:{//第一個使用魔彈的角色增加魔彈標記
 					trigger:{player:'useCardBefore'},
 					direct:true,
 					lastDo:true,
@@ -10973,7 +10973,7 @@ export class Library {
 						player.addMark('_moDan',1,false);
 					}
 				},
-				after:{//第一个使用魔弹的角色删除魔弹标记
+				after:{//第一個使用魔彈的角色刪除魔彈標記
 					trigger:{player:'useCardAfter'},
 					direct:true,
 					lastDo:true,
@@ -11072,12 +11072,12 @@ export class Library {
 					} else if (game.phaseNumber && lib.configOL.observe) {
 						lib.node.observing.push(this);
 						this.send("reinit", lib.configOL, get.arenaState(), game.getState ? game.getState() : {}, game.ip, game.players[0].playerid, null, _status.cardtag, _status.postReconnect);
-						// 没有系统提示的接口喵？
-						game.log("玩家 ", `#y${get.plainText(config.nickname)}`, " 进入房间观战");
-						game.me.chat(`玩家 <span style="font-weight: bold; color: rgb(126, 180, 255)">${get.plainText(config.nickname)}</span> 进入房间观战`);
+						// 沒有系統提示的接口喵？
+						game.log("玩家 ", `#y${get.plainText(config.nickname)}`, " 進入房間觀戰");
+						game.me.chat(`玩家 <span style="font-weight: bold; color: rgb(126, 180, 255)">${get.plainText(config.nickname)}</span> 進入房間觀戰`);
 						if (!ui.removeObserve) {
 							ui.removeObserve = ui.create.system(
-								"移除旁观",
+								"移除旁觀",
 								function () {
 									lib.configOL.observe = false;
 									if (game.onlineroom) {
@@ -11133,7 +11133,7 @@ export class Library {
 			 */
 			reinited() {
 				this.inited = true;
-				//重连时使标记显示
+				//重連時使標記顯示
 				for(var player of game.players){
 					for(var mark in player.marks){
 						player.markSkill(mark);
@@ -11193,7 +11193,7 @@ export class Library {
 					}
 					for (var i = 0; i < game.connectPlayers.length; i++) {
 						if (game.connectPlayers[i].playerid == this.id) {
-							game.connectPlayers[i].chat("房间设置已更改");
+							game.connectPlayers[i].chat("房間設置已更改");
 						}
 					}
 				}
@@ -11293,7 +11293,7 @@ export class Library {
 			},
 			/**
 			 * ```plain
-			 * 当客机向主机发送投降请求时的回调
+			 * 當客機向主機發送投降請求時的回調
 			 * ```
 			 *
 			 * @this {import("./element/client.js").Client}
@@ -11302,7 +11302,7 @@ export class Library {
 			giveup(player) {
 				if (lib.node.observing.includes(this) || !player || !player._giveUp) return;
 				var self = lib.playerOL[this.id];
-				if (self !== player) return; // 禁止让别人投降
+				if (self !== player) return; // 禁止讓別人投降
 				_status.event.next.length = 0;
 				game
 					.createEvent("giveup", false)
@@ -11321,9 +11321,9 @@ export class Library {
 				var player = lib.playerOL[this.id];
 				if (player) {
 					player.isAuto = true;
-					player.setNickname(player.nickname + " - 托管");
+					player.setNickname(player.nickname + " - 託管");
 					game.broadcast(function (player) {
-						player.setNickname(player.nickname + " - 托管");
+						player.setNickname(player.nickname + " - 託管");
 					}, player);
 				}
 			},
@@ -11387,7 +11387,7 @@ export class Library {
 					lib.config.banned_info
 				);
 				if (ui.connecting && !ui.connecting.splashtimeout) {
-					ui.connecting.firstChild.innerHTML = "重连成功";
+					ui.connecting.firstChild.innerHTML = "重連成功";
 				}
 			},
 			onconnection: id => lib.init.connection((lib.wsOL[id] = new lib.element.NodeWS(id))),
@@ -11439,7 +11439,7 @@ export class Library {
 				clearTimeout(_status.enteringroomTimeout);
 				delete _status._enteringRoomSince;
 				_status.enteringroom = false;
-				alert("请稍后再试");
+				alert("請稍後再試");
 				ui.create.connecting(true);
 			},
 			roomlist: function (list, events, clients, wsid) {
@@ -11467,11 +11467,11 @@ export class Library {
 					game.ip = get.trimip(_status.ip);
 					ui.create.connectRooms(list);
 					if (events) {
-						ui.connectEvents = ui.create.div(".forceopaque.menubutton.large.connectevents.pointerdiv", "约战", ui.window, ui.click.connectEvents);
+						ui.connectEvents = ui.create.div(".forceopaque.menubutton.large.connectevents.pointerdiv", "約戰", ui.window, ui.click.connectEvents);
 						ui.connectEventsCount = ui.create.div(".forceopaque.menubutton.icon.connectevents.highlight.hidden", "", ui.window);
-						ui.connectClients = ui.create.div(".forceopaque.menubutton.large.connectevents.pointerdiv.left", "在线", ui.window, ui.click.connectClients);
+						ui.connectClients = ui.create.div(".forceopaque.menubutton.large.connectevents.pointerdiv.left", "在線", ui.window, ui.click.connectClients);
 						ui.connectClientsCount = ui.create.div(".forceopaque.menubutton.icon.connectevents.highlight.left", "1", ui.window);
-						ui.createRoomButton = ui.create.div(".forceopaque.menubutton.large.connectevents.pointerdiv.left2", "创建房间", ui.window, function () {
+						ui.createRoomButton = ui.create.div(".forceopaque.menubutton.large.connectevents.pointerdiv.left2", "創建房間", ui.window, function () {
 							if (!_status.creatingroom) {
 								_status.creatingroom = true;
 								ui.click.connectMenu();
@@ -11488,7 +11488,7 @@ export class Library {
 					lib.message.client.updaterooms(list, clients);
 					lib.message.client.updateevents(events);
 					ui.exitroom = ui.create.system(
-						"退出房间",
+						"退出房間",
 						function () {
 							game.saveConfig("tmp_owner_roomId");
 							game.saveConfig("tmp_user_roomId");
@@ -11602,10 +11602,10 @@ export class Library {
 						if (!i) continue;
 						map[i[4]] = i;
 						if (!map2[i[4]]) {
-							var player = ui.roombase.add('<div class="popup text pointerdiv" style="width:calc(100% - 10px);display:inline-block;white-space:nowrap">空房间</div>');
+							var player = ui.roombase.add('<div class="popup text pointerdiv" style="width:calc(100% - 10px);display:inline-block;white-space:nowrap">空房間</div>');
 							player.roomindex = i;
 							player.initRoom = lib.element.Player.prototype.initRoom;
-							// Always listen for click so mouse works; touchend alone breaks rooms when「触屏模式」is on.
+							// Always listen for click so mouse works; touchend alone breaks rooms when「觸屏模式」is on.
 							player.addEventListener("click", ui.click.connectroom);
 							if (lib.config.touchscreen) {
 								player.addEventListener("touchend", ui.click.connectroom);
@@ -11619,7 +11619,7 @@ export class Library {
 							try {
 								var roomId = text.split("\n")[1].match(/\d+/);
 								var caption = ui.rooms.find(caption => caption.key == roomId);
-								if (caption && (_status.read_clipboard_text || confirm(`是否通过复制的内容加入${roomId}房间？`))) {
+								if (caption && (_status.read_clipboard_text || confirm(`是否通過複製的內容加入${roomId}房間？`))) {
 									ui.click.connectroom.call(caption);
 									delete _status.read_clipboard_text;
 								}
@@ -11627,7 +11627,7 @@ export class Library {
 								console.log(e);
 							}
 						};
-						//每次启动只请求一次
+						//每次啟動只請求一次
 						_status.requestReadClipboard = true;
 						if (_status.read_clipboard_text) {
 							read(_status.read_clipboard_text);
@@ -11645,8 +11645,8 @@ export class Library {
 								input.blur();
 								ui.window.removeChild(input);
 								if (result || input.value.length > 0) read(input.value);
-								else if (confirm("是否输入邀请链接以加入房间？")) {
-									var text = prompt("请输入邀请链接");
+								else if (confirm("是否輸入邀請鏈接以加入房間？")) {
+									var text = prompt("請輸入邀請鏈接");
 									if (typeof text == "string" && text.length > 0) read(text);
 								}
 							}
@@ -11682,13 +11682,13 @@ export class Library {
 				}
 			},
 			eventsdenied: function (reason) {
-				var str = "创建约战失败";
+				var str = "創建約戰失敗";
 				if (reason == "total") {
-					str += "，约战总数不能超过20";
+					str += "，約戰總數不能超過20";
 				} else if (reason == "time") {
-					str += "，时间已过";
+					str += "，時間已過";
 				} else if (reason == "ban") {
-					str += "，请注意文明发言";
+					str += "，請注意文明發言";
 				}
 				alert(str);
 			},
@@ -11901,7 +11901,7 @@ export class Library {
 					} else {
 						if (!ui.exitroom) {
 							ui.create.system(
-								"退出旁观",
+								"退出旁觀",
 								function () {
 									game.saveConfig("reconnect_info");
 									game.reload();
@@ -11934,7 +11934,7 @@ export class Library {
 					game.lanXingBei = state.lanXingBei;
 					game.moDanFangXiang = state.moDanFangXiang;
                     
-					//多控观战模式使用正常布局
+					//多控觀戰模式使用正常佈局
 					if(lib.configOL.phaseswap && observe) ui.arena.setNumber(state.number-1);
 					else{
 						if(lib.configOL.mode=='boss') ui.arena.setNumber(state.number-1)
@@ -12085,7 +12085,7 @@ export class Library {
 						}
 					}
 					game.arrangePlayers();
-					//xingBei更新战绩区
+					//xingBei更新戰績區
 					ui.shiQiInfo=ui.create.div('.touchinfo.bottom-right',ui.window);
                     ui.updateShiQiInfo();
 
@@ -12101,7 +12101,7 @@ export class Library {
 					if (observe) {
 						next.custom.replace.target = function (player) {
 							game.swapPlayer(player);
-							ui.updateShiQiInfo();//可能切换阵营，更新高亮显示
+							ui.updateShiQiInfo();//可能切換陣營，更新高亮顯示
 						};
 					} else {
 						if (Array.isArray(onreconnect)) {
@@ -12126,7 +12126,7 @@ export class Library {
 				const key = game.onlineKey;
 				if (typeof func == "function") {
 					const isMarshalled = security.isSandboxRequired() && security.importSandbox().Domain.current.isFrom(func);
-					// 被封送的函数额外间隔了四层调用栈
+					// 被封送的函數額外間隔了四層調用棧
 					const level = isMarshalled ? 4 : 0;
 					const args = Array.from(arguments).slice(1);
 					ErrorManager.errorHandle(
@@ -12145,22 +12145,22 @@ export class Library {
 			denied: function (reason) {
 				switch (reason) {
 					case "version":
-						alert("加入失败：版本不匹配，请将游戏更新至最新版");
+						alert("加入失敗：版本不匹配，請將遊戲更新至最新版");
 						game.saveConfig("tmp_owner_roomId");
 						game.saveConfig("tmp_user_roomId");
 						game.saveConfig("reconnect_info");
 						break;
 					case "gaming":
-						alert("加入失败：游戏已开始");
+						alert("加入失敗：遊戲已開始");
 						break;
 					case "number":
-						alert("加入失败：房间已满");
+						alert("加入失敗：房間已滿");
 						break;
 					case "banned":
-						alert("加入失败：房间拒绝你加入");
+						alert("加入失敗：房間拒絕你加入");
 						break;
 					case "key":
-						alert("您的游戏版本过低，请升级到最新版");
+						alert("您的遊戲版本過低，請升級到最新版");
 						game.saveConfig("tmp_owner_roomId");
 						game.saveConfig("tmp_user_roomId");
 						game.saveConfig("reconnect_info");
@@ -12171,7 +12171,7 @@ export class Library {
 						}
 						break;
 					case "extension":
-						if (confirm("加入失败：房间禁止使用扩展！是否关闭所有扩展？")) {
+						if (confirm("加入失敗：房間禁止使用擴展！是否關閉所有擴展？")) {
 							let libexts = lib.config.extensions;
 							for (let i = 0; i < libexts.length; i++) {
 								game.saveConfig("extension_" + libexts[i] + "_enable", false);
@@ -12179,7 +12179,7 @@ export class Library {
 						}
 						break;
 					default:
-						alert(reason); //其它原因直接弹窗显示
+						alert(reason); //其它原因直接彈窗顯示
 				}
 				game.ws.close();
 				if (_status.connectDenied) {
@@ -12265,10 +12265,10 @@ export class Library {
 								if (map[i][2] == game.onlineID) {
 									game.onlinezhu = true;
 									if (ui.roomInfo) {
-										ui.roomInfo.innerHTML = "房间设置";
+										ui.roomInfo.innerHTML = "房間設置";
 									}
 									if (ui.connectStartButton) {
-										ui.connectStartButton.innerHTML = "开始游戏";
+										ui.connectStartButton.innerHTML = "開始遊戲";
 									}
 								}
 							} else {
@@ -12283,7 +12283,7 @@ export class Library {
 			},
 		},
 	};
-	//为lib.numstrList属性set数字对应花色，即可在get.strNumber和get.numString中获取使用
+	//為lib.numstrList屬性set數字對應花色，即可在get.strNumber和get.numString中獲取使用
 	numstrList = new Map([
 		[1, "A"],
 		[11, "J"],
@@ -12299,7 +12299,7 @@ export class Library {
 		none: ["none"],
 	};
 	group = ["jiGroup", "xueGroup", "huanGroup", "shengGroup", "yongGroup", "longGroup"];
-	//数值代表各元素在名称中排列的先后顺序
+	//數值代表各元素在名稱中排列的先後順序
 	nature = new Map([
 		["fire", 20],
 		["thunder", 30],
@@ -12310,34 +12310,34 @@ export class Library {
 	]);
 	natureAudio = {
 		damage: {
-			fire: "default", //默认，即语音放置在audio/effect下，以damage_fire.mp3 damage_fire2.mp3命名。
+			fire: "default", //默認，即語音放置在audio/effect下，以damage_fire.mp3 damage_fire2.mp3命名。
 			thunder: "default",
 			ice: "default",
-			stab: "normal", //正常，即与普通伤害音效相同。
+			stab: "normal", //正常，即與普通傷害音效相同。
 			/*
 			'example':{
-				1:'../extension/XXX/damage_example.mp3',//1点伤害。
-				2:'../extension/XXX/damage_example2.mp3',//2点及以上伤害
+				1:'../extension/XXX/damage_example.mp3',//1點傷害。
+				2:'../extension/XXX/damage_example2.mp3',//2點及以上傷害
 			}
 			*/
 		},
 		hujia_damage: {
-			fire: "default", //默认，即语音放置在audio/effect下，以hujia_damage_fire.mp3 hujia_damage_fire2.mp3命名。
+			fire: "default", //默認，即語音放置在audio/effect下，以hujia_damage_fire.mp3 hujia_damage_fire2.mp3命名。
 			thunder: "default",
-			ice: "normal", //正常，即与普通伤害音效相同。
+			ice: "normal", //正常，即與普通傷害音效相同。
 			/*
 			'example':{
-				1:'../extension/XXX/damage_example.mp3',//1点伤害。
-				2:'../extension/XXX/damage_example2.mp3',//2点及以上伤害
+				1:'../extension/XXX/damage_example.mp3',//1點傷害。
+				2:'../extension/XXX/damage_example2.mp3',//2點及以上傷害
 			}
 			*/
 		},
 		sha: {
-			fire: "default", //默认，即语音放置在audio/card/male与audio/card/female下，命名为sha_fire.mp3
+			fire: "default", //默認，即語音放置在audio/card/male與audio/card/female下，命名為sha_fire.mp3
 			thunder: "default",
 			ice: "default",
 			stab: "default",
-			poison: "normal", //正常，即播放“杀”的音效。
+			poison: "normal", //正常，即播放“殺”的音效。
 			kami: "normal",
 			/*
 			'example':{
@@ -12359,7 +12359,7 @@ export class Library {
 			},
 		],
 		[
-			"谋",
+			"謀",
 			{
 				color: "#def7ca",
 				nature: "woodmm",
@@ -12373,7 +12373,7 @@ export class Library {
 			},
 		],
 		[
-			"乐",
+			"樂",
 			{
 				color: "#f7f4fc",
 				nature: "keymm",
@@ -12394,14 +12394,14 @@ export class Library {
 			},
 		],
 		[
-			"晋",
+			"晉",
 			{
 				color: "#f3c5ff",
 				nature: "blackmm",
 			},
 		],
 		[
-			"侠",
+			"俠",
 			{
 				color: "#eeeeee",
 				nature: "qunmm",
@@ -12422,7 +12422,7 @@ export class Library {
 			},
 		],
 		[
-			"转",
+			"轉",
 			{
 				color: "#c3f9ff",
 				nature: "thundermm",
@@ -12443,50 +12443,50 @@ export class Library {
 			},
 		],
 		[
-			"兴",
+			"興",
 			{
 				color: "#c3f9ff",
 				nature: "thundermm",
 			},
 		],
 		[
-			"梦",
+			"夢",
 			{
 				color: "#6affe2",
 				nature: "watermm",
 			},
 		],
 		[
-			"用间",
+			"用間",
 			{
 				color: "#c3f9ff",
 				nature: "thundermm",
 			},
 		],
 		[
-			"战役篇",
+			"戰役篇",
 			{
 				color: "#c3f9ff",
 				nature: "thundermm",
-				showName: "战",
+				showName: "戰",
 			},
 		],
 		[
-			"武将传",
+			"武將傳",
 			{
 				color: "#c3f9ff",
 				nature: "thundermm",
-				showName: "传",
+				showName: "傳",
 			},
 		],
 		[
-			"将",
+			"將",
 			{
 				nature: "firemm",
 			},
 		],
 		[
-			"新杀",
+			"新殺",
 			{
 				color: "#fefedc",
 				nature: "metalmm",
@@ -12494,21 +12494,21 @@ export class Library {
 			},
 		],
 		[
-			"旧",
+			"舊",
 			{
 				color: "#a4a4a4",
 				nature: "black",
 			},
 		],
 		[
-			"旧界",
+			"舊界",
 			{
 				color: "#a4a4a4",
 				nature: "black",
 			},
 		],
 		[
-			"节钺",
+			"節鉞",
 			{
 				color: "#a4a4a4",
 				nature: "black",
@@ -12555,7 +12555,7 @@ export class Library {
 			},
 		],
 		[
-			"经典",
+			"經典",
 			{
 				showName: "典",
 			},
@@ -12632,7 +12632,7 @@ export class Library {
 			},
 		],
 		[
-			"手杀",
+			"手殺",
 			{
 				getSpan: (prefix, name) => {
 					const simple = lib.config.buttoncharacter_prefix == "simple",
@@ -12648,7 +12648,7 @@ export class Library {
 							span.dataset.nature = "watermm";
 						}
 						span.innerHTML = prefix;
-					} else if (simple) span.textContent = "手杀";
+					} else if (simple) span.textContent = "手殺";
 					else {
 						span.style.fontFamily = "NonameSuits";
 						span.textContent = "📱";
@@ -12672,20 +12672,20 @@ export class Library {
 			},
 		],
 		[
-			"汉末",
+			"漢末",
 			{
-				showName: "汉",
+				showName: "漢",
 				color: "#fefedc",
 				nature: "shenmm",
 			},
 		],
 		[
-			"汉末神",
+			"漢末神",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("汉末")}${get.prefixSpan("神")}`,
+				getSpan: () => `${get.prefixSpan("漢末")}${get.prefixSpan("神")}`,
 			},
 		],
 		[
@@ -12698,12 +12698,12 @@ export class Library {
 			},
 		],
 		[
-			"TW将",
+			"TW將",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("TW")}${get.prefixSpan("将")}`,
+				getSpan: () => `${get.prefixSpan("TW")}${get.prefixSpan("將")}`,
 			},
 		],
 		[
@@ -12716,30 +12716,30 @@ export class Library {
 			},
 		],
 		[
-			"旧神",
+			"舊神",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("旧")}${get.prefixSpan("神")}`,
+				getSpan: () => `${get.prefixSpan("舊")}${get.prefixSpan("神")}`,
 			},
 		],
 		[
-			"旧晋",
+			"舊晉",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("旧")}${get.prefixSpan("晋")}`,
+				getSpan: () => `${get.prefixSpan("舊")}${get.prefixSpan("晉")}`,
 			},
 		],
 		[
-			"新杀SP",
+			"新殺SP",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("新杀")}${get.prefixSpan("SP")}`,
+				getSpan: () => `${get.prefixSpan("新殺")}${get.prefixSpan("SP")}`,
 			},
 		],
 		[
@@ -12761,30 +12761,30 @@ export class Library {
 			},
 		],
 		[
-			"手杀界",
+			"手殺界",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("手杀")}${get.prefixSpan("界")}`,
+				getSpan: () => `${get.prefixSpan("手殺")}${get.prefixSpan("界")}`,
 			},
 		],
 		[
-			"手杀SP",
+			"手殺SP",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("手杀")}${get.prefixSpan("SP")}`,
+				getSpan: () => `${get.prefixSpan("手殺")}${get.prefixSpan("SP")}`,
 			},
 		],
 		[
-			"战役篇神",
+			"戰役篇神",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("战役篇")}${get.prefixSpan("神")}`,
+				getSpan: () => `${get.prefixSpan("戰役篇")}${get.prefixSpan("神")}`,
 			},
 		],
 		[
@@ -12804,52 +12804,52 @@ export class Library {
 			},
 		],
 		[
-			"OL谋",
+			"OL謀",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("OL")}${get.prefixSpan("谋")}`,
+				getSpan: () => `${get.prefixSpan("OL")}${get.prefixSpan("謀")}`,
 			},
 		],
 		[
-			"新杀谋",
+			"新殺謀",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("新杀")}${get.prefixSpan("谋")}`,
+				getSpan: () => `${get.prefixSpan("新殺")}${get.prefixSpan("謀")}`,
 			},
 		],
 		[
-			"经典神",
+			"經典神",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("经典")}${get.prefixSpan("神")}`,
+				getSpan: () => `${get.prefixSpan("經典")}${get.prefixSpan("神")}`,
 			},
 		],
 		[
-			"旧谋",
+			"舊謀",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("旧")}${get.prefixSpan("谋")}`,
+				getSpan: () => `${get.prefixSpan("舊")}${get.prefixSpan("謀")}`,
 			},
 		],
 		[
-			"手杀神",
+			"手殺神",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("手杀")}${get.prefixSpan("神")}`,
+				getSpan: () => `${get.prefixSpan("手殺")}${get.prefixSpan("神")}`,
 			},
 		],
 		[
-			"龙",
+			"龍",
 			{
 				color: "#ff0000",
 				nature: "firemm",
@@ -12879,19 +12879,19 @@ export class Library {
 			},
 		],
 		[
-			"荆",
+			"荊",
 			{
 				color: "#00ff00",
 				nature: "firemm",
 			},
 		],
 		[
-			"荆神",
+			"荊神",
 			{
 				/**
 				 * @returns {string}
 				 */
-				getSpan: () => `${get.prefixSpan("荆")}${get.prefixSpan("神")}`,
+				getSpan: () => `${get.prefixSpan("荊")}${get.prefixSpan("神")}`,
 			},
 		],
 		[
@@ -12909,7 +12909,7 @@ export class Library {
 			},
 		],
 		[
-			"标",
+			"標",
 			{
 				color: "#912cee",
 				nature: "metalmm",
@@ -12977,7 +12977,7 @@ export class Library {
 			},
 		],
 		[
-			"势",
+			"勢",
 			{
 				color: "#7d26cd",
 				nature: "purplemm",
@@ -13014,9 +13014,9 @@ export class Library {
 			},
 		],
 		[
-			"农",
+			"農",
 			{
-				showName: "农",
+				showName: "農",
 				color: "#672e3d",
 				nature: "purplemm",
 			},
@@ -13055,13 +13055,13 @@ export class Library {
 		["legend", [233, 131, 255]],
 	]);
 	phaseName = ["phaseZhunbei", "phaseJudge", "phaseDraw", "phaseUse", "phaseDiscard", "phaseJieshu"];
-	quickVoice = ["我从未见过如此厚颜无耻之人！", "这波不亏", "请收下我的膝盖", "你咋不上天呢", "放开我的队友，冲我来", "你随便杀，闪不了算我输", "见证奇迹的时刻到了", "能不能快一点啊，兵贵神速啊", "主公，别开枪，自己人", "小内再不跳，后面还怎么玩儿啊", "你们忍心，就这么让我酱油了？", "我，我惹你们了吗", "姑娘，你真是条汉子", "三十六计，走为上，容我去去便回", "人心散了，队伍不好带啊", "昏君，昏君啊！", "风吹鸡蛋壳，牌去人安乐", "小内啊，您老悠着点儿", "不好意思，刚才卡了", "你可以打得再烂一点吗", "哥们，给力点儿行嘛", "哥哥，交个朋友吧", "妹子，交个朋友吧"];
+	quickVoice = ["我從未見過如此厚顏無恥之人！", "這波不虧", "請收下我的膝蓋", "你咋不上天呢", "放開我的隊友，衝我來", "你隨便殺，閃不了算我輸", "見證奇蹟的時刻到了", "能不能快一點啊，兵貴神速啊", "主公，別開槍，自己人", "小內再不跳，後面還怎麼玩兒啊", "你們忍心，就這麼讓我醬油了？", "我，我惹你們了嗎", "姑娘，你真是條漢子", "三十六計，走為上，容我去去便回", "人心散了，隊伍不好帶啊", "昏君，昏君啊！", "風吹雞蛋殼，牌去人安樂", "小內啊，您老悠著點兒", "不好意思，剛才卡了", "你可以打得再爛一點嗎", "哥們，給力點兒行嘛", "哥哥，交個朋友吧", "妹子，交個朋友吧"];
 	other = {
 		ignore: () => void 0,
 	};
 	InitFilter = {
-		noZhuHp: "不享受主公的额外体力上限",
-		noZhuSkill: "不享受地主的额外技能",
+		noZhuHp: "不享受主公的額外體力上限",
+		noZhuSkill: "不享受地主的額外技能",
 	};
 }
 

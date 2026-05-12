@@ -120,7 +120,7 @@ export class Check {
 			event._skillChoice = game
 				.expandSkills(player.getSkills("invisible").concat(lib.skill.global))
 				.filter((skill) => lib.filter.filterEnable(event, player, skill));
-		//针对展开后的子技能再次判断是否被禁止，修复见习制片等被挑衅还可以使用其他角色独有的法术技能
+		//針對展開後的子技能再次判斷是否被禁止，修復見習製片等被挑釁還可以使用其他角色獨有的法術技能
 		event._skillChoice=game.filterSkills(event._skillChoice,player,'es');
 
 		const skills = event._skillChoice.filter((i) => event.isMine() || !event._aiexclude.includes(i));
@@ -136,7 +136,7 @@ export class Check {
 			else ownedSkills.push(skill);
 		});
 
-		//将无法命中专门设置的技能放到装备技能列表方便显示调整
+		//將無法命中專門設置的技能放到裝備技能列表方便顯示調整
 		if(globalSkills.includes("_wuFaXingDong")){
 			const index = globalSkills.indexOf("_wuFaXingDong");
 			if (index > -1) {

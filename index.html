@@ -5,14 +5,14 @@
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="viewport" content="user-scalable=no, viewport-fit=cover" />
-	<title>AsteriatedGrail星杯传说</title>
+	<title>AsteriatedGrail星杯傳說</title>
 	<script>
 		if (
 			typeof window.require == "function" &&
 			typeof window.process == "object" &&
 			typeof window.__dirname == "string"
 		) {
-			// 使importMap解析node内置模块
+			// 使importMap解析node內置模塊
 			const builtinModules = require("module").builtinModules;
 			if (Array.isArray(builtinModules)) {
 				const importMap = {
@@ -33,10 +33,10 @@
 		"use strict";
 		(() => {
 			window.onerror = function (msg, src, line, column, err) {
-				let str = `错误文件: ${typeof src == "string" && src.length > 0 ? decodeURI(src) : "未知文件"}`;
-				str += `\n错误信息: ${msg}`;
-				str += `\n行号: ${line}`;
-				str += `\n列号: ${column}`;
+				let str = `錯誤文件: ${typeof src == "string" && src.length > 0 ? decodeURI(src) : "未知文件"}`;
+				str += `\n錯誤信息: ${msg}`;
+				str += `\n行號: ${line}`;
+				str += `\n列號: ${column}`;
 				if (err && err.stack) str += "\n" + decodeURI(err.stack);
 				console.error(str);
 				alert(str);
@@ -49,7 +49,7 @@
 					return [urlLike];
 				}
 
-				// 捕获位置用到的正则
+				// 捕獲位置用到的正則
 				const regExp = /(.+?)(?::(\d+))?(?::(\d+))?$/;
 				const parts = regExp.exec(urlLike.replace(/[()]/g, ""));
 
@@ -59,18 +59,18 @@
 			window.onunhandledrejection = async (event) => {
 				event.promise.catch((error) => {
 					console.log(error);
-					// 如果`error`是个错误，则继续处理
+					// 如果`error`是個錯誤，則繼續處理
 					if (error instanceof Error) {
-						// 如果已经处理过该错误，则不再处理
+						// 如果已經處理過該錯誤，則不再處理
 						if (errorList.includes(error)) return;
 						errorList.push(error);
-						// 如果`error`拥有字符串形式的报错栈堆，且报错栈堆确实符合v8的stack
+						// 如果`error`擁有字符串形式的報錯棧堆，且報錯棧堆確實符合v8的stack
 						if (typeof error.stack === "string" && STACK_REGEXP.test(error.stack)) {
-							// 获取符合栈堆信息的字符串，一般来说就是从第二行开始的所有行
-							// 为了处理eval的情况，故必须获取完行数
+							// 獲取符合棧堆信息的字符串，一般來說就是從第二行開始的所有行
+							// 為了處理eval的情況，故必須獲取完行數
 							let lines = error.stack.split("\n").filter((line) => STACK_REGEXP.test(line));
 
-							// 提供类型信息防止vscode报错
+							// 提供類型信息防止vscode報錯
 							/**
 							 * @type {string | undefined}
 							 */
@@ -86,7 +86,7 @@
 							 */
 							let column = void 0;
 
-							// 从第一条开始遍历，一直遍历到不存在eval的位置
+							// 從第一條開始遍歷，一直遍歷到不存在eval的位置
 							for (let currentLine = 0; currentLine < lines.length; ++currentLine) {
 								if (/\(eval /.test(lines[currentLine])) continue;
 
@@ -111,7 +111,7 @@
 							// @ts-ignore
 							window.onerror(error.message, fileName, line, column, error);
 						}
-						// 反之我们只能不考虑报错文件信息，直接调用onerror
+						// 反之我們只能不考慮報錯文件信息，直接調用onerror
 						else {
 							try {
 								// @ts-ignore
@@ -153,15 +153,15 @@
 					function callback() {
 
 						/**
-						 * 检查指定的路径是否是一个文件
+						 * 檢查指定的路徑是否是一個文件
 						 *
-						 * @param {string} fileName - 需要查询的路径
-						 * @param {(result: -1 | 0 | 1) => void} [callback] - 回调函数；接受的参数意义如下:
-						 *  - `-1`: 路径不存在或无法访问
-						 *  - `0`: 路径的内容不是文件
-						 *  - `1`: 路径的内容是文件
-						 * @param {(err: Error) => void} [onerror] - 接收错误的回调函数
-						 * @return {void} - 由于三端的异步需求和历史原因，文件管理必须为回调异步函数
+						 * @param {string} fileName - 需要查詢的路徑
+						 * @param {(result: -1 | 0 | 1) => void} [callback] - 回調函數；接受的參數意義如下:
+						 *  - `-1`: 路徑不存在或無法訪問
+						 *  - `0`: 路徑的內容不是文件
+						 *  - `1`: 路徑的內容是文件
+						 * @param {(err: Error) => void} [onerror] - 接收錯誤的回調函數
+						 * @return {void} - 由於三端的異步需求和歷史原因，文件管理必須為回調異步函數
 						 */
 						game.checkFile = function (fileName, callback, onerror) {
 							fetch(`./checkFile?fileName=${fileName}`)
@@ -174,8 +174,8 @@
                                         }
 
 										if (result.code === 404) {
-											if (result.errorMsg === "不是一个文件") return void callback?.(0);
-											else if (result.errorMsg === "文件不存在或无法访问") return void callback?.(-1);
+											if (result.errorMsg === "不是一個文件") return void callback?.(0);
+											else if (result.errorMsg === "文件不存在或無法訪問") return void callback?.(-1);
                                         }
                                     }
 
@@ -185,15 +185,15 @@
 						}
 
 						/**
-						 * 检查指定的路径是否是一个目录
+						 * 檢查指定的路徑是否是一個目錄
 						 *
-						 * @param {string} dir - 需要查询的路径
-						 * @param {(result: -1 | 0 | 1) => void} [callback] - 回调函数；接受的参数意义如下:
-						 *  - `-1`: 路径不存在或无法访问
-						 *  - `0`: 路径的内容不是目录
-						 *  - `1`: 路径的内容是目录
-						 * @param {(err: Error) => void} [onerror] - 接收错误的回调函数
-						 * @return {void} - 由于三端的异步需求和历史原因，文件管理必须为回调异步函数
+						 * @param {string} dir - 需要查詢的路徑
+						 * @param {(result: -1 | 0 | 1) => void} [callback] - 回調函數；接受的參數意義如下:
+						 *  - `-1`: 路徑不存在或無法訪問
+						 *  - `0`: 路徑的內容不是目錄
+						 *  - `1`: 路徑的內容是目錄
+						 * @param {(err: Error) => void} [onerror] - 接收錯誤的回調函數
+						 * @return {void} - 由於三端的異步需求和歷史原因，文件管理必須為回調異步函數
 						 */
 						game.checkDir = function (dir, callback, onerror) {
 							fetch(`./checkDir?dir=${dir}`)
@@ -206,8 +206,8 @@
 										}
 
 										if (result.code === 404) {
-											if (result.errorMsg === "不是一个文件夹") return void callback?.(0);
-											else if (result.errorMsg === "文件夹不存在或无法访问") return void callback?.(-1);
+											if (result.errorMsg === "不是一個文件夾") return void callback?.(0);
+											else if (result.errorMsg === "文件夾不存在或無法訪問") return void callback?.(-1);
 										}
 									}
 
@@ -334,7 +334,7 @@
 									if (result && result.success) {
 										successCallback();
 									} else {
-										errorCallback(new Error("创建文件夹失败"));
+										errorCallback(new Error("創建文件夾失敗"));
 									}
 								})
 								.catch(errorCallback);
@@ -352,7 +352,7 @@
 									if (result && result.success) {
 										successCallback();
 									} else {
-										errorCallback(new Error("创建文件夹失败"));
+										errorCallback(new Error("創建文件夾失敗"));
 									}
 								})
 								.catch(errorCallback);

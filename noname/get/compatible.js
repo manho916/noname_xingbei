@@ -1,10 +1,10 @@
 import { userAgentLowerCase } from "../util/index.js";
 
 /**
- * 用于老版本能用的`get`
+ * 用於老版本能用的`get`
  */
 export class GetCompatible {
-	// require是需求的版本号，current是浏览器环境本身的版本号
+	// require是需求的版本號，current是瀏覽器環境本身的版本號
 	/**
 	 *
 	 * @param {[majorVersion: number, minorVersion: number, patchVersion: number]} require
@@ -12,47 +12,47 @@ export class GetCompatible {
 	 * @returns
 	 */
 	checkVersion(require, current) {
-		// 防止不存在的意外，提前截断当前版本号的长度
+		// 防止不存在的意外，提前截斷當前版本號的長度
 		if (current.length > require.length) current.length = require.length;
 
-		// 考虑到玄学的NaN情况，记录是否存在NaN
+		// 考慮到玄學的NaN情況，記錄是否存在NaN
 		let flag = false;
-		// 从主版本号遍历到修订版本号，只考虑当前版本号的长度
+		// 從主版本號遍歷到修訂版本號，只考慮當前版本號的長度
 		for (let i = 0; i < current.length; ++i) {
-			// 当前环境版本号当前位若是NaN，则记录后直接到下一位
+			// 當前環境版本號當前位若是NaN，則記錄後直接到下一位
 			if (isNaN(current[i])) {
 				flag = true;
 				continue;
 			}
-			// 如果此时flag为true且current[i]不为NaN，版本号则不合法，直接否
+			// 如果此時flag為true且current[i]不為NaN，版本號則不合法，直接否
 			if (flag) return false;
-			// 上位版本号未达到要求，直接否决
+			// 上位版本號未達到要求，直接否決
 			if (require[i] > current[i]) return false;
-			// 上位版本号已超过要求，直接可行
+			// 上位版本號已超過要求，直接可行
 			if (current[i] > require[i]) return true;
 		}
 		return true;
 	}
 
 	/**
-	 * 获取当前内核版本信息
+	 * 獲取當前內核版本信息
 	 *
-	 * 目前仅考虑`chrome`, `firefox`和`safari`三种浏览器的信息，其余均归于其他范畴
+	 * 目前僅考慮`chrome`, `firefox`和`safari`三種瀏覽器的信息，其餘均歸於其他範疇
 	 *
-	 * > 其他后续或许会增加，但`IE`永无可能
+	 * > 其他後續或許會增加，但`IE`永無可能
 	 *
 	 * @returns {["firefox" | "chrome" | "safari" | "other", number, number, number]}
 	 */
 	coreInfo() {
-		// 如果存在process并且存在process.versions，则默认为node环境
+		// 如果存在process並且存在process.versions，則默認為node環境
 		if (typeof window.process != "undefined" && typeof window.process.versions == "object") {
-			// 如果存在versions.chrome，默认为electron的versions.chrome
+			// 如果存在versions.chrome，默認為electron的versions.chrome
 			if (window.process.versions.chrome) {
 				return parseVersion("chrome", window.process.versions.chrome);
 			}
 		}
 
-		// Chrome/Chromium下的实验性特性，具体可参见
+		// Chrome/Chromium下的實驗性特性，具體可參見
 		// https://developer.mozilla.org/en-US/docs/Web/API/Navigator/userAgentData
 		// @ts-ignore
 		if (typeof navigator.userAgentData != "undefined") {
@@ -61,41 +61,41 @@ export class GetCompatible {
 			if (userAgentData.brands && userAgentData.brands.length) {
 				const brand = userAgentData.brands.find(({ brand }) => {
 					let str = brand.toLowerCase();
-					// 当前支持的浏览器中只有chrome支持userAgentData，故只判断chrome的情况
+					// 當前支持的瀏覽器中只有chrome支持userAgentData，故只判斷chrome的情況
 					return str.includes("chrome") || str.includes("chromium");
 				});
 
-				// 如果能通过userAgentData找到对应的浏览器信息，则直接返回
-				// 反之则继续通过正则表达式匹配userAgent
+				// 如果能通過userAgentData找到對應的瀏覽器信息，則直接返回
+				// 反之則繼續通過正則表達式匹配userAgent
 				if (brand) {
 					return ["chrome", parseInt(brand.version), 0, 0];
 				}
 			}
 		}
 
-		// 目前仅考虑Firefox, Chrome和Safari三种浏览器
-		// 其余浏览器均归于other
+		// 目前僅考慮Firefox, Chrome和Safari三種瀏覽器
+		// 其餘瀏覽器均歸於other
 		const regex = /(firefox|chrome|safari)\/(\d+(?:\.\d+)+)/;
 		let result = userAgentLowerCase.match(regex);
 		if (result == null) {
 			return ["other", NaN, NaN, NaN];
 		}
 
-		// 非Safari情况可直接返回结果
+		// 非Safari情況可直接返回結果
 		if (result[1] !== "safari") {
 			// @ts-expect-error Type must be right
 			return parseVersion(result[1], result[2]);
 		}
 
-		// 以下是所有Safari平台的判断方法
-		// macOS以及以桌面显示的移动端则直接判断
+		// 以下是所有Safari平臺的判斷方法
+		// macOS以及以桌面顯示的移動端則直接判斷
 		if (/macintosh/.test(userAgentLowerCase)) {
 			result = userAgentLowerCase.match(/version\/(\d+(?:\.\d+)+).*safari/);
 			if (result == null) {
 				return ["other", NaN, NaN, NaN];
 			}
 		}
-		// 不然则通过OS后面的版本号来获取内容
+		// 不然則通過OS後面的版本號來獲取內容
 		else {
 			let safariRegex = /(?:iphone|ipad); cpu (?:iphone )?os (\d+(?:_\d+)+)/;
 			result = userAgentLowerCase.match(safariRegex);
@@ -107,7 +107,7 @@ export class GetCompatible {
 		return parseVersion("safari", result[1]);
 
 		/**
-		 * 通用解析版本号方法
+		 * 通用解析版本號方法
 		 *
 		 * @param {"firefox" | "chrome" | "safari" | "other"} coreName
 		 * @param {string} versions
@@ -117,12 +117,12 @@ export class GetCompatible {
 			const [major, minor, patch] = versions.split(".");
 			const majorVersion = parseInt(major);
 
-			// 如果major解析为NaN，则整体解析为NaN（此时不考虑minor和patch）
+			// 如果major解析為NaN，則整體解析為NaN（此時不考慮minor和patch）
 			if (Number.isNaN(majorVersion)) {
 				return [coreName, NaN, NaN, NaN];
 			}
 
-			// 反之则将不为NaN的minor和patch解析为0
+			// 反之則將不為NaN的minor和patch解析為0
 			return [coreName, majorVersion, parseInt(minor) || 0, parseInt(patch) || 0];
 		}
 	}

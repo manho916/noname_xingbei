@@ -1,17 +1,17 @@
 /**
- * 关于`Mozilla Firefox`的异步错误处理
+ * 關於`Mozilla Firefox`的異步錯誤處理
  *
- * 很幸运，Mozilla直接为`Firefox`的报错提供了地址和行列号，故我们能直接获取到要获取的信息，不用像`v8`那样通过栈堆获取
+ * 很幸運，Mozilla直接為`Firefox`的報錯提供了地址和行列號，故我們能直接獲取到要獲取的信息，不用像`v8`那樣通過棧堆獲取
  *
- * 虽然但是，我们还是需要判断一下捕获的报错是否是错误
+ * 雖然但是，我們還是需要判斷一下捕獲的報錯是否是錯誤
  *
  * @implements {PromiseErrorHandler}
  */
 export class FirefoxPromiseErrorHandler {
 	/**
-	 * 在获取报错的时候，我们通过发生报错的`Promise`来进行捕获错误的操作
+	 * 在獲取報錯的時候，我們通過發生報錯的`Promise`來進行捕獲錯誤的操作
 	 *
-	 * 如果捕获到的错误是`Error`，则能直接通过`Firefox`的特性来获取地址和行列号
+	 * 如果捕獲到的錯誤是`Error`，則能直接通過`Firefox`的特性來獲取地址和行列號
 	 *
 	 * @param {PromiseRejectionEvent} event
 	 */
@@ -20,7 +20,7 @@ export class FirefoxPromiseErrorHandler {
 			if (typeof error === "object" && error instanceof Error) {
 				if (/Failed to fetch/.test(error.message) || /The media resource indicated by the src attribute or assigned media provider object was not suitable/.test(error.message)) return;
 
-				// Firefox在大环境下默认情况必须要那么多ts-ignore
+				// Firefox在大環境下默認情況必須要那麼多ts-ignore
 				// @ts-ignore
 				window.onerror(
 					error.message,

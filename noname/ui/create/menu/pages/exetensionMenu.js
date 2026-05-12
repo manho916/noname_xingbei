@@ -23,7 +23,7 @@ import security from "../../../../util/security.js";
 export const extensionMenu = function (connectMenu) {
 	if (connectMenu) return;
 	/**
-	 * 由于联机模式会创建第二个菜单，所以需要缓存一下可变的变量
+	 * 由於聯機模式會創建第二個菜單，所以需要緩存一下可變的變量
 	 */
 	// const cacheMenuContainer = menuContainer;
 	// const cachePopupContainer = popupContainer;
@@ -54,7 +54,7 @@ export const extensionMenu = function (connectMenu) {
 		updateNodes();
 	};
 	ui.click.extensionTab = function (name) {
-		ui.click.menuTab("扩展");
+		ui.click.menuTab("擴展");
 		for (var i = 0; i < start.firstChild.childElementCount; i++) {
 			if (start.firstChild.childNodes[i].innerHTML == name) {
 				clickMode.call(start.firstChild.childNodes[i]);
@@ -178,7 +178,7 @@ export const extensionMenu = function (connectMenu) {
 		if (!lib.device && !lib.db) return;
 		if (lib.config.show_extensionmaker == false) return;
 		var page = ui.create.div("#create-extension");
-		var node = ui.create.div(".menubutton.large", "制作扩展", start.firstChild, clickMode);
+		var node = ui.create.div(".menubutton.large", "製作擴展", start.firstChild, clickMode);
 		node.mode = "create";
 		game.editExtension = function (name) {
 			node._initLink();
@@ -195,11 +195,11 @@ export const extensionMenu = function (connectMenu) {
 			inputExtLine.style.whiteSpace = "nowrap";
 			inputExtLine.style.overflow = "visible";
 			var inputExtSpan = document.createElement("span");
-			inputExtSpan.innerHTML = "扩展名：";
+			inputExtSpan.innerHTML = "擴展名：";
 			inputExtLine.appendChild(inputExtSpan);
 			var inputExtName = document.createElement("input");
 			inputExtName.type = "text";
-			inputExtName.value = "无名扩展";
+			inputExtName.value = "無名擴展";
 			inputExtName.style.width = "80px";
 			inputExtName.style.textAlign = "center";
 			inputExtLine.appendChild(inputExtName);
@@ -219,7 +219,7 @@ export const extensionMenu = function (connectMenu) {
 				buttonSave.style.display = "";
 				buttonReset.style.display = "";
 				buttonExport.style.display = "";
-				inputExtSpan.innerHTML = "扩展名称：";
+				inputExtSpan.innerHTML = "擴展名稱：";
 				inputExtName.style.width = "100px";
 				inputExtName.style.textAlign = "";
 
@@ -235,7 +235,7 @@ export const extensionMenu = function (connectMenu) {
 				infoExtLine.style.overflow = "visible";
 				if (typeof str == "boolean") {
 					var inputConfirm = document.createElement("button");
-					inputConfirm.innerHTML = "确定";
+					inputConfirm.innerHTML = "確定";
 					inputConfirm.onclick = buttonConfirmOnclick;
 					infoExtLine.appendChild(inputConfirm);
 					return infoExtLine;
@@ -250,15 +250,15 @@ export const extensionMenu = function (connectMenu) {
 				infoExtLine.appendChild(infoExtName);
 				return infoExtLine;
 			};
-			var authorExtLine = createExtLine("扩展作者", get.connectNickname());
-			var introExtLine = createExtLine("扩展描述");
-			var versionExtLine = createExtLine("扩展版本", "1.0");
-			var diskExtLine = createExtLine("网盘地址");
-			var forumExtLine = createExtLine("讨论地址");
+			var authorExtLine = createExtLine("擴展作者", get.connectNickname());
+			var introExtLine = createExtLine("擴展描述");
+			var versionExtLine = createExtLine("擴展版本", "1.0");
+			var diskExtLine = createExtLine("網盤地址");
+			var forumExtLine = createExtLine("討論地址");
 			var okExtLine = createExtLine(true);
 
 			game.editExtension = function (name) {
-				page.currentExtension = name || "无名扩展";
+				page.currentExtension = name || "無名擴展";
 				inputExtName.value = page.currentExtension;
 				if (name && lib.extensionPack[name]) {
 					authorExtLine.querySelector("input").value = lib.extensionPack[name].author || "";
@@ -285,7 +285,7 @@ export const extensionMenu = function (connectMenu) {
 				} else {
 					inputExtName.disabled = false;
 					buttonConfirm.style.display = "";
-					inputExtSpan.innerHTML = "扩展名：";
+					inputExtSpan.innerHTML = "擴展名：";
 					inputExtName.style.width = "80px";
 					inputExtName.style.textAlign = "center";
 					inputExtSpan.style.display = "";
@@ -355,7 +355,7 @@ export const extensionMenu = function (connectMenu) {
 							delete ext[i];
 						}
 					}
-					page.currentExtension = inputExtName.value || "无名扩展";
+					page.currentExtension = inputExtName.value || "無名擴展";
 					var str = '{name:"' + page.currentExtension + '"';
 					for (var i in ext) {
 						str += "," + i + ":" + ext[i];
@@ -365,8 +365,8 @@ export const extensionMenu = function (connectMenu) {
 						dash2.content.pack.list.push(dash2.pile.childNodes[i].link);
 					}
 					str += ",package:" + get.stringify({
-						//替换die audio，加上扩展名
-						//TODO: 创建扩展这部分更是重量级
+						//替換die audio，加上擴展名
+						//TODO: 創建擴展這部分更是重量級
 						character: ((pack) => {
 							var character = pack.character;
 							for (var key in character) {
@@ -407,7 +407,7 @@ export const extensionMenu = function (connectMenu) {
 						files.skill.push(i);
 					}
 					str += ",files:" + JSON.stringify(files);
-					str += ",connect:false"//不写的话，这里会变成undefined喵，所以默认是不能联机的哦
+					str += ",connect:false"//不寫的話，這裡會變成undefined喵，所以默認是不能聯機的哦
 					str += "}";
 					const extension = {
 						//"extension.js": `import { lib, game, ui, get, ai, _status } from "../../noname.js";\nexport const type = "extension";\nexport default function(){\n\treturn ${str} \n};`,
@@ -459,7 +459,7 @@ export const extensionMenu = function (connectMenu) {
 							});
 						}
 					};
-					//兼容网页版情况
+					//兼容網頁版情況
 					if (typeof game.readFile == "function") {
 						game.readFile(
 							"LICENSE",
@@ -474,7 +474,7 @@ export const extensionMenu = function (connectMenu) {
 								callback();
 							},
 							function () {
-								alert("许可证文件丢失，无法导出扩展");
+								alert("許可證文件丟失，無法導出擴展");
 							}
 						);
 					} else {
@@ -483,12 +483,12 @@ export const extensionMenu = function (connectMenu) {
 				}, 500);
 			};
 			var buttonConfirm = document.createElement("button");
-			buttonConfirm.innerHTML = "确定";
+			buttonConfirm.innerHTML = "確定";
 			buttonConfirm.style.marginLeft = "5px";
 			buttonConfirm.onclick = buttonConfirmOnclick;
 			inputExtLine.appendChild(buttonConfirm);
 			var buttonRename = document.createElement("button");
-			buttonRename.innerHTML = "选项";
+			buttonRename.innerHTML = "選項";
 			buttonRename.style.marginLeft = "2px";
 			buttonRename.style.marginRight = "2px";
 			buttonRename.style.display = "none";
@@ -507,7 +507,7 @@ export const extensionMenu = function (connectMenu) {
 				buttonSave.style.display = "none";
 				buttonReset.style.display = "none";
 				buttonExport.style.display = "none";
-				inputExtSpan.innerHTML = "扩展名称：";
+				inputExtSpan.innerHTML = "擴展名稱：";
 				inputExtName.style.width = "100px";
 				inputExtName.style.textAlign = "";
 
@@ -520,7 +520,7 @@ export const extensionMenu = function (connectMenu) {
 			buttonReset.style.marginRight = "2px";
 			buttonReset.style.display = "none";
 			buttonReset.onclick = function () {
-				if (confirm("当前扩展将被清除，是否确定？")) {
+				if (confirm("當前擴展將被清除，是否確定？")) {
 					game.editExtension();
 				}
 			};
@@ -539,7 +539,7 @@ export const extensionMenu = function (connectMenu) {
 			};
 			inputExtLine.appendChild(buttonSave);
 			var buttonExport = document.createElement("button");
-			buttonExport.innerHTML = "导出";
+			buttonExport.innerHTML = "導出";
 			buttonExport.style.marginLeft = "2px";
 			buttonExport.style.marginRight = "2px";
 			buttonExport.style.display = "none";
@@ -554,18 +554,18 @@ export const extensionMenu = function (connectMenu) {
 					typeof game.readFile == "function" &&
 					window.noname_shijianInterfaces &&
 					typeof window.noname_shijianInterfaces.shareExtensionWithPassWordAsync == "function" &&
-					confirm("是否使用诗笺版自带的导出功能来导出扩展？")
+					confirm("是否使用詩箋版自帶的導出功能來導出擴展？")
 				) {
 					const extName = inputExtName.value;
 					if (!extName) {
-						alert("未检测到扩展名，将使用无名杀自带的导出功能");
+						alert("未檢測到擴展名，將使用無名殺自帶的導出功能");
 						oldExport();
 						return;
 					}
 					game.readFile(
 						`extension/${extName}/extension.js`,
 						() => {
-							const pwd = prompt("请输入压缩包密码，不设密码直接点确定");
+							const pwd = prompt("請輸入壓縮包密碼，不設密碼直接點確定");
 							let result;
 							if (pwd === "" || pwd === null) {
 								window.noname_shijianInterfaces.shareExtensionAsync(extName);
@@ -574,7 +574,7 @@ export const extensionMenu = function (connectMenu) {
 							}
 						},
 						() => {
-							alert("未检测到扩展文件，将使用无名杀自带的导出功能");
+							alert("未檢測到擴展文件，將使用無名殺自帶的導出功能");
 							oldExport();
 						}
 					);
@@ -589,13 +589,13 @@ export const extensionMenu = function (connectMenu) {
 			exportExtLine.style.textAlign = "left";
 			exportExtLine.style.marginBottom = "5px";
 			if (lib.device == "ios") {
-				exportExtLine.innerHTML = '已保存。退出游戏并重新打开后生效<span class="closenode">×</span>';
+				exportExtLine.innerHTML = '已保存。退出遊戲並重新打開後生效<span class="closenode">×</span>';
 				exportExtLine.querySelectorAll("span")[0].onclick = function () {
 					exportExtLine.style.display = "none";
 				};
 			} else {
 				exportExtLine.innerHTML =
-					'重启后生效。<span class="hrefnode">立即重启</span><span class="closenode">×</span>';
+					'重啟後生效。<span class="hrefnode">立即重啟</span><span class="closenode">×</span>';
 				exportExtLine.querySelectorAll("span")[0].onclick = game.reload;
 				exportExtLine.querySelectorAll("span")[1].onclick = function () {
 					exportExtLine.style.display = "none";
@@ -608,11 +608,11 @@ export const extensionMenu = function (connectMenu) {
 			shareExtLine.style.textAlign = "left";
 			shareExtLine.style.marginBottom = "5px";
 			shareExtLine.innerHTML =
-				'已导出扩展。<span class="hrefnode">分享扩展</span><span class="closenode">×</span>';
+				'已導出擴展。<span class="hrefnode">分享擴展</span><span class="closenode">×</span>';
 			shareExtLine.querySelectorAll("span")[0].onclick = function () {
-				//这个链接404了
+				//這個鏈接404了
 				//game.open('https://tieba.baidu.com/p/5439380222');
-				//无名杀贴吧首页
+				//無名殺貼吧首頁
 				game.open("https://tieba.baidu.com/f?ie=utf-8&kw=%E6%97%A0%E5%90%8D%E6%9D%80");
 			};
 			shareExtLine.querySelectorAll("span")[1].onclick = function () {
@@ -730,7 +730,7 @@ export const extensionMenu = function (connectMenu) {
 												console.warn(
 													`未找到${info[4][i]
 														.slice(4)
-														.replace("ext:", "extension/")}阵亡配音`
+														.replace("ext:", "extension/")}陣亡配音`
 												);
 												resolve();
 											}
@@ -742,7 +742,7 @@ export const extensionMenu = function (connectMenu) {
 												resolve();
 											},
 											() => {
-												console.warn(`未找到${info[4][i].slice(4)}阵亡配音`);
+												console.warn(`未找到${info[4][i].slice(4)}陣亡配音`);
 												resolve();
 											}
 										);
@@ -761,10 +761,10 @@ export const extensionMenu = function (connectMenu) {
 						skillList.firstChild.appendChild(node);
 					}
 
-					toggle.innerHTML = "编辑角色 <div>&gt;</div>";
-					editnode.innerHTML = "编辑角色";
+					toggle.innerHTML = "編輯角色 <div>&gt;</div>";
+					editnode.innerHTML = "編輯角色";
 					editnode.classList.remove("disabled");
-					delnode.innerHTML = "删除";
+					delnode.innerHTML = "刪除";
 					delnode.button = this;
 				};
 				var createButton = function (name, image) {
@@ -880,7 +880,7 @@ export const extensionMenu = function (connectMenu) {
 					audio: {},
 				};
 				var newCharacter;
-				var toggle = ui.create.div(".config.more.on", "创建角色 <div>&gt;</div>", page, function () {
+				var toggle = ui.create.div(".config.more.on", "創建角色 <div>&gt;</div>", page, function () {
 					this.classList.toggle("on");
 					if (this.classList.contains("on")) {
 						newCharacter.style.display = "";
@@ -905,8 +905,8 @@ export const extensionMenu = function (connectMenu) {
 						inputs[i].value = "";
 					}
 					skillList.firstChild.innerHTML = "";
-					toggle.innerHTML = "创建角色 <div>&gt;</div>";
-					editnode.innerHTML = "创建角色";
+					toggle.innerHTML = "創建角色 <div>&gt;</div>";
+					editnode.innerHTML = "創建角色";
 					editnode.classList.add("disabled");
 					delnode.innerHTML = "取消";
 					delete delnode.button;
@@ -940,21 +940,21 @@ export const extensionMenu = function (connectMenu) {
 				};
 				fakeme.appendChild(input);
 
-				ui.create.div(".select_avatar", "选择头像", fakeme);
+				ui.create.div(".select_avatar", "選擇頭像", fakeme);
 
 				ui.create.div(
 					".indent",
-					'职业：<input class="new_name" type="text" placeholder="id|中文名">',
+					'職業：<input class="new_name" type="text" placeholder="id|中文名">',
 					newCharacter
 				).style.paddingTop = "8px";
 				ui.create.div(
 					".indent",
-					'介绍：<input class="new_des" type="text">',
+					'介紹：<input class="new_des" type="text">',
 					newCharacter
 				).style.paddingTop = "8px";
 				ui.create.div(
 					".indent",
-					'星级：<input class="new_hp" type="text" placeholder="3或3/4">',
+					'星級：<input class="new_hp" type="text" placeholder="3或3/4">',
 					newCharacter
 				).style.paddingTop = "8px";
 				newCharacter.querySelector("input.new_name").onblur = updateButton;
@@ -968,21 +968,21 @@ export const extensionMenu = function (connectMenu) {
 					[
 						["male", "男"],
 						["female", "女"],
-						["double", "双性"],
-						["none", "无"],
+						["double", "雙性"],
+						["none", "無"],
 					],
 					null,
-					ui.create.div(".indent", "性别：", newCharacter)
+					ui.create.div(".indent", "性別：", newCharacter)
 				);*/
 				var grouplist = lib.group.map((group, i) => [lib.group[i], get.translation(lib.group[i])]);
 				var groups = ui.create.selectlist(
 					grouplist,
 					null,
-					ui.create.div(".indent", "势力：", newCharacter)
+					ui.create.div(".indent", "勢力：", newCharacter)
 				);
 				/*
 				var dieaudio = ui.create.div(".die_audio", newCharacter, { textAlign: "left" });
-				var dieaudiolabel = ui.create.node("label", "阵亡配音:", dieaudio);
+				var dieaudiolabel = ui.create.node("label", "陣亡配音:", dieaudio);
 				var dieaudioUpload = dieaudio.appendChild(document.createElement("input"));
 				dieaudioUpload.type = "file";
 				dieaudioUpload.accept = "audio/*";
@@ -1009,7 +1009,7 @@ export const extensionMenu = function (connectMenu) {
 				var dieaudiotag = ui.create.node("audio", dieaudio);
 				var dieaudiopreview = ui.create.node("button", dieaudio, () => {
 					if (dieaudiotag.error) {
-						alert("您使用的客户端不支持预览此音频！");
+						alert("您使用的客戶端不支持預覽此音頻！");
 					} else dieaudiotag.play();
 				});
 				dieaudiopreview.innerHTML = "播放";
@@ -1032,13 +1032,13 @@ export const extensionMenu = function (connectMenu) {
 				*/
 				var options = ui.create.div(
 					".add_skill.options",
-					'<span>BOSS<input type="checkbox" name="boss"></span><span>仅点角可用<input type="checkbox" name="forbidai"></span><br>',
+					'<span>BOSS<input type="checkbox" name="boss"></span><span>僅點角可用<input type="checkbox" name="forbidai"></span><br>',
 					newCharacter
 				);
 				/*
 				var options = ui.create.div(
 					".add_skill.options",
-					'<span>主公<input type="checkbox" name="zhu"></span><span>BOSS<input type="checkbox" name="boss"></span><span>仅点角可用<input type="checkbox" name="forbidai"></span><br><span>隐匿技<input type="checkbox" name="hiddenSkill"></span><br>',
+					'<span>主公<input type="checkbox" name="zhu"></span><span>BOSS<input type="checkbox" name="boss"></span><span>僅點角可用<input type="checkbox" name="forbidai"></span><br><span>隱匿技<input type="checkbox" name="hiddenSkill"></span><br>',
 					newCharacter
 				);*/
 				var addSkill = ui.create.div(".add_skill", "添加技能<br>", newCharacter);
@@ -1050,7 +1050,7 @@ export const extensionMenu = function (connectMenu) {
 				}
 				if(!list.length){
 					if(!lib.character["noname_sunce"]) lib.character["noname_sunce"] = ["male", "wu", 4, ["jiang"], ["unseen"]];
-					if(!lib.translate["noname_sunce"]) lib.translate["noname_sunce"] = "孙策";
+					if(!lib.translate["noname_sunce"]) lib.translate["noname_sunce"] = "孫策";
 					list.push(["noname_sunce", lib.translate["noname_sunce"]]);
 				}
 				list.sort(function (a, b) {
@@ -1074,7 +1074,7 @@ export const extensionMenu = function (connectMenu) {
 				for (var i = 0; i < skills.length; i++) {
 					list2.push([skills[i], lib.translate[skills[i]]]);
 				}
-				list.unshift(["current_extension", "此扩展"]);
+				list.unshift(["current_extension", "此擴展"]);
 
 				var selectname = ui.create.selectlist(list, list[1], addSkill);
 				page.selectname = selectname;
@@ -1113,11 +1113,11 @@ export const extensionMenu = function (connectMenu) {
 						if (skillList.firstChild.childNodes[i].skill == skillopt.value)
 							return alert(
 								selectname.value == "current_extension"
-									? "此扩展还未添加技能"
-									: "此角色没有技能可添加"
+									? "此擴展還未添加技能"
+									: "此角色沒有技能可添加"
 							);
 					}
-					//无技能时
+					//無技能時
 					if (!skillopt.value || skillopt.childElementCount == 0) return;
 					var node = document.createElement("button");
 					node.skill = skillopt.value;
@@ -1131,7 +1131,7 @@ export const extensionMenu = function (connectMenu) {
 					skillList.firstChild.appendChild(node);
 				};
 				var createSkillButton = document.createElement("button");
-				createSkillButton.innerHTML = "创建";
+				createSkillButton.innerHTML = "創建";
 				createSkillButton.style.marginLeft = "3px";
 				addSkill.appendChild(createSkillButton);
 				createSkillButton.onclick = function () {
@@ -1160,12 +1160,12 @@ export const extensionMenu = function (connectMenu) {
 				ui.create.div(skillList);
 				var editnode = ui.create.div(
 					".menubutton.large.disabled",
-					"创建角色",
+					"創建角色",
 					ui.create.div(skillList),
 					function () {
 						var name = page.querySelector("input.new_name").value;
 						if (!name) {
-							alert("请填写角色名\n提示：角色名格式为id+|+中文名，其中id必须惟一");
+							alert("請填寫角色名\n提示：角色名格式為id+|+中文名，其中id必須惟一");
 							return;
 						}
 						name = name.split("|");
@@ -1175,7 +1175,7 @@ export const extensionMenu = function (connectMenu) {
 							if (currentButton.link != name) {
 								if (lib.character[name] || page.content.pack.character[name]) {
 									alert(
-										"角色名与现有角色重复，请更改\n提示：角色名格式为id+|+中文名，其中id必须惟一"
+										"角色名與現有角色重複，請更改\n提示：角色名格式為id+|+中文名，其中id必須惟一"
 									);
 									return;
 								}
@@ -1189,7 +1189,7 @@ export const extensionMenu = function (connectMenu) {
 						} else {
 							if (lib.character[name] || page.content.pack.character[name]) {
 								alert(
-									"角色名与现有角色重复，请更改\n提示：角色名格式为id+|+中文名，其中id必须惟一"
+									"角色名與現有角色重複，請更改\n提示：角色名格式為id+|+中文名，其中id必須惟一"
 								);
 								return;
 							}
@@ -1198,13 +1198,13 @@ export const extensionMenu = function (connectMenu) {
 							page.content.image[name + ".jpg"] = fakeme.image;
 						} else {
 							if (!page.content.image[name + ".jpg"]) {
-								alert("请选择角色头像");
+								alert("請選擇角色頭像");
 								return;
 							}
 						}
 						var hp = page.querySelector("input.new_hp").value;
-						//体力支持‘Infinity,∞,无限’表示无限
-						if (["Infinity", "∞", "无限"].includes(hp)) hp = Infinity;
+						//體力支持‘Infinity,∞,無限’表示無限
+						if (["Infinity", "∞", "無限"].includes(hp)) hp = Infinity;
 						else if (hp.indexOf("/") == -1) hp = parseInt(hp) || 1;
 						var skills = [];
 						for (var i = 0; i < skillList.firstChild.childNodes.length; i++) {
@@ -1224,7 +1224,7 @@ export const extensionMenu = function (connectMenu) {
 							tags.add("des:" + des);
 						}
 						/*
-						//阵亡配音
+						//陣亡配音
 						if (dieaudio.file && dieaudio.arrayBuffer) {
 							var audioname = name + dieaudio.file.name.slice(dieaudio.file.name.indexOf("."));
 							tags.add(
@@ -1237,7 +1237,7 @@ export const extensionMenu = function (connectMenu) {
 
 						page.content.pack.translate[name] = translate;
 						page.content.pack.character[name] = [sexes.value, groups.value, hp, skills, tags];
-						if (this.innerHTML == "创建角色") {
+						if (this.innerHTML == "創建角色") {
 							createButton(name, fakeme.image64);
 						} else if (currentButton) {
 							if (fakeme.image64) {
@@ -1251,7 +1251,7 @@ export const extensionMenu = function (connectMenu) {
 					}
 				);
 				var delnode = ui.create.div(".menubutton.large", "取消", editnode.parentNode, function () {
-					if (this.innerHTML == "删除") {
+					if (this.innerHTML == "刪除") {
 						this.button.remove();
 						var name = this.button.link;
 						delete dash1.content.pack.character[name];
@@ -1332,10 +1332,10 @@ export const extensionMenu = function (connectMenu) {
 					var info = page.content.pack.card[this.link];
 					container.code = "card=" + get.stringify(info);
 
-					toggle.innerHTML = "编辑卡牌 <div>&gt;</div>";
-					editnode.innerHTML = "编辑卡牌";
+					toggle.innerHTML = "編輯卡牌 <div>&gt;</div>";
+					editnode.innerHTML = "編輯卡牌";
 					editnode.classList.remove("disabled");
-					delnode.innerHTML = "删除";
+					delnode.innerHTML = "刪除";
 					delnode.button = this;
 				};
 				var createButton = function (name, image, fullskin) {
@@ -1486,7 +1486,7 @@ export const extensionMenu = function (connectMenu) {
 					image: {},
 				};
 				var newCard;
-				var toggle = ui.create.div(".config.more.on", "创建卡牌 <div>&gt;</div>", page, function () {
+				var toggle = ui.create.div(".config.more.on", "創建卡牌 <div>&gt;</div>", page, function () {
 					this.classList.toggle("on");
 					if (this.classList.contains("on")) {
 						newCard.style.display = "";
@@ -1508,13 +1508,13 @@ export const extensionMenu = function (connectMenu) {
 					for (var i = 0; i < inputs.length; i++) {
 						inputs[i].value = "";
 					}
-					toggle.innerHTML = "创建卡牌 <div>&gt;</div>";
-					editnode.innerHTML = "创建卡牌";
+					toggle.innerHTML = "創建卡牌 <div>&gt;</div>";
+					editnode.innerHTML = "創建卡牌";
 					editnode.classList.add("disabled");
 					delnode.innerHTML = "取消";
 					delete delnode.button;
 					container.code =
-						'card={\n    \n}\n\n/*\n示例：\ncard={\n    type:"basic",\n    enable:true,\n    filterTarget:true,\n    content:function(){\n        target.draw()\n    },\n    ai:{\n        order:1,\n        result:{\n            target:1\n        }\n    }\n}\n此例的效果为目标摸一张牌\n导出时本段代码中的换行、缩进以及注释将被清除\n*/';
+						'card={\n    \n}\n\n/*\n示例：\ncard={\n    type:"basic",\n    enable:true,\n    filterTarget:true,\n    content:function(){\n        target.draw()\n    },\n    ai:{\n        order:1,\n        result:{\n            target:1\n        }\n    }\n}\n此例的效果為目標摸一張牌\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/';
 				};
 
 				newCard = ui.create.div(".new_character", page);
@@ -1556,11 +1556,11 @@ export const extensionMenu = function (connectMenu) {
 				fakeme.appendChild(input);
 
 				fakeme.imagenode = ui.create.div(".image", fakeme);
-				ui.create.div(".name", "选择背景", fakeme);
+				ui.create.div(".name", "選擇背景", fakeme);
 
 				ui.create.div(
 					".indent",
-					'名称：<input class="new_name" type="text">',
+					'名稱：<input class="new_name" type="text">',
 					newCard
 				).style.paddingTop = "8px";
 				ui.create.div(
@@ -1571,14 +1571,14 @@ export const extensionMenu = function (connectMenu) {
 				newCard.querySelector("input.new_name").onblur = updateButton;
 				var codeButton = document.createElement("button");
 				newCard.appendChild(codeButton);
-				codeButton.innerHTML = "编辑代码";
+				codeButton.innerHTML = "編輯代碼";
 				codeButton.style.left = "123px";
 				codeButton.style.top = "66px";
 				codeButton.style.position = "absolute";
 
 				var citeButton = document.createElement("button");
 				newCard.appendChild(citeButton);
-				citeButton.innerHTML = "引用代码";
+				citeButton.innerHTML = "引用代碼";
 				citeButton.style.left = "123px";
 				citeButton.style.top = "90px";
 				citeButton.style.position = "absolute";
@@ -1694,10 +1694,10 @@ export const extensionMenu = function (connectMenu) {
 						}
 					} catch (e) {
 						if (e == "err") {
-							alert("代码格式有错误，请对比示例代码仔细检查");
+							alert("代碼格式有錯誤，請對比示例代碼仔細檢查");
 						} else {
 							var tip = lib.getErrorTip(e) || "";
-							alert("代码语法有错误，请仔细检查（" + e + "）" + tip);
+							alert("代碼語法有錯誤，請仔細檢查（" + e + "）" + tip);
 						}
 						window.focus();
 						if (container.editor) {
@@ -1716,16 +1716,16 @@ export const extensionMenu = function (connectMenu) {
 				};
 				var editor = ui.create.editor(container, saveInput);
 				container.code =
-					'card={\n    \n}\n\n/*\n示例：\ncard={\n    type:"basic",\n    enable:true,\n    filterTarget:true,\n    content:function(){\n        target.draw()\n    },\n    ai:{\n        order:1,\n        result:{\n            target:1\n        }\n    }\n}\n此例的效果为目标摸一张牌\n导出时本段代码中的换行、缩进以及注释将被清除\n*/';
+					'card={\n    \n}\n\n/*\n示例：\ncard={\n    type:"basic",\n    enable:true,\n    filterTarget:true,\n    content:function(){\n        target.draw()\n    },\n    ai:{\n        order:1,\n        result:{\n            target:1\n        }\n    }\n}\n此例的效果為目標摸一張牌\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/';
 
 				var editnode = ui.create.div(
 					".menubutton.large.new_card.disabled",
-					"创建卡牌",
+					"創建卡牌",
 					newCard,
 					function () {
 						var name = page.querySelector("input.new_name").value;
 						if (!name) {
-							alert("请填写卡牌名\n提示：卡牌名格式为id+|+中文名，其中id必须惟一");
+							alert("請填寫卡牌名\n提示：卡牌名格式為id+|+中文名，其中id必須惟一");
 							return;
 						}
 						name = name.split("|");
@@ -1736,7 +1736,7 @@ export const extensionMenu = function (connectMenu) {
 							if (currentButton.link != name) {
 								if (lib.card[name] || page.content.pack.card[name]) {
 									alert(
-										"卡牌名与现有卡牌重复，请更改\n提示：卡牌名格式为id+|+中文名，其中id必须惟一"
+										"卡牌名與現有卡牌重複，請更改\n提示：卡牌名格式為id+|+中文名，其中id必須惟一"
 									);
 									return;
 								}
@@ -1757,7 +1757,7 @@ export const extensionMenu = function (connectMenu) {
 						} else {
 							if (lib.card[name] || page.content.pack.card[name]) {
 								alert(
-									"卡牌名与现有卡牌重复，请更改\n提示：卡牌名格式为id+|+中文名，其中id必须惟一"
+									"卡牌名與現有卡牌重複，請更改\n提示：卡牌名格式為id+|+中文名，其中id必須惟一"
 								);
 								return;
 							}
@@ -1771,7 +1771,7 @@ export const extensionMenu = function (connectMenu) {
 								delete page.content.image[name + ".png"];
 							}
 						} else if (!fakeme.classList.contains("inited")) {
-							alert("请选择一个卡牌背景");
+							alert("請選擇一個卡牌背景");
 							return;
 						}
 						page.content.pack.translate[name] = translate;
@@ -1794,7 +1794,7 @@ export const extensionMenu = function (connectMenu) {
 								delete page.content.pack.card[name].fullskin;
 							}
 						}
-						if (this.innerHTML == "创建卡牌") {
+						if (this.innerHTML == "創建卡牌") {
 							createButton(name, fakeme.image64, fakeme.classList.contains("fullskin"));
 						} else if (currentButton) {
 							if (fakeme.image64) {
@@ -1827,7 +1827,7 @@ export const extensionMenu = function (connectMenu) {
 					"取消",
 					editnode.parentNode,
 					function () {
-						if (this.innerHTML == "删除") {
+						if (this.innerHTML == "刪除") {
 							this.button.remove();
 							var name = this.button.link;
 							delete dash2.content.pack.card[name];
@@ -1842,7 +1842,7 @@ export const extensionMenu = function (connectMenu) {
 				);
 
 				var editPile;
-				var toggle2 = ui.create.div(".config.more", "编辑牌堆 <div>&gt;</div>", page, function () {
+				var toggle2 = ui.create.div(".config.more", "編輯牌堆 <div>&gt;</div>", page, function () {
 					this.classList.toggle("on");
 					if (this.classList.contains("on")) {
 						editPile.style.display = "";
@@ -1898,7 +1898,7 @@ export const extensionMenu = function (connectMenu) {
 				cardpileaddname.style.marginLeft = "-1px";
 				var cardpileaddsuit = ui.create.selectlist(
 					[
-						["heart", "红桃"],
+						["heart", "紅桃"],
 						["diamond", "方片"],
 						["club", "梅花"],
 						["spade", "黑桃"],
@@ -1916,7 +1916,7 @@ export const extensionMenu = function (connectMenu) {
 				cardpileaddnumber.style.width = "43px";
 				cardpileaddnumber.style.marginRight = "2px";
 				var button = document.createElement("button");
-				button.innerHTML = "确定";
+				button.innerHTML = "確定";
 				button.style.width = "40px";
 				button.onclick = function () {
 					var card = [cardpileaddsuit.value, cardpileaddnumber.value, cardpileaddname.value];
@@ -2043,11 +2043,11 @@ export const extensionMenu = function (connectMenu) {
 								configurable: true,
 							})
 						);
-					toggle.innerHTML = "编辑技能 <div>&gt;</div>";
-					editnode.innerHTML = "编辑技能";
+					toggle.innerHTML = "編輯技能 <div>&gt;</div>";
+					editnode.innerHTML = "編輯技能";
 					editnode.classList.remove("disabled");
 					delnode.button = this;
-					delnode.innerHTML = "删除";
+					delnode.innerHTML = "刪除";
 				};
 				var createButton = function (name) {
 					var button = ui.create.div(".menubutton");
@@ -2057,7 +2057,7 @@ export const extensionMenu = function (connectMenu) {
 					page.insertBefore(button, page.childNodes[1]);
 				};
 				var newSkill;
-				var toggle = ui.create.div(".config.more.on", "创建技能 <div>&gt;</div>", page, function () {
+				var toggle = ui.create.div(".config.more.on", "創建技能 <div>&gt;</div>", page, function () {
 					this.classList.toggle("on");
 					if (this.classList.contains("on")) {
 						newSkill.style.display = "";
@@ -2078,13 +2078,13 @@ export const extensionMenu = function (connectMenu) {
 					for (var i = 0; i < inputs.length; i++) {
 						inputs[i].value = "";
 					}
-					toggle.innerHTML = "创建技能 <div>&gt;</div>";
-					editnode.innerHTML = "创建技能";
+					toggle.innerHTML = "創建技能 <div>&gt;</div>";
+					editnode.innerHTML = "創建技能";
 					editnode.classList.add("disabled");
 					delnode.innerHTML = "取消";
 					delete delnode.button;
 					container.code =
-						'skill={\n    \n}\n\n/*\n示例：\nskill={\n    trigger:{player:"phaseJieshuBegin"},\n    frequent:true,\n    content:function(){\n        player.draw()\n    }\n}\n此例为闭月代码\n导出时本段代码中的换行、缩进以及注释将被清除\n*/';
+						'skill={\n    \n}\n\n/*\n示例：\nskill={\n    trigger:{player:"phaseJieshuBegin"},\n    frequent:true,\n    content:function(){\n        player.draw()\n    }\n}\n此例為閉月代碼\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/';
 					if (page.fromchar == "add") {
 						page.fromchar = true;
 					}
@@ -2094,7 +2094,7 @@ export const extensionMenu = function (connectMenu) {
 				page.newSkill = newSkill;
 				var namenode = ui.create.div(
 					".config",
-					'名称：<input class="new_name" type="text" style="width:120px"></input>',
+					'名稱：<input class="new_name" type="text" style="width:120px"></input>',
 					newSkill
 				);
 				var descnode = ui.create.div(
@@ -2105,7 +2105,7 @@ export const extensionMenu = function (connectMenu) {
 				namenode.querySelector("input.new_name").onblur = updateButton;
 				var commandline = ui.create.div(".config", newSkill);
 				var editbutton = document.createElement("button");
-				editbutton.innerHTML = "编辑代码";
+				editbutton.innerHTML = "編輯代碼";
 				commandline.appendChild(editbutton);
 				editbutton.onclick = function () {
 					var node = container;
@@ -2151,10 +2151,10 @@ export const extensionMenu = function (connectMenu) {
 						}
 					} catch (e) {
 						if (e == "err") {
-							alert("代码格式有错误，请对比示例代码仔细检查");
+							alert("代碼格式有錯誤，請對比示例代碼仔細檢查");
 						} else {
 							var tip = lib.getErrorTip(e) || "";
-							alert("代码语法有错误，请仔细检查（" + e + "）" + tip);
+							alert("代碼語法有錯誤，請仔細檢查（" + e + "）" + tip);
 						}
 						window.focus();
 						if (container.editor) {
@@ -2173,10 +2173,10 @@ export const extensionMenu = function (connectMenu) {
 				};
 				var editor = ui.create.editor(container, saveInput);
 				container.code =
-					'skill={\n    \n}\n\n/*\n示例：\nskill={\n    trigger:{player:"phaseJieshuBegin"},\n    frequent:true,\n    content:function(){\n        player.draw()\n    }\n}\n此例为闭月代码\n导出时本段代码中的换行、缩进以及注释将被清除\n*/';
+					'skill={\n    \n}\n\n/*\n示例：\nskill={\n    trigger:{player:"phaseJieshuBegin"},\n    frequent:true,\n    content:function(){\n        player.draw()\n    }\n}\n此例為閉月代碼\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/';
 
 				var citebutton = document.createElement("button");
-				citebutton.innerHTML = "引用代码";
+				citebutton.innerHTML = "引用代碼";
 				commandline.appendChild(citebutton);
 				citebutton.onclick = function () {
 					editbutton.style.display = "none";
@@ -2195,7 +2195,7 @@ export const extensionMenu = function (connectMenu) {
 				}
 				if(!list.length){
 					if(!lib.character["noname_sunce"]) lib.character["noname_sunce"] = ["male", "wu", 4, ["jiang"], ["unseen"]];
-					if(!lib.translate["noname_sunce"]) lib.translate["noname_sunce"] = "孙策";
+					if(!lib.translate["noname_sunce"]) lib.translate["noname_sunce"] = "孫策";
 					list.push(["noname_sunce", lib.translate["noname_sunce"]]);
 				}
 				list.sort(function (a, b) {
@@ -2297,11 +2297,11 @@ export const extensionMenu = function (connectMenu) {
 
 				var editnode = ui.create.div(
 					".menubutton.large.new_skill.disabled",
-					"创建技能",
+					"創建技能",
 					function () {
 						var name = page.querySelector("input.new_name").value;
 						if (!name) {
-							alert("请填写技能名\n提示：技能名格式为id+|+中文名，其中id必须惟一");
+							alert("請填寫技能名\n提示：技能名格式為id+|+中文名，其中id必須惟一");
 							return;
 						}
 						name = name.split("|");
@@ -2312,7 +2312,7 @@ export const extensionMenu = function (connectMenu) {
 							if (currentButton.link != name) {
 								if (lib.skill[name] || page.content.pack.skill[name]) {
 									alert(
-										"技能名与现有技能重复，请更改\n提示：技能名格式为id+|+中文名，其中id必须惟一"
+										"技能名與現有技能重複，請更改\n提示：技能名格式為id+|+中文名，其中id必須惟一"
 									);
 									return;
 								}
@@ -2324,7 +2324,7 @@ export const extensionMenu = function (connectMenu) {
 						} else {
 							if (lib.skill[name] || page.content.pack.skill[name]) {
 								alert(
-									"技能名与现有技能重复，请更改\n提示：技能名格式为id+|+中文名，其中id必须惟一"
+									"技能名與現有技能重複，請更改\n提示：技能名格式為id+|+中文名，其中id必須惟一"
 								);
 								return;
 							}
@@ -2342,7 +2342,7 @@ export const extensionMenu = function (connectMenu) {
 						}
 						dash1.selectname.value = "current_extension";
 						dash1.selectname.onchange.call(dash1.selectname);
-						if (this.innerHTML == "创建技能") {
+						if (this.innerHTML == "創建技能") {
 							createButton(name);
 							if (page.fromchar == "add") {
 								ui.create.templayer();
@@ -2366,7 +2366,7 @@ export const extensionMenu = function (connectMenu) {
 					"取消",
 					editnode.parentNode,
 					function () {
-						if (this.innerHTML == "删除") {
+						if (this.innerHTML == "刪除") {
 							this.button.remove();
 							var name = this.button.link;
 							delete dash3.content.pack.skill[name];
@@ -2433,12 +2433,12 @@ export const extensionMenu = function (connectMenu) {
 							dashes[i].node.code = page.content[i] || "";
 						}
 					} else {
-						dashes.arenaReady.node.code = "function(){\n    \n}\n\n/*\n函数执行时机为界面创建之后\n导出时本段代码中的换行、缩进以及注释将被清除\n*/";
-						dashes.content.node.code = "function(config,pack){\n    \n}\n\n/*\n函数执行时机为游戏数据加载之后、界面加载之前\n参数1扩展选项（见选项代码）；参数2为扩展定义的武将、卡牌和技能等（可在此函数中修改）\n导出时本段代码中的换行、缩进以及注释将被清除\n*/";
-						dashes.prepare.node.code = "function(){\n    \n}\n\n/*\n函数执行时机玩游戏扩展加载之后\n导出时本段代码中的换行、缩进以及注释将被清除\n*/";
-						dashes.precontent.node.code = "function(){\n    \n}\n\n/*\n函数执行时机为游戏数据加载之前，联机模式亦可加载\n除添加模式外请慎用\n导出时本段代码中的换行、缩进以及注释将被清除\n*/";
-						dashes.config.node.code = 'config={\n    \n}\n\n/*\n示例：\nconfig={\n    switcher_example:{\n    name:"示例列表选项",\n        init:"3",\n        item:{"1":"一","2":"二","3":"三"}\n    },\n    toggle_example:{\n        name:"示例开关选项",\n        init:true\n    }\n}\n此例中传入的主代码函数的默认参数为{switcher_example:"3",toggle_example:true}\n导出时本段代码中的换行、缩进以及注释将被清除\n*/';
-						dashes.help.node.code = 'help={\n    \n}\n\ns/*\n示例：\nhelp={\n    "帮助条目":"<ul><li>列表1-条目1<li>列表1-条目2</ul><ol><li>列表2-条目1<li>列表2-条目2</ul>"\n}\n帮助内容将显示在菜单－选项－帮助中\n导出时本段代码中的换行、缩进以及注释将被清除\n*/';
+						dashes.arenaReady.node.code = "function(){\n    \n}\n\n/*\n函數執行時機為界面創建之後\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/";
+						dashes.content.node.code = "function(config,pack){\n    \n}\n\n/*\n函數執行時機為遊戲數據加載之後、界面加載之前\n參數1擴展選項（見選項代碼）；參數2為擴展定義的武將、卡牌和技能等（可在此函數中修改）\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/";
+						dashes.prepare.node.code = "function(){\n    \n}\n\n/*\n函數執行時機玩遊戲擴展加載之後\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/";
+						dashes.precontent.node.code = "function(){\n    \n}\n\n/*\n函數執行時機為遊戲數據加載之前，聯機模式亦可加載\n除添加模式外請慎用\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/";
+						dashes.config.node.code = 'config={\n    \n}\n\n/*\n示例：\nconfig={\n    switcher_example:{\n    name:"示例列表選項",\n        init:"3",\n        item:{"1":"一","2":"二","3":"三"}\n    },\n    toggle_example:{\n        name:"示例開關選項",\n        init:true\n    }\n}\n此例中傳入的主代碼函數的默認參數為{switcher_example:"3",toggle_example:true}\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/';
+						dashes.help.node.code = 'help={\n    \n}\n\ns/*\n示例：\nhelp={\n    "幫助條目":"<ul><li>列表1-條目1<li>列表1-條目2</ul><ol><li>列表2-條目1<li>列表2-條目2</ul>"\n}\n幫助內容將顯示在菜單－選項－幫助中\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/';
 					}
 				};
 				var dashes = {};
@@ -2477,10 +2477,10 @@ export const extensionMenu = function (connectMenu) {
 							}
 						} catch (e) {
 							if (e == "err") {
-								alert("代码格式有错误，请对比示例代码仔细检查");
+								alert("代碼格式有錯誤，請對比示例代碼仔細檢查");
 							} else {
 								var tip = lib.getErrorTip(e) || "";
-								alert("代码语法有错误，请仔细检查（" + e + "）" + tip);
+								alert("代碼語法有錯誤，請仔細檢查（" + e + "）" + tip);
 							}
 							window.focus();
 							if (container.editor) {
@@ -2535,66 +2535,66 @@ export const extensionMenu = function (connectMenu) {
 				};
 				page.content = {};
 				createCode(
-					"辅",
-					"辅助代码",
+					"輔",
+					"輔助代碼",
 					page,
 					clickCode,
 					"arenaReady",
-					"function(){\n    \n}\n\n/*\n函数执行时机为游戏界面创建之后\n导出时本段代码中的换行、缩进以及注释将被清除\n*/"
+					"function(){\n    \n}\n\n/*\n函數執行時機為遊戲界面創建之後\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/"
 				);
 				createCode(
 					"主",
-					"主代码",
+					"主代碼",
 					page,
 					clickCode,
 					"content",
-					"function(config,pack){\n    \n}\n\n/*\n函数执行时机为游戏数据加载之后、界面加载之前\n参数1扩展选项（见选项代码）；参数2为扩展定义的角色、卡牌和技能等（可在此函数中修改）\n导出时本段代码中的换行、缩进以及注释将被清除\n*/"
+					"function(config,pack){\n    \n}\n\n/*\n函數執行時機為遊戲數據加載之後、界面加載之前\n參數1擴展選項（見選項代碼）；參數2為擴展定義的角色、卡牌和技能等（可在此函數中修改）\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/"
 				);
 				createCode(
-					"预",
-					"预备代码",
+					"預",
+					"預備代碼",
 					page,
 					clickCode,
 					"prepare",
-					"function(){\n    \n}\n\n/*\n函数执行时机为游戏扩展全部加载之后\n导出时本段代码中的换行、缩进以及注释将被清除\n*/"
+					"function(){\n    \n}\n\n/*\n函數執行時機為遊戲擴展全部加載之後\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/"
 				);
 				createCode(
-					"启",
-					"启动代码",
+					"啟",
+					"啟動代碼",
 					page,
 					clickCode,
 					"precontent",
-					"function(){\n    \n}\n\n/*\n函数执行时机为游戏数据加载之前，联机模式亦可加载\n除添加模式外请慎用\n导出时本段代码中的换行、缩进以及注释将被清除\n*/"
+					"function(){\n    \n}\n\n/*\n函數執行時機為遊戲數據加載之前，聯機模式亦可加載\n除添加模式外請慎用\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/"
 				);
 				createCode(
-					"选",
-					"选项代码",
+					"選",
+					"選項代碼",
 					page,
 					clickCode,
 					"config",
-					'config={\n    \n}\n\n/*\n示例：\nconfig={\n    switcher_example:{\n        name:"示例列表选项",\n        init:"3",\n     	  item:{"1":"一","2":"二","3":"三"}\n    },\n    toggle_example:{\n        name:"示例开关选项",\n        init:true\n    }\n}\n此例中传入的主代码函数的默认参数为{switcher_example:"3",toggle_example:true}\n导出时本段代码中的换行、缩进以及注释将被清除\n*/'
+					'config={\n    \n}\n\n/*\n示例：\nconfig={\n    switcher_example:{\n        name:"示例列表選項",\n        init:"3",\n     	  item:{"1":"一","2":"二","3":"三"}\n    },\n    toggle_example:{\n        name:"示例開關選項",\n        init:true\n    }\n}\n此例中傳入的主代碼函數的默認參數為{switcher_example:"3",toggle_example:true}\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/'
 				);
 				createCode(
-					"帮",
-					"帮助代码",
+					"幫",
+					"幫助代碼",
 					page,
 					clickCode,
 					"help",
-					'help={\n    \n}\n\n/*\n示例：\nhelp={\n    "帮助条目":"<ul><li>列表1-条目1<li>列表1-条目2</ul><ol><li>列表2-条目1<li>列表2-条目2</ul>"\n}\n帮助内容将显示在菜单－选项－帮助中\n导出时本段代码中的换行、缩进以及注释将被清除\n*/'
+					'help={\n    \n}\n\n/*\n示例：\nhelp={\n    "幫助條目":"<ul><li>列表1-條目1<li>列表1-條目2</ul><ol><li>列表2-條目1<li>列表2-條目2</ul>"\n}\n幫助內容將顯示在菜單－選項－幫助中\n導出時本段代碼中的換行、縮進以及註釋將被清除\n*/'
 				);
 
 				return page;
 			})();
-			createDash("角", "编辑角色", dash1);
-			createDash("卡", "编辑卡牌", dash2);
-			createDash("技", "编辑技能", dash3);
-			createDash("码", "编辑代码", dash4);
+			createDash("角", "編輯角色", dash1);
+			createDash("卡", "編輯卡牌", dash2);
+			createDash("技", "編輯技能", dash3);
+			createDash("碼", "編輯代碼", dash4);
 		};
 		if (!get.config("menu_loadondemand")) node._initLink();
 	})();
 	(function () {
 		var page = ui.create.div("");
-		var node = ui.create.div(".menubutton.large", "获取扩展", start.firstChild, clickMode);
+		var node = ui.create.div(".menubutton.large", "獲取擴展", start.firstChild, clickMode);
 		node.mode = "get";
 		var _thisUpdate = false;
 		node.update = function () {
@@ -2613,7 +2613,7 @@ export const extensionMenu = function (connectMenu) {
 			var importextensionexpanded = false;
 			page.style.paddingBottom = "10px";
 			var importExtension;
-			var extensionNode = ui.create.div(".config.more", "导入扩展 <div>&gt;</div>", page, function () {
+			var extensionNode = ui.create.div(".config.more", "導入擴展 <div>&gt;</div>", page, function () {
 				if (importextensionexpanded) {
 					this.classList.remove("on");
 					importExtension.style.display = "none";
@@ -2632,11 +2632,11 @@ export const extensionMenu = function (connectMenu) {
 			importExtension.style.textAlign = "left";
 			ui.create.div(
 				"",
-				'<input type="file" accept="application/zip" style="width:153px"><button>确定</button>',
+				'<input type="file" accept="application/zip" style="width:153px"><button>確定</button>',
 				importExtension
 			);
-			ui.create.div(".config", "修改下载地址", page, function () {
-				alert("您可以在“设置→通用→获取扩展地址”中，修改下载扩展时所采用的地址。");
+			ui.create.div(".config", "修改下載地址", page, function () {
+				alert("您可以在“設置→通用→獲取擴展地址”中，修改下載擴展時所採用的地址。");
 			});
 
 			var extensionURL;
@@ -2645,7 +2645,7 @@ export const extensionMenu = function (connectMenu) {
 			if (source && source[index]) extensionURL = source[index];
 			else extensionURL = lib.updateURL.replace(/noname/g, "noname-extension") + "/master/";
 
-			var reloadnode = ui.create.div(".config.toggle.pointerdiv", "重新启动", page, game.reload);
+			var reloadnode = ui.create.div(".config.toggle.pointerdiv", "重新啟動", page, game.reload);
 			reloadnode.style.display = "none";
 			var placeholder = ui.create.div(".config.toggle", page);
 			placeholder.style.height = 0;
@@ -2662,14 +2662,14 @@ export const extensionMenu = function (connectMenu) {
 				}).then(async (progressEvent) => {
 					if (
 						await game.importExtension(progressEvent.target.result, () => {
-							extensionNode.innerHTML = "导入成功，3秒后将重启";
+							extensionNode.innerHTML = "導入成功，3秒後將重啟";
 							new Promise((resolve) => setTimeout(resolve, 1000))
 								.then(() => {
-									extensionNode.innerHTML = "导入成功，2秒后将重启";
+									extensionNode.innerHTML = "導入成功，2秒後將重啟";
 									return new Promise((resolve) => setTimeout(resolve, 1000));
 								})
 								.then(() => {
-									extensionNode.innerHTML = "导入成功，1秒后将重启";
+									extensionNode.innerHTML = "導入成功，1秒後將重啟";
 									return new Promise((resolve) => setTimeout(resolve, 1000));
 								})
 								.then(game.reload);
@@ -2691,7 +2691,7 @@ export const extensionMenu = function (connectMenu) {
 				}, 200);
 			};
 			var downloadExtension = function (e) {
-				if ((this.innerHTML != "下载扩展" && this.innerHTML != "更新扩展") || !window.JSZip) return;
+				if ((this.innerHTML != "下載擴展" && this.innerHTML != "更新擴展") || !window.JSZip) return;
 				this.classList.remove("update");
 				if (e) {
 					e.stopPropagation();
@@ -2708,7 +2708,7 @@ export const extensionMenu = function (connectMenu) {
 					}
 				}
 
-				this.innerHTML = "<span>正在下载</span><div>正在下载</div>";
+				this.innerHTML = "<span>正在下載</span><div>正在下載</div>";
 				this.classList.add("nopointer");
 				this.classList.add("button-downloading");
 				var progress = ui.create.div(".button-progress", this);
@@ -2745,7 +2745,7 @@ export const extensionMenu = function (connectMenu) {
 							onprogress(n1, n2);
 						},
 						function (e) {
-							game.print("下载失败：" + e.source);
+							game.print("下載失敗：" + e.source);
 						},
 						function () {
 							onprogress(-1);
@@ -2780,19 +2780,19 @@ export const extensionMenu = function (connectMenu) {
 											}
 										}
 										reloadnode.style.display = "";
-										that.childNodes[0].innerHTML = "安装成功";
-										that.childNodes[1].innerHTML = "安装成功";
+										that.childNodes[0].innerHTML = "安裝成功";
+										that.childNodes[1].innerHTML = "安裝成功";
 										that.classList.remove("active");
 										that.classList.remove("highlight");
 										delete game.importedPack;
 									} else {
-										that.innerHTML = "安装失败";
+										that.innerHTML = "安裝失敗";
 										that.classList.add("nopointer");
 									}
 									_status.importingExtension = false;
 								},
 								function () {
-									that.innerHTML = "下载失败";
+									that.innerHTML = "下載失敗";
 									that.classList.add("nopointer");
 									_status.importingExtension = false;
 								}
@@ -2823,7 +2823,7 @@ export const extensionMenu = function (connectMenu) {
 					toremove[i].remove();
 				}
 
-				var loading = ui.create.div(".loading.config.toggle", "载入中...", page);
+				var loading = ui.create.div(".loading.config.toggle", "載入中...", page);
 				var loaded = function () {
 					var list = [];
 					var extension = window.extension;
@@ -2848,7 +2848,7 @@ export const extensionMenu = function (connectMenu) {
 						);
 						ui.create.div(".text", "更新日期：" + list[i].date, node);
 						ui.create.div(".text", list[i].intro, node);
-						var download = ui.create.div(".menubutton.text.active", "下载扩展", node.firstChild, {
+						var download = ui.create.div(".menubutton.text.active", "下載擴展", node.firstChild, {
 							zIndex: "5",
 						});
 						if (game.download) {
@@ -2856,7 +2856,7 @@ export const extensionMenu = function (connectMenu) {
 								var linknode = ui.create.div(".text", node);
 								ui.create.node(
 									"span.hrefnode",
-									"网盘链接",
+									"網盤鏈接",
 									function () {
 										game.open(this.link);
 									},
@@ -2866,7 +2866,7 @@ export const extensionMenu = function (connectMenu) {
 									ui.create.node("span", linknode).style.marginRight = "10px";
 									ui.create.node(
 										"span.hrefnode",
-										"参与讨论",
+										"參與討論",
 										function () {
 											game.open(this.link);
 										},
@@ -2877,7 +2877,7 @@ export const extensionMenu = function (connectMenu) {
 								var linknode = ui.create.div(".text", node);
 								ui.create.node(
 									"span.hrefnode",
-									"参与讨论",
+									"參與討論",
 									function () {
 										game.open(this.link);
 									},
@@ -2893,17 +2893,17 @@ export const extensionMenu = function (connectMenu) {
 								) {
 									download.classList.add("transparent2");
 									download.classList.remove("active");
-									download.innerHTML = "已安装";
+									download.innerHTML = "已安裝";
 								} else if (
 									lib.config["extension_" + list[i].name + "_version"] != list[i].version
 								) {
-									download.innerHTML = "更新扩展";
+									download.innerHTML = "更新擴展";
 									download.classList.add("highlight");
 									download.classList.add("update");
 								} else {
 									download.classList.add("transparent2");
 									download.classList.remove("active");
-									download.innerHTML = "已安装";
+									download.innerHTML = "已安裝";
 								}
 							}
 							download.info = list[i];
@@ -2913,7 +2913,7 @@ export const extensionMenu = function (connectMenu) {
 								ui.create.node("span", linknode);
 								ui.create.node(
 									"span.hrefnode",
-									"参与讨论",
+									"參與討論",
 									function () {
 										game.open(this.link);
 									},
@@ -2928,7 +2928,7 @@ export const extensionMenu = function (connectMenu) {
 					}
 				};
 				window.extension = {};
-				//增加?t=${Date.now()}使每次都重新请求
+				//增加?t=${Date.now()}使每次都重新請求
 				fetch(`${extensionURL}catalog.js?t=${Date.now()}`, {
 					referrerPolicy: "no-referrer",
 				})
@@ -2939,7 +2939,7 @@ export const extensionMenu = function (connectMenu) {
 						console.log(reason);
 						delete window.extension;
 						loading.innerHTML =
-							"连接失败:" + (reason instanceof Error ? reason.message : String(reason));
+							"連接失敗:" + (reason instanceof Error ? reason.message : String(reason));
 					});
 			};
 			if (_thisUpdate) node.update();

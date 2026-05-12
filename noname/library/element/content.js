@@ -6,7 +6,7 @@ import { _status } from "../../status/index.js";
 import { ui } from "../../ui/index.js";
 import { gnc } from "../../gnc/index.js";
 
-// 未来再改
+// 未來再改
 export const Content = {
 	emptyEvent: async event => {
 		await event.trigger(event.name);
@@ -21,8 +21,8 @@ export const Content = {
 			return;
 		}
 		event.acted.push(player);
-		var str = get.translation(trigger.player) + "濒死，是否帮助？";
-		var str2 = "当前体力：" + trigger.player.hp;
+		var str = get.translation(trigger.player) + "瀕死，是否幫助？";
+		var str2 = "當前體力：" + trigger.player.hp;
 		if (lib.config.tao_enemy && event.dying.side != player.side && lib.config.mode != "identity" && lib.config.mode != "guozhan" && !event.dying.hasSkillTag("revertsave")) {
 			event._result = { bool: false };
 		} else if (player.canSave(event.dying)) {
@@ -101,7 +101,7 @@ export const Content = {
 		if (event.isMine()) {
 			_status.imchoosing = true;
 			event.settleed = false;
-			event.dialog = ui.create.dialog(event.prompt || "请调整以下数值", "forcebutton", "hidden");
+			event.dialog = ui.create.dialog(event.prompt || "請調整以下數值", "forcebutton", "hidden");
 			if (event.prompt2) event.dialog.addText(event.prompt2);
 			event.switchToAuto = function () {
 				if (!event.filterOk(event)) {
@@ -169,7 +169,7 @@ export const Content = {
 
 			for (var index = 0; index < event.list.length; index++) {
 				event.numbers.push(void 0);
-				event.dialog.addText(event.list[index].prompt || "选择一个数值");
+				event.dialog.addText(event.list[index].prompt || "選擇一個數值");
 				var select = document.createElement("select");
 				select.id = `select${index}`;
 				select.classList.add("add-setting");
@@ -226,7 +226,7 @@ export const Content = {
 		}
 		event.result = _result;
 	},
-	//变更武将牌
+	//變更武將牌
 	async changeCharacter(event, trigger, player) {
 		const rawPairs = [player.name1];
 		if (player.name2 && lib.character[player.name2]) rawPairs.push(player.name2);
@@ -234,31 +234,31 @@ export const Content = {
 		const newPairs = event.newPairs;
 		for (let name of newPairs) {
 			if (!lib.character[name]) {
-				console.warn(`警告：Player[${player.name}]试图将角色牌变更为不存在的角色:`, name);
+				console.warn(`警告：Player[${player.name}]試圖將角色牌變更為不存在的角色:`, name);
 				return;
 			}
 		}
 		const removeSkills = [],
 			addSkills = [];
-		//进行Log
+		//進行Log
 		if (event.log !== false) {
-			//变更前后数量相同的情况
+			//變更前後數量相同的情況
 			if (rawPairs.length == newPairs.length) {
 				for (let i = 0; i < Math.min(2, rawPairs.length); i++) {
 					let rawName = rawPairs[i],
 						newName = newPairs[i];
 					if (rawName != newName) {
-						game.log(player, `将${i == 0 ? "主" : "副"}角从`, `#b${get.translation(rawName)}`, "变更为了", `#b${get.translation(newName)}`);
+						game.log(player, `將${i == 0 ? "主" : "副"}角從`, `#b${get.translation(rawName)}`, "變更為了", `#b${get.translation(newName)}`);
 					}
 				}
 			} else if (rawPairs.length == 1 && newPairs.length == 2) {
-				game.log(player, "将单角", `#b${get.translation(rawPairs[0])}`, "变更为了双角", `#b${get.translation(newPairs[0])}+${get.translation(newPairs[1])}`);
+				game.log(player, "將單角", `#b${get.translation(rawPairs[0])}`, "變更為了雙角", `#b${get.translation(newPairs[0])}+${get.translation(newPairs[1])}`);
 			} else if (rawPairs.length == 2 && newPairs.length == 1) {
-				game.log(player, "将双角", `#b${get.translation(rawPairs[0])}+${get.translation(rawPairs[1])}`, "变更为了单角", `#b${get.translation(newPairs[0])}`);
+				game.log(player, "將雙角", `#b${get.translation(rawPairs[0])}+${get.translation(rawPairs[1])}`, "變更為了單角", `#b${get.translation(newPairs[0])}`);
 			}
 		}
-		//确定要失去和获得的技能
-		//失去技能时全部失去，但获得技能时，非主公角色不能获得主公技。
+		//確定要失去和獲得的技能
+		//失去技能時全部失去，但獲得技能時，非主公角色不能獲得主公技。
 		rawPairs.forEach(name => {
 			removeSkills.addArray(lib.character[name][3]);
 		});
@@ -271,16 +271,16 @@ export const Content = {
 				})
 			);
 		});
-		//实际变更武将牌
+		//實際變更武將牌
 		player.reinit2(newPairs);
-		//操作武将牌堆
+		//操作武將牌堆
 		if (_status.characterlist) {
 			_status.characterlist.removeArray(newPairs);
 			_status.characterlist.addArray(rawPairs);
 		}
-		//变更一下获得前后的技能
+		//變更一下獲得前後的技能
 		await player.changeSkills(addSkills, removeSkills);
-		//变更角色的所属势力。如果新将是双势力，重选一下势力。
+		//變更角色的所屬勢力。如果新將是雙勢力，重選一下勢力。
 		if (event.changeGroup !== false) {
 			let newGroups = [];
 			if (!player.isUnseen(1)) {
@@ -289,7 +289,7 @@ export const Content = {
 				newGroups = get.is.double(player.name2, true) || [get.character(player.name2, 1)];
 			}
 			if (newGroups.length > 1) {
-				const newGroup = await player.chooseControl(newGroups).set("prompt", "请选择一个新的势力").forResult("control");
+				const newGroup = await player.chooseControl(newGroups).set("prompt", "請選擇一個新的勢力").forResult("control");
 				if (newGroup != player.group) {
 					await player.changeGroup(newGroup);
 				}
@@ -298,14 +298,14 @@ export const Content = {
 			}
 		}
 	},
-	//变更技能
+	//變更技能
 	async changeSkills(event, trigger, player) {
-		//获取玩家当前已有的技能
+		//獲取玩家當前已有的技能
 		const ownedSkills = player.getSkills(true, false, false);
-		//去重检查
+		//去重檢查
 		event.addSkill.unique();
 		event.removeSkill.unique();
-		//避免失去还没拥有的技能
+		//避免失去還沒擁有的技能
 		event.removeSkill = event.removeSkill.filter(skill => ownedSkills.includes(skill));
 		const duplicatedSkills = event.addSkill.filter(skill => event.removeSkill.includes(skill));
 		if (duplicatedSkills.length) {
@@ -313,10 +313,10 @@ export const Content = {
 			event.removeSkill.removeArray(duplicatedSkills);
 		}
 		//if (!event.addSkill.length&&!event.removeSkill.length) return;
-		//手动触发时机
+		//手動觸發時機
 		await event.trigger("changeSkillsBefore");
 		await event.trigger("changeSkillsBegin");
-		//处理失去和获得的技能
+		//處理失去和獲得的技能
 		if (event.$handle) {
 			event.$handle(player, event.addSkill, event.removeSkill, event);
 		} else {
@@ -324,7 +324,7 @@ export const Content = {
 				player.addSkill(event.addSkill);
 				game.log(
 					player,
-					"获得了技能",
+					"獲得了技能",
 					...event.addSkill
 						.filter(i => i in lib.translate)
 						.map(i => {
@@ -347,7 +347,7 @@ export const Content = {
 				);
 			}
 		}
-		//手动触发时机
+		//手動觸發時機
 		await event.trigger("changeSkillsEnd");
 		await event.trigger("changeSkillsAfter");
 	},
@@ -362,7 +362,7 @@ export const Content = {
 		//if (event.animate != false) player.$give(event.cards, player, false);
 		event.trigger("addShownCardsAfter");
 	},
-	//隐藏明置手牌
+	//隱藏明置手牌
 	hideShownCards: () => {
 		var shown = player.getShownCards(),
 			hidingCards = event._cards.filter(hidingCard => shown.includes(hidingCard));
@@ -386,8 +386,8 @@ export const Content = {
 		event.trigger("hideShownCardsAfter");
 	},
 	//Execute the delay card effect
-	//执行延时锦囊牌效果
-	//TODO: 修改此处的虚拟牌/实体牌判断
+	//執行延時錦囊牌效果
+	//TODO: 修改此處的虛擬牌/實體牌判斷
 	executeDelayCardEffect: () => {
 		"step 0";
 		target.$phaseJudge(card);
@@ -457,7 +457,7 @@ export const Content = {
 		card.delete();
 	},
 	//Gift
-	//赠予
+	//贈予
 	gift: () => {
 		"step 0";
 		event.num = 0;
@@ -471,13 +471,13 @@ export const Content = {
 		}
 		"step 2";
 		if (event.deniedGifts.includes(card)) {
-			game.log(target, "拒绝了", player, "赠予的", card);
+			game.log(target, "拒絕了", player, "贈予的", card);
 			event.trigger("giftDeny");
 			player.loseToDiscardpile(card).log = false;
 			event.trigger("giftDenied");
 			return;
 		}
-		game.log(player, "将", card, "赠予了", target);
+		game.log(player, "將", card, "贈予了", target);
 		player.$give(card, target, false);
 		game.delay(0.5);
 		event.trigger("giftAccept");
@@ -489,10 +489,10 @@ export const Content = {
 		event.goto(1);
 	},
 	//Recast
-	//重铸
+	//重鑄
 	recast: () => {
 		"step 0";
-		game.log(player, "重铸了", cards);
+		game.log(player, "重鑄了", cards);
 		if (typeof event.recastingLose != "function") return;
 		event.trigger("recastingLose");
 		event.recastingLose(player, cards);
@@ -507,7 +507,7 @@ export const Content = {
 		event.trigger("recastingGained");
 		event.recastingGainingEvents.push(...event.next.filter(value => value.name != "arrangeTrigger"));
 	},
-	//装备栏相关
+	//裝備欄相關
 	disableEquip: function () {
 		"step 0";
 		event.cards = [];
@@ -534,7 +534,7 @@ export const Content = {
 		} else lose = Math.min(left, get.numOf(event.slots, slot));
 		if (lose <= 0) event.goto(3);
 		else {
-			game.log(player, "废除了" + get.cnNumber(lose) + "个", "#g" + get.translation(slot) + "栏");
+			game.log(player, "廢除了" + get.cnNumber(lose) + "個", "#g" + get.translation(slot) + "欄");
 			if (!player.disabledSlots) player.disabledSlots = {};
 			if (!player.disabledSlots[slot_key]) player.disabledSlots[slot_key] = 0;
 			player.disabledSlots[slot_key] += lose;
@@ -547,7 +547,7 @@ export const Content = {
 						num = cards.length - (left - lose);
 					if (!source || !source.isIn()) source = player;
 					source
-						.chooseButton(["选择" + (player == source ? "你" : get.translation(player)) + "的" + get.cnNumber(num) + "张" + get.translation(slot) + "牌置入弃牌堆", cards], true, [1, num])
+						.chooseButton(["選擇" + (player == source ? "你" : get.translation(player)) + "的" + get.cnNumber(num) + "張" + get.translation(slot) + "牌置入棄牌堆", cards], true, [1, num])
 						.set("filterOk", function () {
 							var evt = _status.event;
 							return (
@@ -580,7 +580,7 @@ export const Content = {
 				gain = Math.min(lost, get.numOf(event.slots, slot));
 			if (lost <= 0) continue;
 			else {
-				game.log(player, "恢复了" + get.cnNumber(gain) + "个", "#g" + get.translation(slot) + "栏");
+				game.log(player, "恢復了" + get.cnNumber(gain) + "個", "#g" + get.translation(slot) + "欄");
 				if (!player.disabledSlots) player.disabledSlots = {};
 				if (!player.disabledSlots[slot]) player.disabledSlots[slot] = 0;
 				player.disabledSlots[slot] -= gain;
@@ -607,14 +607,14 @@ export const Content = {
 				expand = Math.max(get.numOf(event.slots, "equip3"), get.numOf(event.slots, "equip4"));
 				slot_key = "equip3";
 			}
-			game.log(player, "获得了" + get.cnNumber(expand) + "个额外的", "#g" + get.translation(slot) + "栏");
+			game.log(player, "獲得了" + get.cnNumber(expand) + "個額外的", "#g" + get.translation(slot) + "欄");
 			if (!player.expandedSlots) player.expandedSlots = {};
 			if (!player.expandedSlots[slot_key]) player.expandedSlots[slot_key] = 0;
 			player.expandedSlots[slot_key] += expand;
 		}
 		player.$syncExpand();
 	},
-	//选择顶装备要顶的牌
+	//選擇頂裝備要頂的牌
 	replaceEquip: async function (event, trigger, player) {
 		const vcards = event.vcards ?? [event.card];
 		const specializedVCards = [],
@@ -662,7 +662,7 @@ export const Content = {
 								num = cards.length - (left - lose);
 							if (!source || !source.isIn()) source = player;
 							const chooseEvent = source
-								.chooseButton(["选择替换掉" + get.cnNumber(num) + "张" + get.translation(slot) + "装备牌", [cards, "vcard"]], true, [1, num])
+								.chooseButton(["選擇替換掉" + get.cnNumber(num) + "張" + get.translation(slot) + "裝備牌", [cards, "vcard"]], true, [1, num])
 								.set("filterOk", function () {
 									var evt = _status.event;
 									return (
@@ -736,7 +736,7 @@ export const Content = {
 						num = cards.length - (left - lose);
 					if (!source || !source.isIn()) source = player;
 					source
-						.chooseButton(["选择替换掉" + get.cnNumber(num) + "张" + get.translation(slot) + "牌", cards], true, [1, num])
+						.chooseButton(["選擇替換掉" + get.cnNumber(num) + "張" + get.translation(slot) + "牌", cards], true, [1, num])
 						.set("filterOk", function () {
 							var evt = _status.event;
 							return (
@@ -759,7 +759,7 @@ export const Content = {
 		"step 4";
 		event.result = cards;
 	},
-	//装备牌
+	//裝備牌
 	equip: async function (event, trigger, player) {
 		event.visible = true;
 		if (event.vcards && !event.cards) {
@@ -768,10 +768,10 @@ export const Content = {
 				return cards;
 			}, []);
 		}
-		//进行第一轮先行判断，让所有装备牌的原主失去装备牌
+		//進行第一輪先行判斷，讓所有裝備牌的原主失去裝備牌
 		if (event.cards) {
 			const map = {};
-			//第一轮初判断的event.cards会在后面的步骤被覆盖，所以此处安心修改
+			//第一輪初判斷的event.cards會在後面的步驟被覆蓋，所以此處安心修改
 			if (event.card) {
 				const cardx = get.cardPile(cardx => {
 					if (cardx[cardx.cardSymbol] !== event.card) return false;
@@ -835,9 +835,9 @@ export const Content = {
 			if (event.log != false) {
 				const isViewAsCard = cards.length !== 1 || cards[0].name !== card.name;
 				if (isViewAsCard && cards.length) {
-					game.log(player, '装备了<span class="yellowtext">' + get.translation(card) + "</span>（", cards, "）");
+					game.log(player, '裝備了<span class="yellowtext">' + get.translation(card) + "</span>（", cards, "）");
 				} else {
-					game.log(player, "装备了", card);
+					game.log(player, "裝備了", card);
 				}
 			}
 			if (cardInfo.onEquip && (!cardInfo.filterEquip || cardInfo.filterEquip(card, player))) {
@@ -863,7 +863,7 @@ export const Content = {
 				await game.delayx();
 			}
 		};
-		//生成虚拟牌列表
+		//生成虛擬牌列表
 		if (!event.vcards) {
 			if (event.card) {
 				// @ts-ignore
@@ -871,7 +871,7 @@ export const Content = {
 				event.vcards = [event.card];
 			} else event.vcards = event.cards.map(card => get.autoViewAs(card, void 0, false));
 		}
-		//过滤被销毁的装备牌
+		//過濾被銷燬的裝備牌
 		event.vcards = event.vcards.filter(card => {
 			let cards;
 			// @ts-ignore
@@ -901,7 +901,7 @@ export const Content = {
 			if (vcard.cards) cards.addArray(vcard.cards);
 			return cards;
 		}, []);
-		//同时播放所有装备牌的装备动画
+		//同時播放所有裝備牌的裝備動畫
 		if (event.cards.length) {
 			if (event.draw) {
 				player.$draw(event.cards);
@@ -927,7 +927,7 @@ export const Content = {
 				});
 			}
 		}
-		//将多张装备牌的牌替换事件合并为一个，废弃卡牌的replaceEquip自定义事件属性（反正没人用）
+		//將多張裝備牌的牌替換事件合併為一個，廢棄卡牌的replaceEquip自定義事件屬性（反正沒人用）
 		const replaceEquipEvent = game.createEvent("replaceEquip");
 		replaceEquipEvent.player = player;
 		// @ts-ignore
@@ -959,7 +959,7 @@ export const Content = {
 		result?.vcards?.forEach(card => {
 			player.removeVirtualEquip(card);
 		});
-		//然后处理每一张装备牌的装备
+		//然後處理每一張裝備牌的裝備
 		for (const card of event.vcards) {
 			event.card = card;
 			await handleEquip(card);
@@ -1047,7 +1047,7 @@ export const Content = {
 		}, subtype);
 		player.$equip(card);
 		game.addVideo("equip", player, get.cardInfo(card));
-		if (event.log != false) game.log(player, "装备了", card);
+		if (event.log != false) game.log(player, "裝備了", card);
 		if (event.updatePile) game.updateRoundNumber();
 		"step 7";
 		var info = get.info(card, false);
@@ -1072,7 +1072,7 @@ export const Content = {
 			game.delayx();
 		}
 	},
-	//装备栏 END
+	//裝備欄 END
 	changeGroup: function () {
 		"step 0";
 		event.originGroup = player.group;
@@ -1092,8 +1092,8 @@ export const Content = {
 		}
 		player.group = group;
 		player.node.name.dataset.nature = get.groupnature(group);
-		if (event.log !== false) game.log(player, "将势力变为了", "#y" + get.translation(group));
-		//if (event.log !== false) game.log(player, "将势力变为了", "#y" + get.translation(group + 2));
+		if (event.log !== false) game.log(player, "將勢力變為了", "#y" + get.translation(group));
+		//if (event.log !== false) game.log(player, "將勢力變為了", "#y" + get.translation(group + 2));
 	},
 	chooseToDebate: function () {
 		"step 0";
@@ -1107,7 +1107,7 @@ export const Content = {
 			}
 			if (event.targets.length) {
 				var next = player
-					.chooseCardOL(event.targets, get.translation(player) + "发起了议事，请选择展示的手牌", true)
+					.chooseCardOL(event.targets, get.translation(player) + "發起了議事，請選擇展示的手牌", true)
 					.set("type", "debate")
 					.set("source", player)
 					.set(
@@ -1185,7 +1185,7 @@ export const Content = {
 							return i[0];
 						})
 						.unique(),
-					color == "other" ? "没有意见" : '意见为<span class="firetext">' + get.translation(color) + "</span>",
+					color == "other" ? "沒有意見" : '意見為<span class="firetext">' + get.translation(color) + "</span>",
 					cards.length ? "，展示了" : "",
 					cards.map(i => i[1])
 				);
@@ -1193,7 +1193,7 @@ export const Content = {
 		}
 		game.broadcastAll(
 			function (name, id, event) {
-				var dialog = ui.create.dialog(name + "发起了议事", "hidden", "forcebutton");
+				var dialog = ui.create.dialog(name + "發起了議事", "hidden", "forcebutton");
 				dialog.videoId = id;
 				dialog.classList.add("scroll1");
 				dialog.classList.add("scroll2");
@@ -1233,7 +1233,7 @@ export const Content = {
 					}
 				} else {
 					dialog.buttonss = [];
-					dialog.add('<div class="text center">意见</div>');
+					dialog.add('<div class="text center">意見</div>');
 					var buttons = ui.create.div(".buttons", dialog.content);
 					dialog.buttonss.push(buttons);
 					buttons.classList.add("popup");
@@ -1262,8 +1262,8 @@ export const Content = {
 			.filter(i => i != "others")
 			.sort((a, b) => event[b].length - event[a].length);
 		opinion = event[opinion[0]].length > event[opinion[1]].length ? opinion[0] : null;
-		if (opinion) game.log(player, "本次发起的议事结果为", opinion == "red" ? '<span class="firetext">红色</span>' : "#g" + get.translation(opinion));
-		else game.log(player, "本次发起的议事无结果");
+		if (opinion) game.log(player, "本次發起的議事結果為", opinion == "red" ? '<span class="firetext">紅色</span>' : "#g" + get.translation(opinion));
+		else game.log(player, "本次發起的議事無結果");
 		event.result = {
 			bool: true,
 			opinion: opinion,
@@ -1286,7 +1286,7 @@ export const Content = {
 	},
 	chooseCooperationFor: function () {
 		"step 0";
-		var next = player.chooseButton(["选择和" + get.translation(target) + "的协力方式", [event.cardlist, "vcard"]], true);
+		var next = player.chooseButton(["選擇和" + get.translation(target) + "的協力方式", [event.cardlist, "vcard"]], true);
 		next.set(
 			"ai",
 			event.ai ||
@@ -1304,13 +1304,13 @@ export const Content = {
 		if (game.online) return;
 		if (_status.connectMode) event.time = lib.configOL.choose_timeout;
 		event.videoId = lib.status.videoId++;
-		//给其他角色看的演奏框
+		//給其他角色看的演奏框
 		game.broadcastAll(
 			function (player, id, beatmap) {
 				if (_status.connectMode) lib.configOL.choose_timeout = (Math.ceil((beatmap.timeleap[beatmap.timeleap.length - 1] + beatmap.speed * 100 + (beatmap.current || 0)) / 1000) + 5).toString();
 				if (player == game.me) return;
 				var str = get.translation(player) + "正在演奏《" + beatmap.name + "》...";
-				if (!_status.connectMode) str += "<br>（点击屏幕可以跳过等待AI操作）";
+				if (!_status.connectMode) str += "<br>（點擊屏幕可以跳過等待AI操作）";
 				ui.create.dialog(str).videoId = id;
 				if (ui.backgroundMusic) ui.backgroundMusic.pause();
 				if (lib.config.background_audio) {
@@ -1327,14 +1327,14 @@ export const Content = {
 		if (event.isMine()) {
 			var timeleap = beatmap.timeleap.slice(0);
 			var current = beatmap.current;
-			//获取两个音符的时间间隔
+			//獲取兩個音符的時間間隔
 			var getTimeout = function () {
 				var time = timeleap.shift();
 				var out = time - current;
 				current = time;
 				return out;
 			};
-			//初始化一堆变量
+			//初始化一堆變量
 			var score = 0;
 			var added = timeleap.length;
 			var number_of_tracks = beatmap.number_of_tracks || 6;
@@ -1357,7 +1357,7 @@ export const Content = {
 			var max_combo = 0;
 			var nodes = [];
 			var roundmenu = false;
-			//隐藏菜单按钮
+			//隱藏菜單按鈕
 			if (ui.roundmenu && ui.roundmenu.display != "none") {
 				roundmenu = true;
 				ui.roundmenu.style.display = "none";
@@ -1365,10 +1365,10 @@ export const Content = {
 			if (ui.backgroundMusic) ui.backgroundMusic.pause();
 			var event = _status.event;
 			event.settleed = false;
-			//建个框框
+			//建個框框
 			var dialog = ui.create.dialog("forcebutton", "hidden");
 			event.dialog = dialog;
-			event.dialog.textPrompt = event.dialog.add('<div class="text center">' + (beatmap.prompt || "在音符滑条和底部判定区重合时点击屏幕！") + "</div>");
+			event.dialog.textPrompt = event.dialog.add('<div class="text center">' + (beatmap.prompt || "在音符滑條和底部判定區重合時點擊屏幕！") + "</div>");
 			event.switchToAuto = function () {};
 			event.dialog.classList.add("fixed");
 			event.dialog.classList.add("scroll1");
@@ -1377,11 +1377,11 @@ export const Content = {
 			event.dialog.classList.add("fullheight");
 			event.dialog.classList.add("noupdate");
 			event.dialog.style.overflow = "hidden";
-			//结束后操作
+			//結束後操作
 			event.settle = function () {
 				if (event.settleed) return;
 				event.settleed = true;
-				//评分
+				//評分
 				var acc = Math.floor((score / (added * 5)) * 100);
 				if (!Array.isArray(lib.config.choose_to_play_beatmap_accuracies)) lib.config.choose_to_play_beatmap_accuracies = [];
 				lib.config.choose_to_play_beatmap_accuracies.push(acc);
@@ -1394,9 +1394,9 @@ export const Content = {
 				else if (acc >= 80) rank = ["B", "water"];
 				else if (acc >= 65) rank = ["C", "thunder"];
 				else rank = ["D", "fire"];
-				event.dialog.textPrompt.innerHTML = '<div class="text center">演奏结束！<br>最大连击数：' + max_combo + "  精准度：" + acc + "%</div>";
-				game.me.$fullscreenpop('<span style="font-family:xinwei">演奏评级：<span data-nature="' + rank[1] + '">' + rank[0] + "</span></span>", null, null, false);
-				//返回结果并继续游戏
+				event.dialog.textPrompt.innerHTML = '<div class="text center">演奏結束！<br>最大連擊數：' + max_combo + "  精準度：" + acc + "%</div>";
+				game.me.$fullscreenpop('<span style="font-family:xinwei">演奏評級：<span data-nature="' + rank[1] + '">' + rank[0] + "</span></span>", null, null, false);
+				//返回結果並繼續遊戲
 				setTimeout(function () {
 					event._result = {
 						bool: true,
@@ -1419,7 +1419,7 @@ export const Content = {
 			var range2 = beatmap.range2 || [93, 107];
 			var range3 = beatmap.range3 || [96, 104];
 			var speed = beatmap.speed || 25;
-			//初始化底部的条子
+			//初始化底部的條子
 			var judger = ui.create.div("");
 			judger.style["background-image"] = beatmap.judgebar_color || "linear-gradient(rgba(240, 235, 3, 1), rgba(230, 225, 5, 1))";
 			judger.style["border-radius"] = "3px";
@@ -1431,7 +1431,7 @@ export const Content = {
 			judger.style.left = "0px";
 			judger.style.top = height - heightj + "px";
 			event.dialog.appendChild(judger);
-			//生成每个音符
+			//生成每個音符
 			var addNode = function () {
 				var node = ui.create.div("");
 				nodes.push(node);
@@ -1484,11 +1484,11 @@ export const Content = {
 					}, speed * 110 + 100);
 				}
 			};
-			//点击时的判断操作
+			//點擊時的判斷操作
 			var click = function () {
 				if (!nodes.length) return;
 				for (var node of nodes) {
-					//用生成到点击的时间差来判断距离
+					//用生成到點擊的時間差來判斷距離
 					var time = get.utc();
 					var top = (time - node._position) / speed;
 					if (top > range1[1]) continue;
@@ -1540,7 +1540,7 @@ export const Content = {
 			var settle = function () {
 				_status.imchoosing = false;
 				//Algorithm: Generate the random number range using the mean and the half standard deviation of accuracies of the player's last 5 plays
-				//算法：用玩家的上5次游玩的准确率的平均数和半标准差生成随机数范围
+				//算法：用玩家的上5次遊玩的準確率的平均數和半標準差生成隨機數範圍
 				var choose_to_play_beatmap_accuracies = (lib.config.choose_to_play_beatmap_accuracies || []).concat(
 					Array.from(
 						{
@@ -1617,7 +1617,7 @@ export const Content = {
 			_status.imchoosing = true;
 			var event = _status.event;
 			event.settleed = false;
-			event.dialog = ui.create.dialog(event.prompt || "请选择要操作的牌", "hidden", "forcebutton");
+			event.dialog = ui.create.dialog(event.prompt || "請選擇要操作的牌", "hidden", "forcebutton");
 			event.switchToAuto = function () {
 				if (!filterOk(event.moved)) {
 					if (!event.forced) event._result = { bool: false };
@@ -1645,34 +1645,34 @@ export const Content = {
 			}
 
 			/**
-			 * @type { Card[][] } 保存每次移动后的对应实体牌的位置
+			 * @type { Card[][] } 保存每次移動後的對應實體牌的位置
 			 */
 			event.moved = [];
 			/**
-			 * @type { HTMLDivElement[] } 所有可移动的buttons数组
+			 * @type { HTMLDivElement[] } 所有可移動的buttons數組
 			 */
 			var buttonss = [];
 			event.buttonss = buttonss;
 			/**
-			 * 是否处于拖拽动画中(禁止其他的选择，拖拽)
+			 * 是否處於拖拽動畫中(禁止其他的選擇，拖拽)
 			 */
 			event.isPlayingAnimation = false;
-			// 初始化触摸点位置和元素偏移量
+			// 初始化觸摸點位置和元素偏移量
 			var touchStartX = 0;
 			var touchStartY = 0;
 			var elementOffsetX = 0;
 			var elementOffsetY = 0;
 			var currentElement;
-			// 首次触发move事件的元素
+			// 首次觸發move事件的元素
 			var firstOnDragElement;
 			/**
-			 * 每次移动后更新数据
+			 * 每次移動後更新數據
 			 */
 			var updateButtons = function () {
 				for (var i of buttonss) {
-					// 更新每次移动后的对应实体牌的位置
+					// 更新每次移動後的對應實體牌的位置
 					event.moved[i._link] = get.links(Array.from(i.childNodes));
-					// 更新这个buttons的提示文本
+					// 更新這個buttons的提示文本
 					if (typeof i.textPrompt == "function") i.previousSibling.innerHTML = '<div class="text center">' + i.textPrompt(event.moved[i._link]) + "</div>";
 				}
 				if (filterOk(event.moved)) {
@@ -1684,24 +1684,24 @@ export const Content = {
 			};
 
 			/**
-			 * 确认是否是拖拽开始
+			 * 確認是否是拖拽開始
 			 *
-			 * 按下时，是不能判断出是否拖拽开始的，得在move事件才可以
+			 * 按下時，是不能判斷出是否拖拽開始的，得在move事件才可以
 			 *
 			 * @this buttons
 			 * @param { TouchEvent | MouseEvent } e
 			 */
 			var dragStart = function (e) {
 				if (event.isPlayingAnimation) return;
-				// 左键按下
+				// 左鍵按下
 				if (e instanceof MouseEvent) {
 					if (e.which != 1) return;
 				}
-				// 单个手指按下
+				// 單個手指按下
 				if (window.TouchEvent && e instanceof TouchEvent) {
 					if (e.touches.length != 1) return;
 				}
-				// 判断按下的元素是否是card
+				// 判斷按下的元素是否是card
 				var cards = Array.from(this.children);
 				var target = cards.find(card => {
 					// Node.contains()
@@ -1723,9 +1723,9 @@ export const Content = {
 			};
 
 			/**
-			 * 判断出是否拖拽开始
+			 * 判斷出是否拖拽開始
 			 *
-			 * move事件是在button元素上监听的，而不是在dialog.content上。
+			 * move事件是在button元素上監聽的，而不是在dialog.content上。
 			 *
 			 * @this dialog
 			 * @param { TouchEvent | MouseEvent } e
@@ -1746,7 +1746,7 @@ export const Content = {
 						firstOnDragElement = currentElement;
 					}
 				}
-				// 拖动离开了这个牌的区域，进行赋值
+				// 拖動離開了這個牌的區域，進行賦值
 				// if (!currentElement.contains(e.target)) {
 
 				// }
@@ -1754,7 +1754,7 @@ export const Content = {
 				ui.selected.guanxing_button?.classList.remove("glow2");
 				ui.selected.guanxing_button = currentElement;
 				ui.selected.guanxing_button.classList.add("glow2");
-				// 显示拖拽的元素
+				// 顯示拖拽的元素
 				/**
 				 * @type { HTMLDivElement }
 				 */
@@ -1795,30 +1795,30 @@ export const Content = {
 				if (!ui.selected.guanxing_button?.copy) return;
 				var clientX = (e instanceof MouseEvent ? e.clientX : e.changedTouches[0].clientX) / game.documentZoom;
 				var clientY = (e instanceof MouseEvent ? e.clientY : e.changedTouches[0].clientY) / game.documentZoom;
-				// 鼠标当前处于哪个元素上
+				// 鼠標當前處於哪個元素上
 				var target = document.elementFromPoint(clientX * game.documentZoom, clientY * game.documentZoom);
-				// 相当于没移动，让它自己触发后续的click
+				// 相當於沒移動，讓它自己觸發後續的click
 				if (ui.selected.guanxing_button.contains(target)) return;
-				// 停止拖拽的目标处于哪个button区域中
+				// 停止拖拽的目標處於哪個button區域中
 				var button = buttonss.find(b => {
 					// Node.contains()
 					return b.contains(target);
 				});
-				// 不能拖拽到区域外
+				// 不能拖拽到區域外
 				if (!button) return;
 				var children = Array.from(button.children);
-				// 与card交换位置
+				// 與card交換位置
 				var card = children.find(element => element.contains(target));
-				// 判断是否可以移动
+				// 判斷是否可以移動
 				if (!card) {
 					if (!filterMove(ui.selected.guanxing_button, button._link, event.moved)) return;
 				} else {
 					if (!filterMove(card, ui.selected.guanxing_button, event.moved)) return;
 				}
-				//后续这里可以增加拖动到空白位置的效果
+				//後續這裡可以增加拖動到空白位置的效果
 				/*
 
-				 if (拖动到空白) {
+				 if (拖動到空白) {
 					game.$elementGoto().then(){
 						delete ui.selected.guanxing_button;
 						event.isPlayingAnimation = false;
@@ -1830,7 +1830,7 @@ export const Content = {
 				}
 				
 				*/
-				// FLIP动画
+				// FLIP動畫
 				// first
 				buttonss.forEach(btn => {
 					Array.from(btn.children).forEach(element => {
@@ -1839,11 +1839,11 @@ export const Content = {
 					});
 				});
 				// last
-				// 如果拖拽到一个空区域内
+				// 如果拖拽到一個空區域內
 				if (!button.hasChildNodes()) {
 					button.appendChild(ui.selected.guanxing_button);
 				} else if (!card) {
-					// 判断是加在第一个还是最后一个
+					// 判斷是加在第一個還是最後一個
 					if (children.length > 0) {
 						var firstChild = children[0];
 						if (clientX < firstChild.getBoundingClientRect().left / game.documentZoom) {
@@ -1851,7 +1851,7 @@ export const Content = {
 						} else button.appendChild(ui.selected.guanxing_button);
 					} else button.appendChild(ui.selected.guanxing_button);
 				} else {
-					// 是交换而不是到card前面
+					// 是交換而不是到card前面
 					var par1 = ui.selected.guanxing_button.parentNode,
 						ind1 = ui.selected.guanxing_button.nextSibling,
 						par2 = card.parentNode,
@@ -1886,7 +1886,7 @@ export const Content = {
 											element.addEventListener(
 												"transitionend",
 												event => {
-													// 确保 transitionend 事件是针对当前元素的 transform 属性
+													// 確保 transitionend 事件是針對當前元素的 transform 屬性
 													if (event.propertyName === "transform") {
 														resolve();
 													}
@@ -1905,7 +1905,7 @@ export const Content = {
 				}, 0);
 			};
 
-			// 根据数据创建区域
+			// 根據數據創建區域
 			for (var i = 0; i < list.length; i++) {
 				var tex = event.dialog.add('<div class="text center">' + list[i][0] + "</div>");
 				tex.classList.add("choosetomove");
@@ -1929,7 +1929,7 @@ export const Content = {
 				}
 				if (list[i][2] && typeof list[i][2] == "function") buttons.textPrompt = list[i][2];
 			}
-			var tex = event.dialog.add('<div class="text center">点击或拖动两张牌以交换位置；点击一张牌并点击其他区域或拖动到其他区域以移动卡牌</div>');
+			var tex = event.dialog.add('<div class="text center">點擊或拖動兩張牌以交換位置；點擊一張牌並點擊其他區域或拖動到其他區域以移動卡牌</div>');
 			tex.classList.add("choosetomove");
 
 			event.dialog.open();
@@ -2056,7 +2056,7 @@ export const Content = {
 				return;
 			} else {
 				var next = player.chooseBool();
-				next.set("prompt", event.prompt || "是否" + (event.targets2.length ? "对" : "") + get.translation(event.targets2) + "使用" + get.translation(card) + "?");
+				next.set("prompt", event.prompt || "是否" + (event.targets2.length ? "對" : "") + get.translation(event.targets2) + "使用" + get.translation(card) + "?");
 				if (event.hsskill) next.setHiddenSkill(event.hsskill);
 				if (event.prompt2) next.set("prompt2", event.prompt2);
 				next.set(
@@ -2102,7 +2102,7 @@ export const Content = {
 			if (event.forced) next.set("forced", true);
 			if (event.addCount !== false) next.set("addCount_extra", true);
 			next.set("targets", targets);
-			next.set("prompt", event.prompt || "选择" + get.translation(card) + "的目标");
+			next.set("prompt", event.prompt || "選擇" + get.translation(card) + "的目標");
 			if (event.prompt2) next.set("prompt2", event.prompt2);
 			if (event.hsskill) next.setHiddenSkill(event.hsskill);
 		}
@@ -2134,12 +2134,12 @@ export const Content = {
 	},
 	chooseToDuiben: function () {
 		"step 0";
-		if (!event.namelist) event.namelist = ["全军出击", "分兵围城", "奇袭粮道", "开城诱敌"];
+		if (!event.namelist) event.namelist = ["全軍出擊", "分兵圍城", "奇襲糧道", "開城誘敵"];
 		game.broadcastAll(
 			function (list, translationList = []) {
 				var list2 = ["db_atk1", "db_atk2", "db_def1", "db_def2"];
 				for (var i = 0; i < 4; i++) {
-					lib.card[list2[i]].image = "card/" + list2[i] + (list[0] == "全军出击" ? "" : "_" + list[i]);
+					lib.card[list2[i]].image = "card/" + list2[i] + (list[0] == "全軍出擊" ? "" : "_" + list[i]);
 					lib.translate[list2[i]] = list[i];
 					lib.translate[list2[i] + "_info"] = translationList[i];
 				}
@@ -2147,8 +2147,8 @@ export const Content = {
 			event.namelist,
 			event.translationList
 		);
-		if (!event.title) event.title = "对策";
-		game.log(player, "向", target, "发起了", "#y" + event.title);
+		if (!event.title) event.title = "對策";
+		game.log(player, "向", target, "發起了", "#y" + event.title);
 		if (!event.ai)
 			event.ai = function () {
 				return 1 + Math.random();
@@ -2160,7 +2160,7 @@ export const Content = {
 						[
 							player,
 							[
-								event.title + "：请选择一种策略",
+								event.title + "：請選擇一種策略",
 								[
 									[
 										["", "", "db_def2"],
@@ -2174,7 +2174,7 @@ export const Content = {
 						[
 							target,
 							[
-								event.title + "：请选择一种策略",
+								event.title + "：請選擇一種策略",
 								[
 									[
 										["", "", "db_atk1"],
@@ -2208,7 +2208,7 @@ export const Content = {
 		} else {
 			player.chooseButton(
 				[
-					event.title + "：请选择一种策略",
+					event.title + "：請選擇一種策略",
 					[
 						[
 							["", "", "db_def2"],
@@ -2224,7 +2224,7 @@ export const Content = {
 		event.mes = result.links[0][2];
 		target.chooseButton(
 			[
-				event.title + "：请选择一种策略",
+				event.title + "：請選擇一種策略",
 				[
 					[
 						["", "", "db_atk1"],
@@ -2244,8 +2244,8 @@ export const Content = {
 		ui.arena.classList.add("thrownhighlight");
 		game.addVideo("thrownhighlight1");
 		target.$compare(game.createCard(event.tes, "", ""), player, game.createCard(event.mes, "", ""));
-		game.log(target, "选择的策略为", "#g" + get.translation(event.tes));
-		game.log(player, "选择的策略为", "#g" + get.translation(event.mes));
+		game.log(target, "選擇的策略為", "#g" + get.translation(event.tes));
+		game.log(player, "選擇的策略為", "#g" + get.translation(event.mes));
 		game.delay(0, 1500);
 		"step 5";
 		var mes = event.mes.slice(6);
@@ -2253,15 +2253,15 @@ export const Content = {
 		var str;
 		if (mes == tes) {
 			str = get.translation(player) + event.title + "成功";
-			player.popup("胜", "wood");
-			target.popup("负", "fire");
-			game.log(player, "#g胜");
+			player.popup("勝", "wood");
+			target.popup("負", "fire");
+			game.log(player, "#g勝");
 			event.result = { bool: true };
 		} else {
-			str = get.translation(player) + event.title + "失败";
-			target.popup("胜", "wood");
-			player.popup("负", "fire");
-			game.log(target, "#g胜");
+			str = get.translation(player) + event.title + "失敗";
+			target.popup("勝", "wood");
+			player.popup("負", "fire");
+			game.log(target, "#g勝");
 			event.result = { bool: false };
 		}
 		event.result.player = event.mes;
@@ -2287,7 +2287,7 @@ export const Content = {
 	},
 	chooseToPSS: function () {
 		"step 0";
-		game.log(player, "对", target, "发起了猜拳");
+		game.log(player, "對", target, "發起了猜拳");
 		if (_status.connectMode) {
 			player
 				.chooseButtonOL(
@@ -2295,7 +2295,7 @@ export const Content = {
 						[
 							player,
 							[
-								"猜拳：请选择一种手势",
+								"猜拳：請選擇一種手勢",
 								[
 									[
 										["", "", "pss_stone"],
@@ -2310,7 +2310,7 @@ export const Content = {
 						[
 							target,
 							[
-								"猜拳：请选择一种手势",
+								"猜拳：請選擇一種手勢",
 								[
 									[
 										["", "", "pss_stone"],
@@ -2347,7 +2347,7 @@ export const Content = {
 		} else {
 			player.chooseButton(
 				[
-					"猜拳：请选择一种手势",
+					"猜拳：請選擇一種手勢",
 					[
 						[
 							["", "", "pss_stone"],
@@ -2366,7 +2366,7 @@ export const Content = {
 		event.mes = result.links[0][2];
 		target.chooseButton(
 			[
-				"猜拳：请选择一种手势",
+				"猜拳：請選擇一種手勢",
 				[
 					[
 						["", "", "pss_stone"],
@@ -2389,8 +2389,8 @@ export const Content = {
 		ui.arena.classList.add("thrownhighlight");
 		game.addVideo("thrownhighlight1");
 		player.$compare(game.createCard(event.mes, "", ""), target, game.createCard(event.tes, "", ""));
-		game.log(player, "选择的手势为", "#g" + get.translation(event.mes));
-		game.log(target, "选择的手势为", "#g" + get.translation(event.tes));
+		game.log(player, "選擇的手勢為", "#g" + get.translation(event.mes));
+		game.log(target, "選擇的手勢為", "#g" + get.translation(event.tes));
 		game.delay(0, 1500);
 		"step 5";
 		var mes = event.mes.slice(4);
@@ -2400,20 +2400,20 @@ export const Content = {
 			str = "二人平局";
 			player.popup("平", "metal");
 			target.popup("平", "metal");
-			game.log("猜拳的结果为", "#g平局");
+			game.log("猜拳的結果為", "#g平局");
 			event.result = { tie: true };
 		} else {
 			if ({ paper: "stone", scissor: "paper", stone: "scissor" }[mes] == tes) {
-				str = get.translation(player) + "胜利";
-				player.popup("胜", "wood");
-				target.popup("负", "fire");
-				game.log(player, "#g胜");
+				str = get.translation(player) + "勝利";
+				player.popup("勝", "wood");
+				target.popup("負", "fire");
+				game.log(player, "#g勝");
 				event.result = { bool: true };
 			} else {
-				str = get.translation(target) + "胜利";
-				target.popup("胜", "wood");
-				player.popup("负", "fire");
-				game.log(target, "#g胜");
+				str = get.translation(target) + "勝利";
+				target.popup("勝", "wood");
+				player.popup("負", "fire");
+				game.log(target, "#g勝");
 				event.result = { bool: false };
 			}
 		}
@@ -2497,7 +2497,7 @@ export const Content = {
 			_status.renku.addArray(cards);
 			if (_status.renku.length > 6) {
 				var cards = _status.renku.splice(0, _status.renku.length - 6);
-				game.log(cards, "从仁库进入了弃牌堆");
+				game.log(cards, "從仁庫進入了棄牌堆");
 				game.cardsDiscard(cards).set("outRange", true).fromRenku = true;
 			}
 			game.updateRenku();
@@ -2539,7 +2539,7 @@ export const Content = {
 				list.sort();
 				list = list.map(current => [current, get.translation(current)]);
 				event.list = list;
-				var str = `请选择恢复${get.translation(player.name)}的`;
+				var str = `請選擇恢復${get.translation(player.name)}的`;
 				var selectButton = get.select(event.selectButton);
 				if (selectButton[0] == selectButton[1]) {
 					str += get.cnNumber(selectButton[0]);
@@ -2548,7 +2548,7 @@ export const Content = {
 				} else {
 					str += get.cnNumber(selectButton[0]) + "至" + get.cnNumber(selectButton[1]);
 				}
-				str += "个装备栏";
+				str += "個裝備欄";
 				var next = source.chooseButton(selectButton, true, [str, [list, "tdnodes"]]);
 				next.set("filterButton", function (button) {
 					if (player.hasDisabledSlot(button.link)) return true;
@@ -2576,7 +2576,7 @@ export const Content = {
 				var result = { control: list[0] };
 			} else {
 				var next = source.chooseControl(list);
-				next.set("prompt", "请选择恢复" + get.translation(player.name) + "的一个装备栏");
+				next.set("prompt", "請選擇恢復" + get.translation(player.name) + "的一個裝備欄");
 				if (!event.ai)
 					event.ai = function (event, player, list) {
 						return list.randomGet();
@@ -2623,7 +2623,7 @@ export const Content = {
 				list.sort();
 				list = list.map(current => [current, get.translation(current)]);
 				event.list = list;
-				var str = `请选择废除${get.translation(player.name)}的`;
+				var str = `請選擇廢除${get.translation(player.name)}的`;
 				var selectButton = get.select(event.selectButton);
 				if (selectButton[0] == selectButton[1]) {
 					str += get.cnNumber(selectButton[0]);
@@ -2632,7 +2632,7 @@ export const Content = {
 				} else {
 					str += get.cnNumber(selectButton[0]) + "至" + get.cnNumber(selectButton[1]);
 				}
-				str += "个装备栏";
+				str += "個裝備欄";
 				var next = source.chooseButton(selectButton, true, [str, [list, "tdnodes"]]);
 				next.set("filterButton", function (button) {
 					if (player.hasEnabledSlot(button.link)) return true;
@@ -2672,7 +2672,7 @@ export const Content = {
 				list.sort();
 				event.list = list;
 				var next = source.chooseControl(list);
-				next.set("prompt", "请选择废除" + get.translation(player.name) + "的一个装备栏");
+				next.set("prompt", "請選擇廢除" + get.translation(player.name) + "的一個裝備欄");
 				if (!event.ai)
 					event.ai = function (event, player, list) {
 						return list.randomGet();
@@ -2693,7 +2693,7 @@ export const Content = {
 	},
 	swapEquip: function () {
 		"step 0";
-		game.log(player, "和", target, "交换了装备区中的牌");
+		game.log(player, "和", target, "交換了裝備區中的牌");
 		event.cards = [player.getCards("e"), target.getCards("e")];
 		event.vcards = [player.getVCards("e"), target.getVCards("e")];
 		game.loseAsync({
@@ -2710,7 +2710,7 @@ export const Content = {
 	},
 	disableJudge: function () {
 		"step 0";
-		game.log(player, "废除了判定区");
+		game.log(player, "廢除了判定區");
 		var js = player.getCards("j");
 		if (js.length) player.discard(js);
 		player.storage._disableJudge = true;
@@ -2722,12 +2722,12 @@ export const Content = {
 	},
 	enableJudge: function () {
 		if (!player.storage._disableJudge) return;
-		game.log(player, "恢复了判定区");
+		game.log(player, "恢復了判定區");
 		game.broadcastAll(function (player) {
 			player.$enableJudge();
 		}, player);
 	},
-	/*----分界线----*/
+	/*----分界線----*/
 	phasing: function () {
 		"step 0";
 		while (ui.dialogs.length) {
@@ -2742,7 +2742,7 @@ export const Content = {
 					player.classList.add("glow_phase");
 				}
 				player.phaseNumber = num;
-				if (popup && lib.config.show_phase_prompt) player.popup("回合开始", null, false);
+				if (popup && lib.config.show_phase_prompt) player.popup("回合開始", null, false);
 			},
 			player,
 			_status.currentPhase,
@@ -2761,7 +2761,7 @@ export const Content = {
 			}
 		}
 		game.log();
-		game.log(player, "的回合开始");
+		game.log(player, "的回合開始");
 		player._noVibrate = true;
 		if (get.config("identity_mode") != "zhong" && get.config("identity_mode") != "purple" && !_status.connectMode) {
 			var num;
@@ -2783,7 +2783,7 @@ export const Content = {
 					break;
 			}
 			if (num && !_status.identityShown && game.phaseNumber > game.players.length * num && game.showIdentity) {
-				if (!_status.video) player.popup("显示身份");
+				if (!_status.video) player.popup("顯示身份");
 				_status.identityShown = true;
 				game.showIdentity(false);
 			}
@@ -2803,7 +2803,7 @@ export const Content = {
 		event.list = list;
 		if (!event.directresult) {
 			if (list.length > 1) {
-				var dialog = ui.create.dialog("更换一个随从", "hidden");
+				var dialog = ui.create.dialog("更換一個隨從", "hidden");
 				dialog.add([list, "character"]);
 				player.chooseButton(dialog, true);
 			} else if (list.length == 1) {
@@ -2878,9 +2878,9 @@ export const Content = {
 				}
 				delete player.storage[current];
 				player.storage.subplayer.skills.remove(current);
-				game.log(player, "牺牲了随从", "#g" + current);
+				game.log(player, "犧牲了隨從", "#g" + current);
 			} else {
-				game.log(player, "收回了随从", "#g" + current);
+				game.log(player, "收回了隨從", "#g" + current);
 			}
 			player.addSkill(player.storage.subplayer.skills);
 		}
@@ -2901,7 +2901,7 @@ export const Content = {
 		event.list = list;
 		if (!event.directresult) {
 			if (list.length > 1) {
-				var dialog = ui.create.dialog("调遣一个随从", "hidden");
+				var dialog = ui.create.dialog("調遣一個隨從", "hidden");
 				dialog.add([list, "character"]);
 				player.chooseButton(dialog, true);
 			} else if (list.length == 1) {
@@ -2927,7 +2927,7 @@ export const Content = {
 			var cfg = player.storage[event.directresult];
 			var source = cfg.source || player.name;
 			var name = event.directresult;
-			game.log(player, "调遣了随从", "#g" + name);
+			game.log(player, "調遣了隨從", "#g" + name);
 			player.storage.subplayer = {
 				name: source,
 				name2: event.directresult,
@@ -2970,7 +2970,7 @@ export const Content = {
 			})
 		) {
 			var next = player.chooseTarget(
-				get.translation(event.card) + "：选择" + get.translation(targets[num]) + "对应的指向目标",
+				get.translation(event.card) + "：選擇" + get.translation(targets[num]) + "對應的指向目標",
 				function (card, player, target) {
 					var card = get.card(),
 						info = get.info(card);
@@ -2999,19 +2999,19 @@ export const Content = {
 		"step 1";
 		var choice;
 		if (get.tag(card, "multineg")) {
-			choice = player.previous.side == player.side ? "逆时针" : "顺时针";
+			choice = player.previous.side == player.side ? "逆時針" : "順時針";
 		} else {
-			choice = player.next.side == player.side ? "逆时针" : "顺时针";
+			choice = player.next.side == player.side ? "逆時針" : "順時針";
 		}
 		player
-			.chooseControl("顺时针", "逆时针", function (event, player) {
-				return _status.event.choice || "逆时针";
+			.chooseControl("順時針", "逆時針", function (event, player) {
+				return _status.event.choice || "逆時針";
 			})
-			.set("prompt", "选择" + get.translation(card) + "的结算方向")
+			.set("prompt", "選擇" + get.translation(card) + "的結算方向")
 			.set("choice", choice)
 			.set("forceDie", true);
 		"step 2";
-		if (result && result.control == "顺时针") {
+		if (result && result.control == "順時針") {
 			var evt = event.getParent(),
 				sorter = _status.currentPhase || player;
 			evt.fixedSeat = true;
@@ -3067,7 +3067,7 @@ export const Content = {
 		}
 		"step 1";
 		if (event.changeCard != "disabled" && !_status.auto && game.me.countCards("h")) {
-			event.dialog = ui.create.dialog("是否使用手气卡？");
+			event.dialog = ui.create.dialog("是否使用手氣卡？");
 			ui.create.confirm("oc");
 			event.custom.replace.confirm = function (bool) {
 				_status.event.bool = bool;
@@ -3166,7 +3166,7 @@ export const Content = {
 			}
 			for (j in character[i]) {
 				if (j == "mode" || j == "forbid" || j == "characterSort") continue;
-				//TODO: 改掉这第二坨
+				//TODO: 改掉這第二坨
 				for (k in character[i][j]) {
 					if (j == "character") {
 						if (!character[i][j][k][4]) {
@@ -3261,12 +3261,12 @@ export const Content = {
 					break;
 				} else {
 					event.doing.todoList = event.doing.todoList.filter(i => i.priority <= usableSkills[0].priority);
-					//firstDo时机和lastDo时机不进行技能优先级选择
+					//firstDo時機和lastDo時機不進行技能優先級選擇
 					if (get.itemtype(event.doing.player) !== "player") {
 						event.current = usableSkills[0];
 					} else {
 						event.choice = usableSkills.filter(n => n.priority == usableSkills[0].priority);
-						//现在只要找到一个同优先度技能为silent，或没有技能描述的技能 便优先执行该技能
+						//現在只要找到一個同優先度技能為silent，或沒有技能描述的技能 便優先執行該技能
 						const silentSkill = event.choice.find(item => {
 							const skillInfo = lib.skill[item.skill];
 							return skillInfo && (skillInfo.silent || !lib.translate[item.skill]);
@@ -3290,14 +3290,14 @@ export const Content = {
 								if(!bool) skillsToChoose.push("cancel2");
 								const currentPlayer = currentChoice.player;
 								const next = currentPlayer.chooseControl(skillsToChoose);
-								next.set("prompt", "选择下一个触发的技能");
+								next.set("prompt", "選擇下一個觸發的技能");
 								next.set("forceDie", true);
 								next.set("arrangeSkill", true);
 								next.set("includeOut", true);
 								const { result } = await next;
-								//千里走单骑全责，把敌人打死可能会打断chooseControl
+								//千里走單騎全責，把敵人打死可能會打斷chooseControl
 								if (result) {
-									//多技能增加取消选项，取消删除本次选择的技能
+									//多技能增加取消選項，取消刪除本次選擇的技能
 									if(result.control=="cancel2"){
 										for(let control of skillsToChoose){
 											if(control!="cancel2"){
@@ -3371,7 +3371,7 @@ export const Content = {
 		} else if (typeof info.cost === "function") {
 			if (checkFrequent(info)) event.frequentSkill = true;
 			if (player.isUnderControl()) game.swapPlayerAuto(player);
-			//创建cost事件
+			//創建cost事件
 			var next = game.createEvent(`${event.skill}_cost`);
 			next.player = player;
 			if (event.frequentSkill) next.set("frequentSkill", event.skill);
@@ -3464,10 +3464,10 @@ export const Content = {
 		next.skillHidden = event.skillHidden;
 		if (info.forceDie) next.forceDie = true;
 		if (info.forceOut) next.includeOut = true;
-		//传入数据
+		//傳入數據
 		if (get.itemtype(targets) == "players") next.targets = targets.slice(0);
 		if (get.itemtype(result.cards) === "cards") next.cards = result.cards.slice(0);
-		//语法糖部分
+		//語法糖部分
 		if ("cost_data" in result) next.cost_data = result.cost_data;
 		next.indexedData = event.indexedData;
 		"step 4";
@@ -3506,7 +3506,7 @@ export const Content = {
 			})
 		) event.finish();
 		"step 1";
-		event.trigger("triggerSkill");//技能条件需要判断不是自身，既不是自身时返回false，避免嵌套
+		event.trigger("triggerSkill");//技能條件需要判斷不是自身，既不是自身時返回false，避免嵌套
 		"step 2";
 		if (event.cancelled) return event.finish();
 		var info = get.info(event.skill);
@@ -3523,14 +3523,14 @@ export const Content = {
 		};
 		if (info.direct) {
 			//if(get.phaseswap()) game.swapPlayerAuto(player);
-			//注释掉避免一些机制技能导致控制权切换导致视角闪烁
+			//註釋掉避免一些機制技能導致控制權切換導致視角閃爍
 			if (player.isOnline()) void 0;
 			event._result = { bool: true };
 			event._direct = true;
 		} else if (typeof info.cost === "function") {
 			if (checkFrequent(info)) event.frequentSkill = true;
 			if(get.phaseswap()) game.swapPlayerAuto(player);
-			//创建cost事件
+			//創建cost事件
 			var next = game.createEvent(`${event.skill}_cost`);
 			next.player = player;
 			if (event.frequentSkill) next.set("frequentSkill", event.skill);
@@ -3623,10 +3623,10 @@ export const Content = {
 		next.skillHidden = event.skillHidden;
 		if (info.forceDie) next.forceDie = true;
 		if (info.forceOut) next.includeOut = true;
-		//传入数据
+		//傳入數據
 		if (get.itemtype(targets) == "players") next.targets = targets.slice(0);
 		if (get.itemtype(result.cards) === "cards") next.cards = result.cards.slice(0);
-		//语法糖部分
+		//語法糖部分
 		if ("cost_data" in result) next.cost_data = result.cost_data;
 		next.indexedData = event.indexedData;
 		"step 5";
@@ -3688,7 +3688,7 @@ export const Content = {
 			_status.replayvideo = true;
 			game.playVideo(_status.playback, lib.config.mode);
 		});
-		ui.create.system("暂停", ui.click.pause, true).id = "pausebutton";
+		ui.create.system("暫停", ui.click.pause, true).id = "pausebutton";
 		var atempo = ui.create.system(
 			"原速",
 			function () {
@@ -3698,7 +3698,7 @@ export const Content = {
 			true
 		);
 		var slow = ui.create.system(
-			"减速",
+			"減速",
 			function () {
 				_status.videoDuration *= 1.5;
 				updateDuration();
@@ -3714,7 +3714,7 @@ export const Content = {
 			true
 		);
 		var updateDuration = function () {
-			atempo.innerHTML = `原速(当前${Math.round(100 / _status.videoDuration) / 100}倍速)`;
+			atempo.innerHTML = `原速(當前${Math.round(100 / _status.videoDuration) / 100}倍速)`;
 			if (_status.videoDuration > 1) {
 				slow.classList.add("glow");
 			} else {
@@ -3817,7 +3817,7 @@ export const Content = {
 		_status.waitingForPlayer = false;
 		lib.configOL.gameStarted = true;
 		if (window.isNonameServer) {
-			document.querySelector("#server_status").innerHTML = "游戏中";
+			document.querySelector("#server_status").innerHTML = "遊戲中";
 		}
 		if (game.onlineroom) {
 			game.send("server", "config", lib.configOL);
@@ -3845,7 +3845,7 @@ export const Content = {
 	replaceHandcards: function () {
 		"step 0";
 		if (event.players.includes(game.me)) {
-			game.me.chooseBool("是否置换手牌？");
+			game.me.chooseBool("是否置換手牌？");
 		} else {
 			event.finish();
 		}
@@ -3863,7 +3863,7 @@ export const Content = {
 	replaceHandcardsOL: function () {
 		"step 0";
 		var send = function () {
-			game.me.chooseBool("是否置换手牌？");
+			game.me.chooseBool("是否置換手牌？");
 			game.resume();
 		};
 		var sendback = function (result, player) {
@@ -3891,7 +3891,7 @@ export const Content = {
 				event.players[i].wait(sendback);
 			} else if (event.players[i] == game.me) {
 				event.withme = true;
-				game.me.chooseBool("是否置换手牌？");
+				game.me.chooseBool("是否置換手牌？");
 				game.me.wait(sendback);
 			}
 		}
@@ -3907,12 +3907,12 @@ export const Content = {
 	/*
 	phase: function () {
 		"step 0";
-		//规则集中的“回合开始后③（处理“游戏开始时”的时机）”
-		//提前phaseBefore时机解决“游戏开始时”时机和“一轮开始时”先后
+		//規則集中的“回合開始後③（處理“遊戲開始時”的時機）”
+		//提前phaseBefore時機解決“遊戲開始時”時機和“一輪開始時”先後
 		event.trigger("phaseBefore");
 		"step 1";
 		game.phaseNumber++;
-		//初始化阶段列表
+		//初始化階段列表
 		if (!event.phaseList) {
 			//event.phaseList = ["phaseZhunbei", "phaseJudge", "phaseDraw", "phaseUse", "phaseDiscard", "phaseJieshu"];
 			event.phaseList = [ "phaseUse"];
@@ -3920,7 +3920,7 @@ export const Content = {
 		if (typeof event.num != "number") {
 			event.num = 0;
 		}
-		//规则集中的“回合开始后①”，更新游戏轮数，触发“一轮游戏开始时”
+		//規則集中的“回合開始後①”，更新遊戲輪數，觸發“一輪遊戲開始時”
 		var isRound = false;
 		if (lib.onround.every(i => i(event, player))) {
 			isRound = _status.roundSkipped;
@@ -3981,13 +3981,13 @@ export const Content = {
 			game.getGlobalHistory().isRound = true;
 		}
 		"step 2";
-		//规则集中的“回合开始后②（1v1武将登场专用）”
+		//規則集中的“回合開始後②（1v1武將登場專用）”
 		event.trigger("phaseBeforeStart");
 		"step 3";
-		//规则集中的“回合开始后④（卑弥呼〖纵傀〗的时机）”
+		//規則集中的“回合開始後④（卑彌呼〖縱傀〗的時機）”
 		event.trigger("phaseBeforeEnd");
 		"step 4";
-		//规则集中的“回合开始后⑤”，进行翻面检测
+		//規則集中的“回合開始後⑤”，進行翻面檢測
 		if (player.isTurnedOver() && !event._noTurnOver) {
 			player.turnOver();
 			player.phaseSkipped = true;
@@ -4004,7 +4004,7 @@ export const Content = {
 			player.getStat().isMe = true;
 		}
 		"step 5";
-		//规则集中的“回合开始后⑥”，更新“当前回合角色”
+		//規則集中的“回合開始後⑥”，更新“當前回合角色”
 		while (ui.dialogs.length) {
 			ui.dialogs[0].close();
 		}
@@ -4016,7 +4016,7 @@ export const Content = {
 				}
 				player.phaseNumber = num;
 				_status.currentPhase = player;
-				if (popup && lib.config.show_phase_prompt) player.popup("回合开始", null, false);
+				if (popup && lib.config.show_phase_prompt) player.popup("回合開始", null, false);
 			},
 			player,
 			player.phaseNumber,
@@ -4033,7 +4033,7 @@ export const Content = {
 			}
 		}
 		game.log('————————————————————');
-		game.log(player, "的回合开始");
+		game.log(player, "的回合開始");
 		player._noVibrate = true;
 		if (get.config("identity_mode") != "zhong" && get.config("identity_mode") != "purple" && !_status.connectMode) {
 			var num;
@@ -4055,7 +4055,7 @@ export const Content = {
 					break;
 			}
 			if (num && !_status.identityShown && game.phaseNumber > game.players.length * num && game.showIdentity) {
-				if (!_status.video) player.popup("显示身份");
+				if (!_status.video) player.popup("顯示身份");
 				_status.identityShown = true;
 				game.showIdentity(false);
 			}
@@ -4066,16 +4066,16 @@ export const Content = {
 			ui.land.destroy();
 		}
 		"step 6";
-		//规则集中的“回合开始后⑦”，国战武将明置武将牌
+		//規則集中的“回合開始後⑦”，國戰武將明置武將牌
 		event.trigger("phaseBeginStart");
 		"step 7";
-		//规则集中的“回合开始后⑨”，进行当先，化身等操作
-		//没有⑧ 因为⑧用不到
+		//規則集中的“回合開始後⑨”，進行當先，化身等操作
+		//沒有⑧ 因為⑧用不到
 		event.trigger("phaseBegin");
-		//阶段部分
+		//階段部分
 		"step 8";
 		if (num < event.phaseList.length) {
-			//规则集中没有的新时机 可以用来插入额外阶段啥的
+			//規則集中沒有的新時機 可以用來插入額外階段啥的
 			if (player.isIn()) event.trigger("phaseChange");
 		} else event.goto(11);
 		"step 9";
@@ -4119,7 +4119,7 @@ export const Content = {
 		"step 12";
 		event.trigger("phaseAfter");
 		"step 13";
-		//删除当前回合角色 此时处于“不属于任何角色的回合”的阶段
+		//刪除當前回合角色 此時處於“不屬於任何角色的回合”的階段
 		game.broadcastAll(function (player) {
 			player.classList.remove("glow_phase");
 			delete _status.currentPhase;
@@ -4128,7 +4128,7 @@ export const Content = {
 	phase: function () {
 		"step 0";
 		game.phaseNumber++;
-		//规则集中的“回合开始后①”，更新游戏轮数，触发“一轮游戏开始时”
+		//規則集中的“回合開始後①”，更新遊戲輪數，觸發“一輪遊戲開始時”
 		var isRound = false;
 		if (lib.onround.every(i => i(event, player))) {
 			isRound = _status.roundSkipped;
@@ -4191,7 +4191,7 @@ export const Content = {
 		"step 1";
 		if(get.phaseswap()) game.swapPlayerAuto(player);
 
-		//规则集中的“回合开始后⑤”，进行翻面检测
+		//規則集中的“回合開始後⑤”，進行翻面檢測
 		if (player.isTurnedOver() && !event._noTurnOver) {
 			player.turnOver();
 			player.phaseSkipped = true;
@@ -4217,10 +4217,10 @@ export const Content = {
 		}
 		event.trigger("phaseBefore");
 		'step 3';
-		//回合开始后
-		event.trigger("phaseBeforeStart");//addTempSkill删除技能默认时机
+		//回合開始後
+		event.trigger("phaseBeforeStart");//addTempSkill刪除技能默認時機
 		"step 4";
-		//规则集中的“回合开始后⑥”，更新“当前回合角色”
+		//規則集中的“回合開始後⑥”，更新“當前回合角色”
 		while (ui.dialogs.length) {
 			ui.dialogs[0].close();
 		}
@@ -4232,7 +4232,7 @@ export const Content = {
 				}
 				player.phaseNumber = num;
 				_status.currentPhase = player;
-				if (popup && lib.config.show_phase_prompt) player.popup("回合开始", null, false);
+				if (popup && lib.config.show_phase_prompt) player.popup("回合開始", null, false);
 			},
 			player,
 			player.phaseNumber,
@@ -4249,7 +4249,7 @@ export const Content = {
 			}
 		}
 		game.log('————————————————————');
-		game.log(player, "的回合开始");
+		game.log(player, "的回合開始");
 		player._noVibrate = true;
 		player.ai.tempIgnore = [];
 		if (ui.land && ui.land.player == player) {
@@ -4261,15 +4261,15 @@ export const Content = {
 		"step 5";
 		player.xingDong();
 		"step 6";
-		//回合结束前
+		//回合結束前
 		event.trigger("phaseEndBefore");
 		'step 7';
 		event.trigger("phaseEnd");
 		"step 8";
-		//回合结束后
-		event.trigger("phaseAfter");//addTempSkill删除技能默认时机
+		//回合結束後
+		event.trigger("phaseAfter");//addTempSkill刪除技能默認時機
 		"step 9";
-		//删除当前回合角色 此时处于“不属于任何角色的回合”的阶段
+		//刪除當前回合角色 此時處於“不屬於任何角色的回合”的階段
 		game.broadcastAll(function (player) {
 			player.classList.remove("glow_phase");
 			delete _status.currentPhase;
@@ -4310,11 +4310,11 @@ export const Content = {
 	},
 	phaseZhunbei: function () {
 		event.trigger(event.name);
-		game.log(player, "进入了准备阶段");
+		game.log(player, "進入了準備階段");
 	},
 	phaseJudge: function () {
 		"step 0";
-		game.log(player, "进入了判定阶段");
+		game.log(player, "進入了判定階段");
 		event.cards = player.getVCards("j");
 		if (!event.cards.length) event.finish();
 		"step 1";
@@ -4372,7 +4372,7 @@ export const Content = {
 	 */
 	phaseDraw: function () {
 		"step 0";
-		game.log(player, "进入了摸牌阶段");
+		game.log(player, "進入了摸牌階段");
 		event.trigger("phaseDrawBegin1");
 		"step 1";
 		event.trigger("phaseDrawBegin2");
@@ -4425,7 +4425,7 @@ export const Content = {
 		event.trigger("phaseUseBegin");
 		"step 3";
 		if (!event.logged) {
-			game.log(player, "进入了出牌阶段");
+			game.log(player, "進入了出牌階段");
 			event.logged = true;
 		}
 		var next = player.chooseToUse();
@@ -4450,12 +4450,12 @@ export const Content = {
 	},*/
 	xingDong:function(){
 		"step 0";
-		//xingBei设置
+		//xingBei設置
 		player.storage.gongJiOrFaShu=1;
 		player.storage.faShu=0;
 		player.storage.gongJi=0;
 		player.storage.extraXingDong=[];
-		//判断是否有可启动技
+		//判斷是否有可啟動技
 		var skills=player.skills;
 		var flag=false;
 		for(var i=0;i<skills.length;i++){
@@ -4468,7 +4468,7 @@ export const Content = {
 		}
 		event.canQiDong=flag;
 
-		event.firstAction=true;//首次行动
+		event.firstAction=true;//首次行動
 
 		const stat = player.getStat();
 		for (let i in stat.skill) {
@@ -4497,7 +4497,7 @@ export const Content = {
 		event.trigger("qiDong");
 		"step 4";
 		if (!event.logged) {
-			game.log(player, "进入了行动阶段");
+			game.log(player, "進入了行動階段");
 			event.logged = true;
 		}
 		if(player.storage.extraXingDong.length>0){
@@ -4508,13 +4508,13 @@ export const Content = {
 		}else{
 			if(player.storage.gongJiOrFaShu>0){
 				event.xingDong='gongJiOrFaShu';
-				var next=player.gongJiOrFaShu().set('action',true).set('prompt','[攻击行动]或者[法术行动]');
+				var next=player.gongJiOrFaShu().set('action',true).set('prompt','[攻擊行動]或者[法術行動]');
 			}else if(player.storage.faShu>0){
 				event.xingDong='faShu';
-				var next=player.faShu().set('action',true).set('prompt','法术行动');
+				var next=player.faShu().set('action',true).set('prompt','法術行動');
 			}else if(player.storage.gongJi>0){
 				event.xingDong='gongJi';
-				var next=player.gongJi().set('action',true).set('prompt','攻击行动');
+				var next=player.gongJi().set('action',true).set('prompt','攻擊行動');
 			}
 		}
 		if(next){
@@ -4554,14 +4554,14 @@ export const Content = {
 	},
 	phaseDiscard: function () {
 		"step 0";
-		game.log(player, "进入了弃牌阶段");
+		game.log(player, "進入了棄牌階段");
 		event.num = player.needsToDiscard();
 		event.trigger("phaseDiscard");
 		if (event.num <= 0) event.finish();
 		else {
 			game.broadcastAll(function (player) {
 				if (lib.config.show_phase_prompt) {
-					player.popup("弃牌阶段", null, false);
+					player.popup("棄牌階段", null, false);
 				}
 			}, player);
 		}
@@ -4572,7 +4572,7 @@ export const Content = {
 	},
 	phaseJieshu: function () {
 		event.trigger(event.name);
-		game.log(player, "进入了结束阶段");
+		game.log(player, "進入了結束階段");
 	},
 	chooseToUse: function () {
 		"step 0";
@@ -4591,7 +4591,7 @@ export const Content = {
 		if (event.type == "phase") {
 			if (event.isMine()) {
 				/*
-				event.endButton = ui.create.control("结束回合", "stayleft", function () {
+				event.endButton = ui.create.control("結束回合", "stayleft", function () {
 					var evt = _status.event;
 					if (evt.name != "chooseToUse" || evt.type != "phase") return;
 					if (evt.skill) {
@@ -4656,14 +4656,14 @@ export const Content = {
 					var str;
 					if (typeof event.filterCard == "object") {
 						var filter = event.filterCard;
-						str = "请使用" + get.cnNumber(event.selectCard[0]) + "张";
+						str = "請使用" + get.cnNumber(event.selectCard[0]) + "張";
 						if (filter.name) {
 							str += get.translation(filter.name);
 						} else {
 							str += "牌";
 						}
 					} else {
-						str = "请选择要使用的牌";
+						str = "請選擇要使用的牌";
 					}
 					if (event.openskilldialog) {
 						event.skillDialog = ui.create.dialog(event.openskilldialog);
@@ -5106,7 +5106,7 @@ export const Content = {
 			}
 			game.pause();
 			if (range[1] > 1 && typeof event.selectCard != "function") {
-				event.aiChoose = ui.create.control("AI代选", function () {
+				event.aiChoose = ui.create.control("AI代選", function () {
 					ai.basic.chooseCard(event.ai);
 					if (_status.event.custom && _status.event.custom.add.card) {
 						_status.event.custom.add.card();
@@ -5126,8 +5126,8 @@ export const Content = {
 					if (range[0] == range[1]) select = get.cnNumber(range[0]);
 					else if (range[1] == Infinity) select = "至少" + get.cnNumber(range[0]);
 					else select = get.cnNumber(range[0]) + "至" + get.cnNumber(range[1]);
-					const position = event.position == "h" ? "手" : event.position == "e" ? "装备" : "";
-					prompt = `请交给${get.translation(target)}${select}张${position}牌`;
+					const position = event.position == "h" ? "手" : event.position == "e" ? "裝備" : "";
+					prompt = `請交給${get.translation(target)}${select}張${position}牌`;
 				}
 				event.dialog = ui.create.dialog(prompt);
 				if (event.prompt2) {
@@ -5233,7 +5233,7 @@ export const Content = {
 				}
 				game.pause();
 				if (range[1] > 1 && typeof event.selectCard != "function") {
-					event.promptdiscard = ui.create.control("AI代选", function () {
+					event.promptdiscard = ui.create.control("AI代選", function () {
 						ai.basic.chooseCard(event.ai);
 						if (_status.event.custom && _status.event.custom.add.card) {
 							_status.event.custom.add.card();
@@ -5251,13 +5251,13 @@ export const Content = {
 					var str;
 					if (typeof event.prompt == "string") str = event.prompt;
 					else {
-						str = "请弃置";
+						str = "請棄置";
 						if (range[0] == range[1]) str += get.cnNumber(range[0]);
 						else if (range[1] == Infinity) str += "至少" + get.cnNumber(range[0]);
 						else str += get.cnNumber(range[0]) + "至" + get.cnNumber(range[1]);
-						str += "张";
+						str += "張";
 						if (event.position == "h" || event.position == undefined) str += "手";
-						if (event.position == "e") str += "装备";
+						if (event.position == "e") str += "裝備";
 						str += "牌";
 					}
 					event.dialog = ui.create.dialog(str);
@@ -5368,7 +5368,7 @@ export const Content = {
 				}
 				game.pause();
 				if(range[1]>1&&typeof event.selectCard!='function'){
-					event.promptdiscard=ui.create.control('AI代选',function(){
+					event.promptdiscard=ui.create.control('AI代選',function(){
 						ai.basic.chooseCard(event.ai);
 						if(_status.event.custom&&_status.event.custom.add.card){
 							_status.event.custom.add.card();
@@ -5387,13 +5387,13 @@ export const Content = {
 					var str;
 					if(typeof(event.prompt)=='string') str=event.prompt;
 					else{
-						str='请弃置';
+						str='請棄置';
 						if(range[0]==range[1]) str+=get.cnNumber(range[0]);
 						else if(range[1]==Infinity) str+='至少'+get.cnNumber(range[0]);
 						else str+=get.cnNumber(range[0])+'至'+get.cnNumber(range[1]);
-						str+='张';
+						str+='張';
 						if(event.position=='h'||event.position==undefined) str+='手';
-						if(event.position=='e') str+='装备';
+						if(event.position=='e') str+='裝備';
 						str+='牌';
 					}
 					event.dialog=ui.create.dialog(str);
@@ -5483,7 +5483,7 @@ export const Content = {
 					}else{
 						event.done.set('faShu',false);
 					}
-					//传递士气最大变动值
+					//傳遞士氣最大變動值
 					if(typeof event.shiQiMax=='number'){
 						event.done.set('shiQiMax',event.shiQiMax);
 					}
@@ -5594,7 +5594,7 @@ export const Content = {
 		event.cards = cards;
 		for (var i = 0; i < event.lose_list.length; i++) {
 			var next = event.lose_list[i][0].lose(event.lose_list[i][1], event.position);
-			game.log(event.lose_list[i][0], "弃置了", event.lose_list[i][1]);
+			game.log(event.lose_list[i][0], "棄置了", event.lose_list[i][1]);
 			next.type = "discard";
 			next.animate = false;
 			next.delay = false;
@@ -5686,7 +5686,7 @@ export const Content = {
 		if (!event.multitarget) {
 			targets.sort(lib.sort.seat);
 		}
-		game.log(player, "对", targets, "发起了共同拼点");
+		game.log(player, "對", targets, "發起了共同拼點");
 		event.compareMeanwhile = true;
 		if (!event.filterCard) event.filterCard = lib.filter.all;
 		"step 1";
@@ -5696,7 +5696,7 @@ export const Content = {
 		});
 		if (event.list.length || !event.fixedResult || !event.fixedResult[player.playerid]) {
 			if (!event.fixedResult || !event.fixedResult[player.playerid]) event.list.unshift(player);
-			player.chooseCardOL(event.list, "请选择拼点牌", true).set("filterCard", event.filterCard).set("type", "compare").set("ai", event.ai).set("source", player).aiCard = function (target) {
+			player.chooseCardOL(event.list, "請選擇拼點牌", true).set("filterCard", event.filterCard).set("type", "compare").set("ai", event.ai).set("source", player).aiCard = function (target) {
 				var hs = target.getCards("h");
 				var event = _status.event;
 				event.player = target;
@@ -5764,9 +5764,9 @@ export const Content = {
 		event.trigger("compareCardShowBefore");
 		"step 4";
 		player.$compareMultiple(event.card1, targets, cards);
-		game.log(player, "的拼点牌为", event.card1);
+		game.log(player, "的拼點牌為", event.card1);
 		event.cardlist.forEach((card, index) => {
-			game.log(targets[index], "的拼点牌为", card);
+			game.log(targets[index], "的拼點牌為", card);
 		});
 		player.addTempClass("target");
 		game.delay(0, 1000);
@@ -5825,18 +5825,18 @@ export const Content = {
 		var player = event.tempplayer;
 		event.player = player;
 		delete event.tempplayer;
-		var str = "无人拼点成功";
+		var str = "無人拼點成功";
 		const winner = event.forceWinner || event.winner;
 		if (winner) {
 			event.result.winner = winner;
-			str = get.translation(winner) + "拼点成功";
-			game.log(winner, "拼点成功");
-			winner.popup("胜");
-		} else game.log("#b无人", "拼点成功");
+			str = get.translation(winner) + "拼點成功";
+			game.log(winner, "拼點成功");
+			winner.popup("勝");
+		} else game.log("#b無人", "拼點成功");
 		var list = [player].addArray(targets);
 		list.remove(winner);
 		for (var i of list) {
-			i.popup("负");
+			i.popup("負");
 		}
 		if (str) {
 			game.broadcastAll(function (str) {
@@ -5870,7 +5870,7 @@ export const Content = {
 		if (!event.multitarget) {
 			targets.sort(lib.sort.seat);
 		}
-		game.log(player, "对", targets, "发起拼点");
+		game.log(player, "對", targets, "發起拼點");
 		if (!event.filterCard) event.filterCard = lib.filter.all;
 		"step 1";
 		event._result = [];
@@ -5879,7 +5879,7 @@ export const Content = {
 		});
 		if (event.list.length || !event.fixedResult || !event.fixedResult[player.playerid]) {
 			if (!event.fixedResult || !event.fixedResult[player.playerid]) event.list.unshift(player);
-			player.chooseCardOL(event.list, "请选择拼点牌", true).set("filterCard", event.filterCard).set("type", "compare").set("ai", event.ai).set("source", player).aiCard = function (target) {
+			player.chooseCardOL(event.list, "請選擇拼點牌", true).set("filterCard", event.filterCard).set("type", "compare").set("ai", event.ai).set("source", player).aiCard = function (target) {
 				var hs = target.getCards("h");
 				var event = _status.event;
 				event.player = target;
@@ -5942,7 +5942,7 @@ export const Content = {
 		"step 3";
 		event.trigger("compareCardShowBefore");
 		"step 4";
-		game.log(player, "的拼点牌为", event.card1);
+		game.log(player, "的拼點牌為", event.card1);
 		"step 5";
 		if (event.iwhile < targets.length) {
 			event.target = targets[event.iwhile];
@@ -5950,7 +5950,7 @@ export const Content = {
 			player.addTempClass("target");
 			event.card2 = event.cardlist[event.iwhile];
 			event.num2 = event.getNum(event.card2);
-			game.log(event.target, "的拼点牌为", event.card2);
+			game.log(event.target, "的拼點牌為", event.card2);
 			player.line(event.target);
 			player.$compare(event.card1, event.target, event.card2);
 			event.trigger("compare");
@@ -5968,18 +5968,18 @@ export const Content = {
 		var str;
 		if (event.forceWinner === player || (event.forceWinner !== target && event.num1 > event.num2)) {
 			event.winner = player;
-			str = get.translation(player) + "拼点成功";
-			player.popup("胜");
-			target.popup("负");
+			str = get.translation(player) + "拼點成功";
+			player.popup("勝");
+			target.popup("負");
 		} else {
-			str = get.translation(player) + "拼点失败";
+			str = get.translation(player) + "拼點失敗";
 			if (event.forceWinner !== target && event.num1 == event.num2) {
 				player.popup("平");
 				target.popup("平");
 			} else {
 				event.winner = target;
-				player.popup("负");
-				target.popup("胜");
+				player.popup("負");
+				target.popup("勝");
 			}
 		}
 		game.broadcastAll(function (str) {
@@ -6027,14 +6027,14 @@ export const Content = {
 			event.finish();
 			return;
 		}
-		game.log(player, "对", target, "发起拼点");
+		game.log(player, "對", target, "發起拼點");
 		if (!event.filterCard) event.filterCard = lib.filter.all;
 		"step 1";
 		event.list = [player, target].filter(function (current) {
 			return !event.fixedResult || !event.fixedResult[current.playerid];
 		});
 		if (event.list.length) {
-			player.chooseCardOL(event.list, "请选择拼点牌", true).set("small", event.small).set("filterCard", event.filterCard).set("type", "compare").set("ai", event.ai).set("source", player).aiCard = function (target) {
+			player.chooseCardOL(event.list, "請選擇拼點牌", true).set("small", event.small).set("filterCard", event.filterCard).set("type", "compare").set("ai", event.ai).set("source", player).aiCard = function (target) {
 				var hs = target.getCards("h");
 				var event = _status.event;
 				event.player = target;
@@ -6090,8 +6090,8 @@ export const Content = {
 		ui.arena.classList.add("thrownhighlight");
 		game.addVideo("thrownhighlight1");
 		player.$compare(event.card1, target, event.card2);
-		game.log(player, "的拼点牌为", event.card1);
-		game.log(target, "的拼点牌为", event.card2);
+		game.log(player, "的拼點牌為", event.card1);
+		game.log(target, "的拼點牌為", event.card2);
 		var getNum = function (card) {
 			for (var i of event.lose_list) {
 				if (i[1].includes(card)) return get.mingGe(card, i[0]);
@@ -6115,20 +6115,20 @@ export const Content = {
 		if (event.forceWinner === player || (event.forceWinner !== target && event.num1 > event.num2)) {
 			event.result.bool = true;
 			event.result.winner = player;
-			str = get.translation(player) + "拼点成功";
-			player.popup("胜");
-			target.popup("负");
+			str = get.translation(player) + "拼點成功";
+			player.popup("勝");
+			target.popup("負");
 		} else {
 			event.result.bool = false;
-			str = get.translation(player) + "拼点失败";
+			str = get.translation(player) + "拼點失敗";
 			if (event.forceWinner !== target && event.num1 == event.num2) {
 				event.result.tie = true;
 				player.popup("平");
 				target.popup("平");
 			} else {
 				event.result.winner = target;
-				player.popup("负");
-				target.popup("胜");
+				player.popup("負");
+				target.popup("勝");
 			}
 		}
 		game.broadcastAll(function (str) {
@@ -6176,7 +6176,7 @@ export const Content = {
 		};
 		if (event.isMine()) {
 			var dialog = ui.create.dialog("forcebutton");
-			dialog.add(event.prompt || "选择获得一项技能");
+			dialog.add(event.prompt || "選擇獲得一項技能");
 			_status.event.list = list;
 			var clickItem = function () {
 				_status.event._result = this.link;
@@ -6228,11 +6228,11 @@ export const Content = {
 		if (choice.length) {
 			var prompt = event.prompt;
 			if (!prompt) {
-				prompt = "选择一张牌";
+				prompt = "選擇一張牌";
 				if (event.use) {
 					prompt += "使用之";
 				} else if (!event.nogain) {
-					prompt += "获得之";
+					prompt += "獲得之";
 				}
 			}
 			if (typeof choice[0] === "string") {
@@ -6272,7 +6272,7 @@ export const Content = {
 					player.chooseUseTarget(togain);
 				} else if (!event.nogain) {
 					player.gain(togain, "draw");
-					game.log(player, "获得了一张牌");
+					game.log(player, "獲得了一張牌");
 				}
 			}
 		}
@@ -6558,14 +6558,14 @@ export const Content = {
 					var str;
 					if (typeof event.prompt == "string") str = event.prompt;
 					else {
-						str = "请选择";
+						str = "請選擇";
 						var range = get.select(event.selectCard);
 						if (range[0] == range[1]) str += get.cnNumber(range[0]);
 						else if (range[1] == Infinity) str += "至少" + get.cnNumber(range[0]);
 						else str += get.cnNumber(range[0]) + "至" + get.cnNumber(range[1]);
-						str += "张";
+						str += "張";
 						if (event.position == "h" || event.position == undefined) str += "手";
-						if (event.position == "e") str += "装备";
+						if (event.position == "e") str += "裝備";
 						str += "牌";
 					}
 					event.dialog = ui.create.dialog(str);
@@ -6634,12 +6634,12 @@ export const Content = {
 				var str;
 				if (typeof event.prompt == "string") str = event.prompt;
 				else {
-					str = "请选择";
+					str = "請選擇";
 					var range = get.select(event.selectTarget);
 					if (range[0] == range[1]) str += get.cnNumber(range[0]);
 					else if (range[1] == Infinity) str += "至少" + get.cnNumber(range[0]);
 					else str += get.cnNumber(range[0]) + "至" + get.cnNumber(range[1]);
-					str += "个目标";
+					str += "個目標";
 				}
 				event.dialog = ui.create.dialog(str);
 				if (event.prompt2) {
@@ -6698,7 +6698,7 @@ export const Content = {
 			game.check();
 			game.pause();
 			if (event.prompt != false) {
-				event.dialog = ui.create.dialog(event.prompt || "请选择卡牌和目标");
+				event.dialog = ui.create.dialog(event.prompt || "請選擇卡牌和目標");
 				if (event.prompt2) {
 					event.dialog.addText(event.prompt2, event.prompt2.length <= 20);
 				}
@@ -6750,7 +6750,7 @@ export const Content = {
 				}
 			} else if (event.choiceList) {
 				for (var i = 0; i < event.choiceList.length; i++) {
-					event.controls.push("选项" + get.cnNumber(i + 1, true));
+					event.controls.push("選項" + get.cnNumber(i + 1, true));
 				}
 			} else {
 				event.finish();
@@ -6759,7 +6759,7 @@ export const Content = {
 		} else if (event.choiceList && event.controls.length == 1 && event.controls[0] == "cancel2") {
 			event.controls.shift();
 			for (var i = 0; i < event.choiceList.length; i++) {
-				event.controls.push("选项" + get.cnNumber(i + 1, true));
+				event.controls.push("選項" + get.cnNumber(i + 1, true));
 			}
 			event.controls.push("cancel2");
 		}
@@ -6786,7 +6786,7 @@ export const Content = {
 				return;
 			}
 			if (event.sortcard) {
-				var prompt = event.prompt || "选择一个位置";
+				var prompt = event.prompt || "選擇一個位置";
 				if (event.tosort) {
 					prompt += "放置" + get.translation(event.tosort);
 				}
@@ -6806,7 +6806,7 @@ export const Content = {
 					var item = ui.create.div(".button.card.pointerdiv.mebg");
 					item.style.width = "50px";
 					buttons.insertBefore(item, event.dialog.buttons[i]);
-					item.innerHTML = '<div style="font-family: xinwei;font-size: 25px;height: 75px;line-height: 25px;top: 8px;left: 10px;width: 30px;">第' + get.cnNumber(i + 1, true) + "张</div>";
+					item.innerHTML = '<div style="font-family: xinwei;font-size: 25px;height: 75px;line-height: 25px;top: 8px;left: 10px;width: 30px;">第' + get.cnNumber(i + 1, true) + "張</div>";
 					if (i == event.dialog.buttons.length + 1) {
 						item.firstChild.innerHTML = "牌堆底";
 					}
@@ -6818,7 +6818,7 @@ export const Content = {
 				event.dialog.classList.add("forcebutton");
 				event.dialog.open();
 			} else if (event.dialogcontrol) {
-				event.dialog = ui.create.dialog(event.prompt || "选择一项", "hidden");
+				event.dialog = ui.create.dialog(event.prompt || "選擇一項", "hidden");
 				for (var i = 0; i < event.controls.length; i++) {
 					var item = event.dialog.add('<div class="popup text pointerdiv dialogcontrol" >' + event.controls[i] + "</div>");
 					item.firstChild.listen(ui.click.dialogcontrol);
@@ -6873,11 +6873,11 @@ export const Content = {
 					}
 					event.dialog.open();
 				} else if (event.choiceList) {
-					event.dialog = ui.create.dialog(event.prompt || "选择一项", "hidden");
+					event.dialog = ui.create.dialog(event.prompt || "選擇一項", "hidden");
 					event.dialog.forcebutton = true;
 					event.dialog.open();
 					for (var i = 0; i < event.choiceList.length; i++) {
-						event.dialog.add('<div class="popup text choiceList">' + (event.displayIndex !== false ? "选项" + get.cnNumber(i + 1, true) + "：" : "") + event.choiceList[i] + "</div>");
+						event.dialog.add('<div class="popup text choiceList">' + (event.displayIndex !== false ? "選項" + get.cnNumber(i + 1, true) + "：" : "") + event.choiceList[i] + "</div>");
 					}
 				} else if (event.prompt) {
 					event.dialog = ui.create.dialog(event.prompt);
@@ -6984,9 +6984,9 @@ export const Content = {
 		var prompt = event.prompt;
 		if (!prompt) {
 			if (player.isHealthy()) {
-				prompt = "是否摸" + get.cnNumber(event.num1) + "张牌？";
+				prompt = "是否摸" + get.cnNumber(event.num1) + "張牌？";
 			} else {
-				prompt = "摸" + get.cnNumber(event.num1) + "张牌或回复" + get.cnNumber(event.num2) + "点体力";
+				prompt = "摸" + get.cnNumber(event.num1) + "張牌或回覆" + get.cnNumber(event.num2) + "點體力";
 			}
 		}
 		var next = player.chooseControl(controls);
@@ -7032,7 +7032,7 @@ export const Content = {
 		if (event.prompt) {
 			event.dialog.add(event.prompt);
 		} else {
-			event.dialog.add("选择" + get.translation(target) + "的一张牌");
+			event.dialog.add("選擇" + get.translation(target) + "的一張牌");
 		}
 		if (event.prompt2) {
 			event.dialog.addText(event.prompt2);
@@ -7048,7 +7048,7 @@ export const Content = {
 				var hs = target.getCards("h");
 				if (hs.length) {
 					expand_length += Math.ceil(hs.length / 6);
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">手牌区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">手牌區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					hs.randomSort();
@@ -7078,7 +7078,7 @@ export const Content = {
 				var es = target.getCards("e");
 				if (es.length) {
 					expand_length += Math.ceil(es.length / 6);
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">装备区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">裝備區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					event.dialog.add(es);
@@ -7088,7 +7088,7 @@ export const Content = {
 				var js = target.getCards("j");
 				if (js.length) {
 					expand_length += Math.ceil(js.length / 6);
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">判定区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">判定區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					var shown = js.filter(card => {
@@ -7189,14 +7189,14 @@ export const Content = {
 			event.dialog.style.display = "none";
 		}
 		if (event.prompt == undefined) {
-			var str = "弃置" + get.translation(target);
+			var str = "棄置" + get.translation(target);
 			var range = get.select(event.selectButton);
 			if (range[0] == range[1]) str += get.cnNumber(range[0]);
 			else if (range[1] == Infinity) str += "至少" + get.cnNumber(range[0]);
 			else str += get.cnNumber(range[0]) + "至" + get.cnNumber(range[1]);
-			str += "张";
+			str += "張";
 			if (event.position == "h" || event.position == undefined) str += "手";
-			if (event.position == "e") str += "装备";
+			if (event.position == "e") str += "裝備";
 			str += "牌";
 			event.prompt = str;
 		}
@@ -7217,7 +7217,7 @@ export const Content = {
 				var hs = target.getDiscardableCards(player, "h");
 				expand_length += Math.ceil(hs.length / 6);
 				if (hs.length) {
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">手牌区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">手牌區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					hs.randomSort();
@@ -7247,7 +7247,7 @@ export const Content = {
 				var es = target.getDiscardableCards(player, "e");
 				if (es.length) {
 					expand_length += Math.ceil(es.length / 6);
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">装备区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">裝備區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					event.dialog.add(es);
@@ -7257,7 +7257,7 @@ export const Content = {
 				var js = target.getDiscardableCards(player, "j");
 				if (js.length) {
 					expand_length += Math.ceil(js.length / 6);
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">判定区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">判定區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					var shown = js.filter(card => {
@@ -7381,14 +7381,14 @@ export const Content = {
 			event.dialog.style.display = "none";
 		}
 		if (event.prompt == undefined) {
-			var str = "获得" + get.translation(target);
+			var str = "獲得" + get.translation(target);
 			var range = get.select(event.selectButton);
 			if (range[0] == range[1]) str += get.cnNumber(range[0]);
 			else if (range[1] == Infinity) str += "至少" + get.cnNumber(range[0]);
 			else str += get.cnNumber(range[0]) + "至" + get.cnNumber(range[1]);
-			str += "张";
+			str += "張";
 			if (event.position == "h" || event.position == undefined) str += "手";
-			if (event.position == "e") str += "装备";
+			if (event.position == "e") str += "裝備";
 			str += "牌";
 			event.prompt = str;
 		}
@@ -7409,7 +7409,7 @@ export const Content = {
 				var hs = target.getGainableCards(player, "h");
 				if (hs.length) {
 					expand_length += Math.ceil(hs.length / 6);
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">手牌区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">手牌區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					hs.randomSort();
@@ -7439,7 +7439,7 @@ export const Content = {
 				var es = target.getGainableCards(player, "e");
 				if (es.length) {
 					expand_length += Math.ceil(es.length / 6);
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">装备区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">裝備區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					event.dialog.add(es);
@@ -7449,7 +7449,7 @@ export const Content = {
 				var js = target.getGainableCards(player, "j");
 				if (js.length) {
 					expand_length += Math.ceil(js.length / 6);
-					var title = event.dialog.add('<div class="text center" style="margin: 0px;">判定区</div>');
+					var title = event.dialog.add('<div class="text center" style="margin: 0px;">判定區</div>');
 					title.style.margin = "0px";
 					title.style.padding = "0px";
 					var shown = js.filter(card => {
@@ -7828,8 +7828,8 @@ export const Content = {
 			return maxEff;
 		});
 		next.set("multitarget", true);
-		next.set("targetprompt", _status.event.targetprompt || ["被移走", "移动目标"]);
-		next.set("prompt", event.prompt || "移动场上的一张牌");
+		next.set("targetprompt", _status.event.targetprompt || ["被移走", "移動目標"]);
+		next.set("prompt", event.prompt || "移動場上的一張牌");
 		next.set("filter", event.filter);
 		next.set("sourceTargets", event.sourceTargets || game.filterPlayer());
 		next.set("aimTargets", event.aimTargets || game.filterPlayer());
@@ -7860,7 +7860,7 @@ export const Content = {
 		game.delay();
 		"step 3";
 		if (targets.length == 2) {
-			const dialogArgs = ["请选择要移动的牌"];
+			const dialogArgs = ["請選擇要移動的牌"];
 			const es = targets[0].getVCards("e", card => {
 					return event.filter(card) && targets[1].canEquip(card, event.canReplace);
 				}),
@@ -7870,11 +7870,11 @@ export const Content = {
 							return event.filter(card) && targets[1].canAddJudge(card);
 					  });
 			if (es.length) {
-				dialogArgs.push(`<div class="text center">装备区</div>`);
+				dialogArgs.push(`<div class="text center">裝備區</div>`);
 				dialogArgs.push([es, "vcard"]);
 			}
 			if (js.length) {
-				dialogArgs.push(`<div class="text center">判定区</div>`);
+				dialogArgs.push(`<div class="text center">判定區</div>`);
 				dialogArgs.push([js, "vcard"]);
 			}
 			if (es.length + js.length === 1) {
@@ -7929,7 +7929,7 @@ export const Content = {
 				event.targets[1].addJudge(link, link?.cards);
 			}
 			if (link.cards?.length) event.targets[0].$give(link.cards, event.targets[1], false);
-			game.log(event.targets[0], "的", link, "被移动给了", event.targets[1]);
+			game.log(event.targets[0], "的", link, "被移動給了", event.targets[1]);
 			event.result.card = link;
 			event.result.position = "e";
 			game.delay();
@@ -8030,7 +8030,7 @@ export const Content = {
 					virtualCard.expired = true;
 					const info = lib.card[card.name],
 						mingGe = card.mingGe;
-					virtualCard.init([get.xiBie(card), typeof mingGe == "string" ? mingGe : "虚拟", card.name, card.duYou]);
+					virtualCard.init([get.xiBie(card), typeof mingGe == "string" ? mingGe : "虛擬", card.name, card.duYou]);
 					virtualCard_str = virtualCard.querySelector(".info").innerHTML;
 					throw_cards = [virtualCard];
 				}
@@ -8050,7 +8050,7 @@ export const Content = {
 									ui.create.cardTempName(card, node);
 									if (node._tempName && card_cards?.length <= 0) {
 										node._tempName.innerHTML = node._tempName.innerHTML.slice(0, node._tempName.innerHTML.indexOf("<span", -1));
-										node._tempName.innerHTML += "<span style='color:black'>虚拟</span></span>";
+										node._tempName.innerHTML += "<span style='color:black'>虛擬</span></span>";
 									}
 								}
 							}
@@ -8112,15 +8112,15 @@ export const Content = {
 			var str = targets.length == 1 && targets[0] == player ? "#b自己" : targets;
 			if (cards.length && !card.isCard) {
 				if (event.addedTarget) {
-					game.log(player, "对", str, "使用了", card, "（", cards, "，指向", event.addedTargets, "）");
+					game.log(player, "對", str, "使用了", card, "（", cards, "，指向", event.addedTargets, "）");
 				} else {
-					game.log(player, "对", str, "使用了", card, "（", cards, "）");
+					game.log(player, "對", str, "使用了", card, "（", cards, "）");
 				}
 			} else {
 				if (event.addedTarget) {
-					game.log(player, "对", str, "使用了", card, "（指向", event.addedTargets, "）");
+					game.log(player, "對", str, "使用了", card, "（指向", event.addedTargets, "）");
 				} else {
-					game.log(player, "对", str, "使用了", card);
+					game.log(player, "對", str, "使用了", card);
 				}
 			}
 		} else {
@@ -8465,7 +8465,7 @@ export const Content = {
 		if(info&&info.viewAs&&info.discard==true&&cards.length){
 			var next=player.discard(cards);
 			event.animate=false;
-			event.cards=[];//因为是弃置视为打出，清空卡牌
+			event.cards=[];//因為是棄置視為打出，清空卡牌
 			card.cards=[];
 			if(info.showCards) next.set("showCards", info.showCards);
 		}
@@ -8545,7 +8545,7 @@ export const Content = {
 					virtualCard.expired = true;
 					const info = lib.card[card.name],
 						mingGe = card.mingGe;
-					virtualCard.init([get.xiBie(card), typeof mingGe == "string" ? mingGe : "虚拟", card.name, card.duYou]);
+					virtualCard.init([get.xiBie(card), typeof mingGe == "string" ? mingGe : "虛擬", card.name, card.duYou]);
 					virtualCard_str = virtualCard.querySelector(".info").innerHTML;
 					throw_cards = [virtualCard];
 				}
@@ -8565,7 +8565,7 @@ export const Content = {
 									ui.create.cardTempName(card, node);
 									if (node._tempName && card_cards?.length <= 0) {
 										node._tempName.innerHTML = node._tempName.innerHTML.slice(0, node._tempName.innerHTML.indexOf("<span", -1));
-										node._tempName.innerHTML += "<span style='color:black'>虚拟</span></span>";
+										node._tempName.innerHTML += "<span style='color:black'>虛擬</span></span>";
 									}
 								}
 							}
@@ -8605,7 +8605,7 @@ export const Content = {
 			event.canShengGuang=true;
 			event.canShengDun=true;
 			event.canAnMie=true;
-			//记录攻击次数
+			//記錄攻擊次數
 			let dict={name:get.name(card),xiBie: get.xiBie(card),mingGe:card.mingGe,duYou:card.duYou};
 			player.stat[player.stat.length - 1].gongJi.all.push(dict);
 			if(event.yingZhan){
@@ -8614,7 +8614,7 @@ export const Content = {
 				player.stat[player.stat.length - 1].gongJi.zhuDong.push(dict);
 			}
 
-		}else if(type=='faShu'&&get.is.xingDong(event)){//防止传递魔弹时触发该时机
+		}else if(type=='faShu'&&get.is.xingDong(event)){//防止傳遞魔彈時觸發該時機
 			event.type='faShu';
 			let dict={name:get.name(card),xiBie: get.xiBie(card),mingGe:card.mingGe,duYou:card.duYou};
 			player.stat[player.stat.length - 1].faShu.push(dict);
@@ -8648,24 +8648,24 @@ export const Content = {
 			}
 		}
 		"step 1";
-		//日志改到比应战未命中早
+		//日誌改到比應戰未命中早
 		if (targets.length && !event.hideTargets) {
 			//xingbei
 			var yingZhan_str='';
 			if(get.type(card)=='gongJi'){
 				if(event.yingZhan==true){
-					yingZhan_str='，应战攻击';
+					yingZhan_str='，應戰攻擊';
 				}else{
 					event.yingZhan=false;
-					yingZhan_str='，主动攻击';
+					yingZhan_str='，主動攻擊';
 				}
 			}
 
 			var str=targets;
 			if (cards.length && !card.isCard) {
-				game.log(player, "对", str, "使用了", card, "（", cards, "）");
+				game.log(player, "對", str, "使用了", card, "（", cards, "）");
 			} else {
-				game.log(player, "对", str, "使用了", card,yingZhan_str);
+				game.log(player, "對", str, "使用了", card,yingZhan_str);
 			}
 		} else {
 			if (cards.length && !card.isCard) {
@@ -8693,7 +8693,7 @@ export const Content = {
 		}
 		"step 5";
 		if(event.type=='gongJi'){
-			if(get.xiBie(card)=='an') event.canYingZhan=false;//暗灭无法应战
+			if(get.xiBie(card)=='an') event.canYingZhan=false;//暗滅無法應戰
 			event.trigger("gongJiSheZhi");
 		}
 		"step 6";
@@ -8801,13 +8801,13 @@ export const Content = {
 		}
 		var str = "";
 		if (targets && targets.length && info.log != "notarget") {
-			str += '对<span class="bluetext">' + (targets[0] == player ? "自己" : get.translation(targets[0]));
+			str += '對<span class="bluetext">' + (targets[0] == player ? "自己" : get.translation(targets[0]));
 			for (var i = 1; i < targets.length; i++) {
 				str += "、" + (targets[i] == player ? "自己" : get.translation(targets[i]));
 			}
 			str += "</span>";
 		}
-		str += "发动了";
+		str += "發動了";
 		if (!info.direct && info.log !== false) {
 			game.log(player, str, "【" + get.skillTranslation(skill, player) + "】");
 			if (info.logv !== false) game.logv(player, skill, targets);
@@ -9027,9 +9027,9 @@ export const Content = {
 		event._skill=event.skill;
 		game.trySkillAudio(event.skill,player);
 		var checkShow=player.checkShow(event.skill);
-		if(info.useCard&&!info.viewAs){//针对独有法术技能
+		if(info.useCard&&!info.viewAs){//針對獨有法術技能
 			player.useCard(cards);
-		}else if(info.discard!=false&&info.lose!=false&&info.showCards&&!info.viewAs){//针对弃牌展示牌法术技能
+		}else if(info.discard!=false&&info.lose!=false&&info.showCards&&!info.viewAs){//針對棄牌展示牌法術技能
 			player.discard(cards).set('showCards',true);
 		}else if(info.discard!=false&&info.lose!=false&&!info.viewAs){
 			player.discard(cards).delay=false;
@@ -9087,9 +9087,9 @@ export const Content = {
 
 		if(!info.direct&&info.log!==false){
 			if(targets.length){
-				game.log(player,'对',targets,'发动了','【'+get.skillTranslation(skill,player)+'】');
+				game.log(player,'對',targets,'發動了','【'+get.skillTranslation(skill,player)+'】');
 			}else{
-				game.log(player,'发动了','【'+get.skillTranslation(skill,player)+'】');
+				game.log(player,'發動了','【'+get.skillTranslation(skill,player)+'】');
 			}
 			if(info.logv!==false) game.logv(player,skill,targets);
 			player.trySkillAnimate(skill,skill,checkShow);
@@ -9339,11 +9339,11 @@ export const Content = {
 		}
 		if (event.log != false) {
 			if (num > 0) {
-				if (event.bottom) game.log(player, "从牌堆底摸了" + get.cnNumber(num) + "张牌");
-				else game.log(player, "摸了" + get.cnNumber(num) + "张牌");
+				if (event.bottom) game.log(player, "從牌堆底摸了" + get.cnNumber(num) + "張牌");
+				else game.log(player, "摸了" + get.cnNumber(num) + "張牌");
 			}
 			if (event.drawDeck) {
-				game.log(player, "从牌库中获得了" + get.cnNumber(event.drawDeck) + "张牌");
+				game.log(player, "從牌庫中獲得了" + get.cnNumber(event.drawDeck) + "張牌");
 			}
 		}
 		let cards;
@@ -9361,8 +9361,8 @@ export const Content = {
 		if (event.animate != false) {
 			if (event.visible) {
 				next = player.gain(cards, "gain2");
-				if (event.bottom) game.log(player, "从牌堆底摸了" + get.cnNumber(num) + "张牌（", cards, "）");
-				else game.log(player, "摸了" + get.cnNumber(num) + "张牌（", cards, "）");
+				if (event.bottom) game.log(player, "從牌堆底摸了" + get.cnNumber(num) + "張牌（", cards, "）");
+				else game.log(player, "摸了" + get.cnNumber(num) + "張牌（", cards, "）");
 			} else {
 				next = player.gain(cards, "draw");
 			}
@@ -9377,7 +9377,7 @@ export const Content = {
 	},
 	discard: function () {
 		"step 0";
-		game.log(player, "弃置了", cards);
+		game.log(player, "棄置了", cards);
 		event.done = player.lose(cards, event.position, "visible");
 		event.done.type = "discard";
 		if (event.discarder) event.done.discarder = event.discarder;
@@ -9386,7 +9386,7 @@ export const Content = {
 	},
 	loseToDiscardpile: function () {
 		"step 0";
-		if (event.log != false) game.log(player, "将", cards, "置入了弃牌堆");
+		if (event.log != false) game.log(player, "將", cards, "置入了棄牌堆");
 		var next = player.lose(cards, event.position);
 		if (event.insert_index) next.insert_index = event.insert_index;
 		if (event.insert_card) next.insert_card = true;
@@ -9409,11 +9409,11 @@ export const Content = {
 		}
 		if(event.log!=false){
 			if(num>0){
-				if(event.bottom) game.log(player,'从牌堆底摸了'+num+'张牌');
-				else game.log(player,'摸了'+num+'张牌');
+				if(event.bottom) game.log(player,'從牌堆底摸了'+num+'張牌');
+				else game.log(player,'摸了'+num+'張牌');
 			}
 			if(event.drawDeck){
-				game.log(player,'从牌库中获得了'+event.drawDeck+'张牌');
+				game.log(player,'從牌庫中獲得了'+event.drawDeck+'張牌');
 			}
 		}
 		var cards;
@@ -9431,8 +9431,8 @@ export const Content = {
 		if(event.animate!=false){
 			if(event.visible){
 				var next=player.gain(cards,'gain2');
-				if(event.bottom) game.log(player,'从牌堆底摸了'+num+'张牌（',cards,'）');
-				else game.log(player,'摸了'+num+'张牌（',cards,'）');
+				if(event.bottom) game.log(player,'從牌堆底摸了'+num+'張牌（',cards,'）');
+				else game.log(player,'摸了'+num+'張牌（',cards,'）');
 			}
 			else{
 				var next=player.gain(cards,'draw');
@@ -9449,7 +9449,7 @@ export const Content = {
 				}else{
 					next.set('shiQiXiaJiang',true);
 				}
-				//传递士气最大变动值
+				//傳遞士氣最大變動值
 				if(typeof event.shiQiMax=='number'){
 					next.set('shiQiMax',event.shiQiMax);
 				}
@@ -9462,7 +9462,7 @@ export const Content = {
 				player.$draw(cards.length);
 			}
 		}
-		//如果有来源，则传递来源
+		//如果有來源，則傳遞來源
 		if(source){
 			next.set('source',source);
 		}
@@ -9471,26 +9471,26 @@ export const Content = {
 	},
 	discard:function(){
 		"step 0"
-		//game.log(player,'弃置了',cards);
+		//game.log(player,'棄置了',cards);
 		event.done=player.lose(cards,event.position);
 		event.done.type='discard';
 		if(event.discarder) event.done.discarder=event.discarder;
 		if(event.visible) event.done.visible=true;
-		if(event.gaiPai){//移除了盖牌日志
+		if(event.gaiPai){//移除了蓋牌日誌
 			let name;
 			let info= get.info(event.gaiPai);
 			if(info&&info.intro&&info.intro.name){
 				name=info.intro.name;
 			}else name=get.translation(event.gaiPai);
 			if(event.visible){
-				game.log(player,'移除了',cards.length,'张','【'+name+'】',"(",cards,")");
+				game.log(player,'移除了',cards.length,'張','【'+name+'】',"(",cards,")");
 			}else if(event.sheQi){
-				game.log(player,'舍弃了',cards.length,'张','【'+name+'】');
+				game.log(player,'捨棄了',cards.length,'張','【'+name+'】');
 			}else {
-				game.log(player,'移除了',cards.length,'张','【'+name+'】');
+				game.log(player,'移除了',cards.length,'張','【'+name+'】');
 			}
 		}else{
-			game.log(player,'弃置了',cards.length,'张牌');//星杯暗置弃牌日志
+			game.log(player,'棄置了',cards.length,'張牌');//星杯暗置棄牌日誌
 		}
 		event.nun=cards.length;
 		'step 1'
@@ -9515,7 +9515,7 @@ export const Content = {
 						next.set('faShu',false)
 					}
 				}
-				//传递士气最大变动值
+				//傳遞士氣最大變動值
 				if(typeof event.shiQiMax=='number'){
 					next.set('shiQiMax',event.shiQiMax);
 				}
@@ -9527,7 +9527,7 @@ export const Content = {
 	},
 	loseToDiscardpile:function(){
 		"step 0"
-		if(event.log!=false) game.log(player,'将',cards,'置入了弃牌堆');
+		if(event.log!=false) game.log(player,'將',cards,'置入了棄牌堆');
 		var next=player.lose(cards,event.position);
 		if(event.insert_index) next.insert_index=event.insert_index;
 		if(event.insert_card) next.insert_card=true;
@@ -9609,7 +9609,7 @@ export const Content = {
 				virtualCard.expired = true;
 				const info = lib.card[card.name],
 					mingGe = card.mingGe;
-				virtualCard.init([get.xiBie(card), typeof mingGe == "string" ? mingGe : "虚拟", card.name, card.duYou]);
+				virtualCard.init([get.xiBie(card), typeof mingGe == "string" ? mingGe : "虛擬", card.name, card.duYou]);
 				virtualCard_str = virtualCard.querySelector(".info").innerHTML;
 				throw_cards = [virtualCard];
 			}
@@ -9629,7 +9629,7 @@ export const Content = {
 								ui.create.cardTempName(card, node);
 								if (node._tempName && card_cards?.length <= 0) {
 									node._tempName.innerHTML = node._tempName.innerHTML.slice(0, node._tempName.innerHTML.indexOf("<span", -1));
-									node._tempName.innerHTML += "<span style='color:black'>虚拟</span></span>";
+									node._tempName.innerHTML += "<span style='color:black'>虛擬</span></span>";
 								}
 							}
 						}
@@ -9820,7 +9820,7 @@ export const Content = {
 			cards[num].style.transform = "";
 			cards[num].addGaintag(event.gaintag);
 			if (event.knowers) {
-				cards[num].addKnower(event.knowers); //添加事件设定的知情者。
+				cards[num].addKnower(event.knowers); //添加事件設定的知情者。
 			}
 			if (_status.discarded) {
 				_status.discarded.remove(cards[num]);
@@ -10040,7 +10040,7 @@ export const Content = {
 			else frag2.appendChild(cards[num]);
 		}
 		/*
-		var addv=function(){//针对对称布局的动画，用不上了
+		var addv=function(){//針對對稱佈局的動畫，用不上了
 			if(player==game.me){
 				game.addVideo('gain12',player,[get.cardsInfo(frag1.childNodes),get.cardsInfo(frag2.childNodes),event.gaintag]);
 			}
@@ -10051,8 +10051,8 @@ export const Content = {
 				_status.cardPileNum=num;
 			},player,cards,ui.cardPile.childNodes.length,event.gaintag);
 		};
-		//更改了directgain来使录像正常显示故不在单独增加录像
-		//game.addVideo("directgain", player, get.cardsInfo(cards));//录像正常显示角色手牌
+		//更改了directgain來使錄像正常顯示故不在單獨增加錄像
+		//game.addVideo("directgain", player, get.cardsInfo(cards));//錄像正常顯示角色手牌
 		if(event.animate=='draw'){
 			player.$draw(cards.length);
 			game.pause();
@@ -10101,13 +10101,13 @@ export const Content = {
 				for(var i in evtmap){
 					var source=(_status.connectMode?lib.playerOL:game.playerMap)[i];
 					source.$give(evtmap[i][0],player,event.log);
-					//明置给出动画
+					//明置給出動畫
 					//source.$give(cards.length,player,event.log)
 				}
 			}
 			else{
 				for(var i in evtmap){
-					//$giveAuto会自动处理隐藏/明置和动画，所以不需要区分
+					//$giveAuto會自動處理隱藏/明置和動畫，所以不需要區分
 					var source=(_status.connectMode?lib.playerOL:game.playerMap)[i];
 					if(evtmap[i][1].length) source.$giveAuto(evtmap[i][1],player,event.log);
 					if(evtmap[i][2].length) source.$give(evtmap[i][2],player,event.log);
@@ -10150,7 +10150,7 @@ export const Content = {
 		game.delayx();
 		var num=player.needsToDiscard();
 		if(num>0){
-			var next=player.chooseToDiscard(num,true,`爆牌：弃${num}张牌`).set('baoPai',true);
+			var next=player.chooseToDiscard(num,true,`爆牌：棄${num}張牌`).set('baoPai',true);
 			if(event.cause=='damage'){
 				next.set('cause','damage');
 				if(event.faShu===true){
@@ -10164,7 +10164,7 @@ export const Content = {
 			}else{
 				next.set('shiQiXiaJiang',true);
 			}
-			//传递士气最大变动值
+			//傳遞士氣最大變動值
 			if(typeof event.shiQiMax=='number'){
 				next.set('shiQiMax',event.shiQiMax);
 			}
@@ -10251,8 +10251,8 @@ export const Content = {
 		}
 		if(event.animate=='draw'){
 			player.$draw(cards.length);
-			//if(event.log) game.log(player,'将',get.cnNumber(cards.length),'张牌置于了角色牌上');
-			if(event.log) game.log(player,'将',cards.length,'张',`【${get.translation(event.gaintag[0])}】`,'置于了角色牌上');
+			//if(event.log) game.log(player,'將',get.cnNumber(cards.length),'張牌置於了角色牌上');
+			if(event.log) game.log(player,'將',cards.length,'張',`【${get.translation(event.gaintag[0])}】`,'置於了角色牌上');
 			game.pause();
 			setTimeout(function(){
 				player.$addToExpansion(cards,null,event.gaintag);
@@ -10271,8 +10271,8 @@ export const Content = {
 		}
 		else if(event.animate=='gain2'||event.animate=='draw2'){
 			if(event.log){
-				if(event.source) game.log(event.source,'将',cards,`【${get.translation(event.gaintag[0])}】`,'置于',player,'角色牌上');
-				else game.log(player,'将',cards,`【${get.translation(event.gaintag[0])}】`,'置于角色牌上');
+				if(event.source) game.log(event.source,'將',cards,`【${get.translation(event.gaintag[0])}】`,'置於',player,'角色牌上');
+				else game.log(player,'將',cards,`【${get.translation(event.gaintag[0])}】`,'置於角色牌上');
 			}
 
 			var gain2t=300;
@@ -10293,7 +10293,7 @@ export const Content = {
 					var source=(_status.connectMode?lib.playerOL:game.playerMap)[i];
 					source.$give(evtmap[i][0],player,false);
 					if(event.log){
-						game.log(player,'将',evtmap[i][0],`【${get.translation(event.gaintag[0])}】`,'置于角色牌上');
+						game.log(player,'將',evtmap[i][0],`【${get.translation(event.gaintag[0])}】`,'置於角色牌上');
 					}
 				}
 			}
@@ -10302,12 +10302,12 @@ export const Content = {
 					var source=(_status.connectMode?lib.playerOL:game.playerMap)[i];
 					if(evtmap[i][1].length){
 						source.$giveAuto(evtmap[i][1].length,player,false);
-						//if(event.log) game.log(player,'将',get.cnNumber(evtmap[i][1].length),'张牌置于了角色牌上');
-						if(event.log) game.log(player,'将',evtmap[i][1].length,'张',`【${get.translation(event.gaintag[0])}】`,'置于角色牌上');
+						//if(event.log) game.log(player,'將',get.cnNumber(evtmap[i][1].length),'張牌置於了角色牌上');
+						if(event.log) game.log(player,'將',evtmap[i][1].length,'張',`【${get.translation(event.gaintag[0])}】`,'置於角色牌上');
 					}
 					if(evtmap[i][2].length){
 						source.$give(evtmap[i][2],player,false);
-						if(event.log) game.log(player,'将',evtmap[i][2],`【${get.translation(event.gaintag[0])}】`,'置于角色牌上');
+						if(event.log) game.log(player,'將',evtmap[i][2],`【${get.translation(event.gaintag[0])}】`,'置於角色牌上');
 					}
 				}
 			}
@@ -10451,7 +10451,7 @@ export const Content = {
 			for (var j = 0; j < cardx.length; j++) {
 				if (cardx[j].gaintag && cardx[j].gaintag.length) {
 					event.gaintag_map[cardx[j].cardid] = cardx[j].gaintag.slice(0);
-					//仅移除非永久标记
+					//僅移除非永久標記
 					const tags = cardx[j].gaintag.slice().filter(tag => tag.startsWith("eternal_"));
 					if(tags.length>0) cardx[j].addGaintag(tags);
 					else cardx[j].removeGaintag(true);
@@ -10630,7 +10630,7 @@ export const Content = {
 			);
 			if (_status.renku.length > 6) {
 				var cards = _status.renku.splice(0, _status.renku.length - 6);
-				game.log(cards, "从仁库进入了弃牌堆");
+				game.log(cards, "從仁庫進入了棄牌堆");
 				game.cardsDiscard(cards).set("outRange", true).fromRenku = true;
 			}
 			game.updateRenku();
@@ -10694,11 +10694,11 @@ export const Content = {
 				if (lib.config.background_audio) game.playAudio(damageAudioInfo);
 			}, damageAudioInfo);
 		}
-		var str = event.unreal ? "视为受到了" : "受到了";
-		if (source) str += '来自<span class="bluetext">' + (source == player ? "自己" : get.translation(source)) + "</span>的";
-		str += get.cnNumber(num) + "点";
-		if (event.nature) str += get.translation(event.nature) + "属性";
-		str += "伤害";
+		var str = event.unreal ? "視為受到了" : "受到了";
+		if (source) str += '來自<span class="bluetext">' + (source == player ? "自己" : get.translation(source)) + "</span>的";
+		str += get.cnNumber(num) + "點";
+		if (event.nature) str += get.translation(event.nature) + "屬性";
+		str += "傷害";
 		game.log(player, str);
 		if (player.stat[player.stat.length - 1].damaged == undefined) {
 			player.stat[player.stat.length - 1].damaged = num;
@@ -10812,10 +10812,10 @@ export const Content = {
 		}
 		event.trigger('shouDaoShangHai');
 		event.numx=num;
-		var str=`造成的${num}点${event.faShu?'法术':'攻击'}伤害`;
+		var str=`造成的${num}點${event.faShu?'法術':'攻擊'}傷害`;
 		game.log(player,'受到',source,str);
 		"step 2"
-		//检测治疗触发器是否能触发
+		//檢測治療觸發器是否能觸發
 		if(event.canZhiLiao!=false&&event.diXiao!=false){
 			event.canZhiLiao=true;
 		}
@@ -10850,7 +10850,7 @@ export const Content = {
 			if(lib.config.background_audio) game.playAudio('effect','damage'+(num>2?'2':''));
 		},num);
 		if(event.numx!=num){
-			var str=`造成的${num}点${event.faShu?'法术':'攻击'}伤害`;
+			var str=`造成的${num}點${event.faShu?'法術':'攻擊'}傷害`;
 			game.log(player,'承受',source,str);
 		}
 		if(player.stat[player.stat.length-1].damaged==undefined){
@@ -10883,7 +10883,7 @@ export const Content = {
 			}else{
 				next.set('shiQiXiaJiang',true);
 			}
-			//传递士气最大变动值
+			//傳遞士氣最大變動值
 			if(typeof event.shiQiMax=='number'){
 				next.set('shiQiMax',event.shiQiMax);
 			}
@@ -10958,7 +10958,7 @@ export const Content = {
 				}
 			}, player);
 			player.$damagepop(num, "wood");
-			game.log(player, "回复了" + get.cnNumber(num) + "点体力");
+			game.log(player, "回覆了" + get.cnNumber(num) + "點體力");
 
 			player.changeHp(num, false);
 		} else event._triggered = null;
@@ -10978,7 +10978,7 @@ export const Content = {
 				game.playAudio("effect", "loseHp");
 			}
 		});
-		game.log(player, "失去了" + get.cnNumber(num) + "点体力");
+		game.log(player, "失去了" + get.cnNumber(num) + "點體力");
 		player.changeHp(-num);
 		"step 1";
 		if (player.hp <= 0 && !event.nodying) {
@@ -10989,7 +10989,7 @@ export const Content = {
 	},
 	doubleDraw: function () {
 		"step 0";
-		player.chooseBool("你的主副将体力上限之和是奇数，是否摸一张牌？");
+		player.chooseBool("你的主副將體力上限之和是奇數，是否摸一張牌？");
 		"step 1";
 		if (result.bool) {
 			player.draw();
@@ -10997,7 +10997,7 @@ export const Content = {
 	},
 	loseMaxHp: function () {
 		"step 0";
-		game.log(player, "减少了" + get.cnNumber(num) + "点体力上限");
+		game.log(player, "減少了" + get.cnNumber(num) + "點體力上限");
 		player.maxHp -= num;
 		if (isNaN(player.maxHp)) {
 			player.maxHp = 0;
@@ -11011,7 +11011,7 @@ export const Content = {
 	},
 	gainMaxHp: function () {
 		"step 0";
-		game.log(player, "增加了" + get.cnNumber(num) + "点体力上限");
+		game.log(player, "增加了" + get.cnNumber(num) + "點體力上限");
 		player.maxHp += num;
 		player.update();
 	},
@@ -11024,7 +11024,7 @@ export const Content = {
 			event.getParent().hujia = event.hujia;
 			event.num += event.hujia;
 			//log moved to changeHujia
-			//game.log(player,'的护甲抵挡了'+get.cnNumber(event.hujia)+'点伤害');
+			//game.log(player,'的護甲抵擋了'+get.cnNumber(event.hujia)+'點傷害');
 			player.changeHujia(-event.hujia).type = "damage";
 		}
 		//old part
@@ -11060,7 +11060,7 @@ export const Content = {
 			_status.dying = list;
 		}, _status.dying);
 		event.trigger("dying");
-		game.log(player, "濒死");
+		game.log(player, "瀕死");
 		"step 1";
 		delete event.filterStop;
 		if (player.hp > 0 || event.nodying) {
@@ -11113,14 +11113,14 @@ export const Content = {
 			player.classList.add("unseen");
 		}
 		if (source) {
-			game.log(player, "被", source, "杀害");
+			game.log(player, "被", source, "殺害");
 			if (source.stat[source.stat.length - 1].kill == undefined) {
 				source.stat[source.stat.length - 1].kill = 1;
 			} else {
 				source.stat[source.stat.length - 1].kill++;
 			}
 		} else {
-			game.log(player, "阵亡");
+			game.log(player, "陣亡");
 		}
 
 		// player.removeEquipTrigger();
@@ -11214,7 +11214,7 @@ export const Content = {
 				ui.revive = ui.create.control("revive", ui.click.dierevive);
 			}
 			if (get.config("continue_game") && !ui.continue_game && lib.mode[lib.config.mode].config.continue_game && !_status.brawl && !game.no_continue_game) {
-				ui.continue_game = ui.create.control("再战", game.reloadCurrent);
+				ui.continue_game = ui.create.control("再戰", game.reloadCurrent);
 			}
 			if (get.config("dierestart") && lib.mode[lib.config.mode].config.dierestart && !ui.restart) {
 				ui.restart = ui.create.control("restart", game.reload);
@@ -11270,7 +11270,7 @@ export const Content = {
 			source.classList.add("topcount");
 		}
 	},
-	//暂时还是只能一次加一张牌，需要后续跟进处理
+	//暫時還是隻能一次加一張牌，需要後續跟進處理
 	addJudge: async function (event, trigger, player) {
 		let card, cardName;
 		if (typeof event.card == "string") {
@@ -11295,7 +11295,7 @@ export const Content = {
 			cardInfo = lib.card[cardName],
 			visible = cardInfo && !cardInfo.blankCard;
 		event.visible = visible;
-		//失去牌的一长串
+		//失去牌的一長串
 		if (event.cards?.length) {
 			const map = {};
 			for (const i of event.cards) {
@@ -11363,10 +11363,10 @@ export const Content = {
 			if (cardInfo.blankCard) {
 				game.log(player, '被扣置了<span class="yellowtext">' + get.translation(cardName) + "</span>");
 			} else {
-				game.log(player, '被贴上了<span class="yellowtext">' + get.translation(cardName) + "</span>（", cards, "）");
+				game.log(player, '被貼上了<span class="yellowtext">' + get.translation(cardName) + "</span>（", cards, "）");
 			}
 		} else {
-			game.log(player, "被贴上了", card);
+			game.log(player, "被貼上了", card);
 		}
 	},
 	addJudge_old: function () {
@@ -11452,11 +11452,11 @@ export const Content = {
 				if (lib.card[viewAs].blankCard) {
 					game.log(player, '被扣置了<span class="yellowtext">' + get.translation(cards[0].viewAs) + "</span>");
 				} else {
-					game.log(player, '被贴上了<span class="yellowtext">' + get.translation(cards[0].viewAs) + "</span>（", cards, "）");
+					game.log(player, '被貼上了<span class="yellowtext">' + get.translation(cards[0].viewAs) + "</span>（", cards, "）");
 				}
 			} else {
 				cards[0].classList.remove("fakejudge");
-				game.log(player, "被贴上了", cards);
+				game.log(player, "被貼上了", cards);
 			}
 			game.addVideo("addJudge", player, [get.cardInfo(cards[0]), cards[0].viewAs]);
 		}
@@ -11508,7 +11508,7 @@ export const Content = {
 			get.id()
 		);
 
-		game.log(player, "进行" + event.judgestr + "判定，亮出的判定牌为", player.judging[0]);
+		game.log(player, "進行" + event.judgestr + "判定，亮出的判定牌為", player.judging[0]);
 		game.delay(2);
 		if (!event.noJudgeTrigger) event.trigger("judge");
 		"step 1";
@@ -11548,7 +11548,7 @@ export const Content = {
 		event.dialog.close();
 		game.addVideo("judge2", null, event.videoId);
 		ui.arena.classList.remove("thrownhighlight");
-		game.log(player, "的判定结果为", event.result.card);
+		game.log(player, "的判定結果為", event.result.card);
 		event.trigger("judgeFixing");
 		if (event.callback) {
 			var next = game.createEvent("judgeCallback", false);
@@ -11570,7 +11570,7 @@ export const Content = {
 	/*
 	link: function () {
 		const isLinked = player.isLinked();
-		game.log(player, (isLinked ? "解除" : "被") + "连环");
+		game.log(player, (isLinked ? "解除" : "被") + "連環");
 		game.broadcastAll(
 			(player, isLinked) => {
 				if (lib.config.background_audio) game.playAudio("effect", "link" + (isLinked ? "_clear" : ""));
@@ -11586,7 +11586,7 @@ export const Content = {
 	},*/
 	link: function () {
 		const isLinked = player.isLinked();
-		game.log(player, (isLinked ? "重置" : "横置"));
+		game.log(player, (isLinked ? "重置" : "橫置"));
 		game.broadcastAll(
 			(player, isLinked) => {
 				if (lib.config.background_audio) game.playAudio("effect", "link" + (isLinked ? "_clear" : ""));
@@ -11609,8 +11609,8 @@ export const Content = {
 		var cards = get.cards(num);
 		game.cardsGotoOrdering(cards);
 		var next = player.chooseToMove();
-		next.set("list", [["牌堆顶", cards], ["牌堆底"]]);
-		next.set("prompt", event.prompt || "点击或拖动将牌移动到牌堆顶或牌堆底");
+		next.set("list", [["牌堆頂", cards], ["牌堆底"]]);
+		next.set("prompt", event.prompt || "點擊或拖動將牌移動到牌堆頂或牌堆底");
 		next.processAI =
 			event.processAI ||
 			function (list) {
@@ -11712,13 +11712,13 @@ export const Content = {
 		game.addCardKnower(top, player);
 		game.addCardKnower(bottom, player);
 		player.popup(get.cnNumber(top.length) + "上" + get.cnNumber(bottom.length) + "下");
-		game.log(player, "将" + get.cnNumber(top.length) + "张牌置于牌堆顶");
+		game.log(player, "將" + get.cnNumber(top.length) + "張牌置於牌堆頂");
 		game.updateRoundNumber();
 		game.delayx();
 	},
 	chooseToMove_new: function () {
 		"step 0";
-		//联机时间
+		//聯機時間
 		if (event.chooseTime && _status.connectMode && !game.online) {
 			event.time = lib.configOL.choose_timeout;
 			game.broadcastAll(function (time) {
@@ -11726,7 +11726,7 @@ export const Content = {
 			}, event.chooseTime);
 		}
 		if (event.isMine()) {
-			//自动选择
+			//自動選擇
 			event.switchToAuto = function () {
 				if (!event.filterOk(event.moved)) {
 					if (!event.forced) event._result = { bool: false };
@@ -11745,9 +11745,9 @@ export const Content = {
 					ui.arena.classList.remove("choose-to-move");
 				}, 500);
 			};
-			//创造dialog
+			//創造dialog
 			event.dialog = ui.create.dialog();
-			event.dialog.addNewRow(event.prompt || "请选择要操作的牌");
+			event.dialog.addNewRow(event.prompt || "請選擇要操作的牌");
 			event.dialog.selectedCard = null;
 			event.dialog.isBusy = false;
 			event.dialog.classList.add("scroll1");
@@ -11757,7 +11757,7 @@ export const Content = {
 				ui.arena.classList.add("choose-to-move");
 				event.dialog.classList.add("fullheight");
 			}
-			//刷新，确认是否返回结果
+			//刷新，確認是否返回結果
 			function updateButtons() {
 				event.moved = Array.from({
 					length: event.list.slice().reduce((sum, currentList) => {
@@ -11775,7 +11775,7 @@ export const Content = {
 					else if (ui.confirm) ui.confirm.close();
 				}
 			}
-			//点击每个卡的事件
+			//點擊每個卡的事件
 			function clickItem(card, container, allContainers) {
 				if (event.dialog.isBusy) return;
 				if (event.dialog.selectedCard) {
@@ -11793,7 +11793,7 @@ export const Content = {
 					card.classList.add("selected");
 				}
 			}
-			//点击容器的事件回调
+			//點擊容器的事件回調
 			function clickItemContainer(itemContainer, i, allContainers) {
 				if (event.dialog.isBusy || !event.dialog.selectedCard) return;
 				if (itemContainer.contains(event.dialog.selectedCard)) return;
@@ -11808,7 +11808,7 @@ export const Content = {
 				event.dialog.selectedCard.classList.remove("selected");
 				event.dialog.selectedCard = null;
 			}
-			//框的部分属性
+			//框的部分屬性
 			let itemContainerCss = event.itemContainerCss || {
 				justifyContent: "center",
 				minHeight: "100px",
@@ -11827,7 +11827,7 @@ export const Content = {
 			}
 			event.dialog.open();
 			updateButtons();
-			//获取结果
+			//獲取結果
 			event.custom.replace.confirm = function (bool) {
 				if (bool)
 					event._result = {
@@ -11843,7 +11843,7 @@ export const Content = {
 					ui.arena.classList.remove("choose-to-move");
 				}, 500);
 			};
-			//开搞
+			//開搞
 			game.pause();
 			game.countChoose();
 			event.choosing = true;
@@ -11853,13 +11853,13 @@ export const Content = {
 			event.result = "ai";
 		}
 		"step 1";
-		//时间限制
+		//時間限制
 		if (event.time) {
 			game.broadcastAll(function (time) {
 				lib.configOL.choose_timeout = time;
 			}, event.time);
 		}
-		//结果获取
+		//結果獲取
 		var result = event.result || result;
 		if ((!result || result == "ai" || (event.forced && !result.bool)) && event.processAI) {
 			var moved = event.processAI(event.list);
@@ -11872,11 +11872,11 @@ export const Content = {
 		}
 		event.result = result;
 	},
-	//先选择按钮再选择目标的函数，可以简化一些交互流程，目前可以隐藏弹窗
-	//该事件目前采用async contents的写法
+	//先選擇按鈕再選擇目標的函數，可以簡化一些交互流程，目前可以隱藏彈窗
+	//該事件目前採用async contents的寫法
 	chooseButtonTarget: [
 		async (event, _trigger, player) => {
-			//根据player.chooseButtonTarget获取到的dialog信息创建对话框，也支持createDialog
+			//根據player.chooseButtonTarget獲取到的dialog信息創建對話框，也支持createDialog
 			if (typeof event.dialog == "number") {
 				event.dialog = get.idDialog(event.dialog);
 			}
@@ -11897,7 +11897,7 @@ export const Content = {
 					event.dialog.style.display = "";
 					event.dialog.open();
 					if (event.canHidden) {
-						//增加隐藏窗口的按钮
+						//增加隱藏窗口的按鈕
 						const func = () => {
 							const event = get.event();
 							const controls = [
@@ -11910,15 +11910,15 @@ export const Content = {
 							event.controls = [
 								ui.create.control(
 									controls.concat([
-										"隐藏窗口",
+										"隱藏窗口",
 										"stayleft",
 										link => {
 											const control = event.controls[0];
 											if (event.dialog.style.display == "none") {
-												control.childNodes[0].innerHTML = "隐藏窗口";
+												control.childNodes[0].innerHTML = "隱藏窗口";
 												event.dialog.style.display = "";
 											} else {
-												control.childNodes[0].innerHTML = "显示窗口";
+												control.childNodes[0].innerHTML = "顯示窗口";
 												event.dialog.style.display = "none";
 											}
 										},
@@ -11934,7 +11934,7 @@ export const Content = {
 								replace: {},
 							};
 						if (event.custom.add.confirm == undefined) {
-							//如果有人canHidden是true然后还动了这部分请把一部分代码复制过去适配一下，不然隐藏的按钮不会关闭
+							//如果有人canHidden是true然後還動了這部分請把一部分代碼複製過去適配一下，不然隱藏的按鈕不會關閉
 							event.custom.add.confirm = function (bool) {
 								if (bool != true) return;
 								const event = get.event();
@@ -11950,12 +11950,12 @@ export const Content = {
 			} else if (event.isOnline()) {
 				event.result = await event.sendAsync();
 			} else {
-				//考虑中途托管的情况
+				//考慮中途託管的情況
 				event.result = "ai";
 			}
 		},
 		async (event, _trigger, player, result) => {
-			//处理ai的选择结果
+			//處理ai的選擇結果
 			if (event.result == "ai") {
 				game.check();
 				if (ai.basic.chooseButton(event.ai1) || event.forced) {
@@ -11971,7 +11971,7 @@ export const Content = {
 			}
 		},
 		async (event, _trigger, player, result) => {
-			//处理选择的结果
+			//處理選擇的結果
 			event.resume();
 			if (event.result.bool && event.animate !== false) {
 				for (var i = 0; i < event.result.targets.length; i++) {
@@ -11983,7 +11983,7 @@ export const Content = {
 	],
 	chooseButtonCard: [
 		async (event, _trigger, player) => {
-			//根据player.chooseButtonCard获取到的dialog信息创建对话框，也支持createDialog
+			//根據player.chooseButtonCard獲取到的dialog信息創建對話框，也支持createDialog
 			if (typeof event.dialog == "number") {
 				event.dialog = get.idDialog(event.dialog);
 			}
@@ -12009,12 +12009,12 @@ export const Content = {
 			} else if (event.isOnline()) {
 				event.result = await event.sendAsync();
 			} else {
-				//考虑中途托管的情况
+				//考慮中途託管的情況
 				event.result = "ai";
 			}
 		},
 		async (event, _trigger, player, result) => {
-			//处理ai的选择结果
+			//處理ai的選擇結果
 			if (event.result == "ai") {
 				game.check();
 				if (ai.basic.chooseButton(event.ai1) || event.forced) {
@@ -12030,7 +12030,7 @@ export const Content = {
 			}
 		},
 		async (event, _trigger, player, result) => {
-			//处理选择的结果
+			//處理選擇的結果
 			event.resume();
 			if (event.result.bool && event.animate !== false) {
 				for (var i = 0; i < event.result.targets.length; i++) {
@@ -12050,18 +12050,18 @@ export const Content = {
 		if(side==true){
 			game.hongXingBei+=num;
 			if(num>0){
-				game.log('<span style="color:red;">红方</span>星杯数量增加',num);
+				game.log('<span style="color:red;">紅方</span>星杯數量增加',num);
 			}else if(num<0){
 				num=-num;
-				game.log('<span style="color:red;">红方</span>星杯数量减少',num);
+				game.log('<span style="color:red;">紅方</span>星杯數量減少',num);
 			}
 		}else if(side==false){
 			game.lanXingBei+=num;
 			if(num>0){
-				game.log('<span style="color:lightblue;">蓝方</span>星杯数量增加',num);
+				game.log('<span style="color:lightblue;">藍方</span>星杯數量增加',num);
 			}else if(num<0){
 				num=-num;
-				game.log('<span style="color:lightblue;">蓝方</span>星杯数量减少',num);
+				game.log('<span style="color:lightblue;">藍方</span>星杯數量減少',num);
 			}
 		}
 
@@ -12085,7 +12085,7 @@ export const Content = {
 		'step 2'
 		num=event.num;
 		side=event.side;
-		//增加参数是否存在最大变动值，如果存在则进行限制
+		//增加參數是否存在最大變動值，如果存在則進行限制
 		if(typeof event.shiQiMax=='number'){
 			if(num<0&&num<event.shiQiMax){
 				num=event.shiQiMax;
@@ -12096,14 +12096,14 @@ export const Content = {
 			
 		}
 
-		if(player.side!=side){//造成士气变动与事件玩家阵营不符时，则事件玩家为来源
+		if(player.side!=side){//造成士氣變動與事件玩家陣營不符時，則事件玩家為來源
 			if(player.stat[player.stat.length-1].changeShiQi==undefined){
 				player.stat[player.stat.length-1].changeShiQi=-num;
 			}
 			else{
 				player.stat[player.stat.length-1].changeShiQi+=-num;
 			}
-		}else{//自己变动了士气
+		}else{//自己變動了士氣
 			if(player.stat[player.stat.length-1].changedShiQi==undefined){
 				player.stat[player.stat.length-1].changedShiQi=-num;
 			}
@@ -12124,18 +12124,18 @@ export const Content = {
 		if(side==true){
 			game.hongShiQi+=num;
 			if(num>0){
-				game.log('<span style="color:red;">红方</span>士气增加',num);
+				game.log('<span style="color:red;">紅方</span>士氣增加',num);
 			}else if(num<0){
 				num=-num;
-				game.log('<span style="color:red;">红方</span>士气减少',num);
+				game.log('<span style="color:red;">紅方</span>士氣減少',num);
 			}
 		}else if(side==false){
 			game.lanShiQi+=num;
 			if(num>0){
-				game.log('<span style="color:lightblue;">蓝方</span>士气增加',num);
+				game.log('<span style="color:lightblue;">藍方</span>士氣增加',num);
 			}else if(num<0){
 				num=-num;
-				game.log('<span style="color:lightblue;">蓝方</span>士气减少',num);
+				game.log('<span style="color:lightblue;">藍方</span>士氣減少',num);
 			}
 		}
 
@@ -12173,12 +12173,12 @@ export const Content = {
 				for(let i=0;i<num;i++){
 					game.hongZhanJi.push(xingShi);
 				}
-				game.log(`<span style="color:red;">红方</span>战绩区增加了${num}个`,name);
+				game.log(`<span style="color:red;">紅方</span>戰績區增加了${num}個`,name);
 			}else if(side==false){
 				for(let i=0;i<num;i++){
 					game.lanZhanJi.push(xingShi);
 				}
-				game.log(`<span style="color:lightblue;">蓝方</span>战绩区增加了${num}个`,name);
+				game.log(`<span style="color:lightblue;">藍方</span>戰績區增加了${num}個`,name);
 			}
 		}else if(num<0){
 			num=-num;
@@ -12189,7 +12189,7 @@ export const Content = {
 						game.hongZhanJi.splice(index, 1);  
 					}
 				}
-				game.log(`<span style="color:red;">红方</span>战绩区移除了${num}个`,name);
+				game.log(`<span style="color:red;">紅方</span>戰績區移除了${num}個`,name);
 			}else if(side==false){
 				for(let i=0;i<num;i++){
 					let index = game.lanZhanJi.indexOf(xingShi);  
@@ -12197,7 +12197,7 @@ export const Content = {
 						game.lanZhanJi.splice(index, 1);  
 					}
 				}
-				game.log(`<span style="color:lightblue;">蓝方</span>战绩区移除了${num}个`,name);
+				game.log(`<span style="color:lightblue;">藍方</span>戰績區移除了${num}個`,name);
 			}	
 		}
 		game.hongZhanJi.sort();
@@ -12219,7 +12219,7 @@ export const Content = {
 	removeBiShaShuiJing:function(){
 		'step 0'
 		var list=['baoShi','shuiJing'];
-		player.chooseControl(list).set('prompt','选择要移除的星石').set('ai',function(){
+		player.chooseControl(list).set('prompt','選擇要移除的星石').set('ai',function(){
 			return 1;
 		});
 		'step 1'
@@ -12271,16 +12271,16 @@ export const Content = {
 				game.playAudio("effect", "heal");
 			});
 			if(event.yiChu==true){
-				if(event.source) game.log(event.source,'使',player,'获得了'+num+'点','[治疗]','，','[治疗]','溢出');
-				else game.log(player,'获得了'+num+'点','[治疗]','，','[治疗]','溢出');
+				if(event.source) game.log(event.source,'使',player,'獲得了'+num+'點','[治療]','，','[治療]','溢出');
+				else game.log(player,'獲得了'+num+'點','[治療]','，','[治療]','溢出');
 			}else{
-				if(event.source) game.log(event.source,'使',player,'获得了'+num+'点','[治疗]');
-				else game.log(player,'获得了'+num+'点','[治疗]');
+				if(event.source) game.log(event.source,'使',player,'獲得了'+num+'點','[治療]');
+				else game.log(player,'獲得了'+num+'點','[治療]');
 			}
 		}else if(num<0){
 			num=-num;
-			if(event.source) game.log(event.source,'使',player,'移除了'+num+'点','[治疗]');
-			else game.log(player,'移除了'+num+'点','[治疗]');
+			if(event.source) game.log(event.source,'使',player,'移除了'+num+'點','[治療]');
+			else game.log(player,'移除了'+num+'點','[治療]');
 		}
 		'step 1'
 		if(player.zhiLiao<0){
@@ -12313,7 +12313,7 @@ export const Content = {
 		if(maxValue<=numx){
 			drawNum = maxValue;
 		}
-		var next=player.chooseControl(list).set('prompt','选择摸牌数量');
+		var next=player.chooseControl(list).set('prompt','選擇摸牌數量');
 		next.set('ai',function(){
 			return _status.event.drawNum;
 		});
@@ -12331,7 +12331,7 @@ export const Content = {
 		var list=target.jiChuXiaoGuoList();
 		if(list.length==0) event.finish();
 		else{
-			player.chooseControl(list).set('prompt','选择要获得的基础效果').set('ai',function(){
+			player.chooseControl(list).set('prompt','選擇要獲得的基礎效果').set('ai',function(){
 				var player=_status.event.player;
 				var target=_status.event.targetX;
 				var list=_status.event.listX;
@@ -12360,7 +12360,7 @@ export const Content = {
 		event.control=result.control;
 		if(event.control=='_zhongDu' && target.getExpansions('_zhongDu').length!=1){
 			event.flag=true;
-			player.chooseCardButton(target.getExpansions('_zhongDu'),true,'选择要获得的中毒');
+			player.chooseCardButton(target.getExpansions('_zhongDu'),true,'選擇要獲得的中毒');
 		}else{
 			event.card=target.getExpansions(event.control);
 			if(event.control=='_zhongDu') target.storage.zhongDu=[];
@@ -12378,14 +12378,14 @@ export const Content = {
 			card:event.card,
 		};
 		'step 3'
-		game.log(player,'获得了',event.card);
+		game.log(player,'獲得了',event.card);
 		player.gain(event.card);
 		'step 4'
 		if(!game.jiChuXiaoGuo.pai_xiaoGuo.includes(event.control)){
 			target.removeSkill(event.control);
 		}
 		'step 5'
-		//在此时机获取result可用tigger.result获取result
+		//在此時機獲取result可用tigger.result獲取result
 		event.trigger('gainJiChuXiaoGuo');
 	},
 	removeJiChuXiaoGuo:function(){
@@ -12393,7 +12393,7 @@ export const Content = {
 		var list=target.jiChuXiaoGuoList();
 		if(list.length==0) event.finish();
 		else{
-			player.chooseControl(list).set('prompt','选择要移除的基础效果').set('ai',function(){
+			player.chooseControl(list).set('prompt','選擇要移除的基礎效果').set('ai',function(){
 				var player=_status.event.player;
 				var target=_status.event.targetX;
 				var list=_status.event.listX;
@@ -12422,7 +12422,7 @@ export const Content = {
 		event.control=result.control;
 		if(event.control=='_zhongDu' && target.getExpansions('_zhongDu').length!=1){
 			event.flag=true;
-			player.chooseCardButton(target.getExpansions('_zhongDu'),true,'选择要移除的中毒');
+			player.chooseCardButton(target.getExpansions('_zhongDu'),true,'選擇要移除的中毒');
 		}else{
 			event.card=target.getExpansions(event.control);
 			if(event.control=='_zhongDu') target.storage.zhongDu=[];
@@ -12446,7 +12446,7 @@ export const Content = {
 			target.removeSkill(event.control);
 		}
 		'step 5'
-		//在此时机获取result可用tigger.result获取result
+		//在此時機獲取result可用tigger.result獲取result
 		event.trigger('removeJiChuXiaoGuo');
 	},
 	tiaoZhengShouPai: async function (event, trigger, player) {
@@ -12455,7 +12455,7 @@ export const Content = {
 		if(event.num<=0) return;
 		
 		if(handcardsNum!=event.num){
-			game.log(player,'的手牌数从',handcardsNum,'调整为',event.num);
+			game.log(player,'的手牌數從',handcardsNum,'調整為',event.num);
 			if(handcardsNum<event.num){
 				var next=game.createEvent('tiaoZheng',false);
 				next.player = player;
@@ -12492,7 +12492,7 @@ export const Content = {
 			}
 			game.pause();
 			if(range[1]>1&&typeof event.selectCard!='function'){
-				event.promptdiscard=ui.create.control('AI代选',function(){
+				event.promptdiscard=ui.create.control('AI代選',function(){
 					ai.basic.chooseCard(event.ai);
 					if(_status.event.custom&&_status.event.custom.add.card){
 						_status.event.custom.add.card();
@@ -12511,13 +12511,13 @@ export const Content = {
 				var str;
 				if(typeof(event.prompt)=='string') str=event.prompt;
 				else{
-					str='请弃置';
+					str='請棄置';
 					if(range[0]==range[1]) str+=get.cnNumber(range[0]);
 					else if(range[1]==Infinity) str+='至少'+get.cnNumber(range[0]);
 					else str+=get.cnNumber(range[0])+'至'+get.cnNumber(range[1]);
-					str+='张';
+					str+='張';
 					if(event.position=='h'||event.position==undefined) str+='手';
-					if(event.position=='e') str+='装备';
+					if(event.position=='e') str+='裝備';
 					str+='牌';
 				}
 				event.dialog=ui.create.dialog(str);

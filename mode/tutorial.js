@@ -35,21 +35,21 @@ export default () => {
 					game.reload();
 				};
 				var step1 = function () {
-					ui.create.dialog("欢迎来到无名星杯，是否进入新手向导？");
+					ui.create.dialog("歡迎來到無名星杯，是否進入新手嚮導？");
 					game.saveConfig("new_tutorial", true);
-					ui.dialog.add('<div class="text center">跳过后，你可以在选项-其它中重置新手向导');
+					ui.dialog.add('<div class="text center">跳過後，你可以在選項-其它中重置新手嚮導');
 					ui.auto.hide();
-					ui.create.control("跳过向导", function () {
+					ui.create.control("跳過嚮導", function () {
 						finish();
 					});
-					ui.create.control("继续", step2);
+					ui.create.control("繼續", step2);
 				};
 				var step2 = function () {
 					if (lib.config.touchscreen) {
 						clear();
-						ui.create.dialog("触屏模式中，下划可以显示菜单，上划可以切换托管，双指单击可以暂停");
-						ui.dialog.add('<div class="text center">你可以在选项-通用-中更改手势设置');
-						ui.create.control("继续", step4);
+						ui.create.dialog("觸屏模式中，下劃可以顯示菜單，上劃可以切換託管，雙指單擊可以暫停");
+						ui.dialog.add('<div class="text center">你可以在選項-通用-中更改手勢設置');
+						ui.create.control("繼續", step4);
 					} else {
 						step3();
 					}
@@ -60,15 +60,15 @@ export default () => {
 					ui.click.configMenu();
 					ui.control.classList.add("noclick_click_important");
 					ui.control.style.top = "calc(100% - 105px)";
-					yield new Promise(resolve => ui.create.control("在菜单中，可以进行各项设置", resolve));
-					ui.click.menuTab("选项");
-					yield new Promise(resolve => ui.controls[0].replace("如果你感到游戏较卡，可以开启流畅模式", resolve));
+					yield new Promise(resolve => ui.create.control("在菜單中，可以進行各項設置", resolve));
+					ui.click.menuTab("選項");
+					yield new Promise(resolve => ui.controls[0].replace("如果你感到遊戲較卡，可以開啟流暢模式", resolve));
 					ui.click.menuTab("角色");
-					yield new Promise(resolve => ui.controls[0].replace("在角色或卡牌一栏中，单击角色/卡牌可以将其禁用", resolve));
-					ui.click.menuTab("扩展");
-                    yield new Promise(resolve => ui.controls[0].replace("在扩展中，可以下载和导入扩展", resolve));
+					yield new Promise(resolve => ui.controls[0].replace("在角色或卡牌一欄中，單擊角色/卡牌可以將其禁用", resolve));
+					ui.click.menuTab("擴展");
+                    yield new Promise(resolve => ui.controls[0].replace("在擴展中，可以下載和導入擴展", resolve));
                     ui.click.menuTab("其它");
-					yield new Promise(resolve => ui.controls[0].replace("在其它中可以更新游戏，或者管理录像，查看帮助", resolve));
+					yield new Promise(resolve => ui.controls[0].replace("在其它中可以更新遊戲，或者管理錄像，查看幫助", resolve));
 					ui.click.configMenu();
 					ui.window.classList.remove("noclick_important");
 					ui.control.classList.remove("noclick_click_important");
@@ -77,15 +77,15 @@ export default () => {
 				});
 				var step4 = function () {
 					clear();
-					ui.create.dialog("是否查看星杯传说的视频教学，可在选项-其他-帮助-关于游戏中再次查看");
+					ui.create.dialog("是否查看星杯傳說的視頻教學，可在選項-其他-幫助-關於遊戲中再次查看");
 					ui.create.control("查看", function () {
 						window.open("https://www.bilibili.com/video/BV1Mo4y1q717/", "_blank");
 					});
-					ui.create.control("继续", step5);
+					ui.create.control("繼續", step5);
 				};
 				var step5 = function () {
 					clear();
-					ui.create.dialog("如果还有其它问题，欢迎来到QQ群966951007进行交流");
+					ui.create.dialog("如果還有其它問題，歡迎來到QQ群966951007進行交流");
 					ui.create.control("完成", function () {
 						finish();
 					});

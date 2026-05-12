@@ -9,9 +9,9 @@ class CodeSnippet {
 
 	/**
 	 * ```plain
-	 * 构造一个代码片段对象
+	 * 構造一個代碼片段對象
 	 * 
-	 * 通过 `erroff` 指定在发生错误时，错误信息指出的行与实际代码行的偏移量
+	 * 通過 `erroff` 指定在發生錯誤時，錯誤信息指出的行與實際代碼行的偏移量
 	 * ```
 	 * @param {string} code 
 	 * @param {number} erroff 
@@ -33,7 +33,7 @@ class CodeSnippet {
 
 	/**
 	 * ```plain
-	 * 给定错误行号来获取错误代码片段
+	 * 給定錯誤行號來獲取錯誤代碼片段
 	 * ```
 	 * 
 	 * @param {number} lineno 
@@ -43,7 +43,7 @@ class CodeSnippet {
 		const range = 5;
 
 		if (!Number.isInteger(lineno))
-			throw new TypeError("错误行号必须是一个整数");
+			throw new TypeError("錯誤行號必須是一個整數");
 
 		const index = lineno - this.#erroff;
 		const lines = this.lines;
@@ -64,7 +64,7 @@ class CodeSnippet {
 
 	/**
 	 * ```plain
-	 * 获取当前代码片段
+	 * 獲取當前代碼片段
 	 * ```
 	 * 
 	 * @type {CodeSnippet?}
@@ -78,28 +78,28 @@ class CodeSnippet {
 
 	/**
 	 * ```plain
-	 * 压入一个代码片段作为当前代码片段
+	 * 壓入一個代碼片段作為當前代碼片段
 	 * ```
 	 * 
 	 * @param {CodeSnippet} snippet 
 	 */
 	static pushSnippet(snippet) {
 		if (!(snippet instanceof CodeSnippet))
-			throw new TypeError("参数必须是一个代码片段对象");
+			throw new TypeError("參數必須是一個代碼片段對象");
 
 		this.#snippetStack.push(snippet);
 	}
 
 	/**
 	 * ```plain
-	 * 弹出当前代码片段
+	 * 彈出當前代碼片段
 	 * ```
 	 * 
 	 * @returns {CodeSnippet} 
 	 */
 	static popSnippet() {
 		if (!this.#snippetStack.length)
-			throw new Error("代码片段栈为空");
+			throw new Error("代碼片段棧為空");
 
 		// @ts-ignore // eslint好不智能哦
 		return this.#snippetStack.pop();
@@ -125,8 +125,8 @@ class ErrorReporter {
 
 	/**
 	 * ```plain
-	 * 构造一个错误报告对象
-	 * 以此来保存错误相关信息
+	 * 構造一個錯誤報告對象
+	 * 以此來保存錯誤相關信息
 	 * ```
 	 * 
 	 * @param {Error} error 
@@ -134,7 +134,7 @@ class ErrorReporter {
 	 */
 	constructor(error, snippet = CodeSnippet.currentSnippet) {
 		if (!("stack" in error))
-			throw new TypeError("传入的对象不是一个错误对象");
+			throw new TypeError("傳入的對象不是一個錯誤對象");
 
 		this.#snippet = snippet;
 		this.#message = String(error);
@@ -176,30 +176,30 @@ class ErrorReporter {
 
 	/**
 	 * ```plain
-	 * 向用户报告错误信息
+	 * 向用戶報告錯誤信息
 	 * ```
 	 * 
 	 * @param {string} title 
 	 * @returns {string} 
 	 */
 	report(title) {
-		const codeView = this.viewCode() || "#没有代码预览#";
+		const codeView = this.viewCode() || "#沒有代碼預覽#";
 		let errorInfo = `${title}:\n\t${this.#message}\n`;
 		errorInfo += `-------------\n${codeView.trim()}\n`;
-		errorInfo += `-------------\n调用堆栈:\n${this.#stack}`;
+		errorInfo += `-------------\n調用堆棧:\n${this.#stack}`;
 		ErrorReporter.#topAlert(errorInfo);
 		return errorInfo;
 	}
 
 	/**
 	 * ```plain
-	 * 向用户报告错误信息
+	 * 向用戶報告錯誤信息
 	 * ```
 	 * 
 	 * @param {Error} error 
 	 * @param {string} title 
 	 */
-	static reportError(error, title = "发生错误") {
+	static reportError(error, title = "發生錯誤") {
 		new ErrorReporter(error).report(title);
 	}
 }
@@ -212,7 +212,7 @@ class ErrorManager {
 
 	/**
 	 * ```plain
-	 * 获取函数对应的代码片段
+	 * 獲取函數對應的代碼片段
 	 * ```
 	 * 
 	 * @param {Function} func 
@@ -220,14 +220,14 @@ class ErrorManager {
 	 */
 	static getCodeSnippet(func) {
 		if (typeof func !== 'function')
-			throw new TypeError("参数func必须是一个function");
+			throw new TypeError("參數func必須是一個function");
 
 		return this.#codeSnippets.get(func) || null;
 	}
 
 	/**
 	 * ```plain
-	 * 设置函数对应的代码片段
+	 * 設置函數對應的代碼片段
 	 * ```
 	 * 
 	 * @param {Function} func 
@@ -235,16 +235,16 @@ class ErrorManager {
 	 */
 	static setCodeSnippet(func, snippet) {
 		if (typeof func !== 'function')
-			throw new TypeError("参数func必须是一个function");
+			throw new TypeError("參數func必須是一個function");
 		if (!(snippet instanceof CodeSnippet))
-			throw new TypeError("参数snippet必须是一个CodeSnippet");
+			throw new TypeError("參數snippet必須是一個CodeSnippet");
 
 		return this.#codeSnippets.set(func, snippet);
 	}
 
 	/**
 	 * ```plain
-	 * 获取错误堆栈中与行列无关的错误信息
+	 * 獲取錯誤堆棧中與行列無關的錯誤信息
 	 * ```
 	 * 
 	 * @param {Error} error 
@@ -264,7 +264,7 @@ class ErrorManager {
 
 	/**
 	 * ```plain
-	 * 计算错误A比错误B多的堆栈层数
+	 * 計算錯誤A比錯誤B多的堆棧層數
 	 * ```
 	 * 
 	 * @param {Error} errorA 
@@ -290,10 +290,10 @@ class ErrorManager {
 
 	/**
 	 * ```plain
-	 * 封装被设定了代码片段函数的错误捕获调用
+	 * 封裝被設定了代碼片段函數的錯誤捕獲調用
 	 * 
-	 * 当 `body` 函数在它这一层调用栈中出现错误时
-	 * 此函数将自动记录此次错误信息并整理相关代码片段
+	 * 當 `body` 函數在它這一層調用棧中出現錯誤時
+	 * 此函數將自動記錄此次錯誤信息並整理相關代碼片段
 	 * ```
 	 * @example
 	 * ```javascript
@@ -302,9 +302,9 @@ class ErrorManager {
 	 * }, event.content);
 	 * ```
 	 * 
-	 * @param {Function} action 调用函数的闭包
-	 * @param {Function} body 实际被调用的函数，同时也是持有代码片段的函数
-	 * @param {number} extraLevel action调用到body的间隔调用栈层数
+	 * @param {Function} action 調用函數的閉包
+	 * @param {Function} body 實際被調用的函數，同時也是持有代碼片段的函數
+	 * @param {number} extraLevel action調用到body的間隔調用棧層數
 	 */
 	static errorHandle(action, body, extraLevel = 0) {
 		const snippet = ErrorManager.getCodeSnippet(body);
@@ -328,9 +328,9 @@ class ErrorManager {
 
 	/**
 	 * ```plain
-	 * 设置错误报告器
+	 * 設置錯誤報告器
 	 * 
-	 * 在报告错误时可以从此处获取错误报告器来直接报告错误
+	 * 在報告錯誤時可以從此處獲取錯誤報告器來直接報告錯誤
 	 * ```
 	 * 
 	 * @param {Object} obj 
@@ -349,7 +349,7 @@ class ErrorManager {
 	 */
 	static setErrorReporter(obj, reporter = null) {
 		if (obj !== Object(obj))
-			throw new TypeError("参数必须是一个对象");
+			throw new TypeError("參數必須是一個對象");
 
 		if (!(reporter instanceof ErrorReporter)) {
 			if (reporter instanceof CodeSnippet)
@@ -363,7 +363,7 @@ class ErrorManager {
 
 	/**
 	 * ```plain
-	 * 获取设置的错误报告器
+	 * 獲取設置的錯誤報告器
 	 * ```
 	 * 
 	 * @param {Object} obj 

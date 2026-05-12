@@ -6,17 +6,17 @@ import { _status } from "../../status/index.js";
 /**
  * @type {(NonameAssemblyType["checkBegin"])}
  * 
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkBegin = {};
 
 /**
  * @type {(NonameAssemblyType["checkCard"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkCard = {
 	updateTempname(card, event) {
@@ -29,9 +29,9 @@ export const checkCard = {
 
 /**
  * @type {(NonameAssemblyType["checkTarget"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkTarget = {
 	updateInstance(target, event) {
@@ -51,17 +51,17 @@ export const checkTarget = {
 
 /**
  * @type {(NonameAssemblyType["checkButton"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkButton = {};
 
 /**
  * @type {(NonameAssemblyType["checkEnd"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkEnd = {
 	autoConfirm(event, { ok, auto, autoConfirm }) {
@@ -82,17 +82,17 @@ export const checkEnd = {
 
 /**
  * @type {(NonameAssemblyType["uncheckBegin"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const uncheckBegin = {};
 
 /**
  * @type {(NonameAssemblyType["uncheckCard"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const uncheckCard = {
 	removeTempname(card, event) {
@@ -107,9 +107,9 @@ export const uncheckCard = {
 
 /**
  * @type {(NonameAssemblyType["uncheckTarget"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const uncheckTarget = {
 	removeInstance(target, event) {
@@ -124,29 +124,29 @@ export const uncheckTarget = {
 
 /**
  * @type {(NonameAssemblyType["uncheckButton"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const uncheckButton = {};
 
 /**
  * @type {(NonameAssemblyType["uncheckEnd"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const uncheckEnd = {};
 
 /**
  * @type {(NonameAssemblyType["checkOverflow"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkOverflow = {
 	updateDialog(itemOption, itemContainer, addedItems, game) {
-		//计算压缩折叠的量
+		//計算壓縮摺疊的量
 		const gap = 3;
 		// @ts-ignore
 		function isEqual(a, b) {
@@ -155,10 +155,10 @@ export const checkOverflow = {
 		let equal = isEqual(itemContainer.originWidth, itemContainer.getBoundingClientRect().width);
 		const L = (itemContainer.originWidth - 2 * gap) * (equal ? 0.8 : 1);
 		// @ts-ignore
-		const W = 90;//这里需要填卡的实际宽度，扩展中需要自行调整。
+		const W = 90;//這裡需要填卡的實際寬度，擴展中需要自行調整。
 		// @ts-ignore
 		let n = addedItems.length;
-		const r = 16; //为偏移留出的空间，如果r为0，可能会把前面的卡牌全遮住
+		const r = 16; //為偏移留出的空間，如果r為0，可能會把前面的卡牌全遮住
 		if (n * W + (n + 1) * gap < L) {
 			itemContainer.style.setProperty("--ml", gap + "px");
 			itemContainer.classList.remove('zoom');
@@ -180,7 +180,7 @@ export const checkTipBottom = {
 		if ((lib.config.layout == "mobile" || lib.config.layout == "long") && player.dataset.position == '0') {
 			player.style.removeProperty('--bottom');
 		} else {
-			//如果全是空的装备栏
+			//如果全是空的裝備欄
 			if (Array.from(player.node.equips.children).every(e => e.classList.contains('emptyequip'))) {
 				player.style.removeProperty('--bottom');
 			} else {
@@ -203,9 +203,9 @@ export const checkTipBottom = {
 
 /**
  * @type {(NonameAssemblyType["checkDamage1"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkDamage1 = {
 	kuanggu(event, player) {
@@ -216,17 +216,17 @@ export const checkDamage1 = {
 
 /**
  * @type {(NonameAssemblyType["checkDamage2"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkDamage2 = {};
 
 /**
  * @type {(NonameAssemblyType["checkDamage3"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkDamage3 = {
 	jiushi(event, player) {
@@ -237,9 +237,9 @@ export const checkDamage3 = {
 
 /**
  * @type {(NonameAssemblyType["checkDamage4"])}
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
- * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts里把类型补了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
+ * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkDamage4 = {};
 

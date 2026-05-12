@@ -20,7 +20,7 @@ import { ui, game, get, ai, lib, _status } from "../../../../../noname.js";
 
 export const startMenu = function (connectMenu) {
 	/**
-	 * 由于联机模式会创建第二个菜单，所以需要缓存一下可变的变量
+	 * 由於聯機模式會創建第二個菜單，所以需要緩存一下可變的變量
 	 */
 	const cacheMenuContainer = menuContainer;
 	// const cachePopupContainer = popupContainer;
@@ -31,8 +31,8 @@ export const startMenu = function (connectMenu) {
 	var start = cacheMenuxpages.shift();
 	var rightPane = start.lastChild;
 
-	/** 启动按钮 */
-	let startButton = ui.create.div(".menubutton.round.highlight", "启", start, function () {
+	/** 啟動按鈕 */
+	let startButton = ui.create.div(".menubutton.round.highlight", "啟", start, function () {
 		if (this.animating || this.classList.contains("dim")) {
 			return;
 		}
@@ -47,7 +47,7 @@ export const startMenu = function (connectMenu) {
 					}
 					config.zhinang_tricks = lib.config.connect_zhinang_tricks;
 					
-					//可在创房后更改角色包设置
+					//可在創房後更改角色包設置
 					config.characterPack = lib.connectCharacterPack.slice(0);
 					config.cardPack = lib.connectCardPack.slice(0);
 					for (var i = 0; i < lib.config.connect_characters.length; i++) {
@@ -83,7 +83,7 @@ export const startMenu = function (connectMenu) {
 						if (game.onlineroom) {
 							game.send("server", "config", lib.configOL);
 						}
-						game.connectPlayers[0].chat("房间设置已更改");
+						game.connectPlayers[0].chat("房間設置已更改");
 					}
 				} else if (_status.enteringroom || _status.creatingroom) {
 					lib.configOL.mode = active.mode;
@@ -130,7 +130,7 @@ export const startMenu = function (connectMenu) {
 					game.saveConfig("directstartmode", active.mode);
 					game.saveConfig("mode", "connect");
 					ui.exitroom = ui.create.system(
-						"退出房间",
+						"退出房間",
 						function () {
 							game.saveConfig("directstartmode");
 							game.reload();
@@ -205,7 +205,7 @@ export const startMenu = function (connectMenu) {
 		}
 		node._initLink = function () {
 			node.link = page;
-			//“更多”下的内容
+			//“更多”下的內容
 			var map = {};
 			var infoconfig = connectMenu ? info.connect : info.config;
 			if (infoconfig) {
@@ -213,12 +213,12 @@ export const startMenu = function (connectMenu) {
 				var config = lib.config.mode_config[mode] || {};
 				if (connectMenu) {
 					infoconfig.connect_remark = {
-						name:'房间备注',
+						name:'房間備註',
 						input:true,
 						frequent:true,
 					};
 					infoconfig.connect_choose_timeout = {
-						name: "出牌时限",
+						name: "出牌時限",
 						init: "30",
 						item: {
 							10: "10秒",
@@ -233,18 +233,18 @@ export const startMenu = function (connectMenu) {
 						frequent: true,
 					};
 					infoconfig.connect_observe = {
-						name: "允许旁观",
+						name: "允許旁觀",
 						init: true,
 						connect: true,
 					};
 					infoconfig.connect_observe_handcard = {
-						name: "允许观看手牌",
+						name: "允許觀看手牌",
 						init: false,
 						connect: true,
 					};
 					/*
 					infoconfig.connect_mount_combine = {
-						name: "合并坐骑栏",
+						name: "合併坐騎欄",
 						init: false,
 						connect: true,
 					};*/
@@ -359,18 +359,18 @@ export const startMenu = function (connectMenu) {
 				if (!connectMenu) {
 					var hidemode = ui.create.div(
 						".config.pointerspan",
-						"<span>隐藏此模式</span>",
+						"<span>隱藏此模式</span>",
 						page,
 						function () {
-							if (this.firstChild.innerHTML == "隐藏此模式") {
-								this.firstChild.innerHTML = "此模式将在重启后隐藏";
+							if (this.firstChild.innerHTML == "隱藏此模式") {
+								this.firstChild.innerHTML = "此模式將在重啟後隱藏";
 								lib.config.hiddenModePack.add(mode);
 								if (!lib.config.prompt_hidepack) {
-									alert("隐藏的扩展包可通过选项-其它-重置隐藏内容恢复");
+									alert("隱藏的擴展包可通過選項-其它-重置隱藏內容恢復");
 									game.saveConfig("prompt_hidepack", true);
 								}
 							} else {
-								this.firstChild.innerHTML = "隐藏此模式";
+								this.firstChild.innerHTML = "隱藏此模式";
 								lib.config.hiddenModePack.remove(mode);
 							}
 							game.saveConfig("hiddenModePack", lib.config.hiddenModePack);

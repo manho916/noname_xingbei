@@ -1,11 +1,11 @@
 import { CodeSnippet, ErrorReporter, ErrorManager } from "./error.js";
 
-// 方便开关确定沙盒的问题喵
-// 当此处为true、debug模式未启用、设备非苹果时，沙盒生效
+// 方便開關確定沙盒的問題喵
+// 當此處為true、debug模式未啟用、設備非蘋果時，沙盒生效
 let SANDBOX_ENABLED = false;
 
-// 执行上下文传递函数，请勿动喵
-// 用于传递顶级execute context
+// 執行上下文傳遞函數，請勿動喵
+// 用於傳遞頂級execute context
 
 /** @type {(target: Function, thiz: Object, args: Array) => any} */
 // @ts-ignore
@@ -51,10 +51,10 @@ async function initializeSandboxRealms(enabled) {
     const createElement = document.createElement.bind(document);
     const appendChild = document.body.appendChild.bind(document.body);
 
-    // 通过构造 iframe 来创建新的变量域
-    // 我们需要确保顶级运行域的原型链不暴露
-    // 为此我们从新的变量域重新载入当前脚本
-    // 然后就可以直接冻结当前变量域的原型链
+    // 通過構造 iframe 來創建新的變量域
+    // 我們需要確保頂級運行域的原型鏈不暴露
+    // 為此我們從新的變量域重新載入當前腳本
+    // 然後就可以直接凍結當前變量域的原型鏈
     const iframe = createElement("iframe");
     iframe.style.display = "none";
     const firefoxLoaded = new Promise(resolve => {
@@ -62,30 +62,30 @@ async function initializeSandboxRealms(enabled) {
     });
     appendChild(iframe);
 
-    // Firefox 的 appendChild 居然还是异步的喵_(:з」∠)_
+    // Firefox 的 appendChild 居然還是異步的喵_(:з」∠)_
     await firefoxLoaded;
 
     if (!iframe.contentWindow)
-        throw new ReferenceError("无法载入运行域");
+        throw new ReferenceError("無法載入運行域");
 
-    // 定义 createRealms 函数
+    // 定義 createRealms 函數
     Reflect.defineProperty(iframe.contentWindow, "createRealms", {
         value() {
-            // 通过构造 iframe 来创建新的变量域
+            // 通過構造 iframe 來創建新的變量域
             const iframe = createElement("iframe");
             iframe.style.display = "none";
             appendChild(iframe);
 
             const window = iframe.contentWindow;
             if (!window)
-                throw new ReferenceError("顶级域已经被卸载");
+                throw new ReferenceError("頂級域已經被卸載");
 
             iframe.remove();
             return window;
         },
     });
 
-    // 传递顶级变量域、上下文执行器、错误管理器
+    // 傳遞頂級變量域、上下文執行器、錯誤管理器
     // @ts-ignore
     iframe.contentWindow.replacedGlobal = window;
     // @ts-ignore
@@ -97,7 +97,7 @@ async function initializeSandboxRealms(enabled) {
     // @ts-ignore
     iframe.contentWindow.replacedErrors = { CodeSnippet, ErrorReporter, ErrorManager };
 
-    // 重新以新的变量域载入当前脚本
+    // 重新以新的變量域載入當前腳本
     const script = iframe.contentWindow.document.createElement("script");
     script.src = TARGET_URL;
     script.type = "module";

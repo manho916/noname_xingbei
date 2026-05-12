@@ -125,8 +125,8 @@ export class VCard {
 		return get.is.sameNature(duYous, duYou);
 	}
 	/**
-	 * 返回一个键值，用于在缓存中作为键名。
-	 * @param { boolean } [similar] true伪equals, false统一前缀
+	 * 返回一個鍵值，用於在緩存中作為鍵名。
+	 * @param { boolean } [similar] true偽equals, false統一前綴
 	 * @returns {string} cacheKey
 	 */
 	getCacheKey(similar) {

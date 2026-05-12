@@ -20,7 +20,7 @@ import { ui, game, get, ai, lib, _status } from "../../../../../noname.js";
 
 export const characterPackMenu = function (connectMenu) {
 	/**
-	 * 由于联机模式会创建第二个菜单，所以需要缓存一下可变的变量
+	 * 由於聯機模式會創建第二個菜單，所以需要緩存一下可變的變量
 	 */
 	// const cacheMenuContainer = menuContainer;
 	// const cachePopupContainer = popupContainer;
@@ -29,7 +29,7 @@ export const characterPackMenu = function (connectMenu) {
 	/** @type { HTMLDivElement } */
 	// @ts-ignore
 	var start = cacheMenuxpages.shift();
-	// 用于切换显示对应武将包所有武将的界面
+	// 用於切換顯示對應武將包所有武將的界面
 	var rightPane = start.lastChild;
 
 	var clickMode = function () {
@@ -70,7 +70,7 @@ export const characterPackMenu = function (connectMenu) {
 			var node = start.firstChild.childNodes[i];
 			if (node.mode) {
 				if (node.mode.startsWith("mode_")) {
-					// 扩展武将包开启逻辑
+					// 擴展武將包開啟邏輯
 					if (node.mode.startsWith("mode_extension")) {
 						const extName = node.mode.slice(15);
 						if (!game.hasExtension(extName) || !game.hasExtensionLoaded(extName)) continue;
@@ -107,13 +107,13 @@ export const characterPackMenu = function (connectMenu) {
 	};
 	var togglePack = function (bool) {
 		var name = this._link.config._name;
-		// 扩展武将包开启逻辑
+		// 擴展武將包開啟邏輯
 		if (name.startsWith("mode_extension")) {
 			const extName = name.slice(15);
 			if (!game.hasExtension(extName) || !game.hasExtensionLoaded(extName)) return false;
 			game.saveExtensionConfig(extName, "characters_enable", bool);
 		}
-		// 原逻辑
+		// 原邏輯
 		else {
 			if (connectMenu) {
 				if (!bool) {
@@ -181,20 +181,20 @@ export const characterPackMenu = function (connectMenu) {
 			list.sort(lib.sort.character);
 			var list2 = list.slice(0);
 			var cfgnode = createConfig({
-				name: "开启",
+				name: "開啟",
 				_name: mode,
 				init: (() => {
-					// 扩展武将包开启逻辑
+					// 擴展武將包開啟邏輯
 					if (mode.startsWith("mode_extension")) {
 						const extName = mode.slice(15);
 						if (!game.hasExtension(extName) || !game.hasExtensionLoaded(extName)) return false;
-						// 这块或许应该在加载扩展时候写
+						// 這塊或許應該在加載擴展時候寫
 						if (lib.config[`extension_${extName}_characters_enable`] === undefined) {
 							game.saveExtensionConfig(extName, "characters_enable", true);
 						}
 						return lib.config[`extension_${extName}_characters_enable`] === true;
 					}
-					// 原逻辑
+					// 原邏輯
 					else {
 						return connectMenu
 							? !lib.config.connect_characters.includes(mode)
@@ -204,10 +204,10 @@ export const characterPackMenu = function (connectMenu) {
 				onclick: togglePack,
 			});
 			var cfgnodeAI = createConfig({
-				name: "仅点角可用",
+				name: "僅點角可用",
 				_name: mode,
 				init: boolAI,
-				intro: "将该角色包内的角色全部设置为仅点角可用",
+				intro: "將該角色包內的角色全部設置為僅點角可用",
 				onclick(bool) {
 					if (bool) {
 						for (var i = 0; i < list.length; i++) {
@@ -221,7 +221,7 @@ export const characterPackMenu = function (connectMenu) {
 					game.saveConfig("forbidai_user", lib.config.forbidai_user);
 				},
 			});
-			//不启用的角色包不增加开启选项
+			//不啟用的角色包不增加開啟選項
 			if(lib.disableCharacterPack.includes(mode)){
 				page.style.paddingTop = "8px";
 			}else if (!mode.startsWith("mode_")) {
@@ -230,7 +230,7 @@ export const characterPackMenu = function (connectMenu) {
 				page.appendChild(cfgnodeAI);
 				if (alterableCharacters.length) {
 					var cfgnode2 = createConfig({
-						name: "新版替换",
+						name: "新版替換",
 						_name: mode,
 						init: charactersToAlter.length == 0,
 						intro: "以下武角色被修改：" + get.translation(alterableCharacters),
@@ -255,8 +255,8 @@ export const characterPackMenu = function (connectMenu) {
 					page.appendChild(cfgnode2);
 				}
 			} else if (mode.startsWith("mode_extension")) {
-				// 排除4个基本扩展，再排除剑阁武将包
-				// 给扩展的武将包加一个开启关闭的功能
+				// 排除4個基本擴展，再排除劍閣武將包
+				// 給擴展的武將包加一個開啟關閉的功能
 				if (
 					!lib.config.all.stockextension.includes(mode.slice(15)) &&
 					mode != "mode_extension_jiange"
@@ -426,28 +426,28 @@ export const characterPackMenu = function (connectMenu) {
 				if (lib.config.all.sgscharacters.includes(mode)) {
 					ui.create.div(
 						".config.pointerspan",
-						'<span style="opacity:0.5">该角色包不可被隐藏</span>',
+						'<span style="opacity:0.5">該角色包不可被隱藏</span>',
 						page
 					);
 				} else if (!mode.startsWith("mode_")) {
-					ui.create.div(".config.pointerspan", "<span>隐藏角色包</span>", page, function () {
-						if (this.firstChild.innerHTML == "隐藏角色包") {
+					ui.create.div(".config.pointerspan", "<span>隱藏角色包</span>", page, function () {
+						if (this.firstChild.innerHTML == "隱藏角色包") {
 							if (
 								confirm(
-									"真的要隐藏“" +
+									"真的要隱藏“" +
 										get.translation(mode + "_character_config") +
-										"”角色包吗？\n建议使用“关闭”而不是“隐藏”功能，否则将会影响其他相关角色包的正常运行！"
+										"”角色包嗎？\n建議使用“關閉”而不是“隱藏”功能，否則將會影響其他相關角色包的正常運行！"
 								)
 							) {
-								this.firstChild.innerHTML = "角色包将在重启后隐藏";
+								this.firstChild.innerHTML = "角色包將在重啟後隱藏";
 								lib.config.hiddenCharacterPack.add(mode);
 								if (!lib.config.prompt_hidepack) {
-									alert("隐藏的扩展包可通过选项-其它-重置隐藏内容恢复");
+									alert("隱藏的擴展包可通過選項-其它-重置隱藏內容恢復");
 									game.saveConfig("prompt_hidepack", true);
 								}
 							}
 						} else {
-							this.firstChild.innerHTML = "隐藏角色包";
+							this.firstChild.innerHTML = "隱藏角色包";
 							lib.config.hiddenCharacterPack.remove(mode);
 						}
 						game.saveConfig("hiddenCharacterPack", lib.config.hiddenCharacterPack);
@@ -498,7 +498,7 @@ export const characterPackMenu = function (connectMenu) {
 	}
 	if (!connectMenu)
 		Object.keys(lib.characterPack).forEach((key) => {
-			// 单机模式下显示不在lib.config.all.characters里的武将包
+			// 單機模式下顯示不在lib.config.all.characters裡的武將包
 			if (!characterlist.includes(key)) createModeConfig(key, start.firstChild);
 			if (connectMenu) lib.connectCharacterPack.add(key);
 		});
@@ -518,12 +518,12 @@ export const characterPackMenu = function (connectMenu) {
 	rightPane.appendChild(active.link);
 
 	if (!connectMenu) {
-		// 下面使用了var的特性，请不要在这里直接改为let
-		var node1 = ui.create.div(".lefttext", "全部开启", start.firstChild, function () {
+		// 下面使用了var的特性，請不要在這裡直接改為let
+		var node1 = ui.create.div(".lefttext", "全部開啟", start.firstChild, function () {
 			game.saveConfig("characters", lib.config.all.characters);
 			updateNodes();
 		});
-		var node2 = ui.create.div(".lefttext", "恢复默认", start.firstChild, function () {
+		var node2 = ui.create.div(".lefttext", "恢復默認", start.firstChild, function () {
 			game.saveConfig("characters", lib.config.defaultcharacters);
 			updateNodes();
 		});
@@ -534,14 +534,14 @@ export const characterPackMenu = function (connectMenu) {
 	updateNodes();
 
 	/**
-	 * 在菜单栏初始化完成后，如果又加载了武将包，进行刷新
+	 * 在菜單欄初始化完成後，如果又加載了武將包，進行刷新
 	 *
 	 * @param { string } packName
 	 */
 	return function (packName) {
-		// 判断菜单栏有没有加载过这个武将包
+		// 判斷菜單欄有沒有加載過這個武將包
 		if ([...start.firstChild.children].map((node) => node.mode).includes(packName)) return;
-		// 显示不是无名杀自带的武将包
+		// 顯示不是無名殺自帶的武將包
 		if (!lib.connectCharacterPack.includes(packName) && !lib.config.all.characters.includes(packName)) {
 			createModeConfig(packName, start.firstChild, node1);
 			if (connectMenu) lib.connectCharacterPack.add(packName);

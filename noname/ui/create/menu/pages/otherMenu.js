@@ -7,7 +7,7 @@ import dedent from "../../../../../game/dedent.js";
 export const otherMenu = function (/** @type { boolean | undefined } */ connectMenu) {
 	if (connectMenu) return;
 	/**
-	 * 由于联机模式会创建第二个菜单，所以需要缓存一下可变的变量
+	 * 由於聯機模式會創建第二個菜單，所以需要緩存一下可變的變量
 	 */
 	const cacheMenuContainer = menuContainer;
 	// const cachePopupContainer = popupContainer;
@@ -19,7 +19,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 	var rightPane = start.lastChild;
 	var cheatButton = ui.create.div(".menubutton.round.highlight", "作", start);
 	cheatButton.style.display = "none";
-	var runButton = ui.create.div(".menubutton.round.highlight", "执", start);
+	var runButton = ui.create.div(".menubutton.round.highlight", "執", start);
 	runButton.style.display = "none";
 	var clearButton = ui.create.div(".menubutton.round.highlight", "清", start);
 	clearButton.style.display = "none";
@@ -28,7 +28,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 	playButton.style.display = "none";
 	playButton.style.left = "215px";
 	playButton.style.transition = "opacity 0.3s";
-	var deleteButton = ui.create.div(".menubutton.round.highlight.hidden", "删", start);
+	var deleteButton = ui.create.div(".menubutton.round.highlight.hidden", "刪", start);
 	deleteButton.style.display = "none";
 	deleteButton.style.left = "275px";
 	deleteButton.style.transition = "opacity 0.3s";
@@ -83,7 +83,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		ui.click.menuTab("其它");
 		clickMode.call(ui.commandnode);
 	};
-	//更新菜单有本体函数赋值，就不要懒加载了
+	//更新菜單有本體函數賦值，就不要懶加載了
 	(function () {
 		var page = ui.create.div("");
 		var node = ui.create.div(".menubutton.large", "更新", start.firstChild, clickMode);
@@ -115,8 +115,8 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		// 	}
 		// 	return url;
 		// };
-		li1.innerHTML = "游戏版本：" + lib.version + '<p style="margin-top:8px;white-space:nowrap"></p>';
-		li2.innerHTML = "素材版本：" + (lib.config.asset_version || "无") + '<p style="margin-top:8px"></p>';
+		li1.innerHTML = "遊戲版本：" + lib.version + '<p style="margin-top:8px;white-space:nowrap"></p>';
+		li2.innerHTML = "素材版本：" + (lib.config.asset_version || "無") + '<p style="margin-top:8px"></p>';
 		// li3.innerHTML = '更新地址：<span>' + trimURL(lib.config.updateURL || lib.updateURL) + '</span><p style="margin-top:8px"></p>';
 		li3.style.whiteSpace = "nowrap";
 		li3.style.display = "none"; // coding
@@ -141,9 +141,9 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				return;
 			} else {
 				if (dev) {
-					checkDevVersionButton.innerHTML = "正在检查更新";
+					checkDevVersionButton.innerHTML = "正在檢查更新";
 				} else {
-					checkVersionButton.innerHTML = "正在检查更新";
+					checkVersionButton.innerHTML = "正在檢查更新";
 				}
 
 				checkDevVersionButton.disabled = true;
@@ -151,9 +151,9 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 
 				const refresh = () => {
 					checkVersionButton.disabled = false;
-					checkVersionButton.innerHTML = "检查游戏更新";
+					checkVersionButton.innerHTML = "檢查遊戲更新";
 					checkDevVersionButton.disabled = false;
-					checkDevVersionButton.innerHTML = "更新到开发版";
+					checkDevVersionButton.innerHTML = "更新到開發版";
 				};
 
 				/**
@@ -168,11 +168,11 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					let url = description.zipball_url;
 					if (Array.isArray(description.assets) && description.assets.length > 0) {
 						const coreZipData = description.assets.find(v => v.name == "noname.core.zip");
-						if (coreZipData && confirm(`检测到该版本(${description.name})有离线包资源，是否改为下载离线包资源？否则将下载完整包资源`)) {
+						if (coreZipData && confirm(`檢測到該版本(${description.name})有離線包資源，是否改為下載離線包資源？否則將下載完整包資源`)) {
 							url = coreZipData.browser_download_url;
 						}
 					}
-					console.log("下载地址", url);
+					console.log("下載地址", url);
 					request(url, (receivedBytes, total, filename) => {
 						if (typeof filename == "string") {
 							progress.setFileName(filename);
@@ -196,10 +196,10 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 							const entries = Object.entries(zip.files);
 							let root;
 							const hiddenFileFlags = [".", "_"];
-							unZipProgress = createProgress("正在解压" + progress.getFileName(), entries.length);
+							unZipProgress = createProgress("正在解壓" + progress.getFileName(), entries.length);
 							let i = 0;
 							for (const [key, value] of entries) {
-								// 第一个是文件夹的话，就是根文件夹
+								// 第一個是文件夾的話，就是根文件夾
 								if (i == 0 && value.dir && !description.name.includes("noname.core.zip")) {
 									root = key;
 								}
@@ -214,7 +214,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 								const [path, name] = [fileName.split("/").slice(0, -1).join("/"), fileName.split("/").slice(-1).join("/")];
 								game.print(`${fileName}(${i}/${entries.length})`);
 								await game.promises.writeFile(value.asArrayBuffer(), path, name).catch(async e => {
-									// 特殊处理
+									// 特殊處理
 									if (name == "noname-server.exe" && e.message.includes("resource busy or locked")) {
 										if (typeof window.require == "function" && typeof window.process == "object" && typeof window.__dirname == "string") {
 											return new Promise((resolve, reject) => {
@@ -233,7 +233,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 																	fetch(`http://localhost:8089/app.html`, { signal })
 																		.then(({ ok }) => {
 																			if (ok) resolve(null);
-																			else throw new Error("fetch加载失败");
+																			else throw new Error("fetch加載失敗");
 																		})
 																		.catch(() => loadURL());
 																}
@@ -254,7 +254,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 									delete window.noname_asset_list;
 								}
 							}
-							if (confirm("更新完成，是否重启？")) {
+							if (confirm("更新完成，是否重啟？")) {
 								game.reload();
 							}
 							refresh();
@@ -285,13 +285,13 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 							}
 							const versionResult = checkVersion(lib.version, description.name);
 							if (versionResult === 0) {
-								// forcecheck: 为false的时候是自动检测更新的调用
-								if (forcecheck === false || !confirm("版本已是最新，是否强制更新？")) {
+								// forcecheck: 為false的時候是自動檢測更新的調用
+								if (forcecheck === false || !confirm("版本已是最新，是否強制更新？")) {
 									refresh();
 									return;
 								}
 							}
-							const str = versionResult < 0 ? `有新版本${description.name}可用，是否下载？` : `本地版本${lib.version}高于或等于github版本${description.name}，是否强制下载？`;
+							const str = versionResult < 0 ? `有新版本${description.name}可用，是否下載？` : `本地版本${lib.version}高於或等於github版本${description.name}，是否強制下載？`;
 							const str2 = description.body;
 							if (navigator.notification && navigator.notification.confirm) {
 								navigator.notification.confirm(
@@ -302,7 +302,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 										} else refresh();
 									},
 									str,
-									["确定", "取消"]
+									["確定", "取消"]
 								);
 							} else {
 								if (confirm(str + "\n" + str2)) {
@@ -311,7 +311,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 							}
 						})
 						.catch(e => {
-							alert("获取更新失败: " + e);
+							alert("獲取更新失敗: " + e);
 							refresh();
 						});
 					}else if(lib.config.update_link=='gitcode'){
@@ -331,13 +331,13 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 							}
 							const versionResult = checkVersion(lib.version, description.name);
 							if (versionResult === 0) {
-								// forcecheck: 为false的时候是自动检测更新的调用
-								if (forcecheck === false || !confirm("版本已是最新，是否强制更新？")) {
+								// forcecheck: 為false的時候是自動檢測更新的調用
+								if (forcecheck === false || !confirm("版本已是最新，是否強制更新？")) {
 									refresh();
 									return;
 								}
 							}
-							const str = versionResult < 0 ? `有新版本${description.name}可用，是否下载？` : `本地版本${lib.version}高于或等于gitcode版本${description.name}，是否强制下载？`;
+							const str = versionResult < 0 ? `有新版本${description.name}可用，是否下載？` : `本地版本${lib.version}高於或等於gitcode版本${description.name}，是否強制下載？`;
 							const str2 = description.body;
 							if (navigator.notification && navigator.notification.confirm) {
 								navigator.notification.confirm(
@@ -348,7 +348,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 										} else refresh();
 									},
 									str,
-									["确定", "取消"]
+									["確定", "取消"]
 								);
 							} else {
 								if (confirm(str + "\n" + str2)) {
@@ -357,12 +357,12 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 							}
 						})
 						.catch(e => {
-							alert("获取更新失败: " + e);
+							alert("獲取更新失敗: " + e);
 							refresh();
 						});
 					}
 				} else {
-					if (confirm("将要直接下载dev版本的完整包，是否继续?")) {
+					if (confirm("將要直接下載dev版本的完整包，是否繼續?")) {
 						download({
 							name: "noname-PR-Branch",
 							assets: [],
@@ -385,16 +385,16 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				// ) {
 				// 	if (
 				// 		confirm(
-				// 			"素材更新或许会直接超过每小时的访问限制，是否输入您github的token以解除访问每小时60次的限制？"
+				// 			"素材更新或許會直接超過每小時的訪問限制，是否輸入您github的token以解除訪問每小時60次的限制？"
 				// 		)
 				// 	)
 				// 		await gainAuthorization();
 				// }
-				checkAssetButton.innerHTML = "正在检查更新";
+				checkAssetButton.innerHTML = "正在檢查更新";
 				checkAssetButton.disabled = true;
 
 				const refresh = () => {
-					checkAssetButton.innerHTML = "检查素材更新";
+					checkAssetButton.innerHTML = "檢查素材更新";
 					checkAssetButton.disabled = false;
 				};
 
@@ -425,7 +425,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				 * @param { (value: T) => Promise<boolean> } predicate
 				 */
 				const asyncFilter = async (arr, predicate) => {
-					//将arr每20个分为一个数组，分别使用Promise.all
+					//將arr每20個分為一個數組，分別使用Promise.all
 					/** @type { boolean[] } */
 					const results = [];
 					for (let i = 0; i < arr.length; i += 20) {
@@ -439,10 +439,10 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					return game.promises
 						.readFile(v.path)
 						.then(data => {
-							// 有设置就不进行对比直接返回false
+							// 有設置就不進行對比直接返回false
 							if (lib.config.asset_notReplaceExistingFiles) return false;
 							return v.size != data.byteLength;
-							// 报错了就是没有文件
+							// 報錯了就是沒有文件
 						})
 						.catch(() => true);
 				}).then(arr => arr.map(v => v.path));
@@ -454,33 +454,33 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					if (Array.isArray(window.noname_asset_list)) {
 						game.saveConfig("asset_version", window.noname_asset_list[0]);
 						try {
-							// 动态更新素材版本显示
+							// 動態更新素材版本顯示
 							if (
 								li2 instanceof HTMLLIElement &&
 								li2.childNodes[0] &&
-								// nodeType = 3为text
+								// nodeType = 3為text
 								li2.childNodes[0].nodeType === 3 &&
 								li2.childNodes[0].textContent.startsWith("素材版本")
 							) {
 								li2.childNodes[0].textContent = `素材版本：${window.noname_asset_list[0]}`;
 							}
 						} catch (error) {
-							console.error("动态更新素材版本显示失败:", error);
+							console.error("動態更新素材版本顯示失敗:", error);
 						}
 						delete window.noname_asset_list;
 					}
-					if (confirm("更新完成，是否重启？")) {
+					if (confirm("更新完成，是否重啟？")) {
 						game.reload();
 					}
 					refresh();
 				};
 				if (result.length > 0) {
-					// 将 "game/asset.js" 追加到文件列表中
+					// 將 "game/asset.js" 追加到文件列表中
 					const fileList = result.concat("game/asset.js");
 					const progress = createProgress("正在更新素材包");
 					progress.setProgressMax(fileList.length);
 
-					// 定义一个异步函数处理所有文件下载与写入
+					// 定義一個異步函數處理所有文件下載與寫入
 					async function downloadFiles() {
 						let downloadedCount = 0;
 						for (const filePath of fileList) {
@@ -495,35 +495,35 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 									redirect: "follow"
 								});
 								if (!response.ok) {
-									throw new Error(`获取 ${filePath} 失败: ${response.statusText}`);
+									throw new Error(`獲取 ${filePath} 失敗: ${response.statusText}`);
 								}
 
 								const json = await response.json();
 
 								if (json.type === "file" && json.content) {
-									// 文件内容经过 Base64 编码，需要解码后写入
+									// 文件內容經過 Base64 編碼，需要解碼後寫入
 									const base64Content = json.content.replace(/\s/g, "");
-									// 使用 atob 将 base64 解码为字符串（二进制数据）
+									// 使用 atob 將 base64 解碼為字符串（二進制數據）
 									const binaryString = atob(base64Content);
 									const len = binaryString.length;
 									const buffer = new Uint8Array(len);
 									for (let i = 0; i < len; i++) {
 										buffer[i] = binaryString.charCodeAt(i);
 									}
-									// 处理路径与文件名：以最后一个斜杠作为分割依据
+									// 處理路徑與文件名：以最後一個斜槓作為分割依據
 									const pathParts = filePath.split("/");
 									const fileName = pathParts.pop();
 									const pathDir = pathParts.join("/");
 									await game.promises.writeFile(buffer.buffer, pathDir, fileName);
 									game.print(`${filePath} (${downloadedCount + 1}/${fileList.length})`);
 								} else if (json.type === "dir") {
-									// 对于目录，直接创建目标目录
+									// 對於目錄，直接創建目標目錄
 									await game.promises.createDir(filePath);
 								}
 								downloadedCount++;
 								progress.setProgressValue(downloadedCount);
 							} catch (e) {
-								// 出错时清除进度条，并调用刷新方法再抛出错误
+								// 出錯時清除進度條，並調用刷新方法再拋出錯誤
 								progress.remove();
 								refresh();
 								throw e;
@@ -538,17 +538,17 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					await finish();
 				}
 			} else {
-				alert("此版本不支持游戏内更新素材，请手动更新");
+				alert("此版本不支持遊戲內更新素材，請手動更新");
 			}
 		};
 
 		checkVersionButton = document.createElement("button");
-		checkVersionButton.innerHTML = "检查游戏更新";
+		checkVersionButton.innerHTML = "檢查遊戲更新";
 		checkVersionButton.onclick = () => game.checkForUpdate(null);
 		li1.lastChild.appendChild(checkVersionButton);
 
 		checkDevVersionButton = document.createElement("button");
-		checkDevVersionButton.innerHTML = "更新到开发版";
+		checkDevVersionButton.innerHTML = "更新到開發版";
 		checkDevVersionButton.style.marginLeft = "5px";
 		checkDevVersionButton.onclick = function () {
 			game.checkForUpdate(null, true);
@@ -569,7 +569,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 			updatepx.style.display = "none";
 			updatepx.style.whiteSpace = "nowrap";
 			updatepx.style.marginTop = "8px";
-			var buttonx = ui.create.node("button", "访问项目主页", function () {
+			var buttonx = ui.create.node("button", "訪問項目主頁", function () {
 				window.open("https://github.com/RancherJie/noname_xingbei");
 			});
 			updatepx.appendChild(buttonx);
@@ -579,7 +579,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					updatep2.style.display = "none";
 					updatep3.style.display = "none";
 					updatepx.style.display = "";
-					updatep4.innerHTML = "关于";
+					updatep4.innerHTML = "關於";
 				} else {
 					updatep1.style.display = "";
 					updatep2.style.display = "";
@@ -592,9 +592,9 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		})();
 
 		// button4 = document.createElement('button');
-		// button4.innerHTML = '设置更新地址';
+		// button4.innerHTML = '設置更新地址';
 		// button4.onclick = function () {
-		// 	game.prompt('设置更新地址', function (str) {
+		// 	game.prompt('設置更新地址', function (str) {
 		// 		if (str) {
 		// 			game.saveConfig('updateURL', str);
 		// 			li3.querySelector('span').innerHTML = trimURL(str);
@@ -606,7 +606,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		// li3.lastChild.appendChild(button4);
 
 		// var button6 = document.createElement('button');
-		// button6.innerHTML = '设为备用镜像';
+		// button6.innerHTML = '設為備用鏡像';
 		// button6.style.display = 'none';// coding
 		// button6.style.marginLeft='5px';
 		// button6.onclick = function () {
@@ -618,7 +618,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		// li3.lastChild.appendChild(button6);
 
 		// button5 = document.createElement('button');
-		// button5.innerHTML = '设为默认镜像';
+		// button5.innerHTML = '設為默認鏡像';
 		// button5.style.marginLeft='5px';
 		// button5.onclick = function () {
 		// 	game.saveConfig('updateURL');
@@ -635,11 +635,11 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		// }
 
 		checkAssetButton = document.createElement("button");
-		checkAssetButton.innerHTML = "检查素材更新";
+		checkAssetButton.innerHTML = "檢查素材更新";
 		checkAssetButton.onclick = () => game.checkForAssetUpdate();
 		li2.lastChild.appendChild(checkAssetButton);
 
-		var span1 = ui.create.div(".config.more", "选项 <div>&gt;</div>");
+		var span1 = ui.create.div(".config.more", "選項 <div>&gt;</div>");
 		span1.style.fontSize = "small";
 		span1.style.display = "inline";
 		span1.toggle = function () {
@@ -698,7 +698,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		var span114514_br = ui.create.node("br");
 		li2.lastChild.appendChild(span114514_br);
 
-		var span7 = ui.create.div("", `不替换已有素材`);
+		var span7 = ui.create.div("", `不替換已有素材`);
 		span7.style.fontSize = "small";
 		span7.style.lineHeight = "16px";
 		li2.lastChild.appendChild(span7);
@@ -715,7 +715,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		var span7_br = ui.create.node("br");
 		li2.lastChild.appendChild(span7_br);
 
-		var span4 = ui.create.div("", `字体素材（${lib.config.asset_font_size || "23.4MB"}）`);
+		var span4 = ui.create.div("", `字體素材（${lib.config.asset_font_size || "23.4MB"}）`);
 		span4.style.fontSize = "small";
 		span4.style.lineHeight = "16px";
 		li2.lastChild.appendChild(span4);
@@ -749,7 +749,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		var span4_br = ui.create.node("br");
 		li2.lastChild.appendChild(span4_br);
 
-		// var span2 = ui.create.div('', '皮肤素材（351MB）');
+		// var span2 = ui.create.div('', '皮膚素材（351MB）');
 		// span2.style.fontSize = 'small';
 		// span2.style.lineHeight = '16px';
 		// li2.lastChild.appendChild(span2);
@@ -763,7 +763,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		// 	game.saveConfig('asset_skin', this.checked);
 		// };
 		// li2.lastChild.appendChild(span2_check);
-		var span5 = ui.create.div("", `图片素材（${lib.config.asset_image_size || "54.8MB"}）`);
+		var span5 = ui.create.div("", `圖片素材（${lib.config.asset_image_size || "54.8MB"}）`);
 		span5.style.fontSize = "small";
 		span5.style.lineHeight = "16px";
 		li2.lastChild.appendChild(span5);
@@ -782,7 +782,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		li2.lastChild.appendChild(span5_br);
 		// li2.lastChild.appendChild(span2_br);
 
-		// var span6 = ui.create.div('', '图片素材（完整，203MB）');
+		// var span6 = ui.create.div('', '圖片素材（完整，203MB）');
 		// span6.style.fontSize = 'small';
 		// span6.style.lineHeight = '16px';
 		// li2.lastChild.appendChild(span6);
@@ -829,10 +829,10 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 			var node = currentrow1;
 			if (!node) return false;
 			return (
-				node.innerHTML == "横置/重置" ||
+				node.innerHTML == "橫置/重置" ||
 				node.innerHTML == "翻面" ||
-				node.innerHTML == "换人" ||
-				node.innerHTML == "复活" ||
+				node.innerHTML == "換人" ||
+				node.innerHTML == "復活" ||
 				node.innerHTML == "回合" 
 			);
 		};
@@ -847,7 +847,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					row2.childNodes[i].classList.remove("unselectable");
 				}
 			}
-			if (currentrow1 && currentrow1.innerHTML == "复活") {
+			if (currentrow1 && currentrow1.innerHTML == "復活") {
 				for (var i = 0; i < row3.childNodes.length; i++) {
 					if (row3.childNodes[i].dead) {
 						row3.childNodes[i].style.display = "";
@@ -859,7 +859,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				}
 			} else {
 				for (var i = 0; i < row3.childElementCount; i++) {
-					if (currentrow1 && currentrow1.innerHTML == "换人" && row3.childNodes[i].link == game.me) {
+					if (currentrow1 && currentrow1.innerHTML == "換人" && row3.childNodes[i].link == game.me) {
 						row3.childNodes[i].classList.add("unselectable");
 					} else {
 						row3.childNodes[i].classList.remove("unselectable");
@@ -885,7 +885,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				var num;
 				if (currentrow2) {
 					var str = currentrow2.innerHTML;
-					num = parseInt(str, 10); // 将字符串转换为整数
+					num = parseInt(str, 10); // 將字符串轉換為整數
 					/*
 					switch (currentrow2.innerHTML) {
 						case "一":
@@ -913,17 +913,17 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				while (targets.length) {
 					var target = targets.shift();
 					switch (currentrow1.innerHTML) {
-						case "攻伤":
+						case "攻傷":
 							target.damage(num, _status.currentPhase);
 							break;
-						case "法伤":
+						case "法傷":
 							target.faShuDamage(num, _status.currentPhase);
 							break;
 						case "手牌":
 							if(num>0) target.draw(num);
 							else if(num<0) target.discard(target.getCards("h").randomGets(-num));
 							break;
-						case "横置/重置":
+						case "橫置/重置":
 							if(target.isLinked()) target.chongZhi();
 							else target.hengZhi();
 							break;
@@ -933,22 +933,22 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 						case "回合":
 							target.insertPhase();
 							break;
-						case '红石':
+						case '紅石':
 							target.changeZhanJi('baoShi',num);
 							break;
-						case '红能':
+						case '紅能':
 							target.changeNengLiang('baoShi',num);
 							break;
-						case '红灯':
+						case '紅燈':
 							target.changeHong(num,Infinity);
 							break;
-						case '蓝灯':
+						case '藍燈':
 							target.changeLan(num,Infinity);
 							break;
-						case '治疗':
+						case '治療':
 							target.changeZhiLiao(num,Infinity);
 							break;
-						case "换人": {
+						case "換人": {
 							if (_status.event.isMine()) {
 								if (!ui.auto.classList.contains("hidden")) {
 									setTimeout(function () {
@@ -992,7 +992,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					currentrow1.classList.remove("selectedx");
 				}
 				currentrow1 = this;
-				if (this.innerHTML == "换人") {
+				if (this.innerHTML == "換人") {
 					for (var i = 0; i < row3.childNodes.length; i++) {
 						row3.childNodes[i].classList.remove("glow");
 					}
@@ -1000,17 +1000,17 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 			}
 			checkCheat();
 		};
-		var nodedamage=ui.create.div('.menubutton','攻伤',row1,clickrow1);
-		var nodedamageFaShu=ui.create.div('.menubutton','法伤',row1,clickrow1);
+		var nodedamage=ui.create.div('.menubutton','攻傷',row1,clickrow1);
+		var nodedamageFaShu=ui.create.div('.menubutton','法傷',row1,clickrow1);
 		var nodehandCard=ui.create.div('.menubutton','手牌',row1,clickrow1);
 		//var nodeturnover=ui.create.div('.menubutton','翻面',row1,clickrow1);
-		var nodechangeZhiLiao=ui.create.div('.menubutton','治疗',row1,clickrow1);
-		var nodechangeHong=ui.create.div('.menubutton','红灯',row1,clickrow1);
-		var nodechangeLan=ui.create.div('.menubutton','蓝灯',row1,clickrow1);
-		var nodechangeNengLiang=ui.create.div('.menubutton','红能',row1,clickrow1);
-		var nodegaiBianZhanJi=ui.create.div('.menubutton','红石',row1,clickrow1);
-		var nodelink=ui.create.div('.menubutton','横置/重置',row1,clickrow1);
-		var nodereplace=ui.create.div('.menubutton','换人',row1,clickrow1);
+		var nodechangeZhiLiao=ui.create.div('.menubutton','治療',row1,clickrow1);
+		var nodechangeHong=ui.create.div('.menubutton','紅燈',row1,clickrow1);
+		var nodechangeLan=ui.create.div('.menubutton','藍燈',row1,clickrow1);
+		var nodechangeNengLiang=ui.create.div('.menubutton','紅能',row1,clickrow1);
+		var nodegaiBianZhanJi=ui.create.div('.menubutton','紅石',row1,clickrow1);
+		var nodelink=ui.create.div('.menubutton','橫置/重置',row1,clickrow1);
+		var nodereplace=ui.create.div('.menubutton','換人',row1,clickrow1);
 		var nodePhase=ui.create.div('.menubutton','回合',row1,clickrow1);
 
 		var currentrow2 = null;
@@ -1048,7 +1048,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 		var clickrow3 = function () {
 			if (this.classList.contains("unselectable")) return;
 			this.classList.toggle("glow");
-			if (currentrow1 && currentrow1.innerHTML == "换人" && this.classList.contains("glow")) {
+			if (currentrow1 && currentrow1.innerHTML == "換人" && this.classList.contains("glow")) {
 				if (this.link == game.me) {
 					this.classList.remove("glow");
 				}
@@ -1121,7 +1121,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					nodereplace.classList.remove("unselectable");
 				}
 			}
-			/* 复活相关，用不到
+			/* 復活相關，用不到
 			if (game.dead.length == 0) {
 				noderevive.classList.add("unselectable");
 			} else {
@@ -1246,7 +1246,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					},
 				});
 			}
-			//使用new Function隔绝作用域，避免在控制台可以直接访问到runCommand等变量
+			//使用new Function隔絕作用域，避免在控制台可以直接訪問到runCommand等變量
 			/**
 			 * @type { (value:string)=>any }
 			 */
@@ -1265,8 +1265,8 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				// 	const ui=window.ui;
 				// 	const get=window.get;
 				// 	const ai=window.nonameAI;
-				// 	// const cheat=window.lib.cheat; // 不再允许使用 cheat，因为它是不允许访问的变量
-				// 	//使用正则匹配绝大多数的普通obj对象，避免解析成代码块。
+				// 	// const cheat=window.lib.cheat; // 不再允許使用 cheat，因為它是不允許訪問的變量
+				// 	//使用正則匹配絕大多數的普通obj對象，避免解析成代碼塊。
 				// 	const reg=${/^\{([^{}]+:\s*([^\s,]*|'[^']*'|"[^"]*"|\{[^}]*\}|\[[^\]]*\]|null|undefined|([a-zA-Z$_][a-zA-Z0-9$_]*\s*:\s*)?[a-zA-Z$_][a-zA-Z0-9$_]*\(\)))(?:,\s*([^{}]+:\s*(?:[^\s,]*|'[^']*'|"[^"]*"|\{[^}]*\}|\[[^\]]*\]|null|undefined|([a-zA-Z$_][a-zA-Z0-9$_]*\s*:\s*)?[a-zA-Z$_][a-zA-Z0-9$_]*\(\))))*\}$/};
 				// 	return function(value){
 				// 		"use strict";
@@ -1284,7 +1284,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					const get=window.get;
 					const ai=window.nonameAI;
 					const cheat=window.lib.cheat;
-					//使用正则匹配绝大多数的普通obj对象，避免解析成代码块。
+					//使用正則匹配絕大多數的普通obj對象，避免解析成代碼塊。
 					const reg=${/^\{([^{}]+:\s*([^\s,]*|'[^']*'|"[^"]*"|\{[^}]*\}|\[[^\]]*\]|null|undefined|([a-zA-Z$_][a-zA-Z0-9$_]*\s*:\s*)?[a-zA-Z$_][a-zA-Z0-9$_]*\(\)))(?:,\s*([^{}]+:\s*(?:[^\s,]*|'[^']*'|"[^"]*"|\{[^}]*\}|\[[^\]]*\]|null|undefined|([a-zA-Z$_][a-zA-Z0-9$_]*\s*:\s*)?[a-zA-Z$_][a-zA-Z0-9$_]*\(\))))*\}$/};
 					return function(value){ 
 						"use strict";
@@ -1318,8 +1318,8 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					} else {
 						text2.value = "";
 					}
-				} else if (text2.value.includes("无天使") && (text2.value.includes("无神佛") || (text2.value.includes("无神") && text2.value.includes("无佛")))) {
-					game.print("密码正确！欢迎来到死后世界战线！");
+				} else if (text2.value.includes("無天使") && (text2.value.includes("無神佛") || (text2.value.includes("無神") && text2.value.includes("無佛")))) {
+					game.print("密碼正確！歡迎來到死後世界戰線！");
 					_status.keyVerified = true;
 					text2.value = "";
 				} else {
@@ -1414,15 +1414,15 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				pre.innerHTML = "";
 			});
 			if (typeof window.noname_shijianInterfaces?.showDevTools == "function") {
-				game.print("点击以下按钮\n将开启诗笺版内置的控制台");
-				game.print("<button onclick='window.noname_shijianInterfaces.showDevTools();'>开启DevTools</button>");
+				game.print("點擊以下按鈕\n將開啟詩箋版內置的控制台");
+				game.print("<button onclick='window.noname_shijianInterfaces.showDevTools();'>開啟DevTools</button>");
 			}
 		};
 		if (!get.config("menu_loadondemand")) node._initLink();
 	})();
 	(function () {
 		var page = ui.create.div("");
-		var node = ui.create.div(".menubutton.large", "内核", start.firstChild, clickMode);
+		var node = ui.create.div(".menubutton.large", "內核", start.firstChild, clickMode);
 		node._initLink = function () {
 			node.link = page;
 			page.classList.add("menu-sym");
@@ -1434,31 +1434,31 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 				margin: "10px 0",
 				textAlign: "left",
 			});
-			let agentText = dedent`浏览器内核: ${coreInfo[0]}<br/>
-			浏览器版本: ${coreInfo[1]}.${coreInfo[2]}.${coreInfo[3]}<br/>`;
+			let agentText = dedent`瀏覽器內核: ${coreInfo[0]}<br/>
+			瀏覽器版本: ${coreInfo[1]}.${coreInfo[2]}.${coreInfo[3]}<br/>`;
 
 			if (lib.device === 'android') {
-				agentText += dedent`应用平台: 安卓<br/>`;
+				agentText += dedent`應用平臺: 安卓<br/>`;
 
 				if (typeof window.NonameAndroidBridge?.getPackageName === "function") {
-					agentText += dedent`安卓应用包名: ${window.NonameAndroidBridge.getPackageName()}<br/>`;
+					agentText += dedent`安卓應用包名: ${window.NonameAndroidBridge.getPackageName()}<br/>`;
 				}
 
 				if (typeof window.NonameAndroidBridge?.getPackageVersionCode === "function") {
-					agentText += dedent`安卓应用版本: ${window.NonameAndroidBridge.getPackageVersionCode()}<br/>`;
+					agentText += dedent`安卓應用版本: ${window.NonameAndroidBridge.getPackageVersionCode()}<br/>`;
 				}
 
 				if (typeof window.device === "object") {
 					agentText += dedent`安卓版本: ${device.version}<br/>
 					安卓SDK版本: ${device.sdkVersion}<br/>
-					设备制造商: ${device.manufacturer}<br/>`;
+					設備製造商: ${device.manufacturer}<br/>`;
 				}
 			}
 			else if (lib.device === 'ios') {
-				agentText += dedent`应用平台: 苹果<br/>`;
+				agentText += dedent`應用平臺: 蘋果<br/>`;
 			}
 			else if (typeof window.require == "function" && typeof window.process == "object" && typeof window.__dirname == "string") {
-				agentText += dedent`应用平台: Electron<br/>
+				agentText += dedent`應用平臺: Electron<br/>
 				Electron版本: ${process.versions.electron}<br/>`;
 			}
 
@@ -1468,13 +1468,13 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 
 			const button = document.createElement("button");
 			button.classList.add("changeWebviewProvider");
-			button.innerText = "点击切换WebView实现";
+			button.innerText = "點擊切換WebView實現";
 			button.addEventListener("click", function () {
 				if (typeof window.NonameAndroidBridge?.changeWebviewProvider === "function") {
 					window.NonameAndroidBridge.changeWebviewProvider();
 				}
 				else {
-					alert("此客户端不支持此功能");
+					alert("此客戶端不支持此功能");
 				}
 			});
 			page.appendChild(button);
@@ -1483,14 +1483,14 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 	})();
 	(function () {
 		var page = ui.create.div("");
-		var node = ui.create.div(".menubutton.large", "战绩", start.firstChild, clickMode);
+		var node = ui.create.div(".menubutton.large", "戰績", start.firstChild, clickMode);
 		node.type = "rec";
 		node._initLink = function () {
 			node.link = page;
 			page.style.paddingBottom = "10px";
 			var reset = function () {
 				if (this.innerHTML == "重置") {
-					this.innerHTML = "确定";
+					this.innerHTML = "確定";
 					var that = this;
 					setTimeout(function () {
 						that.innerHTML = "重置";
@@ -1519,7 +1519,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 	(function () {
 		if (!window.indexedDB || window.nodb) return;
 		var page = ui.create.div("");
-		var node = ui.create.div(".menubutton.large", "录像", start.firstChild, clickMode);
+		var node = ui.create.div(".menubutton.large", "錄像", start.firstChild, clickMode);
 		node.type = "video";
 		lib.videos = [];
 		ui.create.videoNode = (video, before) => {
@@ -1539,7 +1539,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 
 					var importVideoNode = ui.create.div(
 						".config.switcher.pointerspan",
-						'<span class="underlinenode slim ">导入录像...</span>',
+						'<span class="underlinenode slim ">導入錄像...</span>',
 						function () {
 							this.nextSibling.classList.toggle("hidden");
 						},
@@ -1552,7 +1552,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					importVideo.style.marginBottom = "20px";
 					importVideo.style.marginLeft = "13px";
 					importVideo.style.width = "calc(100% - 30px)";
-					importVideo.innerHTML = '<input type="file" accept="*/*" style="width:calc(100% - 40px)">' + '<button style="width:40px">确定</button>';
+					importVideo.innerHTML = '<input type="file" accept="*/*" style="width:calc(100% - 40px)">' + '<button style="width:40px">確定</button>';
 					importVideo.lastChild.onclick = function () {
 						var fileToLoad = importVideo.firstChild.files[0];
 						var fileReader = new FileReader();
@@ -1563,7 +1563,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 								data = JSON.parse(lib.init.decode(data));
 							} catch (e) {
 								console.log(e);
-								alert("导入失败");
+								alert("導入失敗");
 								return;
 							}
 							var store = lib.db.transaction(["video"], "readwrite").objectStore("video");
@@ -1590,7 +1590,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 							}
 							for (var i = 0; i < lib.videos.length; i++) {
 								if (lib.videos[i].time == data.time) {
-									alert("录像已存在");
+									alert("錄像已存在");
 									return;
 								}
 							}
@@ -1654,7 +1654,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 						ui.create.div(".caption", video.name[0], node);
 						ui.create.div(".text", str + "<br>" + video.name[1], node);
 						if (video.win) {
-							ui.create.div(".victory", "胜", node);
+							ui.create.div(".victory", "勝", node);
 						}
 
 						if (before) {
@@ -1691,7 +1691,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					saveButton.listen(function () {
 						var current = this.parentNode.querySelector(".videonode.active");
 						if (current) {
-							game.export(lib.init.encode(JSON.stringify(current.link)), "无名杀 - 录像 - " + current.link.name[0] + " - " + current.link.name[1]);
+							game.export(lib.init.encode(JSON.stringify(current.link)), "無名殺 - 錄像 - " + current.link.name[0] + " - " + current.link.name[1]);
 						}
 					});
 
@@ -1715,65 +1715,65 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 
 	(function () {
 		var page = ui.create.div("");
-		var node = ui.create.div(".menubutton.large", "赞助", start.firstChild, clickMode);
+		var node = ui.create.div(".menubutton.large", "贊助", start.firstChild, clickMode);
 		node.type = "sponsor";
 		node.link = page;
 		page.classList.add("menu-sponsor");
-		var sponsorList = ['Angry Alice','棉花糖耶耶','玄','魔女','潜水','黑潮Kuroshio','wang','泽度哥摧毁停车场'];
+		var sponsorList = ['Angry Alice','棉花糖耶耶','玄','魔女','潛水','黑潮Kuroshio','wang','澤度哥摧毀停車場'];
 		var sponsorListHtml = sponsorList.map(sponsor => `<li style="margin-bottom:0px;">${sponsor}</li>`).join('');
 
 		var sponsorContent = `
 			<div style="margin:10px;color:#e0e0e0;">
-				<div style="font-size:18px;font-weight:bold;margin-bottom:15px;text-align:center;color:#ffd700;">支持无名星杯开发及服务器</div>
-				<div style="margin-bottom:20px;text-align:center;color:#bbb;">您的支持是我们持续开发的动力</div>
+				<div style="font-size:18px;font-weight:bold;margin-bottom:15px;text-align:center;color:#ffd700;">支持無名星杯開發及服務器</div>
+				<div style="margin-bottom:20px;text-align:center;color:#bbb;">您的支持是我們持續開發的動力</div>
 
 				<div style="margin-bottom:15px;">
-					<div style="font-weight:bold;margin-bottom:8px;color:#5dade2;">💖 赞助方式</div>
+					<div style="font-weight:bold;margin-bottom:8px;color:#5dade2;">💖 贊助方式</div>
 					<ul style="margin-top:0;padding-left:20px;">
 						<li style="margin-bottom:8px;">
 							<a href="https://afdian.com/a/noname_xingbei" target="_blank" style="color:#ff7979;text-decoration:none;">
-								爱发电赞助
+								愛發電贊助
 							</a>
-							<span style="color:#aaa;font-size:12px;margin-left:10px;">推荐方式</span>
+							<span style="color:#aaa;font-size:12px;margin-left:10px;">推薦方式</span>
 						</li>
 						<li style="margin-bottom:8px;">
 							<a href="https://github.com/RancherJie/noname_xingbei" target="_blank" style="color:#5dade2;text-decoration:none;">
 								GitHub Star
 							</a>
-							<span style="color:#aaa;font-size:12px;margin-left:10px;">免费支持</span>
+							<span style="color:#aaa;font-size:12px;margin-left:10px;">免費支持</span>
 						</li>
 						<li style="margin-bottom:8px;">
 							<a style="color:#74b9ff;text-decoration:none;">
 								Q群966951007
 							</a>
-							<span style="color:#aaa;font-size:12px;margin-left:10px;">获取最新动态</span>
+							<span style="color:#aaa;font-size:12px;margin-left:10px;">獲取最新動態</span>
 						</li>
 					</ul>
 				</div>
 				
 				<div style="margin-bottom:15px;">
-					<div style="font-weight:bold;margin-bottom:8px;color:#5dade2;">🎁 赞助福利</div>
+					<div style="font-weight:bold;margin-bottom:8px;color:#5dade2;">🎁 贊助福利</div>
 					<ul style="margin-top:0;padding-left:20px;color:#ccc;">
-						<li>制作你的diy角色</li>
+						<li>製作你的diy角色</li>
 					</ul>
 				</div>
 
 				<div style="margin-bottom:15px;">
-					<div style="font-weight:bold;margin-bottom:8px;color:#5dade2;">最近赞助</div>
+					<div style="font-weight:bold;margin-bottom:8px;color:#5dade2;">最近贊助</div>
 					<ul style="margin-top:0;padding-left:0px;color:#ccc;">
 					${sponsorListHtml}
 				</ul>
 				</div>
 				<div style="margin-top:20px;padding:10px;background:#2a2a2a;border-radius:5px;text-align:center;border:1px solid #444;">
-					<div style="font-size:14px;color:#cccccc;">感谢每一位玩家的支持！</div>
-					<div style="font-size:12px;color:#aaaaaa;margin-top:5px;">让我们一起打造更好的无名星杯</div>
+					<div style="font-size:14px;color:#cccccc;">感謝每一位玩家的支持！</div>
+					<div style="font-size:12px;color:#aaaaaa;margin-top:5px;">讓我們一起打造更好的無名星杯</div>
 				</div>
 			</div>
 		`;
 		
 		page.innerHTML = sponsorContent;
 		
-		// 添加样式
+		// 添加樣式
 		var style = document.createElement('style');
 		style.textContent = `
 			.menu-sponsor a:hover {
@@ -1809,9 +1809,9 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 	}
 
 	if (!connectMenu) {
-		var node = ui.create.div(".menubutton.large", "帮助", start.firstChild, function () {
+		var node = ui.create.div(".menubutton.large", "幫助", start.firstChild, function () {
 			var activex = start.firstChild.querySelector(".active");
-			if (this.innerHTML == "帮助") {
+			if (this.innerHTML == "幫助") {
 				cheatButton.style.display = "none";
 				runButton.style.display = "none";
 				clearButton.style.display = "none";
@@ -1837,7 +1837,7 @@ export const otherMenu = function (/** @type { boolean | undefined } */ connectM
 					}
 				}
 			} else {
-				this.innerHTML = "帮助";
+				this.innerHTML = "幫助";
 				for (var i = 0; i < start.firstChild.childElementCount; i++) {
 					var nodex = start.firstChild.childNodes[i];
 					if (nodex == node) continue;

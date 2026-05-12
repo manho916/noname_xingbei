@@ -2,19 +2,19 @@ import { lib, _status, game } from "../../noname.js";
 
 export class GamePromises {
 	/**
-	 * 模仿h5的prompt，用于显示可提示用户进行输入的对话框
+	 * 模仿h5的prompt，用於顯示可提示用戶進行輸入的對話框
 	 *
-	 * 注: 由于参数列表是随意的，在这里我准备限制一下这个函数的参数顺序
+	 * 注: 由於參數列表是隨意的，在這裡我準備限制一下這個函數的參數順序
 	 *
-	 * @param { string } [title] 设置prompt标题与input内容
-	 * @param { boolean } [forced] 为true的话将没有"取消按钮"
-	 * @param { string } alertOption 设置prompt是否模拟alert
+	 * @param { string } [title] 設置prompt標題與input內容
+	 * @param { boolean } [forced] 為true的話將沒有"取消按鈕"
+	 * @param { string } alertOption 設置prompt是否模擬alert
 	 * @example
 	 * ```js
-	 * // 只设置标题(但是input的初始值就变成了undefined)
-	 * game.promises.prompt('###prompt标题').then(value => console.log(value));
-	 * // 设置标题和input初始内容
-	 * game.promises.prompt('###prompt标题###input初始内容').then(value => console.log(value));
+	 * // 只設置標題(但是input的初始值就變成了undefined)
+	 * game.promises.prompt('###prompt標題').then(value => console.log(value));
+	 * // 設置標題和input初始內容
+	 * game.promises.prompt('###prompt標題###input初始內容').then(value => console.log(value));
 	 * ```
 	 * @returns { Promise<string> }
 	 */
@@ -44,12 +44,12 @@ export class GamePromises {
 		});
 	}
 	/**
-	 * 模仿h5的alert，用于显示信息的对话框
+	 * 模仿h5的alert，用於顯示信息的對話框
 	 *
 	 * @param { string } title
 	 * @example
 	 * ```js
-	 * await game.promises.alert('弹窗内容');
+	 * await game.promises.alert('彈窗內容');
 	 * ```
 	 * @returns { Promise<true> }
 	 */
@@ -58,7 +58,7 @@ export class GamePromises {
 			game.prompt(title, "alert", resolve);
 		});
 	}
-	// 读写函数promises化(不用考虑其对应函数是否存在)
+	// 讀寫函數promises化(不用考慮其對應函數是否存在)
 	download(url, folder, dev, onprogress) {
 		return new Promise((resolve, reject) => {
 			// @ts-ignore
@@ -128,10 +128,10 @@ export class GamePromises {
 	}
 
 	/**
-	 * 获取文件列表
+	 * 獲取文件列表
 	 *
-	 * @param { string } dir 目录
-	 * @returns { Promise<[string[], string[]]> } 返回一个数组，第一个元素是文件夹列表，第二个元素是文件列表
+	 * @param { string } dir 目錄
+	 * @returns { Promise<[string[], string[]]> } 返回一個數組，第一個元素是文件夾列表，第二個元素是文件列表
 	 */
 	getFileList(dir) {
 		return new Promise((resolve, reject) => {
@@ -175,13 +175,13 @@ export class GamePromises {
 	}
 
 	/**
-	 * 检查指定的路径是否是一个文件
+	 * 檢查指定的路徑是否是一個文件
 	 *
-	 * @param {string} fileName - 需要查询的路径
-	 * @return {Promise<(-1 | 0 | 1)>} - 返回值意义如下:
-	 *  - `-1`: 路径不存在或无法访问
-	 *  - `0`: 路径的内容不是文件
-	 *  - `1`: 路径的内容是文件
+	 * @param {string} fileName - 需要查詢的路徑
+	 * @return {Promise<(-1 | 0 | 1)>} - 返回值意義如下:
+	 *  - `-1`: 路徑不存在或無法訪問
+	 *  - `0`: 路徑的內容不是文件
+	 *  - `1`: 路徑的內容是文件
 	 */
 	checkFile(fileName) {
 		return new Promise((resolve, reject) => {
@@ -190,13 +190,13 @@ export class GamePromises {
 	}
 
 	/**
-	 * 检查指定的路径是否是一个目录
+	 * 檢查指定的路徑是否是一個目錄
 	 *
-	 * @param {string} dir - 需要查询的路径
-	 * @return {Promise<(-1 | 0 | 1)>} - 返回值意义如下:
-	 *  - `-1`: 路径不存在或无法访问
-	 *  - `0`: 路径的内容不是目录
-	 *  - `1`: 路径的内容是目录
+	 * @param {string} dir - 需要查詢的路徑
+	 * @return {Promise<(-1 | 0 | 1)>} - 返回值意義如下:
+	 *  - `-1`: 路徑不存在或無法訪問
+	 *  - `0`: 路徑的內容不是目錄
+	 *  - `1`: 路徑的內容是目錄
 	 */
 	checkDir(dir) {
 		return new Promise((resolve, reject) => {

@@ -24,7 +24,7 @@ export async function onload() {
 
 	if (lib.config.touchscreen) createTouchDraggedFilter();
 
-	// 重构了吗？如构
+	// 重構了嗎？如構
 	let loadingCustomStyle = [
 		tryLoadCustomStyle("card_style", data => {
 			if (ui.css.card_stylesheet) ui.css.card_stylesheet.remove();
@@ -119,11 +119,11 @@ export async function onload() {
 	lib.connectCharacterPack = [];
 	lib.connectCardPack = [];
 
-	lib.disableCharacterPack=[];//用于角色包设置中无法启用的角色包
+	lib.disableCharacterPack=[];//用於角色包設置中無法啟用的角色包
 
 	const currentMode = lib.imported.mode[lib.config.mode];
 	loadMode(currentMode);
-	// 为了模式扩展，两个东西删不了
+	// 為了模式擴展，兩個東西刪不了
 	lib.init.start = currentMode.start;
 	lib.init.startBefore = currentMode.startBefore;
 
@@ -131,7 +131,7 @@ export async function onload() {
 		Object.values(lib.imported.character).forEach(loadCharacter);
 	}
 
-	// 我不好说，但我尊重水乎的想法
+	// 我不好說，但我尊重水乎的想法
 	Object.keys(lib.character).toSorted(lib.sort.capt).forEach(character => {
 		lib.mode.connect.config.connect_avatar.item[character] = lib.translate[character];
 	});
@@ -285,7 +285,7 @@ function runCustomContents(contents) {
 	if (!Array.isArray(contents)) return;
 
 	const mutex = new Mutex();
-	 // 将生成器函数转换成genCoroutin
+	 // 將生成器函數轉換成genCoroutin
 	const tasks = contents.filter(fn => typeof fn === "function").map(fn => (gnc.is.generatorFunc(fn) ? gnc.of(fn) : fn)).map(fn => fn(mutex));
 
 	return Promise.allSettled(tasks).then(results => {
@@ -298,9 +298,9 @@ function runCustomContents(contents) {
 }
 
 /**
- * 由于不暴露出去，抽象一点
+ * 由於不暴露出去，抽象一點
  *
- * 实际上但凡有重载都不会抽象
+ * 實際上但凡有重載都不會抽象
  *
  * @param {string} id
  * @param {(function(string): void) | Record<string, function(string): void>} keys

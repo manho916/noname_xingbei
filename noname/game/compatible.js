@@ -3,7 +3,7 @@ import { get } from "../get/compatible.js";
 
 export class GameCompatible {
 	/**
-	 * `game/game.js`中退出客户端用到的代码
+	 * `game/game.js`中退出客戶端用到的代碼
 	 *
 	 * @author Spmario233
 	 */
@@ -26,9 +26,9 @@ export class GameCompatible {
 			thisWindow.destroy();
 			window.process.exit();
 		}
-		//android-cordova环境
-		//ios-cordova环境或ios浏览器环境
-		//非ios的网页版
+		//android-cordova環境
+		//ios-cordova環境或ios瀏覽器環境
+		//非ios的網頁版
 		else if (!ios) {
 			window.close();
 		}
@@ -50,7 +50,7 @@ export class GameCompatible {
 		 */
 		function update(url, { request, createProgress }) {
 			let fileName = undefined;
-			let progress = createProgress("正在下载最新客户端");
+			let progress = createProgress("正在下載最新客戶端");
 
 			// @ts-ignore
 			return (
@@ -96,65 +96,65 @@ export class GameCompatible {
 		 * @param {string} text
 		 */
 		function fallback(text) {
-			// 显示一个确认对话框，询问是否要重定向到 GitHub 页面
+			// 顯示一個確認對話框，詢問是否要重定向到 GitHub 頁面
 			if (confirm(text)) {
-				// 如果确认,则打开新的浏览器窗口,跳转到指定的 GitHub 页面
+				// 如果確認,則打開新的瀏覽器窗口,跳轉到指定的 GitHub 頁面
 				window.open("https://github.com/libnoname/noname/releases/tag/chromium85-client");
 			}
 		}
 
 		switch (type) {
 			case UpdateReason.DEBUG: {
-				// 测试环境
+				// 測試環境
 				let url = "https://ghproxy.cc/https://github.com/libnoname/noname/releases/download/chromium85-client/Noname-linux-x64.zip";
 				return import("../library/update.js").then(module => update(url, module)).then(open);
 			}
 			case UpdateReason.FALLBACK: {
-				// 不支持module的平台
-				// 虽然以无名杀直接用了`import`来看，已经不存在这类情况
-				// 但还是引导一下去github，防止存在玄学情况
-				// 毕竟这种情况下，浏览器自行更新，而客户端也提供不了`noname/library/update.js`的环境
+				// 不支持module的平臺
+				// 雖然以無名殺直接用了`import`來看，已經不存在這類情況
+				// 但還是引導一下去github，防止存在玄學情況
+				// 畢竟這種情況下，瀏覽器自行更新，而客戶端也提供不了`noname/library/update.js`的環境
 
 				fallback(text);
 
 				return Promise.resolve();
 			}
 			case UpdateReason.UNDERSUPPORT: {
-				// 可以加载`entry.js`，但版本号低，因为非chrome浏览器不会尝试更新客户端，故只需要考虑chrome的情况
-				// 此时需要检测是浏览器还是客户端，客户端的话是chrome版本问题还是webview问题等等
-				// 总之如果是webview版本过低的话，此时`noname/library/update.js`的内容可能可以加载出来
-				// 故先判断，再尝试下载
+				// 可以加載`entry.js`，但版本號低，因為非chrome瀏覽器不會嘗試更新客戶端，故只需要考慮chrome的情況
+				// 此時需要檢測是瀏覽器還是客戶端，客戶端的話是chrome版本問題還是webview問題等等
+				// 總之如果是webview版本過低的話，此時`noname/library/update.js`的內容可能可以加載出來
+				// 故先判斷，再嘗試下載
 				let [_coreName, coreVersion] = get.coreInfo();
 				let needToWait = Promise.resolve();
 
-				// 使用新版本的客户端，但版本号不到需要的程度，查看是否是由理版或诗笺版，提示更新chrome
+				// 使用新版本的客戶端，但版本號不到需要的程度，查看是否是由理版或詩箋版，提示更新chrome
 				if (androidNewStandardApp) {
-					let tips = ["您使用的无名杀客户端已达到最新，但目前的浏览器内核版本过低，未来可能将无法使用！", "目前使用的浏览器UA信息为: ", userAgentLowerCase, "新版本的客户端在机器存在Chrome的情况下会直接使用Chrome的内核", "请前往下载最新版的Chrome，以获取最佳的体验！", "稍后游戏将继续正常运行，但我们不保证不会出现任何报错"].join("\n");
+					let tips = ["您使用的無名殺客戶端已達到最新，但目前的瀏覽器內核版本過低，未來可能將無法使用！", "目前使用的瀏覽器UA信息為: ", userAgentLowerCase, "新版本的客戶端在機器存在Chrome的情況下會直接使用Chrome的內核", "請前往下載最新版的Chrome，以獲取最佳的體驗！", "稍後遊戲將繼續正常運行，但我們不保證不會出現任何報錯"].join("\n");
 
 					let packageName = window.NonameAndroidBridge.getPackageName();
 					if (!(packageName.includes("shijian") || packageName.includes("yuri"))) {
-						tips = ["您使用的无名杀客户端已达到最新，但目前的浏览器内核版本过低，未来可能将无法使用！", "目前使用的浏览器UA信息为: ", userAgentLowerCase, "检测到你现在使用的是第三方客户端，请联系客户端制作者寻求帮助！", "稍后游戏将继续正常运行，但我们不保证不会出现任何报错"].join("\n");
+						tips = ["您使用的無名殺客戶端已達到最新，但目前的瀏覽器內核版本過低，未來可能將無法使用！", "目前使用的瀏覽器UA信息為: ", userAgentLowerCase, "檢測到你現在使用的是第三方客戶端，請聯繫客戶端製作者尋求幫助！", "稍後遊戲將繼續正常運行，但我們不保證不會出現任何報錯"].join("\n");
 					}
 
 					alert(tips);
 				}
-				// 使用旧版安卓客户端，提示更新，在版本号为77时识别为兼容版
-				// 此时将先考虑能不能加载更新代码
+				// 使用舊版安卓客戶端，提示更新，在版本號為77時識別為兼容版
+				// 此時將先考慮能不能加載更新代碼
 				else if (device == "android") {
-					let tips = ["你使用的无名杀客户端版本号未达到最新无名杀需要的要求，未来可能将无法正常运行无名杀！", "目前使用的浏览器UA信息为: ", userAgentLowerCase, "如果你使用的是第三方客户端，请联系客户端制作者更新或寻求解决方法！", "点击“确认”将开始下载最新版客户端（如果你使用的是第三方客户端，请不要点击“确认”）", "稍后游戏将继续正常运行，但我们不保证不会出现任何报错"].join("\n");
-					let fallbacks = ["你使用的无名杀客户端版本号未达到最新无名杀需要的要求，已无法正常运行无名杀！", "目前使用的浏览器UA信息为: ", userAgentLowerCase, "如果你使用的是第三方客户端，请联系客户端制作者更新或寻求解决方法！", "点击“确认”以前往GitHub下载最新版无名杀客户端（可能需要科学上网）"].join("\n");
+					let tips = ["你使用的無名殺客戶端版本號未達到最新無名殺需要的要求，未來可能將無法正常運行無名殺！", "目前使用的瀏覽器UA信息為: ", userAgentLowerCase, "如果你使用的是第三方客戶端，請聯繫客戶端製作者更新或尋求解決方法！", "點擊“確認”將開始下載最新版客戶端（如果你使用的是第三方客戶端，請不要點擊“確認”）", "稍後遊戲將繼續正常運行，但我們不保證不會出現任何報錯"].join("\n");
+					let fallbacks = ["你使用的無名殺客戶端版本號未達到最新無名殺需要的要求，已無法正常運行無名殺！", "目前使用的瀏覽器UA信息為: ", userAgentLowerCase, "如果你使用的是第三方客戶端，請聯繫客戶端製作者更新或尋求解決方法！", "點擊“確認”以前往GitHub下載最新版無名殺客戶端（可能需要科學上網）"].join("\n");
 
 					/**
 					 * @param {typeof import("../library/update.js")} module
 					 * @returns {Promise<void>}
 					 */
 					function callback(module) {
-						// 此时已经加载了update.js，可以尝试更新
+						// 此時已經加載了update.js，可以嘗試更新
 						if (confirm(tips)) {
 							let url = "https://ghproxy.cc/https://github.com/libnoname/noname/releases/download/chromium85-client/Noname-yuri-v1.9.3.apk";
 
 							if (coreVersion == 77) {
-								let compatibleTips = ["检测到你现在的版本号为上版本兼容版的版本号，由于当前版本无法确认是否为兼容版，特此在此再次询问", "请问你是否需要下载最新的兼容版？", "（目前由理版可直接使用已安装的Chrome内核，但如果无法安装最新的Chrome，依然需要兼容版）"].join("\n");
+								let compatibleTips = ["檢測到你現在的版本號為上版本兼容版的版本號，由於當前版本無法確認是否為兼容版，特此在此再次詢問", "請問你是否需要下載最新的兼容版？", "（目前由理版可直接使用已安裝的Chrome內核，但如果無法安裝最新的Chrome，依然需要兼容版）"].join("\n");
 								if (confirm(compatibleTips)) {
 									url = "https://ghproxy.cc/https://github.com/libnoname/noname/releases/download/chromium85-client/Noname-yuri-compatible-v1.8.4.apk";
 								}
@@ -168,14 +168,14 @@ export class GameCompatible {
 
 					needToWait = import("../library/update.js").then(callback, () => fallback(fallbacks));
 				}
-				// 使用电脑端客户端，直接转到github
+				// 使用電腦端客戶端，直接轉到github
 				else if (typeof window.require == "function") {
-					let tips = ["你使用的无名杀客户端版本号未达到最新无名杀需要的要求，未来可能将无法正常运行无名杀！", "目前使用的浏览器UA信息为: ", userAgentLowerCase, "如果你使用的是第三方客户端，请联系客户端制作者更新或寻求解决方法！", "点击“确认”以前往GitHub下载最新版无名杀客户端（可能需要科学上网）", "稍后游戏将继续正常运行，但我们不保证不会出现任何报错"].join("\n");
+					let tips = ["你使用的無名殺客戶端版本號未達到最新無名殺需要的要求，未來可能將無法正常運行無名殺！", "目前使用的瀏覽器UA信息為: ", userAgentLowerCase, "如果你使用的是第三方客戶端，請聯繫客戶端製作者更新或尋求解決方法！", "點擊“確認”以前往GitHub下載最新版無名殺客戶端（可能需要科學上網）", "稍後遊戲將繼續正常運行，但我們不保證不會出現任何報錯"].join("\n");
 					fallback(tips);
 				}
-				// 使用chrome的，直接提示更新（不是现在还有人用Chrome 85以下的版本吗）
+				// 使用chrome的，直接提示更新（不是現在還有人用Chrome 85以下的版本嗎）
 				else {
-					let tips = ["你使用的浏览器内核已无法达到无名杀的最低要求，未来可能将无法使用！", "请更新你的Google Chrome/Chromium内核！", "稍后游戏将继续正常运行，但我们不保证不会出现任何报错"].join("\n");
+					let tips = ["你使用的瀏覽器內核已無法達到無名殺的最低要求，未來可能將無法使用！", "請更新你的Google Chrome/Chromium內核！", "稍後遊戲將繼續正常運行，但我們不保證不會出現任何報錯"].join("\n");
 					alert(tips);
 				}
 

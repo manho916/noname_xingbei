@@ -8,7 +8,7 @@ import { checkVersion } from "../library/update.js";
 
 export async function cordovaReady() {
 	if (lib.device == "android") {
-		// 新客户端导入扩展逻辑
+		// 新客戶端導入擴展邏輯
 		window.addEventListener(
 			"importExtension",
 			e => {
@@ -16,7 +16,7 @@ export async function cordovaReady() {
 				lib.config.extensions.add(extensionName);
 				game.saveConfig("extensions", lib.config.extensions);
 				game.saveConfig(`extension_${extensionName}_enable`, true);
-				if (confirm(`扩展${extensionName}已导入成功，是否重启游戏？`)) {
+				if (confirm(`擴展${extensionName}已導入成功，是否重啟遊戲？`)) {
 					game.reload();
 				}
 			},
@@ -25,7 +25,7 @@ export async function cordovaReady() {
 		window.addEventListener(
 			"importPackage",
 			() => {
-				if (confirm(`离线包/完整包已导入成功，是否重启游戏？`)) {
+				if (confirm(`離線包/完整包已導入成功，是否重啟遊戲？`)) {
 					game.reload();
 				}
 			},
@@ -51,7 +51,7 @@ export async function cordovaReady() {
 				}
 			} else if (lib.config.confirm_exit) {
 				navigator.notification.confirm(
-					"是否退出游戏？",
+					"是否退出遊戲？",
 					function (index) {
 						switch (index) {
 							case 2:
@@ -62,8 +62,8 @@ export async function cordovaReady() {
 								break;
 						}
 					},
-					"确认退出",
-					["取消", "重新开始", "退出"]
+					"確認退出",
+					["取消", "重新開始", "退出"]
 				);
 			} else {
 				navigator.app.exitApp();
@@ -106,32 +106,32 @@ export async function cordovaReady() {
 		if (typeof window.NonameAndroidBridge == "undefined" || 
 			typeof window.NonameAndroidBridge.getPackageName != "function" ||
 			typeof window.NonameAndroidBridge.getPackageVersionCode != "function") {
-			throw new Error("您的安卓客户端版本过低，请升级至最新版");
+			throw new Error("您的安卓客戶端版本過低，請升級至最新版");
 		}
 		const versionCode = window.NonameAndroidBridge.getPackageVersionCode();
 		switch(window.NonameAndroidBridge.getPackageName()) {
 			case "com.noname.shijian":
 				if (versionCode < 16007) {
-					throw new Error("您的安卓诗笺版客户端版本过低，请升级至v1.6.7或以上");
+					throw new Error("您的安卓詩箋版客戶端版本過低，請升級至v1.6.7或以上");
 				}
 				break;
 			case "yuri.nakamura.noname_android":
 				if (versionCode < 10904) {
-					throw new Error("您的安卓由理版客户端版本过低，请升级至v1.9.4或以上");
+					throw new Error("您的安卓由理版客戶端版本過低，請升級至v1.9.4或以上");
 				}
 				break;
 			case "yuri.nakamura.noname":
 				if (versionCode < 108004) {
-					throw new Error("您的安卓兼容版客户端版本过低，请升级至v1.8.4或以上");
+					throw new Error("您的安卓兼容版客戶端版本過低，請升級至v1.8.4或以上");
 				}
 				break;
 			case "com.widget.noname.cola":
 				if (versionCode < 10320) {
-					throw new Error("您的安卓增强版客户端版本过低，请升级至v1.3.2或以上");
+					throw new Error("您的安卓增強版客戶端版本過低，請升級至v1.3.2或以上");
 				}
 				break;
 			default:
-				// todo: 懒人包提示
+				// todo: 懶人包提示
 		}
 	}
 	game.download = function (url, folder, onsuccess, onerror, dev, onprogress) {
@@ -168,15 +168,15 @@ export async function cordovaReady() {
 	};
 
 	/**
-	 * 检查指定的路径是否是一个文件
+	 * 檢查指定的路徑是否是一個文件
 	 *
-	 * @param {string} fileName - 需要查询的路径
-	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回调函数；接受的参数意义如下:
-	 *  - `-1`: 路径不存在或无法访问
-	 *  - `0`: 路径的内容不是文件
-	 *  - `1`: 路径的内容是文件
-	 * @param {(err: Error) => void} [onerror] - 接收错误的回调函数
-	 * @return {void} - 由于三端的异步需求和历史原因，文件管理必须为回调异步函数
+	 * @param {string} fileName - 需要查詢的路徑
+	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回調函數；接受的參數意義如下:
+	 *  - `-1`: 路徑不存在或無法訪問
+	 *  - `0`: 路徑的內容不是文件
+	 *  - `1`: 路徑的內容是文件
+	 * @param {(err: Error) => void} [onerror] - 接收錯誤的回調函數
+	 * @return {void} - 由於三端的異步需求和歷史原因，文件管理必須為回調異步函數
 	 */
 	game.checkFile = function (fileName, callback, onerror) {
 		let path = lib.path.join(nonameInitialized, fileName);
@@ -197,15 +197,15 @@ export async function cordovaReady() {
 	};
 
 	/**
-	 * 检查指定的路径是否是一个目录
+	 * 檢查指定的路徑是否是一個目錄
 	 *
-	 * @param {string} dir - 需要查询的路径
-	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回调函数；接受的参数意义如下:
-	 *  - `-1`: 路径不存在或无法访问
-	 *  - `0`: 路径的内容不是目录
-	 *  - `1`: 路径的内容是目录
-	 * @param {(err: Error) => void} [onerror] - 接收错误的回调函数
-	 * @return {void} - 由于三端的异步需求和历史原因，文件管理必须为回调异步函数
+	 * @param {string} dir - 需要查詢的路徑
+	 * @param {(result: -1 | 0 | 1) => void} [callback] - 回調函數；接受的參數意義如下:
+	 *  - `-1`: 路徑不存在或無法訪問
+	 *  - `0`: 路徑的內容不是目錄
+	 *  - `1`: 路徑的內容是目錄
+	 * @param {(err: Error) => void} [onerror] - 接收錯誤的回調函數
+	 * @return {void} - 由於三端的異步需求和歷史原因，文件管理必須為回調異步函數
 	 */
 	game.checkDir = function (dir, callback, onerror) {
 		let path = lib.path.join(nonameInitialized, dir);

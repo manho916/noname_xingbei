@@ -19,9 +19,9 @@ export class Channel {
 	}
 
 	/**
-	 * 向该频道发送消息，在消息未被接受前将等待
+	 * 向該頻道發送消息，在消息未被接受前將等待
 	 *
-	 * @param {T} value - 要发送的消息
+	 * @param {T} value - 要發送的消息
 	 * @returns {Promise<void>}
 	 */
 	send(value) {
@@ -52,7 +52,7 @@ export class Channel {
 	}
 
 	/**
-	 * 接收频道所发送的消息，若无消息发送则等待
+	 * 接收頻道所發送的消息，若無消息發送則等待
 	 *
 	 * @returns {Promise<T>} 接收到的消息
 	 */

@@ -8,7 +8,7 @@ import { get } from "./index.js";
 export class Is {
 	//星杯
 	xingDong(event){
-		//判断事件是否为行动事件
+		//判斷事件是否為行動事件
 		return event.action==true||event.getParent().action==true||event.getParent().name=='gongJiOrFaShu'||event.getParent().name=='gongJi'||event.getParent().name=='faShu';
 	}
 	//useSkill||useCard
@@ -49,7 +49,7 @@ export class Is {
 	}
 
 	/**
-	 * 判断是否为进攻坐骑
+	 * 判斷是否為進攻坐騎
 	 * @param { Card | VCard } card
 	 * @param { false | Player } [player]
 	 * @returns { boolean }
@@ -66,7 +66,7 @@ export class Is {
 		return false;
 	}
 	/**
-	 * 判断是否为防御坐骑
+	 * 判斷是否為防禦坐騎
 	 * @param { Card | VCard } card
 	 * @param { false | Player } [player]
 	 * @returns { boolean }
@@ -83,7 +83,7 @@ export class Is {
 		return false;
 	}
 	/**
-	 * 判断坐骑栏是否被合并
+	 * 判斷坐騎欄是否被合併
 	 * @returns { boolean }
 	 */
 	mountCombined() {
@@ -95,9 +95,9 @@ export class Is {
 		return _status.mountCombined;
 	}
 	/**
-	 * 判断传入的参数的属性是否相同（参数可以为卡牌、卡牌信息、属性等）
-	 * @param {...} infos 要判断的属性列表
-	 * @param {boolean} every 是否判断每一个传入的属性是否完全相同而不是存在部分相同
+	 * 判斷傳入的參數的屬性是否相同（參數可以為卡牌、卡牌信息、屬性等）
+	 * @param {...} infos 要判斷的屬性列表
+	 * @param {boolean} every 是否判斷每一個傳入的屬性是否完全相同而不是存在部分相同
 	 */
 	sameNature() {
 		let processedArguments = [],
@@ -128,9 +128,9 @@ export class Is {
 		});
 	}
 	/**
-	 * 判断传入的参数的属性是否不同（参数可以为卡牌、卡牌信息、属性等）
-	 * @param ...infos 要判断的属性列表
-	 * @param every {boolean} 是否判断每一个传入的属性是否完全不同而不是存在部分不同
+	 * 判斷傳入的參數的屬性是否不同（參數可以為卡牌、卡牌信息、屬性等）
+	 * @param ...infos 要判斷的屬性列表
+	 * @param every {boolean} 是否判斷每一個傳入的屬性是否完全不同而不是存在部分不同
 	 */
 	differentNature() {
 		let processedArguments = [],
@@ -161,7 +161,7 @@ export class Is {
 		});
 	}
 	/**
-	 * 判断一张牌是否为明置手牌
+	 * 判斷一張牌是否為明置手牌
 	 * @param { Card } card
 	 */
 	shownCard(card) {
@@ -170,7 +170,7 @@ export class Is {
 		return Array.isArray(gaintag) && gaintag.some(tag => tag.startsWith("visible_"));
 	}
 	/**
-	 * 是否是虚拟牌
+	 * 是否是虛擬牌
 	 * @param { Card | VCard } card
 	 */
 	// @ts-ignore
@@ -178,7 +178,7 @@ export class Is {
 		return !("cards" in card) || !Array.isArray(card.cards) || card.cards.length === 0;
 	}
 	/**
-	 * 是否是转化牌
+	 * 是否是轉化牌
 	 * @param { Card | VCard } card
 	 */
 	// @ts-ignore
@@ -186,7 +186,7 @@ export class Is {
 		return !card.isCard && "cards" in card && Array.isArray(card.cards) && card.cards.length > 0;
 	}
 	/**
-	 * 是否是实体牌
+	 * 是否是實體牌
 	 * @param { Card | VCard } card
 	 */
 	// @ts-ignore
@@ -194,7 +194,7 @@ export class Is {
 		return card.isCard && "cards" in card && Array.isArray(card.cards) && card.cards.length === 1;
 	}
 	/**
-	 * 押韵判断
+	 * 押韻判斷
 	 * @param { string } str1
 	 * @param { string } str2
 	 */
@@ -221,7 +221,7 @@ export class Is {
 		return false;
 	}
 	/**
-	 * 是否是双势力武将
+	 * 是否是雙勢力武將
 	 * @param { string } name
 	 * @param { string[] } [array]
 	 * @returns { boolean | string[] }
@@ -236,7 +236,7 @@ export class Is {
 	/**
 	 * Check if the card has a Yingbian condition
 	 *
-	 * 检测此牌是否具有应变条件
+	 * 檢測此牌是否具有應變條件
 	 * @param { Card | VCard } card
 	 */
 	yingbianConditional(card) {
@@ -263,7 +263,7 @@ export class Is {
 	/**
 	 * Check if the card has a Yingbian effect
 	 *
-	 * 检测此牌是否具有应变效果
+	 * 檢測此牌是否具有應變效果
 	 *
 	 * @param { Card | VCard } card
 	 */
@@ -375,7 +375,7 @@ export class Is {
 		}
 		if (name) {
 			setTimeout(function () {
-				alert("请将至少一个操作绑定为显示按钮或打开菜单，否则将永远无法打开菜单");
+				alert("請將至少一個操作綁定為顯示按鈕或打開菜單，否則將永遠無法打開菜單");
 			});
 		}
 		return true;
@@ -530,7 +530,7 @@ export class Is {
 	}
 
 	/**
-	 * 检查指定玩家的名称的子串是否包含指定字符串
+	 * 檢查指定玩家的名稱的子串是否包含指定字符串
 	 *
 	 * @author tangXins
 	 * @param {Player} player

@@ -4,9 +4,9 @@ import { game } from "../game/index.js";
 import { _status } from "../status/index.js";
 import { ui } from "../ui/index.js";
 /**
- * 为元素添加右击或长按弹出的提示信息
- * @param {string} title 标题
- * @param {string} content 提示的具体内容
+ * 為元素添加右擊或長按彈出的提示信息
+ * @param {string} title 標題
+ * @param {string} content 提示的具體內容
  * @returns {HTMLElement}
  */
 HTMLElement.prototype.setNodeIntro = function (title, content) {
@@ -25,15 +25,15 @@ HTMLElement.prototype.setNodeIntro = function (title, content) {
 	}
 	return this;
 };
-// 废弃覆盖原型的HTMLDivElement.prototype.animate
-// 改为HTMLDivElement.prototype.addTempClass
+// 廢棄覆蓋原型的HTMLDivElement.prototype.animate
+// 改為HTMLDivElement.prototype.addTempClass
 /**
  * @this HTMLDivElement
  * @type { typeof HTMLDivElement['prototype']['animate'] }
  */
 HTMLDivElement.prototype.animate = function (keyframes, options) {
 	if (typeof keyframes == "string") {
-		console.trace(this, "无名杀开发者修改的animate方法已废弃，请改为使用addTempClass方法");
+		console.trace(this, "無名殺開發者修改的animate方法已廢棄，請改為使用addTempClass方法");
 		// @ts-ignore
 		return HTMLDivElement.prototype.addTempClass.call(this, keyframes, options);
 	} else return HTMLElement.prototype.animate.call(this, keyframes, options);
@@ -301,10 +301,10 @@ HTMLDivElement.prototype.listenTransition = function (func, time) {
 /**
  * @this HTMLDivElement
  * @type { typeof HTMLDivElement['prototype']['setPosition'] }
- *- 用Array.from(arguments)来创建一个新的数组，这比使用循环更加简洁。
-  - 使用解构赋值来直接从position数组中提取出四个参数，使代码更清晰。
-  - 将条件运算符的结果直接嵌入到模板字符串中，取代了之前使用字符串拼接的方式喵。
-  //最后，宝贝看一下我的理解有问题吗？🥺
+ *- 用Array.from(arguments)來創建一個新的數組，這比使用循環更加簡潔。
+  - 使用解構賦值來直接從position數組中提取出四個參數，使代碼更清晰。
+  - 將條件運算符的結果直接嵌入到模板字符串中，取代了之前使用字符串拼接的方式喵。
+  //最後，寶貝看一下我的理解有問題嗎？🥺
  */
 HTMLDivElement.prototype.setPosition = function (...args) {
 	let position;
@@ -353,7 +353,7 @@ HTMLTableElement.prototype.get = function (row, col) {
 		return /** @type {HTMLElement | void} */ this.childNodes[row].childNodes[col];
 	}
 };
-/*处理lib.nature等从array改为map的兼容性问题*/
+/*處理lib.nature等從array改為map的兼容性問題*/
 /**
  * @this Map
  * @template T
@@ -361,7 +361,7 @@ HTMLTableElement.prototype.get = function (row, col) {
  * @returns { boolean }
  */
 const mapHasFunc = function (item) {
-	console.trace(this, "已经从array改为map，请改为使用has方法");
+	console.trace(this, "已經從array改為map，請改為使用has方法");
 	return this.has(item);
 };
 Object.defineProperty(Map.prototype, "contains", {
@@ -384,7 +384,7 @@ Object.defineProperty(Map.prototype, "includes", {
  * @returns { Map<T, K> }
  */
 const mapAddFunc = function (item) {
-	console.trace(this, "已经从array改为map，请改为使用set方法");
+	console.trace(this, "已經從array改為map，請改為使用set方法");
 	this.set(item, 0);
 	return this;
 };
@@ -412,7 +412,7 @@ Object.defineProperty(Map.prototype, "addArray", {
 	 * @returns { Map<T, U> }
 	 */
 	value(arr) {
-		console.trace(this, "已经从array改为map，请改为使用set方法");
+		console.trace(this, "已經從array改為map，請改為使用set方法");
 		for (let i = 0; i < arr.length; i++) {
 			this.set(arr[i], 0);
 		}
@@ -431,7 +431,7 @@ Object.defineProperty(Map.prototype, "remove", {
 	 * @returns { Map<T, U> }
 	 */
 	value(item) {
-		console.trace(this, "已经从array改为map，请改为使用delete方法");
+		console.trace(this, "已經從array改為map，請改為使用delete方法");
 		this.delete(item);
 		return this;
 	},
@@ -493,7 +493,7 @@ Object.defineProperty(Array.prototype, "contains", {
 	 * @returns { boolean }
 	 */
 	value(...args) {
-		console.warn(this, "Array的contains方法已废弃，请使用includes方法");
+		console.warn(this, "Array的contains方法已廢棄，請使用includes方法");
 		// @ts-ignore
 		return this.includes(...args);
 	},
@@ -714,7 +714,7 @@ Object.defineProperty(Array.prototype, "sortBySeat", {
 	},
 });
 /**
- *@description 从数组中寻找某个特征最大的，且通过筛选的第一个元素
+ *@description 從數組中尋找某個特徵最大的，且通過篩選的第一個元素
  */
 Object.defineProperty(Array.prototype, "maxBy", {
 	configurable: true,

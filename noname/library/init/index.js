@@ -12,7 +12,7 @@ import { ContentCompiler } from "../element/gameEvent.js";
 
 export class LibInit {
 	/**
-	 * 部分函数的Promise版本
+	 * 部分函數的Promise版本
 	 */
 	promises = new LibInitPromises();
 
@@ -23,7 +23,7 @@ export class LibInit {
 	reset() {
 		if (window.inSplash) return;
 		if (window.resetExtension) {
-			if (confirm("游戏似乎未正常载入，有可能因为部分扩展未正常载入，或者因为部分扩展未载入完毕。\n是否禁用扩展并重新打开？")) {
+			if (confirm("遊戲似乎未正常載入，有可能因為部分擴展未正常載入，或者因為部分擴展未載入完畢。\n是否禁用擴展並重新打開？")) {
 				window.resetExtension();
 				window.location.reload();
 			}
@@ -31,7 +31,7 @@ export class LibInit {
 			if (lib.device) {
 				if (navigator.notification) {
 					navigator.notification.confirm(
-						"游戏似乎未正常载入，是否重置游戏？",
+						"遊戲似乎未正常載入，是否重置遊戲？",
 						function (index) {
 							if (index == 2) {
 								localStorage.removeItem("noname_inited");
@@ -52,17 +52,17 @@ export class LibInit {
 								}, 200);
 							}
 						},
-						"确认退出",
-						["取消", "重新下载", "重置设置"]
+						"確認退出",
+						["取消", "重新下載", "重置設置"]
 					);
 				} else {
-					if (confirm("游戏似乎未正常载入，是否重置游戏？")) {
+					if (confirm("遊戲似乎未正常載入，是否重置遊戲？")) {
 						localStorage.removeItem("noname_inited");
 						window.location.reload();
 					}
 				}
 			} else {
-				if (confirm("游戏似乎未正常载入，是否重置游戏？")) {
+				if (confirm("遊戲似乎未正常載入，是否重置遊戲？")) {
 					var onlineKey = localStorage.getItem(lib.configprefix + "key");
 					localStorage.clear();
 					if (onlineKey) {
@@ -77,7 +77,7 @@ export class LibInit {
 		}
 	}
 
-	// 现在改lib.init.onload的都给我无报错被创
+	// 現在改lib.init.onload的都給我無報錯被創
 	async onload() {
 		throw new Error("lib.init.onload is moved to noname/init/onload");
 	}
@@ -197,9 +197,9 @@ export class LibInit {
 		return style;
 	}
 
-	//在扩展的precontent中调用，用于加载扩展必需的JS文件。
+	//在擴展的precontent中調用，用於加載擴展必需的JS文件。
 	//If any of the parameters is an Array, corresponding files will be loaded in order
-	//如果任意参数为数组，则按顺序加载加载相应的文件
+	//如果任意參數為數組，則按順序加載加載相應的文件
 	jsForExtension(path, file, onLoad, onError) {
 		if (!_status.javaScriptExtensions) _status.javaScriptExtensions = [];
 		_status.javaScriptExtensions.push({
@@ -224,7 +224,7 @@ export class LibInit {
 		if (path.startsWith("http")) scriptSource += `?rand=${get.id()}`;
 		else if (lib.config.fuck_sojson && !_status.connectMode && scriptSource.includes("extension") != -1 && scriptSource.startsWith(lib.assetURL)) {
 			const pathToRead = scriptSource.slice(lib.assetURL.length);
-			const alertMessage = `检测到您安装了使用免费版sojson进行加密的扩展。请谨慎使用这些扩展，避免游戏数据遭到破坏。\n扩展文件：${pathToRead}`;
+			const alertMessage = `檢測到您安裝了使用免費版sojson進行加密的擴展。請謹慎使用這些擴展，避免遊戲數據遭到破壞。\n擴展文件：${pathToRead}`;
 			if (typeof game.readFileAsText == "function")
 				game.readFileAsText(
 					pathToRead,
@@ -260,7 +260,7 @@ export class LibInit {
 	 */
 	jsSync(path, file, onLoad, onError) {
 		if (lib.assetURL.length == 0 && location.origin == "file://" && typeof game.readFile == "undefined") {
-			const e = new Error("浏览器file协议下无法使用此api，请在http/https协议下使用此api");
+			const e = new Error("瀏覽器file協議下無法使用此api，請在http/https協議下使用此api");
 			if (typeof onError == "function") onError(e);
 			else throw e;
 			return;
@@ -287,12 +287,12 @@ export class LibInit {
 			}
 			data = xmlHttpRequest.responseText;
 			if (!data) {
-				if (typeof onError == "function") onError(new Error(`${scriptSource}加载失败！`));
+				if (typeof onError == "function") onError(new Error(`${scriptSource}加載失敗！`));
 				return;
 			}
 			if (lib.config.fuck_sojson && scriptSource.includes("extension") != -1 && scriptSource.startsWith(lib.assetURL)) {
 				const pathToRead = scriptSource.slice(lib.assetURL.length);
-				if (data.includes("sojson") || data.includes("jsjiami") || data.includes("var _0x")) alert(`检测到您安装了使用免费版sojson进行加密的扩展。请谨慎使用这些扩展，避免游戏数据遭到破坏。\n扩展文件：${pathToRead}`);
+				if (data.includes("sojson") || data.includes("jsjiami") || data.includes("var _0x")) alert(`檢測到您安裝了使用免費版sojson進行加密的擴展。請謹慎使用這些擴展，避免遊戲數據遭到破壞。\n擴展文件：${pathToRead}`);
 			}
 			try {
 				security.eval(data);
@@ -311,7 +311,7 @@ export class LibInit {
 		if (str.startsWith("http")) sScriptURL = str;
 		else if (str.startsWith("local:")) {
 			if (lib.assetURL.length == 0 && location.origin == "file://" && typeof game.readFile == "undefined") {
-				const e = new Error("浏览器file协议下无法使用此api，请在http/https协议下使用此api");
+				const e = new Error("瀏覽器file協議下無法使用此api，請在http/https協議下使用此api");
 				if (typeof onerror == "function") onerror(e);
 				else throw e;
 				return;
@@ -345,7 +345,7 @@ export class LibInit {
 		if (str.startsWith("http")) sScriptURL = str;
 		else if (str.startsWith("local:")) {
 			if (lib.assetURL.length == 0 && location.origin == "file://" && typeof game.readFile == "undefined") {
-				const e = new Error("浏览器file协议下无法使用此api，请在http/https协议下使用此api");
+				const e = new Error("瀏覽器file協議下無法使用此api，請在http/https協議下使用此api");
 				if (typeof onerror == "function") onerror(e);
 				else throw e;
 				return;
@@ -401,7 +401,7 @@ export class LibInit {
 	 */
 	jsonSync(url, onload, onerror) {
 		if (lib.assetURL.length == 0 && location.origin == "file://" && typeof game.readFile == "undefined") {
-			const e = new Error("浏览器file协议下无法使用此api，请在http/https协议下使用此api");
+			const e = new Error("瀏覽器file協議下無法使用此api，請在http/https協議下使用此api");
 			if (typeof onerror == "function") onerror(e);
 			else throw e;
 			return;
@@ -596,8 +596,8 @@ export class LibInit {
 	 * @returns
 	 */
 	parsex(item, scope) {
-		if (scope) throw new Error("parsex已经被拆分，不再支持scope的使用");
-		// parsex 的 Legacy 主体移动到 noname/library/event/compilers/StepCompiler.ts
+		if (scope) throw new Error("parsex已經被拆分，不再支持scope的使用");
+		// parsex 的 Legacy 主體移動到 noname/library/event/compilers/StepCompiler.ts
 		return ContentCompiler.compile(item);
 	}
 
@@ -679,8 +679,8 @@ export class LibInit {
 	}
 
 	/**
-	 * 在返回当前加载的esm模块相对位置。
-	 * @param {*} url 传入import.meta.url
+	 * 在返回當前加載的esm模塊相對位置。
+	 * @param {*} url 傳入import.meta.url
 	 */
 	getCurrentFileLocation(url) {
 		let head = window.location.href.slice(0, window.location.href.lastIndexOf("/") + 1);
@@ -689,19 +689,19 @@ export class LibInit {
 	}
 
 	/**
-	 * @param {string | URL} link - 需要解析的路径
-	 * @param {((item: string) => string) | null} [defaultHandle] - 在给定路径不符合可用情况（或基于无名杀相关默认情况）时，处理路径的函数，返回的路径应是相对于根目录的相对路径，默认为`null`，当且仅当无法解析成`URL`时会调用该回调
-	 * @param {((item: URL) => unknown) | null} [loadAsDataUrlCallback] - 若存在值，则将资源加载为[Data URL](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)，然后传入进回调函数
-	 * @param {boolean} [dbNow] - 此刻是否在解析数据库中的内容，请勿直接使用
+	 * @param {string | URL} link - 需要解析的路徑
+	 * @param {((item: string) => string) | null} [defaultHandle] - 在給定路徑不符合可用情況（或基於無名殺相關默認情況）時，處理路徑的函數，返回的路徑應是相對於根目錄的相對路徑，默認為`null`，當且僅當無法解析成`URL`時會調用該回調
+	 * @param {((item: URL) => unknown) | null} [loadAsDataUrlCallback] - 若存在值，則將資源加載為[Data URL](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)，然後傳入進回調函數
+	 * @param {boolean} [dbNow] - 此刻是否在解析數據庫中的內容，請勿直接使用
 	 * @returns {URL}
 	 */
 	parseResourceAddress(link, defaultHandle = null, loadAsDataUrlCallback = null, dbNow = false) {
-		// 适当的摆了，中文错误应该没人会反对
-		if (!link) throw new Error(dbNow ? "传入的数据库链接中不存在内容" : "请传入需要解析的链接");
+		// 適當的擺了，中文錯誤應該沒人會反對
+		if (!link) throw new Error(dbNow ? "傳入的數據庫鏈接中不存在內容" : "請傳入需要解析的鏈接");
 
 		let linkString = link instanceof URL ? link.href : link;
 
-		// 如果传入值为Data URL，经过分析可知无需处理，故直接返回成品URL
+		// 如果傳入值為Data URL，經過分析可知無需處理，故直接返回成品URL
 		if (linkString.startsWith("data:")) {
 			let result = new URL(linkString);
 			if (loadAsDataUrlCallback) loadAsDataUrlCallback(result);
@@ -720,7 +720,7 @@ export class LibInit {
 		} else if (dbNow) {
 			let content = new Blob([linkString], { type: "text/plain" });
 			get.dataUrlAsync(content).then(loadAsDataUrlCallback);
-			// @ts-expect-error 此处的返回值无任何用处
+			// @ts-expect-error 此處的返回值無任何用處
 			return;
 		} else {
 			let resultLink = defaultHandle == null ? linkString : defaultHandle(linkString);
@@ -729,8 +729,8 @@ export class LibInit {
 
 		if (loadAsDataUrlCallback != null) {
 			if (resultUrl.protocol == "db:") {
-				// 我思索了一下，如果这玩意能造成无限递归
-				// 那么我只能说，你赢了
+				// 我思索了一下，如果這玩意能造成無限遞歸
+				// 那麼我只能說，你贏了
 				game.getDB("image", linkString.slice(3)).then(storeResult => this.parseResourceAddress(storeResult, defaultHandle, loadAsDataUrlCallback, true));
 			} else {
 				get.blobFromUrl(resultUrl)

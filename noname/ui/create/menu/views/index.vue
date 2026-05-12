@@ -11,7 +11,7 @@
 					<div v-for="data in leftPaneData" :mode="data.attrs.mode" @click="toggleLeftPaneName" class="new-menubutton large">{{ data.name }}</div>
 				</div>
 				<div class="right pane" ref="rightPane"></div>
-				<div class="menubutton round highlight" ref="startButton">启</div>
+				<div class="menubutton round highlight" ref="startButton">啟</div>
 			</div>
 		</div>
 	</div>
@@ -41,10 +41,10 @@ export default {
 					startMenutabName,
 					startMenuData,
 				],
-				["选项", startMenuData],
+				["選項", startMenuData],
 				["角色", startMenuData],
 				["卡牌", startMenuData],
-				["扩展", startMenuData],
+				["擴展", startMenuData],
 				["其它", startMenuData],
 			]),
 		};
@@ -67,7 +67,7 @@ export default {
 			const data = this.tabDataMap.get(target.innerText);
 			const leftPaneData = data?.initLeftPaneData?.(this.connectMenu);
 			this.leftPaneData = Array.isArray(leftPaneData) ? leftPaneData : [];
-			// 高亮默认元素
+			// 高亮默認元素
 			this.$nextTick(() => {
 				const ele =
 					data?.getDefaultActive(this.connectMenu, Array.from(this.$refs.leftPane.children)) ||
@@ -93,7 +93,7 @@ export default {
 			if (this.rightPaneData.element?.parentElement) {
 				this.rightPaneData.element.remove();
 			}
-			// 缓存
+			// 緩存
 			if (rightPaneAppData) {
 				const parentElement = rightPaneAppData.element;
 				this.$refs.rightPane.appendChild(parentElement);
@@ -101,7 +101,7 @@ export default {
 				this.rightPaneData.app = rightPaneAppData.app;
 			}
 			else {
-				const rightPaneTemplate = data?.rightPaneTemplate || { template: html`<div>还未编写</div>` };
+				const rightPaneTemplate = data?.rightPaneTemplate || { template: html`<div>還未編寫</div>` };
 				data?.initConfigs?.(this.connectMenu, target, this.$refs.startButton);
 				/** @type { string } */
 					// @ts-ignore

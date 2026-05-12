@@ -73,10 +73,10 @@ export class Client {
 			game.updateWaiting();
 		} else if (lib.playerOL[this.id]) {
 			var player = lib.playerOL[this.id];
-			player.setNickname(player.nickname + " - 离线");
+			player.setNickname(player.nickname + " - 離線");
 			// @ts-ignore
 			game.broadcast(function (player) {
-				player.setNickname(player.nickname + " - 离线");
+				player.setNickname(player.nickname + " - 離線");
 			}, player);
 			player.unwait("ai");
 		}

@@ -1,4 +1,4 @@
-// 通过比对本地文件来自动修改asset.js和update.js
+// 通過比對本地文件來自動修改asset.js和update.js
 // 年久失修
 var fs = require("fs");
 var path = require("path");

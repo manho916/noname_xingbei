@@ -9,7 +9,7 @@ import OnloadSplash from "./OnloadSplash.js";
  */
 export class DefaultSplash {
 	id = "style1";
-	name = "样式一";
+	name = "樣式一";
 
 	path = "image/splash/style1/";
 	resolve;

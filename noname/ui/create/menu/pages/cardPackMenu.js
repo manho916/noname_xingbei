@@ -20,7 +20,7 @@ import { ui, game, get, ai, lib, _status } from "../../../../../noname.js";
 
 export const cardPackMenu = function (connectMenu) {
 	/**
-	 * 由于联机模式会创建第二个菜单，所以需要缓存一下可变的变量
+	 * 由於聯機模式會創建第二個菜單，所以需要緩存一下可變的變量
 	 */
 	// const cacheMenuContainer = menuContainer;
 	// const cachePopupContainer = popupContainer;
@@ -32,9 +32,9 @@ export const cardPackMenu = function (connectMenu) {
 	var rightPane = start.lastChild;
 	var pileCreated = false;
 	var recreatePile = function () {
-		lib.config.customcardpile["当前牌堆"] = [lib.config.bannedpile, lib.config.addedpile];
+		lib.config.customcardpile["當前牌堆"] = [lib.config.bannedpile, lib.config.addedpile];
 		game.saveConfig("customcardpile", lib.config.customcardpile);
-		game.saveConfig("cardpilename", "当前牌堆", true);
+		game.saveConfig("cardpilename", "當前牌堆", true);
 		pileCreated = false;
 	};
 
@@ -76,7 +76,7 @@ export const cardPackMenu = function (connectMenu) {
 			var node = start.firstChild.childNodes[i];
 			if (node.mode) {
 				if (node.mode.startsWith("mode_")) {
-					// 扩展卡牌包开启逻辑
+					// 擴展卡牌包開啟邏輯
 					if (node.mode.startsWith("mode_extension")) {
 						const extName = node.mode.slice(15);
 						if (!game.hasExtension(extName) || !game.hasExtensionLoaded(extName)) continue;
@@ -114,13 +114,13 @@ export const cardPackMenu = function (connectMenu) {
 	};
 	var togglePack = function (bool) {
 		var name = this._link.config._name;
-		// 扩展卡牌包开启逻辑
+		// 擴展卡牌包開啟邏輯
 		if (name.startsWith("mode_extension")) {
 			const extName = name.slice(15);
 			if (!game.hasExtension(extName) || !game.hasExtensionLoaded(extName)) return false;
 			game.saveExtensionConfig(extName, "cards_enable", bool);
 		}
-		// 原逻辑
+		// 原邏輯
 		else {
 			if (connectMenu) {
 				if (!bool) {
@@ -237,20 +237,20 @@ export const cardPackMenu = function (connectMenu) {
 				}
 			});
 			var cfgnode = createConfig({
-				name: "开启",
+				name: "開啟",
 				_name: mode,
 				init: (() => {
-					// 扩展卡牌包开启逻辑
+					// 擴展卡牌包開啟邏輯
 					if (mode.startsWith("mode_extension")) {
 						const extName = mode.slice(15);
 						if (!game.hasExtension(extName) || !game.hasExtensionLoaded(extName)) return false;
-						// 这块或许应该在加载扩展时候写
+						// 這塊或許應該在加載擴展時候寫
 						if (lib.config[`extension_${extName}_cards_enable`] === undefined) {
 							game.saveExtensionConfig(extName, "cards_enable", true);
 						}
 						return lib.config[`extension_${extName}_cards_enable`] === true;
 					}
-					// 原逻辑
+					// 原邏輯
 					else return lib.config.cards.includes(mode);
 				})(),
 				onclick: togglePack,
@@ -305,16 +305,16 @@ export const cardPackMenu = function (connectMenu) {
 			page.classList.add("menu-buttons");
 			page.classList.add("leftbutton");
 			if (!connectMenu && !lib.config.all.sgscards.includes(mode) && !mode.startsWith("mode_")) {
-				ui.create.div(".config.pointerspan", "<span>隐藏卡牌包</span>", page, function () {
-					if (this.firstChild.innerHTML == "隐藏卡牌包") {
-						this.firstChild.innerHTML = "卡牌包将在重启后隐藏";
+				ui.create.div(".config.pointerspan", "<span>隱藏卡牌包</span>", page, function () {
+					if (this.firstChild.innerHTML == "隱藏卡牌包") {
+						this.firstChild.innerHTML = "卡牌包將在重啟後隱藏";
 						lib.config.hiddenCardPack.add(mode);
 						if (!lib.config.prompt_hidepack) {
-							alert("隐藏的扩展包可通过选项-其它-重置隐藏内容恢复");
+							alert("隱藏的擴展包可通過選項-其它-重置隱藏內容恢復");
 							game.saveConfig("prompt_hidepack", true);
 						}
 					} else {
-						this.firstChild.innerHTML = "隐藏卡牌包";
+						this.firstChild.innerHTML = "隱藏卡牌包";
 						lib.config.hiddenCardPack.remove(mode);
 					}
 					game.saveConfig("hiddenCardPack", lib.config.hiddenCardPack);
@@ -329,7 +329,7 @@ export const cardPackMenu = function (connectMenu) {
 				if (!lib.config.addedpile[mode]) {
 					lib.config.addedpile[mode] = [];
 				}
-				ui.create.div(".config.more.pile", "编辑牌堆 <div>&gt;</div>", page, function () {
+				ui.create.div(".config.more.pile", "編輯牌堆 <div>&gt;</div>", page, function () {
 					if (cardpileexpanded) {
 						this.classList.remove("on");
 						for (var k = 0; k < cardpileNodes.length; k++) {
@@ -347,7 +347,7 @@ export const cardPackMenu = function (connectMenu) {
 				var cfgaddcard = ui.create.node("button", "", "添加卡牌", cfgnode, function () {
 					this.parentNode.nextSibling.classList.toggle("hidden");
 				});
-				var cfgbancard = ui.create.node("button", "", "全部关闭", cfgnode, function () {
+				var cfgbancard = ui.create.node("button", "", "全部關閉", cfgnode, function () {
 					for (var i = 0; i < cardpileNodes.length; i++) {
 						if (
 							cardpileNodes[i].type == "defaultcards" &&
@@ -357,7 +357,7 @@ export const cardPackMenu = function (connectMenu) {
 						}
 					}
 				});
-				var cfgenablecard = ui.create.node("button", "", "全部开启", cfgnode, function () {
+				var cfgenablecard = ui.create.node("button", "", "全部開啟", cfgnode, function () {
 					for (var i = 0; i < cardpileNodes.length; i++) {
 						if (
 							cardpileNodes[i].type == "defaultcards" &&
@@ -384,10 +384,10 @@ export const cardPackMenu = function (connectMenu) {
 						var cname = lib.cardPack[lib.config.cards[i]][j];
 						pileaddlist.push([cname, get.translation(cname)]);
 						if (cname == "sha") {
-							pileaddlist.push(["huosha", "火杀"]);
-							pileaddlist.push(["leisha", "雷杀"]);
-							pileaddlist.push(["icesha", "冰杀"]);
-							pileaddlist.push(["cisha", "刺杀"]);
+							pileaddlist.push(["huosha", "火殺"]);
+							pileaddlist.push(["leisha", "雷殺"]);
+							pileaddlist.push(["icesha", "冰殺"]);
+							pileaddlist.push(["cisha", "刺殺"]);
 						}
 					}
 				}
@@ -402,7 +402,7 @@ export const cardPackMenu = function (connectMenu) {
 						['lei', '雷'],
 						['huo', '火'],
 						['shui', '水'],
-						['feng', '风'],
+						['feng', '風'],
 						['guang','光'],
 					],
 					null,
@@ -414,9 +414,9 @@ export const cardPackMenu = function (connectMenu) {
 					[
 						['xue','血'],
 						['ji','技'],
-						['yong','咏'],
+						['yong','詠'],
 						['huan','幻'],
-						['sheng', '圣'],
+						['sheng', '聖'],
 					],
 					null,
 					cardpileadd
@@ -424,7 +424,7 @@ export const cardPackMenu = function (connectMenu) {
 				cardpileaddnumber.style.width = "43px";
 				cardpileaddnumber.style.marginRight = "2px";
 				var button = document.createElement("button");
-				button.innerHTML = "确定";
+				button.innerHTML = "確定";
 				button.style.width = "40px";
 				var deletecard = function () {
 					this.parentNode.remove();
@@ -449,7 +449,7 @@ export const cardPackMenu = function (connectMenu) {
 						//get.translation(card[2]) + " " + get.translation(card[0]) + get.strNumber(card[1]);
 					var cfgnodedelete = document.createElement("span");
 					cfgnodedelete.classList.add("cardpiledelete");
-					cfgnodedelete.innerHTML = "删除";
+					cfgnodedelete.innerHTML = "刪除";
 					cfgnodedelete.onclick = deletecard;
 					cfgnode.appendChild(cfgnodedelete);
 					page.insertBefore(cfgnode, cardpileadd.nextSibling);
@@ -471,7 +471,7 @@ export const cardPackMenu = function (connectMenu) {
 						//card[1];
 					var cfgnodedelete = document.createElement("span");
 					cfgnodedelete.classList.add("cardpiledelete");
-					cfgnodedelete.innerHTML = "删除";
+					cfgnodedelete.innerHTML = "刪除";
 					cfgnodedelete.onclick = deletecard;
 					cfgnode.appendChild(cfgnodedelete);
 					cfgnode.style.display = "none";
@@ -560,19 +560,19 @@ export const cardPackMenu = function (connectMenu) {
 				if (pileList) {
 					pileList.remove();
 				}
-				var list = ["默认牌堆"];
-				if (lib.config.customcardpile["当前牌堆"]) {
-					list.push("当前牌堆");
+				var list = ["默認牌堆"];
+				if (lib.config.customcardpile["當前牌堆"]) {
+					list.push("當前牌堆");
 				}
 				for (var i in lib.config.customcardpile) {
 					list.add(i);
 				}
 				var currentpile = get.config("cardpilename");
 				if (!currentpile) {
-					if (list.includes("当前牌堆")) {
-						currentpile = "当前牌堆";
+					if (list.includes("當前牌堆")) {
+						currentpile = "當前牌堆";
 					} else {
-						currentpile = "默认牌堆";
+						currentpile = "默認牌堆";
 					}
 				}
 				pileList = ui.create.selectlist(list, currentpile, pileChoose, function (e) {
@@ -581,7 +581,7 @@ export const cardPackMenu = function (connectMenu) {
 				});
 				pileList.style.float = "right";
 			};
-			var pileChoose = ui.create.div(".config.toggle.cardpilecfg.nomarginleft", "选择牌堆", page);
+			var pileChoose = ui.create.div(".config.toggle.cardpilecfg.nomarginleft", "選擇牌堆", page);
 			createList();
 
 			var pileDel = function () {
@@ -597,17 +597,17 @@ export const cardPackMenu = function (connectMenu) {
 				createList();
 			};
 
-			var restart = ui.create.div(".config.more", "重新启动", game.reload, page);
+			var restart = ui.create.div(".config.more", "重新啟動", game.reload, page);
 			restart.style.display = "none";
 			var createPileNode = function (name) {
 				var node = ui.create.div(".config.toggle.cardpilecfg.nomarginleft", name);
 				node.link = name;
 				var del = document.createElement("span");
-				del.innerHTML = "删除";
+				del.innerHTML = "刪除";
 				del.classList.add("cardpiledelete");
 				del.onclick = pileDel;
 				node.appendChild(del);
-				if (name == "当前牌堆") {
+				if (name == "當前牌堆") {
 					page.insertBefore(node, pileChoose.nextSibling);
 				} else {
 					page.insertBefore(node, restart);
@@ -617,7 +617,7 @@ export const cardPackMenu = function (connectMenu) {
 				createPileNode(i);
 			}
 			var exportCardPile;
-			ui.create.div(".config.more", "保存当前牌堆 <div>&gt;</div>", page, function () {
+			ui.create.div(".config.more", "保存當前牌堆 <div>&gt;</div>", page, function () {
 				this.classList.toggle("on");
 				if (this.classList.contains("on")) {
 					exportCardPile.classList.remove("hidden");
@@ -627,15 +627,15 @@ export const cardPackMenu = function (connectMenu) {
 			});
 			exportCardPile = ui.create.div(".config.cardpileadd.indent", page);
 			exportCardPile.classList.add("hidden");
-			ui.create.div("", '名称：<input type="text"><button>确定</button>', exportCardPile);
+			ui.create.div("", '名稱：<input type="text"><button>確定</button>', exportCardPile);
 			var input = exportCardPile.firstChild.lastChild.previousSibling;
-			input.value = "自定义牌堆";
+			input.value = "自定義牌堆";
 			input.style.marginRight = "3px";
 			input.style.width = "120px";
 			exportCardPile.firstChild.lastChild.onclick = function () {
 				var name = input.value;
 				var ok = true;
-				if (lib.config.customcardpile[name] || name == "默认牌堆" || name == "当前牌堆") {
+				if (lib.config.customcardpile[name] || name == "默認牌堆" || name == "當前牌堆") {
 					for (var i = 1; i <= 1000; i++) {
 						if (!lib.config.customcardpile[name + "(" + i + ")"]) {
 							name = name + "(" + i + ")";
@@ -644,18 +644,18 @@ export const cardPackMenu = function (connectMenu) {
 					}
 				}
 				lib.config.customcardpile[name] = [lib.config.bannedpile, lib.config.addedpile];
-				delete lib.config.customcardpile["当前牌堆"];
+				delete lib.config.customcardpile["當前牌堆"];
 				for (var i in lib.mode) {
 					if (
 						lib.config.mode_config[i] &&
-						(lib.config.mode_config[i].cardpilename == "当前牌堆" ||
+						(lib.config.mode_config[i].cardpilename == "當前牌堆" ||
 							!lib.config.mode_config[i].cardpilename)
 					) {
 						game.saveConfig("cardpilename", name, i);
 					}
 				}
 				for (var i = 0; i < page.childElementCount; i++) {
-					if (page.childNodes[i].link == "当前牌堆") {
+					if (page.childNodes[i].link == "當前牌堆") {
 						page.childNodes[i].remove();
 						break;
 					}
@@ -668,12 +668,12 @@ export const cardPackMenu = function (connectMenu) {
 	})();
 
 	if (!connectMenu) {
-		// 下面使用了var的特性，请不要在这里直接改为let
-		var node1 = ui.create.div(".lefttext", "全部开启", start.firstChild, function () {
+		// 下面使用了var的特性，請不要在這裡直接改為let
+		var node1 = ui.create.div(".lefttext", "全部開啟", start.firstChild, function () {
 			game.saveConfig("cards", lib.config.all.cards);
 			updateNodes();
 		});
-		var node2 = ui.create.div(".lefttext", "恢复默认", start.firstChild, function () {
+		var node2 = ui.create.div(".lefttext", "恢復默認", start.firstChild, function () {
 			game.saveConfig("cards", lib.config.defaultcards);
 			updateNodes();
 		});
@@ -684,14 +684,14 @@ export const cardPackMenu = function (connectMenu) {
 	updateNodes();
 
 	/**
-	 * 在菜单栏初始化完成后，如果又加载了武将包，进行刷新
+	 * 在菜單欄初始化完成後，如果又加載了武將包，進行刷新
 	 *
 	 * @param { string } packName
 	 */
 	return function (packName) {
-		// 判断菜单栏有没有加载过这个卡牌包
+		// 判斷菜單欄有沒有加載過這個卡牌包
 		if ([...start.firstChild.children].map((node) => node.mode).includes(packName)) return;
-		// 显示不是无名杀自带的卡牌包
+		// 顯示不是無名殺自帶的卡牌包
 		if (!lib.connectCardPack.includes(packName) && !lib.config.all.cards.includes(packName)) {
 			if (!(connectMenu && ["mode_derivation", "mode_banned"].includes(packName))) {
 				createModeConfig(packName, start.firstChild, node1);

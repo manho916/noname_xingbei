@@ -37,7 +37,7 @@ window.config = {
 	volumn_audio: 1,
 
 	connect_avatar: "fengZhiJianSheng",
-	connect_nickname: "无名玩家",
+	connect_nickname: "無名玩家",
 	config_menu: true,
 	auto_popped_config: true,
 	auto_popped_history: false,
@@ -132,13 +132,13 @@ window.config = {
 	cards: ["xingBei"],
 	characters: ['shiZhouNian'],
 	moderned_chracters: [],
-	connect_characters: ['yiDuanYeHuo','shenZiChuangLin','sanBan','siBan','zhongMoDaoZhu','teDian','poXiao','boss'],//默认关闭的角色包
+	connect_characters: ['yiDuanYeHuo','shenZiChuangLin','sanBan','siBan','zhongMoDaoZhu','teDian','poXiao','boss'],//默認關閉的角色包
 	connect_cards: [],
 	plays: [],
 	extensions: [],
 	banned: [],
 	bannedcards: [],
-	forbidlist: [//互斥角色组合
+	forbidlist: [//互斥角色組合
 		['hongLianQiShi','shengDianQiShi'],
 		['shengNv','jinGuiZhiNv'],
 		['fengZhiJianSheng','jianZhiZi'],

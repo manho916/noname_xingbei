@@ -21,7 +21,7 @@ export const device = nonameInitialized && nonameInitialized !== "nodejs" ? (use
 export const androidNewStandardApp = device === "android" && typeof window.NonameAndroidBridge != "undefined";
 
 /**
- * 不能被new的类
+ * 不能被new的類
  */
 export class Uninstantable {
 	constructor() {
@@ -30,7 +30,7 @@ export class Uninstantable {
 }
 
 /**
- * 暂停x毫秒
+ * 暫停x毫秒
  * @param { number } ms
  * @returns { Promise<void> }
  */
@@ -44,10 +44,10 @@ export function delay(ms) {
 }
 
 /**
- * 将当前Record已有的普通项封装起来，但不阻止其继续扩展
+ * 將當前Record已有的普通項封裝起來，但不阻止其繼續擴展
  *
  * @template {object} T
- * @param {T} record - 要封装的Record
+ * @param {T} record - 要封裝的Record
  * @returns {Readonly<T>}
  */
 export function freezeButExtensible(record) {
@@ -64,7 +64,7 @@ export function freezeButExtensible(record) {
 	return record;
 }
 
-// 目前是否还在game.js内运行代码
+// 目前是否還在game.js內運行代碼
 export let compatibleEnvironment = true;
 export function leaveCompatibleEnvironment() {
 	compatibleEnvironment = false;

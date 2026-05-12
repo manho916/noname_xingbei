@@ -54,7 +54,7 @@ async function main(argv) {
 	const assetList = await importAsset();
 	const diffList = await loadDiffFiles(commitHash);
 
-	// 添加一个可能没啥用的缓存，但万个数据的情况也不好说
+	// 添加一個可能沒啥用的緩存，但萬個數據的情況也不好說
 	/**
 	 * @type { Map<string, [type: string, subtype: string]> }
 	 */
@@ -82,7 +82,7 @@ async function main(argv) {
 	}
 	newAssetList.sort();
 
-	// 对素材进行分组
+	// 對素材進行分組
 	// @ts-ignore
 	const group = Map.groupBy(newAssetList, path => {
 		const [type, subtype] = splitCache.get(path) ?? path.split(sep);
@@ -169,7 +169,7 @@ async function genAssetSource(version, assetGroup, splitCache) {
 	}
 
 	sourceLines.push("];");
-	// 末尾的换行符用于表示*nix下的留尾
+	// 末尾的換行符用於表示*nix下的留尾
 	sourceLines.push("window.noname_skin_list = {};\n");
 
 	return sourceLines.join("\n");

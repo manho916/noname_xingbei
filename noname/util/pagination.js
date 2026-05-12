@@ -6,10 +6,10 @@ import dedent from "../../game/dedent.js";
 import { lib } from "../../noname.js";
 
 /**
- * 简单分页类
+ * 簡單分頁類
  */
 export class Pagination {
-	/** 是否加载了分页类对应的css文件 */
+	/** 是否加載了分頁類對應的css文件 */
 	static loaded = false;
 	/** @type { HTMLUListElement } 渲染的dom元素 */
 	element;
@@ -60,13 +60,13 @@ export class Pagination {
 			state.activePosition = Math.ceil(state.maxShowBtnCount / 2);
 		}
 	}
-	/** 切换页码并设置按钮点击事件 */
+	/** 切換頁碼並設置按鈕點擊事件 */
 	switchPage() {
 		let { state } = this;
 		let pCNameList = this.selectorEle("." + state.pCName, true);
 		let pageNumber;
 		if (!pCNameList) {
-			console.error(`未找到类名为${"." + state.pCName}的元素`);
+			console.error(`未找到類名為${"." + state.pCName}的元素`);
 			return;
 		}
 		pCNameList.forEach(item => {
@@ -74,18 +74,18 @@ export class Pagination {
 				/** @type { HTMLElement } */
 				// @ts-ignore
 				const currentPageEle = e.target;
-				// 点击的是当前页数不进行操作
+				// 點擊的是當前頁數不進行操作
 				if (this.hasClass(currentPageEle, state.activeCName)) return;
 				let dataNumberAttr = currentPageEle.getAttribute(state.dataNumberAttr);
-				// 点击数字按钮
+				// 點擊數字按鈕
 				if (dataNumberAttr) {
 					pageNumber = +dataNumberAttr;
 				}
-				// 点击上一页按钮
+				// 點擊上一頁按鈕
 				else if (this.hasClass(currentPageEle, state.prevCName)) {
 					state.pageNumber > 1 && (pageNumber = state.pageNumber - 1);
 				}
-				// 点击下一页按钮
+				// 點擊下一頁按鈕
 				else if (this.hasClass(currentPageEle, state.nextCName)) {
 					state.pageNumber < state.totalPageCount && (pageNumber = state.pageNumber + 1);
 				}
@@ -96,28 +96,28 @@ export class Pagination {
 		});
 	}
 	/**
-	 * 跳转页数
+	 * 跳轉頁數
 	 * @param { number } pageNumber
 	 */
 	gotoPage(pageNumber) {
 		let { state } = this;
 		let evaNumberLi = this.selectorEle("." + state.pageNumberCName, true);
 		if (!evaNumberLi) {
-			console.error(`未找到类名为${"." + state.pageNumberCName}的元素`);
+			console.error(`未找到類名為${"." + state.pageNumberCName}的元素`);
 			return;
 		}
 		let len = evaNumberLi.length;
-		// 不合法的页数
+		// 不合法的頁數
 		if (len === 0 || this.isIllegal(pageNumber)) {
 			return;
 		}
 		if (state.pageNumber !== pageNumber) {
-			// 清除 active 样式
+			// 清除 active 樣式
 			const active = this.selectorEle(`.${state.pCName}.${state.activeCName}`);
 			if (active) this.removeClass(active, state.activeCName);
 			if (state.activePosition) {
 				let rEllipseSign = state.totalPageCount - (state.maxShowBtnCount - state.activePosition) - 1;
-				// 左边不需要出现省略符号占位
+				// 左邊不需要出現省略符號佔位
 				if (pageNumber <= state.maxShowBtnCount && pageNumber < rEllipseSign) {
 					if (+(evaNumberLi[1].getAttribute(state.dataNumberAttr) || 0) > 2) {
 						for (let i = 1; i < state.maxShowBtnCount + 1; i++) {
@@ -131,9 +131,9 @@ export class Pagination {
 					this.hiddenEllipse(".ellipsis-tail", false);
 					this.addClass(evaNumberLi[pageNumber - 1], state.activeCName);
 				}
-				// 两边都需要出现省略符号占位
+				// 兩邊都需要出現省略符號佔位
 				if (pageNumber > state.maxShowBtnCount && pageNumber < rEllipseSign) {
-					// 针对 maxShowBtnCount===1 的特殊处理
+					// 針對 maxShowBtnCount===1 的特殊處理
 					this.hiddenEllipse(".ellipsis-head", pageNumber === 2 && state.maxShowBtnCount === 1);
 					this.hiddenEllipse(".ellipsis-tail", false);
 					for (let i = 1; i < state.maxShowBtnCount + 1; i++) {
@@ -144,7 +144,7 @@ export class Pagination {
 					}
 					this.addClass(evaNumberLi[state.activePosition], state.activeCName);
 				}
-				// 右边不需要出现省略符号占位
+				// 右邊不需要出現省略符號佔位
 				if (pageNumber >= rEllipseSign) {
 					this.hiddenEllipse(".ellipsis-tail");
 					this.hiddenEllipse(".ellipsis-head", false);
@@ -160,31 +160,31 @@ export class Pagination {
 					if (active) this.addClass(active, state.activeCName);
 				}
 			} else {
-				// 不需要省略符号占位
+				// 不需要省略符號佔位
 				this.addClass(evaNumberLi[pageNumber - 1], state.activeCName);
 			}
 			state.pageNumber = pageNumber;
 		}
 		state.onPageChange && state.onPageChange(state);
-		// 判断 上一页 下一页 是否可使用
+		// 判斷 上一頁 下一頁 是否可使用
 		this.switchPrevNextAble();
 	}
-	/** 设置上一页下一页按钮合法性 */
+	/** 設置上一頁下一頁按鈕合法性 */
 	switchPrevNextAble() {
 		let { state } = this;
 		let prevBtn = this.selectorEle("." + state.prevCName);
 		let nextBtn = this.selectorEle("." + state.nextCName);
 		if (!prevBtn) {
-			console.error(`未找到上一页按钮的元素`);
+			console.error(`未找到上一頁按鈕的元素`);
 			return;
 		}
 		if (!nextBtn) {
-			console.error(`未找到下一页按钮的元素`);
+			console.error(`未找到下一頁按鈕的元素`);
 			return;
 		}
-		// 当前页已经是第一页，则禁止 上一页 按钮的可用性
+		// 當前頁已經是第一頁，則禁止 上一頁 按鈕的可用性
 		state.pageNumber > 1 ? this.hasClass(prevBtn, state.disbalePrevCName) && this.removeClass(prevBtn, state.disbalePrevCName) : !this.hasClass(prevBtn, state.disbalePrevCName) && this.addClass(prevBtn, state.disbalePrevCName);
-		// 当前页已经是最后一页，则禁止 下一页 按钮的可用性
+		// 當前頁已經是最後一頁，則禁止 下一頁 按鈕的可用性
 		state.pageNumber >= state.totalPageCount ? !this.hasClass(nextBtn, state.disbaleNextCName) && this.addClass(nextBtn, state.disbaleNextCName) : this.hasClass(nextBtn, state.disbaleNextCName) && this.removeClass(nextBtn, state.disbaleNextCName);
 	}
 	/** 渲染Dom */
@@ -192,7 +192,7 @@ export class Pagination {
 		let { state } = this;
 		let pageContainer = state.container instanceof Element ? state.container : document.querySelector(state.container);
 		if (!pageContainer) {
-			console.error(`未根据配置找到父元素`);
+			console.error(`未根據配置找到父元素`);
 			return;
 		}
 
@@ -206,7 +206,7 @@ export class Pagination {
 
 		let paginationStr = dedent`
 				<ul class="pagination">
-					<li class="${pCName} ${prevCName} ${disbalePrevCName}">${state.pageLimitForCN?.[0] ?? "上一页"}</li>
+					<li class="${pCName} ${prevCName} ${disbalePrevCName}">${state.pageLimitForCN?.[0] ?? "上一頁"}</li>
 					<li class="${pCName} ${pageNumberCName} ${activeCName}" ${dataNumberAttr}='1'>${state.pageNumberForCN?.[0] ?? "1"}</li>
 			`;
 		if (totalPageCount - 2 > maxShowBtnCount) {
@@ -223,12 +223,12 @@ export class Pagination {
 				paginationStr += `<li class="${pCName} ${pageNumberCName}" ${dataNumberAttr}='${i}'>${state.pageNumberForCN?.[i - 1] ?? i}</li>`;
 			}
 		}
-		paginationStr += `<li class="${pCName} ${nextCName}${totalPageCount === 1 ? " " + disbaleNextCName : ""}">${state.pageLimitForCN?.[1] ?? "下一页"}</li></ul>`;
+		paginationStr += `<li class="${pCName} ${nextCName}${totalPageCount === 1 ? " " + disbaleNextCName : ""}">${state.pageLimitForCN?.[1] ?? "下一頁"}</li></ul>`;
 
 		if (state.insertAfter) {
 			let afterElement = state.insertAfter instanceof Element ? state.insertAfter : document.querySelector(state.insertAfter);
 			if (!afterElement || !pageContainer.contains(afterElement)) {
-				console.error(`未根据配置找到兄弟元素，元素将添加到父元素结尾`);
+				console.error(`未根據配置找到兄弟元素，元素將添加到父元素結尾`);
 				pageContainer.insertAdjacentHTML("beforeend", paginationStr);
 				// @ts-ignore
 				this.element = pageContainer.lastElementChild;
@@ -245,7 +245,7 @@ export class Pagination {
 			this.element = pageContainer.lastElementChild;
 		}
 
-		// 在dialog中使用分页，将应用shadowed这个css类名以靠近dialog样式
+		// 在dialog中使用分頁，將應用shadowed這個css類名以靠近dialog樣式
 		let ele = this.element;
 		while (ele !== null) {
 			// @ts-ignore
@@ -265,7 +265,7 @@ export class Pagination {
 		this.gotoPage(pageNumber);
 	}
 	/**
-	 * 判断按钮合法性
+	 * 判斷按鈕合法性
 	 * @param { number } pageNumber
 	 */
 	isIllegal(pageNumber) {
@@ -274,7 +274,7 @@ export class Pagination {
 		return /*state.pageNumber === pageNumber || */ Math.ceil(pageNumber) !== pageNumber || pageNumber > state.totalPageCount || pageNumber < 1 || typeof pageNumber !== "number" || pageNumber !== pageNumber;
 	}
 	/**
-	 * 隐藏/显示省略符号占位
+	 * 隱藏/顯示省略符號佔位
 	 * @param { string } selector
 	 **/
 	hiddenEllipse(selector, shouldHidden = true) {
@@ -325,7 +325,7 @@ export class Pagination {
 		}
 	}
 	/**
-	 * 自行添加的修改总页数的方法
+	 * 自行添加的修改總頁數的方法
 	 *
 	 * @param { number } totalPageCount
 	 */

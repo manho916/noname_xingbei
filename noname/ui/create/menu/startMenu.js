@@ -2,12 +2,12 @@ import { ui, game, get, lib, _status } from "../../../../noname.js";
 import { createApp, ref, reactive, onMounted, toRaw, isReactive, watch } from "../../../../game/vue.esm-browser.prod.js";
 import { NonameConfig } from "./nonameConfig.js";
 /**
- * 使字符串有html的代码提示
+ * 使字符串有html的代碼提示
  */
 const html = (strings, ...values) => String.raw({ raw: strings }, ...values);
 
-/** 显示在菜单的名称 */
-export const startMenutabName = "开始";
+/** 顯示在菜單的名稱 */
+export const startMenutabName = "開始";
 
 /**
  * @type { menuData }
@@ -74,12 +74,12 @@ export const startMenuData = {
 			const config = lib.config.mode_config[mode] || {};
 			if (connectMenu) {
 				if (!infoconfig.connect_remark) infoconfig.connect_remark = {
-					name:'房间备注',
+					name:'房間備註',
 					input:true,
 					frequent:true,
 				};
 				if (!infoconfig.connect_choose_timeout) infoconfig.connect_choose_timeout = {
-					name: "出牌时限",
+					name: "出牌時限",
 					init: "30",
 					item: {
 						10: "10秒",
@@ -94,18 +94,18 @@ export const startMenuData = {
 					frequent: true,
 				};
 				if (!infoconfig.connect_observe) infoconfig.connect_observe = {
-					name: "允许旁观",
+					name: "允許旁觀",
 					init: true,
 					connect: true,
 				};
 				if (!infoconfig.connect_observe_handcard) infoconfig.connect_observe_handcard = {
-					name: "允许观看手牌",
+					name: "允許觀看手牌",
 					init: false,
 					connect: true,
 				};
 				/*
 				if (!infoconfig.connect_mount_combine) infoconfig.connect_mount_combine = {
-					name: "合并坐骑栏",
+					name: "合併坐騎欄",
 					init: false,
 					connect: true,
 				};*/

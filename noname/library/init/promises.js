@@ -4,8 +4,8 @@ export class LibInitPromises {
 	/**
 	 * Promise版的`lib.init.js`
 	 *
-	 * @param {string} path - 文件路径
-	 * @param {string | string[]} [file] - 文件名或文件名组，忽略则直接读取`path`的内容
+	 * @param {string} path - 文件路徑
+	 * @param {string | string[]} [file] - 文件名或文件名組，忽略則直接讀取`path`的內容
 	 * @returns {Promise<Event>}
 	 */
 	js(path, file) {
@@ -15,10 +15,10 @@ export class LibInitPromises {
 	/**
 	 * Promise版的`lib.init.css`
 	 *
-	 * @param {string} path - 文件路径
-	 * @param {string | string[]} [file] - 文件名或文件名组，忽略则直接读取`path`的内容
-	 * @param {Element} [before] - 新样式dom的位置
-	 * @param {boolean} [noerror = false] - 是否忽略报错
+	 * @param {string} path - 文件路徑
+	 * @param {string | string[]} [file] - 文件名或文件名組，忽略則直接讀取`path`的內容
+	 * @param {Element} [before] - 新樣式dom的位置
+	 * @param {boolean} [noerror = false] - 是否忽略報錯
 	 * @returns {Promise<HTMLLinkElement>}
 	 */
 	css(path, file, before, noerror = false) {
@@ -33,7 +33,7 @@ export class LibInitPromises {
 	/**
 	 * Promise版的`lib.init.req`
 	 *
-	 * @param {string} str - 要读取的地址
+	 * @param {string} str - 要讀取的地址
 	 * @param {string} [master]
 	 * @returns {Promise<ProgressEvent>}
 	 */
@@ -44,7 +44,7 @@ export class LibInitPromises {
 	/**
 	 * Promise版的`lib.init.json`
 	 *
-	 * @param {string} url - 要读取的地址
+	 * @param {string} url - 要讀取的地址
 	 * @returns {Promise<object>}
 	 */
 	json(url) {
@@ -66,9 +66,9 @@ export class LibInitPromises {
 
 	/**
 	 * @async
-	 * @param {string | URL} link - 需要解析的路径
-	 * @param {((item: string) => string) | null} [defaultHandle] - 在给定路径不符合可用情况（或基于无名杀相关默认情况）时，处理路径的函数，返回的路径应是相对于根目录的相对路径，默认为`null`，当且仅当无法解析成`URL`时会调用该回调
-	 * @param {boolean} [forceLoadAsDataUrl] - 是否将资源加载为[Data URL](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)，默认为`false`
+	 * @param {string | URL} link - 需要解析的路徑
+	 * @param {((item: string) => string) | null} [defaultHandle] - 在給定路徑不符合可用情況（或基於無名殺相關默認情況）時，處理路徑的函數，返回的路徑應是相對於根目錄的相對路徑，默認為`null`，當且僅當無法解析成`URL`時會調用該回調
+	 * @param {boolean} [forceLoadAsDataUrl] - 是否將資源加載為[Data URL](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/Data_URLs)，默認為`false`
 	 * @returns {Promise<URL>}
 	 */
 	parseResourceAddress(link, defaultHandle = null, forceLoadAsDataUrl = false) {
@@ -81,8 +81,8 @@ export class LibInitPromises {
 
 	/**
 	 * @async
-	 * @param {string | URL} link - 需要解析的路径
-	 * @param {((item: string) => string) | null} [defaultHandle] - 在给定路径不符合可用情况（或基于无名杀相关默认情况）时，处理路径的函数，返回的路径应是相对于根目录的相对路径，默认为`null`，当且仅当无法解析成`URL`时会调用该回调
+	 * @param {string | URL} link - 需要解析的路徑
+	 * @param {((item: string) => string) | null} [defaultHandle] - 在給定路徑不符合可用情況（或基於無名殺相關默認情況）時，處理路徑的函數，返回的路徑應是相對於根目錄的相對路徑，默認為`null`，當且僅當無法解析成`URL`時會調用該回調
 	 * @returns {Promise<[origin: URL, data: URL]>}
 	 */
 	async parseResourceAddressExt(link, defaultHandle = null) {

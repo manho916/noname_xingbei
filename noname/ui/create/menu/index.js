@@ -193,13 +193,13 @@ export function createConfig(config, position) {
 	var node = ui.create.div(".config", config.name);
 	node._link = { config: config };
 	if (!config.clear) {
-		if (config.name != "开启") {
-			if (config.name == "屏蔽弱将") {
-				config.intro = "强度过低的武将（孙策除外）不会出现在选将框，也不会被AI选择";
-			} else if (config.name == "屏蔽强将") {
-				config.intro = "强度过高的武将不会出现在选将框，也不会被AI选择";
+		if (config.name != "開啟") {
+			if (config.name == "屏蔽弱將") {
+				config.intro = "強度過低的武將（孫策除外）不會出現在選將框，也不會被AI選擇";
+			} else if (config.name == "屏蔽強將") {
+				config.intro = "強度過高的武將不會出現在選將框，也不會被AI選擇";
 			} else if (!config.intro) {
-				config.intro = "设置" + config.name;
+				config.intro = "設置" + config.name;
 			}
 			lib.setIntro(node, function (uiintro) {
 				if (lib.config.touchscreen) _status.dragged = true;
@@ -319,18 +319,18 @@ export function createConfig(config, position) {
 				input.blur();
 			}
 		};
-		if (config.name == "联机昵称") {
-			input.innerHTML = config.init || "无名玩家";
+		if (config.name == "聯機暱稱") {
+			input.innerHTML = config.init || "無名玩家";
 			input.onblur = function () {
 				input.innerHTML = input.innerHTML.replace(/<br>/g, "");
 				if (!input.innerHTML || get.is.banWords(input.innerHTML)) {
-					input.innerHTML = "无名玩家";
+					input.innerHTML = "無名玩家";
 				}
 				input.innerHTML = input.innerHTML.slice(0, 12);
 				game.saveConfig("connect_nickname", input.innerHTML);
 				game.saveConfig("connect_nickname", input.innerHTML, "connect");
 			};
-		} else if (config.name == "联机大厅") {
+		} else if (config.name == "聯機大廳") {
 			input.innerHTML = config.init || lib.hallURL;
 			input.onblur = function () {
 				if (!input.innerHTML) {
@@ -339,12 +339,12 @@ export function createConfig(config, position) {
 				input.innerHTML = input.innerHTML.replace(/<br>/g, "");
 				game.saveConfig("hall_ip", input.innerHTML, "connect");
 			};
-		}else if(config.name=='房间备注'){
-			input.innerHTML=config.init||'无';
+		}else if(config.name=='房間備註'){
+			input.innerHTML=config.init||'無';
 			input.onblur=function(){
 				input.innerHTML=input.innerHTML.replace(/<br>/g,'');
 				if(!input.innerHTML||get.is.banWords(input.innerHTML)){
-					input.innerHTML='无';
+					input.innerHTML='無';
 				}
 				input.innerHTML=input.innerHTML.slice(0,12);
 				game.saveConfig('connect_remark',input.innerHTML);
@@ -371,14 +371,14 @@ export function createConfig(config, position) {
 /**
  * @type { HTMLDivElement }
  *
- * 也是一个全屏div，但它的子元素是菜单栏
+ * 也是一個全屏div，但它的子元素是菜單欄
  */
 export let menuContainer;
 
 /**
  * @type { HTMLDivElement }
  *
- * 一个全屏div
+ * 一個全屏div
  */
 export let popupContainer;
 
@@ -425,16 +425,16 @@ export const menuUpdates = [];
  * @param { boolean } [connectMenu]
  */
 export function menu(connectMenu) {
-	/** 提示重启的计时器 */
+	/** 提示重啟的計時器 */
 	let menuTimeout = null;
 	if (!connectMenu && !game.syncMenu) {
 		menuTimeout = setTimeout(lib.init.reset, 1000);
 	}
-	/** menu是menux.menu，目前只有赋值没有使用，所以先注释掉 */
+	/** menu是menux.menu，目前只有賦值沒有使用，所以先註釋掉 */
 	// let menu;
 
 	/**
-	 * 由于联机模式会创建第二个菜单，所以需要缓存一下可变的变量
+	 * 由於聯機模式會創建第二個菜單，所以需要緩存一下可變的變量
 	 */
 	const cacheMenuContainer = (menuContainer = ui.create.div(".menu-container.hidden", ui.window, () => {
 		clickContainer.call(cacheMenuContainer, connectMenu);
@@ -474,7 +474,7 @@ export function menu(connectMenu) {
 				clickContainer.call(cacheMenuContainer, connectMenu);
 			}
 		};
-		menux = createMenu(connectMenu, ["开始", "选项", "角色", "卡牌", "扩展", "其它"], {
+		menux = createMenu(connectMenu, ["開始", "選項", "角色", "卡牌", "擴展", "其它"], {
 			position: cacheMenuContainer,
 			bar: 40,
 		});
@@ -483,7 +483,7 @@ export function menu(connectMenu) {
 		ui.click.connectMenu = function () {
 			if (cacheMenuContainer.classList.contains("hidden")) {
 				if (_status.waitingForPlayer) {
-					startButton.innerHTML = "设";
+					startButton.innerHTML = "設";
 					var start = cacheMenux.pages[0].firstChild;
 					for (var i = 0; i < start.childNodes.length; i++) {
 						if (start.childNodes[i].mode != lib.configOL.mode) {
@@ -517,13 +517,13 @@ export function menu(connectMenu) {
 	}
 	menuxpages = menux.pages.slice(0);
 
-	// 开始
+	// 開始
 	let startButton = ui.create.startMenu(connectMenu);
 
-	// 选项
+	// 選項
 	ui.create.optionsMenu(connectMenu);
 
-	// 武将
+	// 武將
 	let updateCharacterPackMenu = ui.create.characterPackMenu(connectMenu);
 	ui.updateCharacterPackMenu.push(updateCharacterPackMenu);
 
@@ -531,7 +531,7 @@ export function menu(connectMenu) {
 	let updatecardPackMenu = ui.create.cardPackMenu(connectMenu);
 	ui.updateCardPackMenu.push(updatecardPackMenu);
 
-	// 扩展
+	// 擴展
 	ui.create.extensionMenu(connectMenu);
 
 	// 其他

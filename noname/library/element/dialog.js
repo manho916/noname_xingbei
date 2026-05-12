@@ -24,17 +24,17 @@ export class Dialog extends HTMLDivElement {
 	/** @type { boolean } */
 	noopen;
 	/**
-	 * dialog添加数据是否支持分页
+	 * dialog添加數據是否支持分頁
 	 * @type { boolean }
 	 **/
 	supportsPagination;
 	/**
-	 * dialog中储存的分页元素(用来兼容一个dialog中多个分页的情况)
+	 * dialog中儲存的分頁元素(用來兼容一個dialog中多個分頁的情況)
 	 * @type { Map<HTMLElement, InstanceType<typeof import("../../util/pagination.js").Pagination>> }
 	 */
 	paginationMap;
 	/**
-	 * 根据数据类型，为每一个类型分配一页的最大数据量
+	 * 根據數據類型，為每一個類型分配一頁的最大數據量
 	 * @type { Map<keyof UI['create']['buttonPresets'], number> }
 	 */
 	paginationMaxCount;
@@ -89,11 +89,11 @@ export class Dialog extends HTMLDivElement {
 		return dialog;
 	}
 	/**
-	 * 添加分页组件到页面
-	 * @param {Pagination} state - 分页组件的配置对象
+	 * 添加分頁組件到頁面
+	 * @param {Pagination} state - 分頁組件的配置對象
 	 */
 	addPagination(state = {}) {
-		// 传入初始配置
+		// 傳入初始配置
 		const p = new Pagination(state);
 		this.paginationMap.set(state.insertAfter, p);
 		// 渲染元素
@@ -106,32 +106,32 @@ export class Dialog extends HTMLDivElement {
 	addNewRow(...args) {
 		this.classList.add("addNewRow");
 		this.classList.remove("nobutton");
-		//参数归一化
+		//參數歸一化
 		let itemOptions = parameterNormolize();
-		//设置比例字符串
+		//設置比例字符串
 		let ratioStr = itemOptions.map(o => o.ratio || 1).join("fr ") + "fr";
-		//定义一个属性记录加入的所有的框，框的links是加入时真实数据，方便最后获取数据，这里可以设计一下别的数据格式向外暴露结果
+		//定義一個屬性記錄加入的所有的框，框的links是加入時真實數據，方便最後獲取數據，這裡可以設計一下別的數據格式向外暴露結果
 		if (!this.itemContainers) this.itemContainers = [];
 		let that = this;
-		//创建一个行的父容器
+		//創建一個行的父容器
 		let rowContainer = createRowContainer(this);
-		//遍历参数
+		//遍歷參數
 		for (let itemOption of itemOptions) {
-			//为每个列创建一个子容器
+			//為每個列創建一個子容器
 			let itemContainer = createItemContainer(itemOption);
-			//将项目加入到每个子容器中
+			//將項目加入到每個子容器中
 			let item = itemOption.item;
 			let addedItems = addItemToItemContainer(item, itemContainer, itemOption);
-			//注册点击事件
+			//註冊點擊事件
 			BindEvent(itemOption, addedItems, itemContainer);
-			//检查溢出处理的逻辑
+			//檢查溢出處理的邏輯
 			checkOverflow(itemOption, itemContainer, addedItems);
-			//自定义添加元素
+			//自定義添加元素
 			if (itemOption.custom) itemOption.custom(itemContainer);
 			observeItemContainer(itemOption, itemContainer);
 			this.itemContainers.push(itemContainer);
 		}
-		//监视容器，实现当itemcontainer的子元素发生变化时，重新调用checkOverflow
+		//監視容器，實現當itemcontainer的子元素髮生變化時，重新調用checkOverflow
 		function observeItemContainer(itemOption, itemContainer) {
 			itemContainer.Observer = new MutationObserver(mutationsList => {
 				for (const mutation of mutationsList) {
@@ -177,7 +177,7 @@ export class Dialog extends HTMLDivElement {
 		function parameterNormolize() {
 			let itemOptions = [];
 			if (args.length == 0) {
-				throw new Error("参数不能为空");
+				throw new Error("參數不能為空");
 			} else if (args.length == 1) {
 				if (isOption(args[0])) {
 					itemOptions = [args[0]];
@@ -212,7 +212,7 @@ export class Dialog extends HTMLDivElement {
 			});
 			return rowContainer;
 		}
-		//添加元素到子容器中，并返回添加后的元素
+		//添加元素到子容器中，並返回添加後的元素
 		function addItemToItemContainer(item, itemContainer, itemOption) {
 			if (!item || (Array.isArray(item) && !item.length)) {
 				itemContainer.classList.add("popup");

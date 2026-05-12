@@ -8,7 +8,7 @@ export class AI {
 	get = get;
 	/**
 	 * @param { any } obj
-	 * @param { boolean } [similar] true伪equals, false统一前缀
+	 * @param { boolean } [similar] true偽equals, false統一前綴
 	 * @returns { string } cacheKey
 	 */
 	getCacheKey(obj, similar) {
@@ -35,13 +35,13 @@ export class AI {
 		}
 	}
 	/**
-	 * 获取viewer视角下target手牌的点数、最大值和最小值
+	 * 獲取viewer視角下target手牌的點數、最大值和最小值
 	 * @param { Player } target 
-	 * @param { Player | true } [viewer] 视角，true则透视
-	 * @param { function (Card): boolean | Card[] } [cards] 枚举的卡牌或卡牌筛选条件
-	 * @param { string } [access] Cache存取，默认"11"。第一位为"1"存入，第二位为"1"读取
-	 * @param { number } r 最大值限制，默认13
-	 * @param { number } l 最小值限制，默认1
+	 * @param { Player | true } [viewer] 視角，true則透視
+	 * @param { function (Card): boolean | Card[] } [cards] 枚舉的卡牌或卡牌篩選條件
+	 * @param { string } [access] Cache存取，默認"11"。第一位為"1"存入，第二位為"1"讀取
+	 * @param { number } r 最大值限制，默認13
+	 * @param { number } l 最小值限制，默認1
 	 * @returns { { nums: number[], max: number, min: number } }
 	 */
 	guessTargetPoints(target, viewer, cards, access = "11", r = 13, l = 1) {

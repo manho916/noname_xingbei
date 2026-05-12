@@ -10,7 +10,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				fullskin:true,
 				selectTarget:1,
 				cardPrompt:function(card){
-					return '主动攻击或应战其他攻击时打出。\n命中时造成2点攻击伤害。\n暗灭不能被应战。';
+					return '主動攻擊或應戰其他攻擊時打出。\n命中時造成2點攻擊傷害。\n暗滅不能被應戰。';
 				},
 				filterTarget:function(card,player,target){
 					return target.side!=player.side;
@@ -40,7 +40,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				fullskin:true,
 				selectTarget:1,
 				cardPrompt:function(card){
-					return '主动攻击或应战水系攻击时打出。\n命中时造成2点攻击伤害。';
+					return '主動攻擊或應戰水系攻擊時打出。\n命中時造成2點攻擊傷害。';
 				},
 				filterTarget:function(card,player,target){
 					return target.side!=player.side;
@@ -71,7 +71,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				fullskin:true,
 				selectTarget:1,
 				cardPrompt:function(card){
-					return '主动攻击或应战火系攻击时打出。\n命中时造成2点攻击伤害。';
+					return '主動攻擊或應戰火系攻擊時打出。\n命中時造成2點攻擊傷害。';
 				},
 				filterTarget:function(card,player,target){
 					return target.side!=player.side;
@@ -102,7 +102,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				fullskin:true,
 				selectTarget:1,
 				cardPrompt:function(card){
-					return '主动攻击或应战风系攻击时打出。\n命中时造成2点攻击伤害。';
+					return '主動攻擊或應戰風系攻擊時打出。\n命中時造成2點攻擊傷害。';
 				},
 				filterTarget:function(card,player,target){
 					return target.side!=player.side;
@@ -133,7 +133,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				fullskin:true,
 				selectTarget:1,
 				cardPrompt:function(card){
-					return '主动攻击或应战雷系攻击时打出。\n命中时造成2点攻击伤害。';
+					return '主動攻擊或應戰雷系攻擊時打出。\n命中時造成2點攻擊傷害。';
 				},
 				filterTarget:function(card,player,target){
 					return target.side!=player.side;
@@ -164,7 +164,7 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 				enable:true,
 				selectTarget:1,
 				cardPrompt:function(card){
-					return '主动攻击或应战地系攻击时打出。\n命中时造成2点攻击伤害。';
+					return '主動攻擊或應戰地系攻擊時打出。\n命中時造成2點攻擊傷害。';
 				},
 				filterTarget:function(card,player,target){
 					return target.side!=player.side;
@@ -359,64 +359,64 @@ game.import('card',function(lib,game,ui,get,ai,_status){
 			guang:'光',
 			shui:'水',
 			huo:'火',
-			feng:'风',
+			feng:'風',
 			lei:'雷',
 			di:'地',
 			xue:'血',
 			ji:'技',
-			yong:'咏',
+			yong:'詠',
 			huan:'幻',
-			sheng:'圣',
-			gongJi:'攻击',
-			faShu:'法术',
+			sheng:'聖',
+			gongJi:'攻擊',
+			faShu:'法術',
 
-			anMie:"暗灭",
-			anMie_info:"主动攻击或应战其他攻击时打出。\n命中时造成2点攻击伤害。\n暗灭不能被应战。",
-			shuiLianZhan:"水涟斩",
-			shuiLianZhan_info:"主动攻击或应战水系攻击时打出。\n命中时造成2点攻击伤害。",
-			huoYanZhan:"火焰斩",
-			huoYanZhan_info:"主动攻击或应战火系攻击时打出。\n命中时造成2点攻击伤害。",
-			fengShenZhan:"风神斩",
-			fengShenZhan_info:"主动攻击或应战风系攻击时打出。\n命中时造成2点攻击伤害。",
-			leiGuangZhan:"雷光斩",
-			leiGuangZhan_info:"主动攻击或应战雷系攻击时打出。\n命中时造成2点攻击伤害。",
-			diLieZhan:"地裂斩",
-			diLieZhan_info:"主动攻击或应战地系攻击时打出。\n命中时造成2点攻击伤害。",
-			shengGuang:"圣光",
-			shengGuang_info:"抵挡一次攻击或者【魔弹】。",
-			xuRuo:"虚弱",
-			xuRuo_info:"（将此牌放置在一名角色面前）该角色跳过其下个行动阶段。在其下个行动阶段开始前他可以选择摸3张牌来取消【虚弱】的效果。不论效果是否发动，触发后移除此牌。",
+			anMie:"暗滅",
+			anMie_info:"主動攻擊或應戰其他攻擊時打出。\n命中時造成2點攻擊傷害。\n暗滅不能被應戰。",
+			shuiLianZhan:"水漣斬",
+			shuiLianZhan_info:"主動攻擊或應戰水系攻擊時打出。\n命中時造成2點攻擊傷害。",
+			huoYanZhan:"火焰斬",
+			huoYanZhan_info:"主動攻擊或應戰火系攻擊時打出。\n命中時造成2點攻擊傷害。",
+			fengShenZhan:"風神斬",
+			fengShenZhan_info:"主動攻擊或應戰風系攻擊時打出。\n命中時造成2點攻擊傷害。",
+			leiGuangZhan:"雷光斬",
+			leiGuangZhan_info:"主動攻擊或應戰雷系攻擊時打出。\n命中時造成2點攻擊傷害。",
+			diLieZhan:"地裂斬",
+			diLieZhan_info:"主動攻擊或應戰地系攻擊時打出。\n命中時造成2點攻擊傷害。",
+			shengGuang:"聖光",
+			shengGuang_info:"抵擋一次攻擊或者【魔彈】。",
+			xuRuo:"虛弱",
+			xuRuo_info:"（將此牌放置在一名角色面前）該角色跳過其下個行動階段。在其下個行動階段開始前他可以選擇摸3張牌來取消【虛弱】的效果。不論效果是否發動，觸發後移除此牌。",
 			zhongDu:'中毒',
-			zhongDu_info:"（将此牌放置在一名角色面前）在他的下一个行动阶段开始前，对他造成1点魔法伤害③。触发后移除此牌。同一角色面前允许存在多个【中毒】。",
-			shengDun:"圣盾",
-			shengDun_info:"（将此牌放置在一名角色面前）在他遭受攻击或者【魔弹】时可以选择移除【圣盾】来抵消该次伤害，触发后移除此牌。（在有【圣盾】的情况下，他不能选择保留【圣盾】直接承受攻击或【魔弹】）。",
-			moDan:"魔弹",
-			moDan_info:"（将此牌传递给右手边最近的一名对手）若命中，对他造成2点法术伤害；对方可以选择打出一张【魔弹】将此效果传递下去，若如此做，则对他视为未命中且视为【魔弹】的传递者为他。每传递一次伤害额外+1。在同一轮传递中每一名角色只能参与一次。【魔弹】可以被【圣光】或【圣盾】抵挡，效果会因此终止。",
+			zhongDu_info:"（將此牌放置在一名角色面前）在他的下一個行動階段開始前，對他造成1點魔法傷害③。觸發後移除此牌。同一角色面前允許存在多個【中毒】。",
+			shengDun:"聖盾",
+			shengDun_info:"（將此牌放置在一名角色面前）在他遭受攻擊或者【魔彈】時可以選擇移除【聖盾】來抵消該次傷害，觸發後移除此牌。（在有【聖盾】的情況下，他不能選擇保留【聖盾】直接承受攻擊或【魔彈】）。",
+			moDan:"魔彈",
+			moDan_info:"（將此牌傳遞給右手邊最近的一名對手）若命中，對他造成2點法術傷害；對方可以選擇打出一張【魔彈】將此效果傳遞下去，若如此做，則對他視為未命中且視為【魔彈】的傳遞者為他。每傳遞一次傷害額外+1。在同一輪傳遞中每一名角色只能參與一次。【魔彈】可以被【聖光】或【聖盾】抵擋，效果會因此終止。",
 
 
-			//牌可转化的技能
-            'xueYingKuangDao|xueZhiBeiMing':"血影狂刀<br>血之悲鸣",
-            'jiFengJi|shanGuangXianJing':"疾风技<br>闪光陷阱",
-            'weiLiCiFu|bingDong':"威力赐福<br>冰冻",
-            'zhiYuZhiGuang|tianShiZhiQiang':"治愈之光<br>天使之墙",
-            'shuiZhiFengYin|lingHunFuYu':"水之封印<br>灵魂赋予",
-            'shuiZhiFengYin|lingHunZhenBao':"水之封印<br>灵魂震爆",
-            'huoZhiFengYin|lingHunZhenBao':"火之封印<br>灵魂震爆",
-            'xueXingPaoXiao|xueZhiBeiMing':"血腥咆哮<br>血之悲鸣",
-            'jiFengJi|shanGuangXianJing':"疾风技<br>闪光陷阱",
-            'weiLiCiFu|huoQou':"威力赐福<br>火球",
-            'zhiLiaoShu|tianShiZhiQiang':'治疗术<br>天使之墙',
-            'fengZhiFengYin|lingHunFuYu':"风之封印<br>灵魂赋予",
-            'lieFengJi|jingZhunSheJi':"烈风技<br>精准射击",
-            'jiFengJi|jingZhunSheJi':"疾风技<br>精准射击",
-            'xunJieCiFu|fengRen':"迅捷赐福<br>风刃",
-            'leiZhiFengYin|lingHunZhenBao':"雷之封印<br>灵魂震爆",
-            'xunJieCiFu|leiJi':"迅捷赐福<br>雷击",
-            'weiLiCiFu|yunShi':"威力赐福<br>陨石",
-            'xunJieCiFu|yunShi':"迅捷赐福<br>陨石",
-            'diZhiFengYin|lingHunZhenBao':"地之封印<br>灵魂震爆",
-            'zhiLiaoShu|':"治疗术",
-            'diZhiFengYin|lingHunFuYu':"地之封印<br>灵魂赋予",
+			//牌可轉化的技能
+            'xueYingKuangDao|xueZhiBeiMing':"血影狂刀<br>血之悲鳴",
+            'jiFengJi|shanGuangXianJing':"疾風技<br>閃光陷阱",
+            'weiLiCiFu|bingDong':"威力賜福<br>冰凍",
+            'zhiYuZhiGuang|tianShiZhiQiang':"治癒之光<br>天使之牆",
+            'shuiZhiFengYin|lingHunFuYu':"水之封印<br>靈魂賦予",
+            'shuiZhiFengYin|lingHunZhenBao':"水之封印<br>靈魂震爆",
+            'huoZhiFengYin|lingHunZhenBao':"火之封印<br>靈魂震爆",
+            'xueXingPaoXiao|xueZhiBeiMing':"血腥咆哮<br>血之悲鳴",
+            'jiFengJi|shanGuangXianJing':"疾風技<br>閃光陷阱",
+            'weiLiCiFu|huoQou':"威力賜福<br>火球",
+            'zhiLiaoShu|tianShiZhiQiang':'治療術<br>天使之牆',
+            'fengZhiFengYin|lingHunFuYu':"風之封印<br>靈魂賦予",
+            'lieFengJi|jingZhunSheJi':"烈風技<br>精準射擊",
+            'jiFengJi|jingZhunSheJi':"疾風技<br>精準射擊",
+            'xunJieCiFu|fengRen':"迅捷賜福<br>風刃",
+            'leiZhiFengYin|lingHunZhenBao':"雷之封印<br>靈魂震爆",
+            'xunJieCiFu|leiJi':"迅捷賜福<br>雷擊",
+            'weiLiCiFu|yunShi':"威力賜福<br>隕石",
+            'xunJieCiFu|yunShi':"迅捷賜福<br>隕石",
+            'diZhiFengYin|lingHunZhenBao':"地之封印<br>靈魂震爆",
+            'zhiLiaoShu|':"治療術",
+            'diZhiFengYin|lingHunFuYu':"地之封印<br>靈魂賦予",
 		},
 		list:[
 			["an",'sheng',"anMie"],

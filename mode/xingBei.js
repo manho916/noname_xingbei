@@ -27,7 +27,7 @@ export default () => {
 						game.playVideoContent(e.target.result.video);
 					}
 					else{
-						alert('播放失败：找不到录像');
+						alert('播放失敗：找不到錄像');
 						game.reload();
 					}
 				}
@@ -36,7 +36,7 @@ export default () => {
 			}
 			if(_status.connectMode){
 				lib.configOL.guDingRenShu=true;
-				game.waitForPlayer(function(){//联机人数确定
+				game.waitForPlayer(function(){//聯機人數確定
 					if(lib.configOL.phaseswap) lib.configOL.number=2;
 					else{
 						switch(lib.configOL.versus_mode){
@@ -79,10 +79,10 @@ export default () => {
                     var players=game.players;
                     for(var i=0;i<players.length;i++){
                         if(players[i].side==true){
-                            players[i].node.identity.firstChild.innerHTML='红';
+                            players[i].node.identity.firstChild.innerHTML='紅';
                         }
                         else{
-                            players[i].node.identity.firstChild.innerHTML='蓝';
+                            players[i].node.identity.firstChild.innerHTML='藍';
                         }
                     }
 					if (lib.config.show_handcardbutton) {
@@ -131,7 +131,7 @@ export default () => {
 		},
 		game:{
 			addRecord: function (bool) {
-				if(!_status.connectMode) return;//只记录联机对局
+				if(!_status.connectMode) return;//只記錄聯機對局
 				if (typeof bool == "boolean") {
 					var phaseswap=get.phaseswap();
 
@@ -157,7 +157,7 @@ export default () => {
 					var str = "";
 					for (var i = 0; i < list.length; i++) {
 						if (data[list[i]]) {
-							str += list[i] + "：" + data[list[i]][0] + "胜" + " " + data[list[i]][1] + "负<br>";
+							str += list[i] + "：" + data[list[i]][0] + "勝" + " " + data[list[i]][1] + "負<br>";
 						}
 					}
 					lib.config.gameRecord.xingBei.str = str;
@@ -180,7 +180,7 @@ export default () => {
 								var str = "";
 								for (var i = 0; i < list.length; i++) {
 									if (data[list[i]]) {
-										str += list[i] + "：" + data[list[i]][0] + "胜" + " " + data[list[i]][1] + "负<br>";
+										str += list[i] + "：" + data[list[i]][0] + "勝" + " " + data[list[i]][1] + "負<br>";
 									}
 								}
 								lib.config.gameRecord.xingBei.str = str;
@@ -192,7 +192,7 @@ export default () => {
 			},
 			
 			submitMatchResult:function (bool) {
-				if(!_status.connectMode) return;//只记录联机对局
+				if(!_status.connectMode) return;//只記錄聯機對局
 				var mode=lib.configOL.versus_mode||'2v2';
 				var phaseswap=get.phaseswap() ? 1 : 0;
 
@@ -215,7 +215,7 @@ export default () => {
 						is_winner:false,
 						is_ai:true,
 					};
-					//胜负判定
+					//勝負判定
 					if(bool===true){
 						if(player.side==game.me.side) playerData.is_winner=true;
 					}else if(bool===false){
@@ -251,7 +251,7 @@ export default () => {
 					method:'POST',
 					headers:{
 						'Content-Type':'application/json',
-						'Authorization':'Bearer FrRz9uz64OZUSglLKv7CcLs4yTjCedOk',//传递授权信息
+						'Authorization':'Bearer FrRz9uz64OZUSglLKv7CcLs4yTjCedOk',//傳遞授權信息
 					},
 					body:JSON.stringify(matchData),
 				})
@@ -289,41 +289,41 @@ export default () => {
 			},
 			getRoomInfo:function(uiintro){
 				if(lib.configOL.versus_mode=='4v4'){
-					uiintro.add('<div class="text chat">队伍顺序：随机');
+					uiintro.add('<div class="text chat">隊伍順序：隨機');
 				}else{
 					switch(lib.configOL.choose_mode){
-						case '多选1':uiintro.add('<div class="text chat">选角模式：多选1');break;
-						case 'CM01':uiintro.add('<div class="text chat">选角模式：CM01');break;
-						case 'CM02':uiintro.add('<div class="text chat">选角模式：CM02');break;
-						case 'BP01':uiintro.add('<div class="text chat">选角模式：BP01');break;
-						case 'BP02':uiintro.add('<div class="text chat">选角模式：BP02');break;
-						case 'jiuGuan':uiintro.add('<div class="text chat">选角模式：酒馆');break;
+						case '多選1':uiintro.add('<div class="text chat">選角模式：多選1');break;
+						case 'CM01':uiintro.add('<div class="text chat">選角模式：CM01');break;
+						case 'CM02':uiintro.add('<div class="text chat">選角模式：CM02');break;
+						case 'BP01':uiintro.add('<div class="text chat">選角模式：BP01');break;
+						case 'BP02':uiintro.add('<div class="text chat">選角模式：BP02');break;
+						case 'jiuGuan':uiintro.add('<div class="text chat">選角模式：酒館');break;
 					}
 					if(lib.configOL.choose_mode!='CM02'&&lib.configOL.choose_mode!='CM01'){
 						switch(lib.configOL.team_sequence){
-							case 'random':uiintro.add('<div class="text chat">队伍顺序：随机');break;
-							case 'near':uiintro.add('<div class="text chat">队伍顺序：临近');break;
-							case 'crossed':uiintro.add('<div class="text chat">队伍顺序：交叉');break;
-							case 'CM':uiintro.add('<div class="text chat">队伍顺序：CM');break;
+							case 'random':uiintro.add('<div class="text chat">隊伍順序：隨機');break;
+							case 'near':uiintro.add('<div class="text chat">隊伍順序：臨近');break;
+							case 'crossed':uiintro.add('<div class="text chat">隊伍順序：交叉');break;
+							case 'CM':uiintro.add('<div class="text chat">隊伍順序：CM');break;
 						}
 						if(lib.configOL.choose_mode=='BP02'||lib.configOL.choose_mode=='BP01'){
-							var last=uiintro.add('<div class="text chat">可选角色数：'+lib.configOL.BPchoose_number);
+							var last=uiintro.add('<div class="text chat">可選角色數：'+lib.configOL.BPchoose_number);
 						}else{
-							var last=uiintro.add('<div class="text chat">侯选角色数：'+lib.configOL.choose_number);
+							var last=uiintro.add('<div class="text chat">侯選角色數：'+lib.configOL.choose_number);
 						}
 					}
 				}
 				if(!lib.configOL.phaseswap){
 					switch(lib.configOL.viewHandcard){
-						case true:uiintro.add('<div class="text chat">可见队友手牌：是');break;
-						case false:uiintro.add('<div class="text chat">可见队友手牌：否');break;
+						case true:uiintro.add('<div class="text chat">可見隊友手牌：是');break;
+						case false:uiintro.add('<div class="text chat">可見隊友手牌：否');break;
 					}
 					switch(lib.configOL.chooseSide){
-						case true:uiintro.add('<div class="text chat">手动选择选队：是');break;
-						case false:uiintro.add('<div class="text chat">手动选择选队：否');break;
+						case true:uiintro.add('<div class="text chat">手動選擇選隊：是');break;
+						case false:uiintro.add('<div class="text chat">手動選擇選隊：否');break;
 					}
 				}
-				var last=uiintro.add('<div class="text chat">出牌时限：'+lib.configOL.choose_timeout+'秒');
+				var last=uiintro.add('<div class="text chat">出牌時限：'+lib.configOL.choose_timeout+'秒');
 				if(lib.configOL.banned.length){
 					last=uiintro.add('<div class="text chat">禁用角色：'+get.translation(lib.configOL.banned));
 				}
@@ -331,8 +331,8 @@ export default () => {
 				if(lib.configOL.bannedcards.length){
 					last=uiintro.add('<div class="text chat">禁用卡牌：'+get.translation(lib.configOL.bannedcards));
 				}*/
-				last=uiintro.add('<div class="text chat">士气初始值：'+get.translation(lib.configOL.shiQiMax||game.shiQiMax));
-				last=uiintro.add('<div class="text chat">战绩区上限：'+get.translation(lib.configOL.zhanJiMax||game.zhanJiMax));
+				last=uiintro.add('<div class="text chat">士氣初始值：'+get.translation(lib.configOL.shiQiMax||game.shiQiMax));
+				last=uiintro.add('<div class="text chat">戰績區上限：'+get.translation(lib.configOL.zhanJiMax||game.zhanJiMax));
 				last=uiintro.add('<div class="text chat">星杯上限：'+get.translation(lib.configOL.xingBeiMax||game.xingBeiMax));
 
 				last.style.paddingBottom='8px';
@@ -366,8 +366,8 @@ export default () => {
 					   	case '4v4':str2='4v4';break;
 					}
 				}
-				if(game.me.side==true) str+='（红方）';
-				else str+='（蓝方）';
+				if(game.me.side==true) str+='（紅方）';
+				else str+='（藍方）';
 
 				return [str,str2];
 			},
@@ -378,7 +378,7 @@ export default () => {
 					game.chooseCharacterPhaseswap();
 				}else{
 					switch(get.config('choose_mode')){
-						case '多选1':game.chooseCharacterDuoXuanYi();break;
+						case '多選1':game.chooseCharacterDuoXuanYi();break;
 						//case 'CM02':game.chooseCharacterCM02();break;
 					}
 				}
@@ -403,27 +403,27 @@ export default () => {
 					var firstChoose=ref;
 					_status.firstAct=firstChoose;
 					for(var i=0;i<number;i++){
-						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						firstChoose=firstChoose.next;
 					}
 
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
-					//22选将框分配
+					//22選將框分配
 					var list=get.characters();
 					list=get.characterGets(list);
 					event.list=list;
 					
 
 					var addSetting=function(dialog){
-						dialog.add('选择座位').classList.add('add-setting');
+						dialog.add('選擇座位').classList.add('add-setting');
 						var seats=document.createElement('table');
 						seats.classList.add('add-setting');
 						seats.style.margin='0';
@@ -465,15 +465,15 @@ export default () => {
 
 								for(var i=0;i<game.players.length;i++){
 									if(game.players[i].side==true){
-										game.players[i].node.identity.firstChild.innerHTML='红';
+										game.players[i].node.identity.firstChild.innerHTML='紅';
 									}
 									else if(game.players[i].side==false){
-										game.players[i].node.identity.firstChild.innerHTML='蓝';
+										game.players[i].node.identity.firstChild.innerHTML='藍';
 									}
 									game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 								}
 								for(var i=0;i<number;i++){
-									firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+									firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 									firstChoose=firstChoose.next;
 								}
 							});
@@ -506,10 +506,10 @@ export default () => {
 					var characterChoice=list.randomGets(choose_number);
 
 					var basenum=1;
-					var basestr='选择角色';
+					var basestr='選擇角色';
 					if(get.config('phaseswap')){
 						basenum =number/2;
-						basestr='选择你和队友的角色';
+						basestr='選擇你和隊友的角色';
 						event.phaseswap=true;
 					}
 
@@ -523,7 +523,7 @@ export default () => {
 
 					ui.create.cheat=function(){
 						_status.createControl=ui.cheat2;
-						ui.cheat=ui.create.control('更换',function(){
+						ui.cheat=ui.create.control('更換',function(){
 							if(ui.cheat2&&ui.cheat2.dialog==_status.event.dialog){
 								return;
 							}
@@ -551,7 +551,7 @@ export default () => {
 						event.dialogxx=ui.create.characterDialog('heightset');
 					}
 					ui.create.cheat2=function(){
-						ui.cheat2=ui.create.control('自由选角',function(){
+						ui.cheat2=ui.create.control('自由選角',function(){
 							if(this.dialog==_status.event.dialog){
 								this.dialog.close();
 								_status.event.dialog=this.backup;
@@ -665,16 +665,16 @@ export default () => {
 					var firstChoose=ref;
 					_status.firstAct=firstChoose;
 					for(var i=0;i<number;i++){
-						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						firstChoose=firstChoose.next;
 					}
 
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
@@ -696,8 +696,8 @@ export default () => {
 
 					var characterChoice=list.randomGets(choose_number);
 					var basenum=number/2;
-					var basestr=game.me.side?'（红方）':'（蓝方）';
-					basestr+='选择你和队友的角色，按顺位选择';
+					var basestr=game.me.side?'（紅方）':'（藍方）';
+					basestr+='選擇你和隊友的角色，按順位選擇';
 					
 					var dialog=ui.create.dialog(basestr,[characterChoice,'characterx']);
 					game.me.chooseButton(true,dialog,basenum).set('onfree',true);
@@ -716,7 +716,7 @@ export default () => {
 					}
 					ui.create.cheat=function(){
 						_status.createControl=ui.cheat2;
-						ui.cheat=ui.create.control('更换',function(){
+						ui.cheat=ui.create.control('更換',function(){
 							if(ui.cheat2&&ui.cheat2.dialog==_status.event.dialog){
 								return;
 							}
@@ -732,7 +732,7 @@ export default () => {
 						delete _status.createControl;
 					};
 					ui.create.cheat2=function(){
-						ui.cheat2=ui.create.control('自由选角',function(){
+						ui.cheat2=ui.create.control('自由選角',function(){
 							if(this.dialog==_status.event.dialog){
 								this.dialog.close();
 								_status.event.dialog=this.backup;
@@ -813,7 +813,7 @@ export default () => {
 			chooseCharacterOL:function(){
 				if(get.phaseswap()){
 					switch(lib.configOL.choose_mode){
-						case '多选1':game.chooseCharacterOLPhaseswapDuoXuanYi();break;
+						case '多選1':game.chooseCharacterOLPhaseswapDuoXuanYi();break;
 						case 'CM01':game.chooseCharacterOLCM();break;
 						case 'CM02':game.chooseCharacterOLCM();break;
 						case 'BP01':game.chooseCharacterOLBP();break;
@@ -824,7 +824,7 @@ export default () => {
 					game.chooseCharacterOLDuoXuanYi();
 				}else{
 					switch(lib.configOL.choose_mode){
-						case '多选1':game.chooseCharacterOLDuoXuanYi();break;
+						case '多選1':game.chooseCharacterOLDuoXuanYi();break;
 						case 'CM01':game.chooseCharacterOLCM();break;
 						case 'CM02':game.chooseCharacterOLCM();break;
 						case 'BP01':game.chooseCharacterOLBP();break;
@@ -838,8 +838,8 @@ export default () => {
 				var next=game.createEvent('chooseSide');
 				next.setContent(function(){
 					'step 0'
-					var sides=['红方','蓝方'];
-					var list=game.players.map(player=>[player,['选择阵营',[sides,'tdnodes']],true]);
+					var sides=['紅方','藍方'];
+					var list=game.players.map(player=>[player,['選擇陣營',[sides,'tdnodes']],true]);
 					game.me.chooseButtonOL(list,function(){},function(){return 1+Math.random()}).set('switchToAuto',function(){
 						_status.event.result='ai';
 					}).set('processAI',function(){
@@ -853,9 +853,9 @@ export default () => {
 					var red=0;
 					var blue=0;
 					var number=lib.configOL.number;
-					for (var i in result) {//优先计算真人的选择
+					for (var i in result) {//優先計算真人的選擇
 						if(lib.playerOL[i].isOnline() || (lib.playerOL[i]==game.me&& !_status.auto)){
-							if (result[i].links[0] == "红方") {
+							if (result[i].links[0] == "紅方") {
 								lib.playerOL[i].side=true;
 							}else{
 								lib.playerOL[i].side=false;
@@ -876,9 +876,9 @@ export default () => {
 						}
 					}
 
-					for (var i in result) {//计算ai的选择
+					for (var i in result) {//計算ai的選擇
 						if((lib.playerOL[i]!=game.me && !lib.playerOL[i].isOnline()) || (lib.playerOL[i]==game.me && _status.auto)){
-							if (result[i].links[0] == "红方") {
+							if (result[i].links[0] == "紅方") {
 								lib.playerOL[i].side=true;
 							}else{
 								lib.playerOL[i].side=false;
@@ -905,9 +905,9 @@ export default () => {
 				var next=game.createEvent('chooseSide');
 				next.setContent(function(){
 					'step 0'
-					var sides=['红方','蓝方'];
+					var sides=['紅方','藍方'];
 					var players=game.players.filter(player=>player.isOnline()||player==game.me);
-					var list=players.map(player=>[player,['选择阵营',[sides,'tdnodes']],true]);
+					var list=players.map(player=>[player,['選擇陣營',[sides,'tdnodes']],true]);
 					game.me.chooseButtonOL(list,function(){},function(){return 1+Math.random()}).set('switchToAuto',function(){
 						_status.event.result='ai';
 					}).set('processAI',function(){
@@ -921,9 +921,9 @@ export default () => {
 					var red=0;
 					var blue=0;
 					var number=2;
-					for (var i in result) {//优先计算真人的选择
+					for (var i in result) {//優先計算真人的選擇
 						if(lib.playerOL[i].isOnline() || (lib.playerOL[i]==game.me)){
-							if (result[i].links[0] == "红方") {
+							if (result[i].links[0] == "紅方") {
 								lib.playerOL[i].side=true; 
 							}else{
 								lib.playerOL[i].side=false;
@@ -987,7 +987,7 @@ export default () => {
 
 			getFirstRed:function(){
 				var ref=game.players.randomGet();;
-				while (ref.side!=true) {//确保红队第一个
+				while (ref.side!=true) {//確保紅隊第一個
 					ref=ref.next;
 				}
 				return ref
@@ -1045,7 +1045,7 @@ export default () => {
 				next.setContent(function(){
 					'step 0'
 					var chooseSide=lib.configOL.chooseSide;
-					if(chooseSide){//自由选择队伍
+					if(chooseSide){//自由選擇隊伍
 						game.chooseSide();
 					}
 					'step 1'
@@ -1064,16 +1064,16 @@ export default () => {
 					var firstChoose=ref;
 					_status.firstAct=firstChoose;
 					for(var i=0;i<number;i++){
-						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						firstChoose=firstChoose.next;
 					}
 
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
@@ -1103,25 +1103,25 @@ export default () => {
 
 					
 					
-					//22联机分配角色
+					//22聯機分配角色
 					var list=get.charactersOL();
 					list=get.characterGets(list);
 					var choose={};
 					event.list=list;
 
-					//推荐队友选将
-					//给所有人生成对话框
+					//推薦隊友選將
+					//給所有人生成對話框
 					for(var i=0;i<game.players.length;i++){
 						choose[game.players[i].playerid]=list.randomRemove(choose_number);
 					}
-					//每名玩家的可选角色
+					//每名玩家的可選角色
 					game._characterChoice=choose;
 					event._choiceMap={};
 					event.videoId=lib.status.videoId++;
 					game.broadcastAll(function(id,choice){
 						game._characterChoice=choice;
 						game._characterDialogID=id;
-						var dialog=ui.create.dialog('请选择角色');
+						var dialog=ui.create.dialog('請選擇角色');
 						dialog.videoId=id;
 						var players;
 						var player=game.me;
@@ -1129,13 +1129,13 @@ export default () => {
 							var current=lib.playerOL[i];
 							if(current==player) players=choice[i];
 						}
-						//dialog.addText('你的选将框');
+						//dialog.addText('你的選將框');
 						var buttons=ui.create.div('.buttons',dialog.content);
 						dialog.players=ui.create.buttons(players,'characterx',buttons)
 						dialog.buttons=dialog.buttons.concat(dialog.players);
 					},event.videoId,choose);
 					
-					//发送选择事件
+					//發送選擇事件
 					var send=function(){
 						var next=game.me.chooseButton([1,2],true);
 						next.set('dialog',game._characterDialogID);
@@ -1146,7 +1146,7 @@ export default () => {
 							button.classList.add('selected');
 							delete game._playerChoice;
 						});
-						//托管选择
+						//託管選擇
 						next.set('ai',function(button){
 							if(ui.selected.buttons.length) return 0;
 							var dialog=get.idDialog(game._characterDialogID);
@@ -1154,12 +1154,12 @@ export default () => {
 							//if(dialog.classList.includes('glow2')) return 1+Math.random();
 							return 0.5+Math.random();
 						});
-						//修改点击按钮后的反应
+						//修改點擊按鈕後的反應
 						next.set('custom',{replace:{
 							button:function(button){
 								var dialog=get.idDialog(game._characterDialogID);
 								var origin=button._link,choice=button.link;
-								//选择按钮时自动取消选择上一个按钮
+								//選擇按鈕時自動取消選擇上一個按鈕
 								if(dialog.players.includes(button)){
 									if(!button.classList.contains('selected')){
 										button.classList.add('selected');
@@ -1179,14 +1179,14 @@ export default () => {
 						if(game.online) game.resume();
 					}
 
-					//确认选将后的回传函数
+					//確認選將後的回傳函數
 					event.confirm=function(player,choice){
 						if(!player.name1) player.init(choice,null,null,false);
 						if(game._characterDialogID==undefined) return;
 						var dialog=get.idDialog(game._characterDialogID);
 						if(!dialog) return;
 					}
-					//处理result
+					//處理result
 					var sendback=function(result,player){
 						var type=typeof result;
 						if(result&&type=='object'){
@@ -1196,7 +1196,7 @@ export default () => {
 					}
 					event.sendback=sendback;
 					
-					//发送
+					//發送
 					event.ai_targets=[];
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].isOnline()){
@@ -1214,7 +1214,7 @@ export default () => {
 							game.players[i].showTimer();
 						}
 					}
-					//模拟AI思考后选择
+					//模擬AI思考後選擇
 					
 					if(event.ai_targets.length){
 						event.ai_targets.randomSort();
@@ -1223,7 +1223,7 @@ export default () => {
 								var target=event.ai_targets.shift();
 								var list=game._characterChoice[target.playerid];
 								var choice;
-								//AI必选玩家推荐角色
+								//AI必選玩家推薦角色
 								if(target._aiChoice&&list.includes(target._aiChoice)) choice=target._aiChoice;
 								else choice=list.randomGet();
 								if(lib.characterReplace[choice]) choice=lib.characterReplace[choice].randomGet();
@@ -1319,20 +1319,20 @@ export default () => {
 					event.videoId = lib.status.videoId++;
 					event.list = [];
 
-					game.log('<span style="color: blue;">蓝色堆</span>：', event.list1);
-					game.log('<span style="color: green;">绿色堆</span>：', event.list2);
-					game.log('<span style="color: red;">红色堆</span>：', event.list3);
+					game.log('<span style="color: blue;">藍色堆</span>：', event.list1);
+					game.log('<span style="color: green;">綠色堆</span>：', event.list2);
+					game.log('<span style="color: red;">紅色堆</span>：', event.list3);
 
 					var createDialog = function(list,list1,list2,list3,id, choosing){
 						ui.arena.classList.add('choose-character');
-						var dialog = ui.create.dialog('<span style="color:red;">红方</span>队长选择特定颜色角色堆', [list, 'character']);
+						var dialog = ui.create.dialog('<span style="color:red;">紅方</span>隊長選擇特定顏色角色堆', [list, 'character']);
 						dialog.classList.add("fullwidth");
 						dialog.classList.add("fullheight");
 						dialog.classList.add("noslide");
 						dialog.classList.add("fixed");
 						dialog.videoId = id;
 						if (choosing != game.me) {
-							dialog.content.firstChild.innerHTML = "等待<span style='color:red;'>红方</span>队长选择角色堆";
+							dialog.content.firstChild.innerHTML = "等待<span style='color:red;'>紅方</span>隊長選擇角色堆";
 						}
 						for (var i = 0; i < dialog.buttons.length; i++) {
                             var button = dialog.buttons[i];
@@ -1346,20 +1346,20 @@ export default () => {
                         }
 					};
 					game.broadcastAll(createDialog, list, event.list1, event.list2, event.list3, event.videoId, event.red_leader);
-					event.chooseList=['蓝色','绿色','红色'];
+					event.chooseList=['藍色','綠色','紅色'];
 					var next= event.red_leader.chooseControl(event.chooseList);
 					next.set('dialog', event.videoId);
 					'step 1'
 					event.chooseList.remove(result.control);
-					var str='<span style="color: red;">红方</span>队长选择了';
-					if(result.control=='蓝色'){
-						str+='<span style="color: blue;">蓝色</span>堆';
+					var str='<span style="color: red;">紅方</span>隊長選擇了';
+					if(result.control=='藍色'){
+						str+='<span style="color: blue;">藍色</span>堆';
 						event.list.addArray(event.list1);
-					}else if(result.control=='绿色'){
-						str+='<span style="color: green;">绿色</span>堆';
+					}else if(result.control=='綠色'){
+						str+='<span style="color: green;">綠色</span>堆';
 						event.list.addArray(event.list2);
-					}else if(result.control=='红色'){
-						str+='<span style="color: red;">红色</span>堆';
+					}else if(result.control=='紅色'){
+						str+='<span style="color: red;">紅色</span>堆';
 						event.list.addArray(event.list3);
 					}
 					game.log(str);
@@ -1367,9 +1367,9 @@ export default () => {
 						var dialog = get.idDialog(id);
 						var str;
 						if(game.me!=choosing){
-							str="等待<span style='color:blue;'>蓝方</span>队长选择特定颜色角色堆";
+							str="等待<span style='color:blue;'>藍方</span>隊長選擇特定顏色角色堆";
 						}else{
-							str="<span style='color:blue;'>蓝方</span>队长选择特定颜色角色堆";
+							str="<span style='color:blue;'>藍方</span>隊長選擇特定顏色角色堆";
 						}
 						dialog.content.firstChild.innerHTML = str;
 					};
@@ -1378,15 +1378,15 @@ export default () => {
 					var next= event.blue_leader.chooseControl(event.chooseList);
 					next.set('dialog', event.videoId);
 					'step 3'
-					var str='<span style="color: blue;">蓝方</span>队长选择了';
-					if(result.control=='蓝色'){
-						str+='<span style="color: blue;">蓝色</span>堆';
+					var str='<span style="color: blue;">藍方</span>隊長選擇了';
+					if(result.control=='藍色'){
+						str+='<span style="color: blue;">藍色</span>堆';
 						event.list.addArray(event.list1);
-					}else if(result.control=='绿色'){
-						str+='<span style="color: green;">绿色</span>堆';
+					}else if(result.control=='綠色'){
+						str+='<span style="color: green;">綠色</span>堆';
 						event.list.addArray(event.list2);
-					}else if(result.control=='红色'){
-						str+='<span style="color: red;">红色</span>堆';
+					}else if(result.control=='紅色'){
+						str+='<span style="color: red;">紅色</span>堆';
 						event.list.addArray(event.list3);
 					}
 					game.log(str);
@@ -1448,15 +1448,15 @@ export default () => {
 					var firstChoose=ref;
 					_status.firstAct=firstChoose;
 					for(var i=0;i<event.number;i++){
-						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						firstChoose=firstChoose.next;
 					}
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
@@ -1514,13 +1514,13 @@ export default () => {
 					var list=game.players.map(function(player){
 						let dialog;
 						if(player.side==true){
-							if(event.number==4) dialog=["一号位", "四号位"];
-							else dialog=["一号位", "四号位", "五号位"];
+							if(event.number==4) dialog=["一號位", "四號位"];
+							else dialog=["一號位", "四號位", "五號位"];
 						}else{
-							if(event.number==4) dialog=["二号位", "三号位"];
-							else dialog=["二号位", "三号位", "六号位"];
+							if(event.number==4) dialog=["二號位", "三號位"];
+							else dialog=["二號位", "三號位", "六號位"];
 						}
-						return [player,['投票选择队长',[dialog,'tdnodes']],true];
+						return [player,['投票選擇隊長',[dialog,'tdnodes']],true];
 					});
 					game.me.chooseButtonOL(list).set('switchToAuto',function(){
 						_status.event.result='ai';
@@ -1541,19 +1541,19 @@ export default () => {
 					for(var i of result){
 						if(event.number==4){
 							switch(i){
-								case "一号位":event.red_vote[0]++;break;
-								case "四号位":event.red_vote[1]++;break;
-								case "二号位":event.blue_vote[0]++;break;
-								case "三号位":event.blue_vote[1]++;break;
+								case "一號位":event.red_vote[0]++;break;
+								case "四號位":event.red_vote[1]++;break;
+								case "二號位":event.blue_vote[0]++;break;
+								case "三號位":event.blue_vote[1]++;break;
 							}
 						}else{
 							switch(i){
-								case "一号位":event.red_vote[0]++;break;
-								case "四号位":event.red_vote[1]++;break;
-								case "五号位":event.red_vote[2]++;break;
-								case "二号位":event.blue_vote[0]++;break;
-								case "三号位":event.blue_vote[1]++;break;
-								case "六号位":event.blue_vote[2]++;break;
+								case "一號位":event.red_vote[0]++;break;
+								case "四號位":event.red_vote[1]++;break;
+								case "五號位":event.red_vote[2]++;break;
+								case "二號位":event.blue_vote[0]++;break;
+								case "三號位":event.blue_vote[1]++;break;
+								case "六號位":event.blue_vote[2]++;break;
 							}
 						}
 					}
@@ -1592,8 +1592,8 @@ export default () => {
 						event.blue_leader=event.blue_list[blue_index];
 					}
 					
-					game.log('<span style="color:red;">红方</span>队长为',event.red_leader.node.name.innerHTML);
-					game.log('<span style="color:lightblue;">蓝方</span>队长为',event.blue_leader.node.name.innerHTML);
+					game.log('<span style="color:red;">紅方</span>隊長為',event.red_leader.node.name.innerHTML);
+					game.log('<span style="color:lightblue;">藍方</span>隊長為',event.blue_leader.node.name.innerHTML);
 					game.broadcastAll(function(red_leader,blue_leader){
 						game.red_leader=red_leader;
 						game.blue_leader=blue_leader;
@@ -1604,14 +1604,14 @@ export default () => {
 					game.chooseCMCharacter(event.red_leader,event.blue_leader);
 					'step 5'//ban角色
 					//角色列表
-					game.log('本局可选角色：',event.list);
+					game.log('本局可選角色：',event.list);
 					event.choosing=game.red_leader;
 					event.videoId = lib.status.videoId++;
 					event.red_chooseList = [];
 					event.blue_chooseList = [];
 
 					var createDialog = function (list, id, list1, list2) {
-						var dialog = ui.create.dialog("<span style='color:red;'>红方</span>队长Ban1名角色", [list, "character"]);
+						var dialog = ui.create.dialog("<span style='color:red;'>紅方</span>隊長Ban1名角色", [list, "character"]);
 						dialog.classList.add("fullwidth");
 						dialog.classList.add("fullheight");
 						dialog.classList.add("noslide");
@@ -1629,9 +1629,9 @@ export default () => {
 							}
 						} else {
 							if (list1 != game.me&&list1==game.red_leader) {
-								dialog.content.firstChild.innerHTML = "等待<span style='color:red;'>红方</span>队长Ban选";
+								dialog.content.firstChild.innerHTML = "等待<span style='color:red;'>紅方</span>隊長Ban選";
 							}else if(list1!=game.me&&list1==game.blue_leader){
-								dialog.content.firstChild.innerHTML = "等待<span style='color:lightblue;'>蓝方</span>队长Ban选";
+								dialog.content.firstChild.innerHTML = "等待<span style='color:lightblue;'>藍方</span>隊長Ban選";
 							}
 						}
 					};
@@ -1663,10 +1663,10 @@ export default () => {
 							var dialog = get.idDialog(id);
 							if (dialog) {
 								if (choosing == game.red_leader) {
-									choosing1 = "<span style='color:red;'>红方</span>队长";
-									choosing2 = "<span style='color:lightblue;'>蓝方</span>队长";
+									choosing1 = "<span style='color:red;'>紅方</span>隊長";
+									choosing2 = "<span style='color:lightblue;'>藍方</span>隊長";
 								} else {
-									choosing2 = "<span style='color:lightblue;'>蓝方</span>队长";
+									choosing2 = "<span style='color:lightblue;'>藍方</span>隊長";
 								}
 								dialog.content.firstChild.innerHTML =
 									choosing1 + "Ban了" + get.translation(links)+`，等待` + choosing2 + "Ban2名角色";
@@ -1694,9 +1694,9 @@ export default () => {
 					}
 
 					if (event.choosing == game.red_leader) {
-						var str = "<span style='color:red;'>红方</span>队长";
+						var str = "<span style='color:red;'>紅方</span>隊長";
 					} else {
-						var str = "<span style='color:lightblue;'>蓝方</span>队长";
+						var str = "<span style='color:lightblue;'>藍方</span>隊長";
 					}
 					game.log(str,'Ban',result.links);
 
@@ -1721,9 +1721,9 @@ export default () => {
 							dialog.close();
 						}
 					}, event.videoId);
-					//为各方队友选择角色
+					//為各方隊友選擇角色
 					'step 10'
-					//设置第一次提示
+					//設置第一次提示
 					event.choosed=event.choose_list[0];
 					//console.log(event.choosed.node.name.innerHTML);
 					event.choosing=game.blue_leader;
@@ -1733,7 +1733,7 @@ export default () => {
 
 					event.videoId = lib.status.videoId++;
 					var createDialog = function (choosed,list, id,list1, list2) {
-						var dialog = ui.create.dialog(`<span style="color:red;">红方</span>为${choosed}选择角色，<span style="color:lightblue;">蓝方</span>队长是否插入Ban`, [list, "characterx"]);
+						var dialog = ui.create.dialog(`<span style="color:red;">紅方</span>為${choosed}選擇角色，<span style="color:lightblue;">藍方</span>隊長是否插入Ban`, [list, "characterx"]);
 						dialog.classList.add("fullwidth");
 						dialog.classList.add("fullheight");
 						dialog.classList.add("noslide");
@@ -1751,16 +1751,16 @@ export default () => {
 							}
 						} else {
 							if (list1 != game.me&&list1==game.red_leader) {
-								dialog.content.firstChild.innerHTML = "等待<span style='color:red;'>红方</span>队长选择";
+								dialog.content.firstChild.innerHTML = "等待<span style='color:red;'>紅方</span>隊長選擇";
 							}else if(list1!=game.me&&list1==game.blue_leader){
-								dialog.content.firstChild.innerHTML = "等待<span style='color:lightblue;'>蓝方</span>队长选择";
+								dialog.content.firstChild.innerHTML = "等待<span style='color:lightblue;'>藍方</span>隊長選擇";
 							}
 						}
 					};
 					game.broadcastAll(createDialog,event.choosed.node.name.innerHTML, event.list, event.videoId, event.choosing);
 
 					_status.firstChoose = game.red_leader;
-					event.num=1;//记录选角次数
+					event.num=1;//記錄選角次數
 					_status.onreconnect = [
 						createDialog,
 						event.choosed.node.name.innerHTML,
@@ -1777,7 +1777,7 @@ export default () => {
 						event.choosing=game.blue_leader;
 					}
 					result.bool=undefined;
-					//反转选择，使插入ban提示正确
+					//反轉選擇，使插入ban提示正確
 					if(event.choosing==game.blue_leader){
 						event.choosing=game.red_leader;
 					}else{
@@ -1785,7 +1785,7 @@ export default () => {
 					}
 
 					if(!event.red_ban&&event.choosing==game.red_leader){
-						//console.log('红方插入ban');
+						//console.log('紅方插入ban');
 						var next = event.choosing.chooseButton(event.videoId, 1);
 						next.set("filterButton", function (button) {
 							if (_status.event.selected.includes(button.link)) return false;
@@ -1796,7 +1796,7 @@ export default () => {
 							return Math.random();
 						});
 					}else if(!event.blue_ban&&event.choosing==game.blue_leader){
-						//console.log('蓝方插入ban');
+						//console.log('藍方插入ban');
 						var next = event.choosing.chooseButton(event.videoId, 1);
 						next.set("filterButton", function (button) {
 							if (_status.event.selected.includes(button.link)) return false;
@@ -1832,11 +1832,11 @@ export default () => {
 								if (dialog) {
 									var str;
 									if (choosing == game.red_leader) {
-										choosing = "<span style='color:red;''>红方</span>队长";
-										str=`，<span style="color:lightblue;">蓝方</span>队长为${choosed}选择角色`;
+										choosing = "<span style='color:red;''>紅方</span>隊長";
+										str=`，<span style="color:lightblue;">藍方</span>隊長為${choosed}選擇角色`;
 									} else {
-										choosing = "<span style='color:lightblue;'>蓝方</span>队长";
-										str=`，<span style="color:red;">红方</span>队长为${choosed}选择角色`;
+										choosing = "<span style='color:lightblue;'>藍方</span>隊長";
+										str=`，<span style="color:red;">紅方</span>隊長為${choosed}選擇角色`;
 									}
 									dialog.content.firstChild.innerHTML =
 										choosing + "Ban了" + get.translation(links)+str;
@@ -1858,9 +1858,9 @@ export default () => {
 						event.selected.addArray(result.links);
 						
 						if (event.choosing == game.red_leader) {
-							var str = "<span style='color:red;'>红方</span>队长";
+							var str = "<span style='color:red;'>紅方</span>隊長";
 						} else {
-							var str = "<span style='color:lightblue;'>蓝方</span>队长";
+							var str = "<span style='color:lightblue;'>藍方</span>隊長";
 						}
 						game.log(str,'插入Ban',result.links[0]);
 					}
@@ -1877,12 +1877,12 @@ export default () => {
 								var dialog = get.idDialog(id);
 								if (dialog) {
 									if (choosing == game.red_leader) {
-										choosing = `<span style="color:red;">红方</span>队长为${choosed}`;
+										choosing = `<span style="color:red;">紅方</span>隊長為${choosed}`;
 									} else {
-										choosing = `<span style="color:lightblue;">蓝方</span>队长为${choosed}`;
+										choosing = `<span style="color:lightblue;">藍方</span>隊長為${choosed}`;
 									}
 									dialog.content.firstChild.innerHTML =
-										choosing + "选择角色";
+										choosing + "選擇角色";
 
 									//console.log(dialog.content.firstChild.innerHTML);
 								}
@@ -1894,7 +1894,7 @@ export default () => {
 					}
 					
 					'step 13'
-					//console.log('选择角色');
+					//console.log('選擇角色');
 					var next = event.choosing.chooseButton(event.videoId, 1, true);
 					next.set("filterButton", function (button) {
 						if (_status.event.selected.includes(button.link)) return false;
@@ -1920,11 +1920,11 @@ export default () => {
 
 					var choosed=event.choosed.node.name.innerHTML
 					if (event.choosing == game.red_leader) {
-						var str = `<span style="color:red;">红方</span>队长为${choosed}`;
+						var str = `<span style="color:red;">紅方</span>隊長為${choosed}`;
 					} else {
-						var str = `<span style="color:lightblue;">蓝方</span>队长为${choosed}`;
+						var str = `<span style="color:lightblue;">藍方</span>隊長為${choosed}`;
 					}
-					game.log(str,'选择了',result.links[0]);
+					game.log(str,'選擇了',result.links[0]);
 
 					if(event.choosing==game.red_leader){
 						event.red_chooseList.addArray(result.links);
@@ -1956,31 +1956,31 @@ export default () => {
 								//console.log(red_ban,blue_ban);
 								var ban='';
 								if (choosing == game.red_leader) {
-									choosing = `<span style="color:red;">红方</span>队长为${choosed}`;
+									choosing = `<span style="color:red;">紅方</span>隊長為${choosed}`;
 								} else {
-									choosing = `<span style="color:lightblue;">蓝方</span>队长为${choosed}`;
+									choosing = `<span style="color:lightblue;">藍方</span>隊長為${choosed}`;
 								}
 
 								if(next_choosed_side===true){
 									if(!blue_ban){
-										ban=`，<span style="color:red;">红方</span>队长将要为${next_choosed_name}选择角色，<span style="color:lightblue;">蓝方</span>是否插入Ban`;
+										ban=`，<span style="color:red;">紅方</span>隊長將要為${next_choosed_name}選擇角色，<span style="color:lightblue;">藍方</span>是否插入Ban`;
 									}else{
 										if(next_choosed_name){
-											ban=`，<span style="color:red;">红方</span>队长为${next_choosed_name}选择角色`;
+											ban=`，<span style="color:red;">紅方</span>隊長為${next_choosed_name}選擇角色`;
 										}
 										
 									}
 								}else if(next_choosed_side===false){
 									if(!red_ban){
-										ban=`，<span style="color:lightblue;">蓝方</span>队长将要为${next_choosed_name}选择角色，<span style="color:red;">红方</span>是否插入Ban`;
+										ban=`，<span style="color:lightblue;">藍方</span>隊長將要為${next_choosed_name}選擇角色，<span style="color:red;">紅方</span>是否插入Ban`;
 									}else{
 										if(next_choosed_name){
-											ban=`，<span style="color:lightblue;">蓝方</span>队长为${next_choosed_name}选择角色`
+											ban=`，<span style="color:lightblue;">藍方</span>隊長為${next_choosed_name}選擇角色`
 										}
 									}
 								}
 
-								var str=choosing + "选择了" + get.translation(link)+ban;
+								var str=choosing + "選擇了" + get.translation(link)+ban;
 								dialog.content.firstChild.innerHTML =str;
 
 								for (var i = 0; i < dialog.buttons.length; i++) {
@@ -2055,7 +2055,7 @@ export default () => {
 					event.choose_number=parseInt(lib.configOL.BPchoose_number);
 
 					var chooseSide=lib.configOL.chooseSide;
-					if(chooseSide){//自由选择队伍
+					if(chooseSide){//自由選擇隊伍
 						game.chooseSideAuto();
 					}
 					'step 1'
@@ -2077,7 +2077,7 @@ export default () => {
 
 					_status.firstAct=firstChoose;
 					for(var i=0;i<event.number;i++){
-						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						if(firstChoose.side==true){
 							event.red_list.push(firstChoose);
 						}else{
@@ -2085,7 +2085,7 @@ export default () => {
 						}
 						firstChoose=firstChoose.next;
 					}
-					//选角顺序
+					//選角順序
 					var mode=lib.configOL.choose_mode;
 					if(mode=='BP01'){
 						if(event.number==4){
@@ -2106,10 +2106,10 @@ export default () => {
 
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
@@ -2161,7 +2161,7 @@ export default () => {
 					//角色列表
 					var list = get.charactersOL();
 					event.list = get.characterGets(list,event.choose_number);
-					game.log('本局可选角色：',event.list);
+					game.log('本局可選角色：',event.list);
 					event.choosing=event.red_list[0];
 					event.videoId = lib.status.videoId++;
 					event.red_ban=[];
@@ -2170,7 +2170,7 @@ export default () => {
 					event.num=1;
 					
 					var createDialog = function (list, id, list1, list2) {
-						var dialog = ui.create.dialog("<span style='color:red;'>红方</span>1名Ban角色", [list, "character"]);
+						var dialog = ui.create.dialog("<span style='color:red;'>紅方</span>1名Ban角色", [list, "character"]);
 						dialog.classList.add("fullwidth");
 						dialog.classList.add("fullheight");
 						dialog.classList.add("noslide");
@@ -2188,7 +2188,7 @@ export default () => {
 							}
 						} else {
 							if (list1 != game.me) {
-								dialog.content.firstChild.innerHTML = "等待<span style='color:red;'>红方</span>选择Ban";
+								dialog.content.firstChild.innerHTML = "等待<span style='color:red;'>紅方</span>選擇Ban";
 							}
 						}
 					};
@@ -2220,10 +2220,10 @@ export default () => {
 							var dialog = get.idDialog(id);
 							if (dialog) {
 								if (choosing.side == true) {
-									choosing = "<span style='color:red;'>红方</span>";
-									var choosing2 = "，等待<span style='color:lightblue;'>蓝方</span>Ban1名角色";
+									choosing = "<span style='color:red;'>紅方</span>";
+									var choosing2 = "，等待<span style='color:lightblue;'>藍方</span>Ban1名角色";
 								} else {
-									choosing = "<span style='color:lightblue;'>蓝方</span>";
+									choosing = "<span style='color:lightblue;'>藍方</span>";
 									var choosing2 = "";
 								}
 								dialog.content.firstChild.innerHTML =
@@ -2246,9 +2246,9 @@ export default () => {
 					);
 					event.selected.addArray(result.links);
 					if (event.choosing.side == true) {
-						var str = "<span style='color:red;'>红方</span>";
+						var str = "<span style='color:red;'>紅方</span>";
 					} else {
-						var str = "<span style='color:lightblue;'>蓝方</span>";
+						var str = "<span style='color:lightblue;'>藍方</span>";
 					}
 					game.log(str,'Ban了',result.links);
 					if(event.choosing.side==true){
@@ -2261,7 +2261,7 @@ export default () => {
 						event.list.remove(result.links[i]);
 					}
 
-					//因仅循环两次，故不在进行判断，直接对当前选择者进行赋值
+					//因僅循環兩次，故不在進行判斷，直接對當前選擇者進行賦值
 					event.choosing=event.blue_list[0];
 
 					event.num++;
@@ -2280,8 +2280,8 @@ export default () => {
 					}, event.videoId);
 
 					'step 7'
-					//为各方选择角色
-					//设置第一次提示
+					//為各方選擇角色
+					//設置第一次提示
 					//console.log(event.choosed.node.name.innerHTML);
 					event.choosing=event.choose_list[0];
 					event.red_chooseList = [];
@@ -2291,7 +2291,7 @@ export default () => {
 
 					event.videoId = lib.status.videoId++;
 					var createDialog = function (choosing,list, id,list1, list2) {
-						var dialog = ui.create.dialog(`<span style="color:red;">${choosing}</span>选择角色`, [list, "characterx"]);
+						var dialog = ui.create.dialog(`<span style="color:red;">${choosing}</span>選擇角色`, [list, "characterx"]);
 						dialog.classList.add("fullwidth");
 						dialog.classList.add("fullheight");
 						dialog.classList.add("noslide");
@@ -2309,7 +2309,7 @@ export default () => {
 							}
 						} else {
 							if (list1 != game.me) {
-								dialog.content.firstChild.innerHTML = `等待<span style='color:red;'>${choosing}</span>选择`;
+								dialog.content.firstChild.innerHTML = `等待<span style='color:red;'>${choosing}</span>選擇`;
 							}
 						}
 					};
@@ -2324,7 +2324,7 @@ export default () => {
 						event.blue_chooseList
 					];
 					"step 8"
-					//console.log('选择角色');
+					//console.log('選擇角色');
 					game.delay(1);
 					event.choosing=event.choose_list.shift();
 					var next = event.choosing.chooseButton(event.videoId, 1, true);
@@ -2358,7 +2358,7 @@ export default () => {
 					}
 
 					var name=event.choosing.node.name.innerHTML;
-					game.log(name,'选择了',result.links[0]);
+					game.log(name,'選擇了',result.links[0]);
 					game.broadcastAll(function(id,link){
 							if(!lib.playerOL[id].name1){
 								lib.playerOL[id].init(link);
@@ -2380,9 +2380,9 @@ export default () => {
 								var next='';
 								if(next_name){
 									if(next_side==true){
-										next=`，<span style="color:red;">${next_name}</span>选择角色`
+										next=`，<span style="color:red;">${next_name}</span>選擇角色`
 									}else{
-										next=`，<span style="color:lightblue;">${next_name}</span>选择角色`
+										next=`，<span style="color:lightblue;">${next_name}</span>選擇角色`
 									}
 								}
 
@@ -2391,7 +2391,7 @@ export default () => {
 								} else {
 									choosing = `<span style="color:lightblue;">${name}</span>`;
 								}
-								var str=choosing + "选择了" + get.translation(link)+next;
+								var str=choosing + "選擇了" + get.translation(link)+next;
 								dialog.content.firstChild.innerHTML =str;
 
 								for (var i = 0; i < dialog.buttons.length; i++) {
@@ -2458,7 +2458,7 @@ export default () => {
 				next.setContent(function(){
 					'step 0'
 					var chooseSide=lib.configOL.chooseSide;
-					if(chooseSide){//自由选择队伍
+					if(chooseSide){//自由選擇隊伍
 						game.chooseSidePhaseswap();
 					}
 					'step 1'
@@ -2480,16 +2480,16 @@ export default () => {
 					var firstChoose=ref;
 					_status.firstAct=firstChoose;
 					for(var i=0;i<number;i++){
-						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						firstChoose=firstChoose.next;
 					}
 
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
@@ -2534,16 +2534,16 @@ export default () => {
 						let buttonList=[];
 						buttonList.push(player);
 						let configList=[];
-						if(player.side==true) configList.push('(红方)');
-						else configList.push('(蓝方)');
-						configList[0]+='按顺位进行选择';
+						if(player.side==true) configList.push('(紅方)');
+						else configList.push('(藍方)');
+						configList[0]+='按順位進行選擇';
 						configList.push([list.randomRemove(choose_number),'characterx']);
 						buttonList.push(configList);
 						buttonList.push(game.players.length/2);
 						buttonList.push(true);
 						return buttonList;
 					});
-					event.characterList=list;//后续给ai随机选角用
+					event.characterList=list;//後續給ai隨機選角用
 
 					game.me.chooseButtonOL(chooseList,function(){},function(){return 1+Math.random()}).set('switchToAuto',function(){
 						_status.event.result='ai';
@@ -2610,7 +2610,7 @@ export default () => {
 					event.number=lib.configOL.number;
 
 					var chooseSide=lib.configOL.chooseSide;
-					if(chooseSide){//自由选择队伍
+					if(chooseSide){//自由選擇隊伍
 						game.chooseSideAuto();
 					}
 					'step 1'
@@ -2631,7 +2631,7 @@ export default () => {
 
 					_status.firstAct=firstChoose;
 					for(var i=0;i<event.number;i++){
-						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'号位');
+						firstChoose.node.name.innerHTML=get.verticalStr(get.cnNumber(i+1,true)+'號位');
 						if(firstChoose.side==true){
 							event.red_list.push(firstChoose);
 						}else{
@@ -2639,7 +2639,7 @@ export default () => {
 						}
 						firstChoose=firstChoose.next;
 					}
-					//选角顺序
+					//選角順序
 					if(event.number==4){
 						event.choose_list=[event.red_list[0],event.blue_list[0],event.red_list[1],event.blue_list[1]];
 					}else{
@@ -2648,10 +2648,10 @@ export default () => {
 
 					for(var i=0;i<game.players.length;i++){
 						if(game.players[i].side==true){
-							game.players[i].node.identity.firstChild.innerHTML='红';
+							game.players[i].node.identity.firstChild.innerHTML='紅';
 						}
 						else if(game.players[i].side==false){
-							game.players[i].node.identity.firstChild.innerHTML='蓝';
+							game.players[i].node.identity.firstChild.innerHTML='藍';
 						}
 						game.players[i].node.identity.dataset.color=game.players[i].side+'zhu';
 					}
@@ -2699,7 +2699,7 @@ export default () => {
 					event.allCharacterList=get.charactersOL();
 					event.allCharacterList=get.characterGets(event.allCharacterList);
 					event.characterList=event.allCharacterList.randomRemove(4);
-					game.log('开局酒馆角色：',event.characterList);
+					game.log('開局酒館角色：',event.characterList);
 					event.banList=[event.red_list[0],event.blue_list[0]];
 					'step 2'
 					event.choosing=event.banList.shift();
@@ -2713,9 +2713,9 @@ export default () => {
 						dialog.videoId = id;
 						if (choosing != game.me) {
 							var str;
-							if(choosing.side==true) str="<span style='color:red;'>红方</span>";
-							else str="<span style='color:lightblue;'>蓝方</span>";
-							str+='选择Ban角色1名';
+							if(choosing.side==true) str="<span style='color:red;'>紅方</span>";
+							else str="<span style='color:lightblue;'>藍方</span>";
+							str+='選擇Ban角色1名';
 							dialog.content.firstChild.innerHTML = str;
 						}
 					};
@@ -2734,10 +2734,10 @@ export default () => {
 							var dialog = get.idDialog(id);
 							if (dialog) {
 								if (choosing.side == true) {
-									choosing = "<span style='color:red;'>红方</span>";
-									var choosing2 = "，等待<span style='color:lightblue;'>蓝方</span>Ban角色1名";
+									choosing = "<span style='color:red;'>紅方</span>";
+									var choosing2 = "，等待<span style='color:lightblue;'>藍方</span>Ban角色1名";
 								} else {
-									choosing = "<span style='color:lightblue;'>蓝方</span>";
+									choosing = "<span style='color:lightblue;'>藍方</span>";
 									var choosing2 = "";
 								}
 								dialog.content.firstChild.innerHTML =
@@ -2764,11 +2764,11 @@ export default () => {
 					event.characterList.push(addedCharacter);
 
 					if (event.choosing.side == true) {
-						var str = "<span style='color:red;'>红方</span>";
+						var str = "<span style='color:red;'>紅方</span>";
 					} else {
-						var str = "<span style='color:lightblue;'>蓝方</span>";
+						var str = "<span style='color:lightblue;'>藍方</span>";
 					}
-					game.log(str,'Ban了',result.links,',酒馆区新增角色',addedCharacter);
+					game.log(str,'Ban了',result.links,',酒館區新增角色',addedCharacter);
 					'step 4'
 					game.delay(1);
 					'step 5'
@@ -2793,8 +2793,8 @@ export default () => {
 					var nextName=event.choosing.node.name.innerHTML;
 
 					var createDialog = function (list, id, choosing,red_ban,blue_ban, nextName) {
-						if((choosing.side==true&&!red_ban)||(choosing.side==false&&!blue_ban)) var dialog = ui.create.dialog("选择1名角色或者从角色堆里随机选择1名角色", [list, "character"]); 
-						else var dialog = ui.create.dialog("选择1名角色", [list, "character"]);
+						if((choosing.side==true&&!red_ban)||(choosing.side==false&&!blue_ban)) var dialog = ui.create.dialog("選擇1名角色或者從角色堆裡隨機選擇1名角色", [list, "character"]); 
+						else var dialog = ui.create.dialog("選擇1名角色", [list, "character"]);
 						dialog.classList.add("noslide");
 						dialog.classList.add("fixed");
 						dialog.classList.add('noanimation');
@@ -2803,8 +2803,8 @@ export default () => {
 							var str;
 							if(choosing.side==true) str=`等待<span style='color:red;'>${nextName}</span>`;
 							else str=`等待<span style='color:lightblue;'>${nextName}</span>`;
-							if((choosing.side==true&&!red_ban)||(choosing.side==false&&!blue_ban)) str+='选择1名角色或者从角色堆里随机选择1名角色';
-							else str+='选择1名角色';
+							if((choosing.side==true&&!red_ban)||(choosing.side==false&&!blue_ban)) str+='選擇1名角色或者從角色堆裡隨機選擇1名角色';
+							else str+='選擇1名角色';
 							dialog.content.firstChild.innerHTML = str;
 						}
 					};
@@ -2826,9 +2826,9 @@ export default () => {
 							var addedCharacterList=event.allCharacterList.randomRemove(2);
 							event.characterList.addArray(addedCharacterList);
 						}
-						game.log(event.choosing.node.name.innerHTML,'选择了',link);
+						game.log(event.choosing.node.name.innerHTML,'選擇了',link);
 						if(addedCharacterList){
-							game.log('酒馆区新增角色',addedCharacterList);
+							game.log('酒館區新增角色',addedCharacterList);
 						}
 					}else{
 						if(event.choosing.side==true) event.redRandomed=true;
@@ -2841,9 +2841,9 @@ export default () => {
 							var addedCharacter=event.allCharacterList.randomRemove();
 							event.characterList.push(addedCharacter);
 						}
-						game.log(event.choosing.node.name.innerHTML,'从角色堆随机选择了',link);
+						game.log(event.choosing.node.name.innerHTML,'從角色堆隨機選擇了',link);
 						if(addedCharacter){
-							game.log('酒馆区新增角色',addedCharacter);
+							game.log('酒館區新增角色',addedCharacter);
 						}
 					}
 					game.broadcastAll(function(id,link){
@@ -2883,7 +2883,7 @@ export default () => {
 					game.delay(0.5);
 					'step 9'
 					if(result.bool){
-						game.log(event.choosing.node.name.innerHTML,'选择了',result.links[0]);
+						game.log(event.choosing.node.name.innerHTML,'選擇了',result.links[0]);
 						event.characterList.removeArray(result.links);
 					}
 					'step 10'
@@ -3018,7 +3018,7 @@ export default () => {
 			},
 		},
 		translate:{
-			versus_single_control_config:'单人控制',
+			versus_single_control_config:'單人控制',
 		},
 		get:{
 			rawAttitude:function(from,to){
@@ -3031,7 +3031,7 @@ export default () => {
 			},
 		},
 		help:{
-			'星杯模式':`<div style="margin:10px">星杯模式</div><br>使对方士气降至0或者我方合成5个星杯即可获得胜利。对局中，右下角查看相关信息。`
+			'星杯模式':`<div style="margin:10px">星杯模式</div><br>使對方士氣降至0或者我方合成5個星杯即可獲得勝利。對局中，右下角查看相關信息。`
 		}
 	};
 };

@@ -1,5 +1,5 @@
-// 关于兼容环境
-// （以后再补，总之兼容环境的代码必须：不依赖coreJS，照顾低版本的浏览器）
+// 關於兼容環境
+// （以後再補，總之兼容環境的代碼必須：不依賴coreJS，照顧低版本的瀏覽器）
 
 export const rootURL = new URL("./", import.meta.url);
 

@@ -9,7 +9,7 @@ const path = require("path");
 
 const oneYear = 60 * 1000 * 60 * 24 * 365;
 
-// 解析命令行参数
+// 解析命令行參數
 // 示例: -s --maxAge 100
 const argv = minimist(process.argv.slice(2), {
 	alias: { server: "s" },
@@ -35,7 +35,7 @@ app.use(
 app.use(
 	bodyParser.urlencoded({
 		limit: "10240mb",
-		extended: true, //需明确设置
+		extended: true, //需明確設置
 	})
 );
 const join = function join(url) {
@@ -51,7 +51,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
-// 全局 中间件  解决所有路由的 跨域问题
+// 全局 中間件  解決所有路由的 跨域問題
 app.all("*", function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Headers", "X-Requested-With,Content-Type");
@@ -59,7 +59,7 @@ app.all("*", function (req, res, next) {
 	next();
 });
 
-// 根据参数设置 maxAge
+// 根據參數設置 maxAge
 const maxAge = argv.server && !argv.debug ? argv.maxAge : 0;
 
 app.use(express.static(__dirname, { maxAge: maxAge }));
@@ -71,13 +71,13 @@ app.get("/", (req, res) => {
 app.get("/createDir", (req, res) => {
 	const { dir } = req.query;
 	if (!isInProject(dir)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	if (!fs.existsSync(join(dir))) {
 		fs.mkdirSync(join(dir), { recursive: true });
 	} else {
 		if (!fs.statSync(join(dir)).isDirectory()) {
-			throw new Error(`${join(dir)}不是文件夹`);
+			throw new Error(`${join(dir)}不是文件夾`);
 		}
 	}
 	res.json(successfulJson(true));
@@ -86,11 +86,11 @@ app.get("/createDir", (req, res) => {
 app.get("/removeDir", (req, res) => {
 	const { dir } = req.query;
 	if (!isInProject(dir)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	if (fs.existsSync(join(dir))) {
 		if (!fs.statSync(join(dir)).isDirectory()) {
-			throw new Error(`${join(dir)}不是文件夹`);
+			throw new Error(`${join(dir)}不是文件夾`);
 		}
 		fs.rmdirSync(join(dir), { recursive: true });
 	}
@@ -100,7 +100,7 @@ app.get("/removeDir", (req, res) => {
 app.get("/readFile", (req, res) => {
 	const { fileName } = req.query;
 	if (!isInProject(fileName)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	if (fs.existsSync(join(fileName))) {
 		res.json(successfulJson(Array.prototype.slice.call(new Uint8Array(fs.readFileSync(join(fileName))))));
@@ -112,7 +112,7 @@ app.get("/readFile", (req, res) => {
 app.get("/readFileAsText", (req, res) => {
 	const { fileName } = req.query;
 	if (!isInProject(fileName)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	if (fs.existsSync(join(fileName))) {
 		res.json(successfulJson(fs.readFileSync(join(fileName), "utf-8")));
@@ -124,7 +124,7 @@ app.get("/readFileAsText", (req, res) => {
 app.post("/writeFile", (req, res) => {
 	const { path: p, data } = req.body;
 	if (!isInProject(p)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	fs.mkdirSync(path.dirname(join(p)), { recursive: true });
 	fs.writeFileSync(join(p), Buffer.from(data));
@@ -134,14 +134,14 @@ app.post("/writeFile", (req, res) => {
 app.get("/removeFile", (req, res) => {
 	const { fileName } = req.query;
 	if (!isInProject(fileName)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	if (!fs.existsSync(join(fileName))) {
 		throw new Error(`文件不存在`);
 	}
 	const stat = fs.statSync(join(fileName));
 	if (stat.isDirectory()) {
-		throw new Error("不能删除文件夹");
+		throw new Error("不能刪除文件夾");
 	}
 	fs.unlinkSync(join(fileName));
 	res.json(successfulJson(true));
@@ -150,14 +150,14 @@ app.get("/removeFile", (req, res) => {
 app.get("/getFileList", (req, res) => {
 	const { dir } = req.query;
 	if (!isInProject(dir)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	if (!fs.existsSync(join(dir))) {
-		throw new Error(`文件夹不存在`);
+		throw new Error(`文件夾不存在`);
 	}
 	const stat = fs.statSync(join(dir));
 	if (stat.isFile()) {
-		throw new Error("getFileList只适用于文件夹而不是文件");
+		throw new Error("getFileList只適用於文件夾而不是文件");
 	}
 	const files = [],
 		folders = [];
@@ -186,32 +186,32 @@ app.get("/getFileList", (req, res) => {
 app.get("/checkFile", (req, res) => {
 	const { fileName } = req.query;
 	if (!isInProject(fileName)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	try {
 		if (fs.statSync(join(fileName)).isFile()) {
 			res.json(successfulJson());
 		} else {
-			res.json(failedJson(404, "不是一个文件"));
+			res.json(failedJson(404, "不是一個文件"));
 		}
 	} catch (error) {
-		res.json(failedJson(404, "文件不存在或无法访问"));
+		res.json(failedJson(404, "文件不存在或無法訪問"));
 	}
 });
 
 app.get("/checkDir", (req, res) => {
 	const { dir } = req.query;
 	if (!isInProject(dir)) {
-		throw new Error(`只能访问${__dirname}的文件或文件夹`);
+		throw new Error(`只能訪問${__dirname}的文件或文件夾`);
 	}
 	try {
 		if (fs.statSync(join(dir)).isDirectory()) {
 			res.json(successfulJson());
 		} else {
-			res.json(failedJson(404, "不是一个文件夹"));
+			res.json(failedJson(404, "不是一個文件夾"));
 		}
 	} catch (error) {
-		res.json(failedJson(404, "文件夹不存在或无法访问"));
+		res.json(failedJson(404, "文件夾不存在或無法訪問"));
 	}
 });
 
@@ -233,7 +233,7 @@ const callback = () => {
 	console.log(`HTTP + WebSocket 正在使用 ${port} 端口 (${src})`);
 	if (process.env.RENDER === "true" && !portFromEnv) {
 		console.warn(
-			"[render] 未使用 process.env.PORT，当前为回退端口。请确认未在 Start Command 里写死 --port，且实例类型为 Web Service。"
+			"[render] 未使用 process.env.PORT，當前為回退端口。請確認未在 Start Command 裡寫死 --port，且實例類型為 Web Service。"
 		);
 	}
 };
@@ -246,9 +246,9 @@ const httpServer = http.createServer((req, res) => {
 });
 require("./game/server.js")(httpServer);
 if (typeof httpServer.listenerCount === "function" && httpServer.listenerCount("upgrade") < 1) {
-	console.warn("警告: 未检测到 WebSocket upgrade 监听器，联机大厅将无法使用。请确认 game/server.js 已随部署上传。");
+	console.warn("警告: 未檢測到 WebSocket upgrade 監聽器，聯機大廳將無法使用。請確認 game/server.js 已隨部署上傳。");
 } else {
-	console.log("联机大厅 WebSocket 已挂载 (upgrade 监听就绪)");
+	console.log("聯機大廳 WebSocket 已掛載 (upgrade 監聽就緒)");
 }
 httpServer.listen(port, callback);
 

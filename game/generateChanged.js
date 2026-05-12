@@ -1,8 +1,8 @@
-// 通过比对git信息来获取改动的文件列表
-// 然后生成zip文件
+// 通過比對git信息來獲取改動的文件列表
+// 然後生成zip文件
 // 使用 node game/generateChanged.js commitHash
-// 命令参数是对应commit的SHA
-// 生成的压缩包在game目录下
+// 命令參數是對應commit的SHA
+// 生成的壓縮包在game目錄下
 const { exec } = require("child_process");
 const path = require("path");
 const fs = require("fs");
@@ -28,14 +28,14 @@ function collectFilesSync(paths, filter = (_path) => true) {
 
 			for (const entry of entries) {
 				const fullPath = path.join(directoryPath, entry.name);
-				// 添加过滤函数
+				// 添加過濾函數
 				if (!filter(fullPath)) continue;
 
 				if (entry.isDirectory()) {
-					// 如果是目录，则递归进入
+					// 如果是目錄，則遞歸進入
 					collectFilesInDirectory(fullPath);
 				} else {
-					// 如果是文件，则添加到文件列表中
+					// 如果是文件，則添加到文件列表中
 					fileList.push(fullPath);
 				}
 			}
@@ -49,10 +49,10 @@ function collectFilesSync(paths, filter = (_path) => true) {
 			const stats = fs.lstatSync(item);
 
 			if (stats.isDirectory()) {
-				// 如果是目录，则递归收集文件
+				// 如果是目錄，則遞歸收集文件
 				collectFilesInDirectory(item);
 			} else {
-				// 如果是文件，则直接添加到列表中
+				// 如果是文件，則直接添加到列表中
 				fileList.push(item);
 			}
 		} else {
@@ -83,7 +83,7 @@ function compareFilesWithCommit(commitHash = "HEAD") {
 
 		filesArray.push(...collectFilesSync([joinRootPath("card"), joinRootPath("character"), joinRootPath("game"), joinRootPath("layout"), joinRootPath("mode"), joinRootPath("noname"), joinRootPath("theme"), joinRootPath("index.html"), joinRootPath("LICENSE"), joinRootPath("noname-compatible.js"), joinRootPath("noname.js"), joinRootPath("README.md"), joinRootPath("tsconfig.json")]));
 
-		// 单独处理extension目录，使扩展不会被打包
+		// 單獨處理extension目錄，使擴展不會被打包
 		filesArray.push(...collectFilesSync([joinRootPath("extension")], path => nonameExtensions.some(extPath => path.startsWith(extPath))));
 
 		filesArray = [...new Set(filesArray.map(v => v.replace(/\\/g, "/")))].sort((a, b) => {
@@ -109,7 +109,7 @@ function compareFilesWithCommit(commitHash = "HEAD") {
 
 		// noinspection JSDeprecatedSymbols
 		const result = zip.generate({ type: "nodebuffer" });
-		fs.writeFileSync(path.join(__dirname, `测试包-${formatDate()}.zip`), result);
+		fs.writeFileSync(path.join(__dirname, `測試包-${formatDate()}.zip`), result);
 	});
 }
 

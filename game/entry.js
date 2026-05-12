@@ -9,10 +9,10 @@ let [core, version] = get.coreInfo();
 let waitUpdate = Promise.resolve();
 if (core === "chrome" && !isNaN(version) && version < 85) {
 	/*
-	const tip = "检测到您的浏览器内核版本小于85，请及时升级浏览器或手机webview内核！";
+	const tip = "檢測到您的瀏覽器內核版本小於85，請及時升級瀏覽器或手機webview內核！";
 	console.warn(tip);
 	game.print(tip);
-	const redirect_tip = `您使用的浏览器或无名杀客户端内核版本过低，将在未来的版本被废弃！\n目前使用的浏览器UA信息为：\n${userAgent}\n点击“确认”以前往GitHub下载最新版无名杀客户端（可能需要科学上网）。`;
+	const redirect_tip = `您使用的瀏覽器或無名殺客戶端內核版本過低，將在未來的版本被廢棄！\n目前使用的瀏覽器UA信息為：\n${userAgent}\n點擊“確認”以前往GitHub下載最新版無名殺客戶端（可能需要科學上網）。`;
 	if (confirm(redirect_tip)) {
 		window.open("https://github.com/libnoname/noname/releases/tag/chromium77-client");
 	}
@@ -23,9 +23,9 @@ if (core === "chrome" && !isNaN(version) && version < 85) {
 waitUpdate
 	.then(boot)
 	.then(() => {
-		// 判断是否从file协议切换到http/s协议
+		// 判斷是否從file協議切換到http/s協議
 		if (canUseHttpProtocol()) {
-			// 保存协议的切换状态
+			// 保存協議的切換狀態
 			const saveProtocol = () => {
 				const url = sendUpdate();
 				if (typeof url == "string") {
@@ -40,14 +40,14 @@ waitUpdate
 				}
 			};
 			/*
-		升级方法:
-			1. 游戏启动后导出数据，然后以http/s协议重启
-			2. 以http/s协议导入数据
-			3. 保存http/s协议的状态，以后不再以file协议启动
+		升級方法:
+			1. 遊戲啟動後導出數據，然後以http/s協議重啟
+			2. 以http/s協議導入數據
+			3. 保存http/s協議的狀態，以後不再以file協議啟動
 		*/
-			// 导出数据到根目录的noname.config.txt
+			// 導出數據到根目錄的noname.config.txt
 			if (navigator.notification) {
-				navigator.notification.activityStart("正在进行升级", "请稍候");
+				navigator.notification.activityStart("正在進行升級", "請稍候");
 			}
 			let data;
 			let export_data = function (data) {
@@ -58,7 +58,7 @@ waitUpdate
 					.writeFile(lib.init.encode(JSON.stringify(data)), "./", "noname.config.txt")
 					.then(saveProtocol)
 					.catch(e => {
-						console.error("升级失败:", e);
+						console.error("升級失敗:", e);
 					});
 			};
 			// @ts-ignore
@@ -86,12 +86,12 @@ waitUpdate
 					.readFileAsText("noname.config.txt")
 					.then(data => {
 						if (navigator.notification) {
-							navigator.notification.activityStart("正在导入数据", "请稍候");
+							navigator.notification.activityStart("正在導入數據", "請稍候");
 						}
 						return /** @type {Promise<void>} */ (
 							// eslint-disable-next-line no-async-promise-executor
 							new Promise(async (resolve, reject) => {
-								if (!data) return reject(new Error("没有数据内容"));
+								if (!data) return reject(new Error("沒有數據內容"));
 								try {
 									data = JSON.parse(lib.init.decode(data));
 									if (!data || typeof data != "object") {
@@ -104,9 +104,9 @@ waitUpdate
 								} catch (e) {
 									console.log(e);
 									if (e == "err") {
-										reject(new Error("导入文件格式不正确"));
+										reject(new Error("導入文件格式不正確"));
 									} else {
-										reject(new Error("导入失败： " + e.message));
+										reject(new Error("導入失敗： " + e.message));
 									}
 									return;
 								}
@@ -142,7 +142,7 @@ waitUpdate
 						return game.promises.removeFile("noname.config.txt").catch(() => void 0);
 					})
 					.then(() => {
-						alert("数据导入成功, 即将自动重启");
+						alert("數據導入成功, 即將自動重啟");
 						const url = new URL(location.href);
 						if (url.searchParams.get("sendUpdate")) {
 							url.searchParams.delete("sendUpdate");
@@ -157,7 +157,7 @@ waitUpdate
 							if (!(e instanceof window.FileError)) {
 								alert(typeof e?.message == "string" ? e.message : JSON.stringify(e));
 							} else {
-								console.error(`noname.config.txt读取失败: ${Object.keys(window.FileError).find(msg => window.FileError[msg] === e.code)}`);
+								console.error(`noname.config.txt讀取失敗: ${Object.keys(window.FileError).find(msg => window.FileError[msg] === e.code)}`);
 							}
 						}
 					})
@@ -169,11 +169,11 @@ waitUpdate
 			};
 			let searchParams = new URLSearchParams(location.search);
 			for (let [key, value] of searchParams) {
-				// 成功导入后删除noname.config.txt
+				// 成功導入後刪除noname.config.txt
 				if (key === "sendUpdate" && value === "true") {
 					return readConfig();
 				}
-				// 新客户端导入扩展
+				// 新客戶端導入擴展
 				else if (key === "importExtensionName") {
 					lib.config.extensions.add(value);
 
@@ -181,7 +181,7 @@ waitUpdate
 
 					waitings.push(game.promises.saveConfig("extensions", lib.config.extensions));
 					waitings.push(game.promises.saveConfig(`extension_${value}_enable`, true));
-					alert(`扩展${value}已导入成功，点击确定重启游戏`);
+					alert(`擴展${value}已導入成功，點擊確定重啟遊戲`);
 
 					return Promise.allSettled(waitings).then(() => {
 						const url = new URL(location.href);

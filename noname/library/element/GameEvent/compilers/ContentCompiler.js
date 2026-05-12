@@ -9,31 +9,31 @@ class ContentCompiler {
 	#compiledContent = new WeakMap();
 	/**
 	 * ```plain
-	 * 注册一个编译器实例
+	 * 註冊一個編譯器實例
 	 *
-	 * 如果后面开始全面迁移到 TypeScript，那么请使用依赖注入代替这个方法喵
+	 * 如果後面開始全面遷移到 TypeScript，那麼請使用依賴注入代替這個方法喵
 	 * ```
 	 *
-	 * @todo 应该使用依赖注入替代
-	 * @param compiler 编译器实例对象
+	 * @todo 應該使用依賴注入替代
+	 * @param compiler 編譯器實例對象
 	 */
 	addCompiler(compiler) {
 		const type = compiler.constructor;
-		if (typeof type !== "function") throw new TypeError("content编译器没有明确的类型");
-		if (this.#compilerTypes.has(type)) throw new TypeError("相同的content编译器类型不能重复注册");
+		if (typeof type !== "function") throw new TypeError("content編譯器沒有明確的類型");
+		if (this.#compilerTypes.has(type)) throw new TypeError("相同的content編譯器類型不能重複註冊");
 		this.#compilerTypes.add(type);
 		this.#compilers.add(compiler);
 	}
 	/**
 	 * ```plain
-	 * 对无法直接编译的数据做处理
+	 * 對無法直接編譯的數據做處理
 	 * ```
 	 *
 	 * @param content
 	 * @returns
 	 */
 	regularize(content) {
-		// 无法直接编译的数据做处理
+		// 無法直接編譯的數據做處理
 		if (typeof content === "string") {
 			return lib.element.content[content] || lib.element.contents[content];
 		} else if (Symbol.iterator in content) {
@@ -43,8 +43,8 @@ class ContentCompiler {
 	}
 	/**
 	 * ```plain
-	 * 集成的编译函数
-	 * 通过责任链模式将content分发给所有注册的编译器喵
+	 * 集成的編譯函數
+	 * 通過責任鏈模式將content分發給所有註冊的編譯器喵
 	 * ```
 	 *
 	 * @param content
@@ -60,11 +60,11 @@ class ContentCompiler {
 			compiled.compiled = true;
 			compiled.type = compiler.type;
 			compiled.original = content;
-			// 对编译结果进行缓存
+			// 對編譯結果進行緩存
 			this.#compiledContent.set(target, compiled);
 			return compiled;
 		}
-		// 无家可归的可怜孩子喵
+		// 無家可歸的可憐孩子喵
 		throw new Error(`不受支持的content: \n ${String(target)}`);
 	}
 }

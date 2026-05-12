@@ -30,21 +30,21 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 		},
 
         characterIntro: {
-			san_fengZhiJianSheng:"风之剑圣有着极高的攻击频率，一旦得到了风的强力赐福，更可以让他打出无数绚丽的连击和伤害。再加上其本身拥有的“圣剑”，在伤害输出上不容小觑，更是团队【宝石】获得的得力助手",
-            san_kuangZhanShi:"狂战士毋庸置疑的拥有本作最强大的物理攻击输出能力，特别是对于防御力弱和拥有治疗的角色更是能制造出绝对的碾压和毁灭伤害。其唯一的弱点就是命中率，因此由队友掩护攻击或攻击防御薄弱的角色是狂战取胜之道",
-            san_anShaZhe:"没有人会去主动惹暗杀者的麻烦，因为他的反击总是会让你后悔刚才做出的决定；也没有人会把他当做一个默默无闻的路人甲，因为当他亮出匕首的时候，你就再也无法闪躲了",
-            san_shengNv:`外表弱小的圣女有着极强的防御和治疗能力。在她的保护下，很多需要厚积薄发的职业能得到全面的呵护成长，更是许多爆发性职业的全职奶妈`,
-            san_shengQiangQiShi:`治疗对于圣枪骑士而言，既是优秀的防御源泉，也是攻击的伤害利器。强大的圣枪骑士总是能运用场上的所有治疗为她所用，狠狠地发泄到她的对手身上。她的天枪和地枪总是让每个对手都胆战心惊`,
-            san_maoXianJia:"在这样一个危险的大陆还敢冒险的人一定具备着以下三种素质：近乎难以置信的运气、让大家都有利可图的能力、遇到危险时跑的足够快",
-            san_xianZhe:`睿智博学的贤者拥有能改变命运的三本魔法法典：智慧、圣洁和魔道。每一本都积攒着前人对奥术能量的深厚研究，而贤者是唯一一个能够完全利用它们的人`,
-            san_lingHunShuShi:"控制并利用灵魂是灵魂术士一族所独具的强大能力，错综多样的灵魂类别会使得很多学徒级的灵魂术士手忙脚乱。而对于精通利用灵魂的大师级灵魂术士而言，却能把每一个灵魂都发挥出最大的利用价值和使用效率",
-            san_nvWuShen:`米涅瓦：力量对于她来说是一种艺术，每一种技巧和武艺对于她来说同样是一种艺术，将各种各样的艺术融会贯通，铸就了女武神不败的威名<br>
-            栞蒂：作为“女武神计划”的最终产物，她拥有的技巧和实力几乎完美再现了当年女武神的威风`,
-            san_moGong:`魔弓为了超越她的姐姐，舍弃了原本应当追寻技巧与速度的弓之奥义，而将所有的箭术魔化为强大的充能能量，力求在爆发力与AOE上做到极致与完美`,
-            san_yingLingRenXing:"纯粹为战斗而生的人形，自诞生之日便掌握神秘的纹章力量，并运用这种力量将前进道路上的障碍统统粉碎",
-            san_moQiang:`被幻之星尘同化的魔枪在获得了新的意志和形态后，体内涌出一股无与伦比的力量。这种力量极大地提高了她的打击能力和爆发力，但也使得她再也无法使用那些基本的法术了`,
-            san_yinYouShiRen:`吟游诗人不仅仅依凭自己的直觉和灵感进行着战斗，他弹奏的一个个音符能大幅增强自身和队友的实力，同样也能对敌人造成极大的伤害`,
-            san_yongZhe:"怒气与知性这一对仿佛不可调和的矛盾却在勇者身上被炼化为一致。拥有怒气时的超强爆发与使用知性时的百发百中让勇者成为星杯传说中的强者",
+			san_fengZhiJianSheng:"風之劍聖有著極高的攻擊頻率，一旦得到了風的強力賜福，更可以讓他打出無數絢麗的連擊和傷害。再加上其本身擁有的“聖劍”，在傷害輸出上不容小覷，更是團隊【寶石】獲得的得力助手",
+            san_kuangZhanShi:"狂戰士毋庸置疑的擁有本作最強大的物理攻擊輸出能力，特別是對於防禦力弱和擁有治療的角色更是能製造出絕對的碾壓和毀滅傷害。其唯一的弱點就是命中率，因此由隊友掩護攻擊或攻擊防禦薄弱的角色是狂戰取勝之道",
+            san_anShaZhe:"沒有人會去主動惹暗殺者的麻煩，因為他的反擊總是會讓你後悔剛才做出的決定；也沒有人會把他當做一個默默無聞的路人甲，因為當他亮出匕首的時候，你就再也無法閃躲了",
+            san_shengNv:`外表弱小的聖女有著極強的防禦和治療能力。在她的保護下，很多需要厚積薄發的職業能得到全面的呵護成長，更是許多爆發性職業的全職奶媽`,
+            san_shengQiangQiShi:`治療對於聖槍騎士而言，既是優秀的防禦源泉，也是攻擊的傷害利器。強大的聖槍騎士總是能運用場上的所有治療為她所用，狠狠地發洩到她的對手身上。她的天槍和地槍總是讓每個對手都膽戰心驚`,
+            san_maoXianJia:"在這樣一個危險的大陸還敢冒險的人一定具備著以下三種素質：近乎難以置信的運氣、讓大家都有利可圖的能力、遇到危險時跑的足夠快",
+            san_xianZhe:`睿智博學的賢者擁有能改變命運的三本魔法法典：智慧、聖潔和魔道。每一本都積攢著前人對奧術能量的深厚研究，而賢者是唯一一個能夠完全利用它們的人`,
+            san_lingHunShuShi:"控制並利用靈魂是靈魂術士一族所獨具的強大能力，錯綜多樣的靈魂類別會使得很多學徒級的靈魂術士手忙腳亂。而對於精通利用靈魂的大師級靈魂術士而言，卻能把每一個靈魂都發揮出最大的利用價值和使用效率",
+            san_nvWuShen:`米涅瓦：力量對於她來說是一種藝術，每一種技巧和武藝對於她來說同樣是一種藝術，將各種各樣的藝術融會貫通，鑄就了女武神不敗的威名<br>
+            栞蒂：作為“女武神計劃”的最終產物，她擁有的技巧和實力幾乎完美再現了當年女武神的威風`,
+            san_moGong:`魔弓為了超越她的姐姐，捨棄了原本應當追尋技巧與速度的弓之奧義，而將所有的箭術魔化為強大的充能能量，力求在爆發力與AOE上做到極致與完美`,
+            san_yingLingRenXing:"純粹為戰鬥而生的人形，自誕生之日便掌握神秘的紋章力量，並運用這種力量將前進道路上的障礙統統粉碎",
+            san_moQiang:`被幻之星塵同化的魔槍在獲得了新的意志和形態後，體內湧出一股無與倫比的力量。這種力量極大地提高了她的打擊能力和爆發力，但也使得她再也無法使用那些基本的法術了`,
+            san_yinYouShiRen:`吟遊詩人不僅僅依憑自己的直覺和靈感進行著戰鬥，他彈奏的一個個音符能大幅增強自身和隊友的實力，同樣也能對敵人造成極大的傷害`,
+            san_yongZhe:"怒氣與知性這一對彷彿不可調和的矛盾卻在勇者身上被煉化為一致。擁有怒氣時的超強爆發與使用知性時的百發百中讓勇者成為星杯傳說中的強者",
 		},
         skill:{
             san_shengJian:{
@@ -220,7 +220,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 content:function(){
                     'step 0'
-                    var next=player.chooseTarget(true,'目标角色+1[治疗]').set('ai',function(target){
+                    var next=player.chooseTarget(true,'目標角色+1[治療]').set('ai',function(target){
                         var player=_status.event.player;
 						return get.zhiLiaoEffect2(target,player,1);
 					});
@@ -294,13 +294,13 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 },
                 content:function(){
                     'step 0'
-                    var choiceList=['你+1[治疗]','(移除我方【战绩区】2星石)，你无视上限+2[治疗]'];
-                    var choices=['选项一'];
+                    var choiceList=['你+1[治療]','(移除我方【戰績區】2星石)，你無視上限+2[治療]'];
+                    var choices=['選項一'];
                     var list=get.zhanJi(player.side);
                     if(list.length>=2){
-                        choices.push('选项二');
+                        choices.push('選項二');
                     }
-                    player.chooseControl(choices).set('prompt','军神威光：选择一项').set('choiceList',choiceList);
+                    player.chooseControl(choices).set('prompt','軍神威光：選擇一項').set('choiceList',choiceList);
                     'step 1'
                     if(result.index==0){
                         player.changeZhiLiao(1);
@@ -312,7 +312,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             listx.push([list[i],get.translation(list[i])]);
                         }
                         var next=player.chooseButton([
-                            '移除2个星石',
+                            '移除2個星石',
                             [listx,'tdnodes'],
                         ]);
                         next.set('forced',true);
@@ -350,7 +350,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     'step 1'
                     trigger.changeDamageNum(1);
                     'step 2'
-                    player.chooseToDiscard('showCards',"<span class='tiaoJian'>(若你额外弃置1张法术牌[展示])</span>本次攻击伤害额外+1",card=>get.type(card)=='faShu').set('ai',function(card){
+                    player.chooseToDiscard('showCards',"<span class='tiaoJian'>(若你額外棄置1張法術牌[展示])</span>本次攻擊傷害額外+1",card=>get.type(card)=='faShu').set('ai',function(card){
                         return 6- get.value(card);
                     });
                     'step 3'
@@ -411,7 +411,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     for(var i=0;i<=3;i++){
                         list.push(i);
                     }
-                    player.chooseControl(list).set('prompt','选择【战纹】数量').set('ai',function(){
+                    player.chooseControl(list).set('prompt','選擇【戰紋】數量').set('ai',function(){
                         var num=Math.random();
                         if(num>0.5) return 1;
                         else return 2;
@@ -482,7 +482,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         listx.push([list[i],get.translation(list[i])]);
                     };
 					var next=player.chooseButton([
-                        '选择提炼的星石',
+                        '選擇提煉的星石',
                         [listx,'tdnodes'],
                     ]);
                     next.set('forced',true);
@@ -497,7 +497,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 							if(button.link=='shuiJing') return 5;
 							else return 2;
 						}
-						//既有水晶也有宝石
+						//既有水晶也有寶石
 						return 2;
                     });
                     next.set('target',target);
@@ -643,7 +643,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                 content:async function(event,trigger,player){
                     await player.discard(event.cards).set('showCards',true);
                     await player.addZhiShiWu('lingGan');
-                    var targets=await player.chooseTarget('对目标对手造成1点法术伤害',true,function(card,player,target){
+                    var targets=await player.chooseTarget('對目標對手造成1點法術傷害',true,function(card,player,target){
                         return player.side!=target.side;
                     })
                     .set('ai',function(target){
@@ -694,7 +694,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             if(num>=2&&button.link=='摸'){
                                 return 1;
                             }
-                            if(num<2&&button.link=='弃'){
+                            if(num<2&&button.link=='棄'){
                                 return 1;
                             }
                         }
@@ -702,13 +702,13 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                     },
 
                     dialog:function(event,player){
-						var dialog=ui.create.dialog(`不谐和弦：移除X点<span class='hong'>【灵感】</span>,与目标角色摸(X-1)张牌或各弃X张牌`,'hidden');
+						var dialog=ui.create.dialog(`不諧和絃：移除X點<span class='hong'>【靈感】</span>,與目標角色摸(X-1)張牌或各棄X張牌`,'hidden');
                         var list=[];
                         for(var i=2;i<=player.countZhiShiWu('san_lingGan');i++){
                             list.push(i);
                         }
 						dialog.add([list,'tdnodes']);
-                        dialog.add([['摸','弃'],'tdnodes'])
+                        dialog.add([['摸','棄'],'tdnodes'])
 						return dialog;
 					},
                     filter:function(button,player){
@@ -771,9 +771,9 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             }
                         }
                         if(action=='摸'){
-                            return `你和目标角色各摸${num}张牌[强制]`
+                            return `你和目標角色各摸${num}張牌[強制]`
                         }else{
-                            return `你和目标角色各弃${num+1}张牌[强制]`
+                            return `你和目標角色各棄${num+1}張牌[強制]`
                         }
                     }
                 },
@@ -800,7 +800,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                         return current.side==player.side&&current.hasZhiShiWu('san_yongHengYueZhang');
                     }));
 
-                    var targets=await player.chooseTarget('将【永恒乐章】转移给我方一名角色面前',true,function(card,player,target){
+                    var targets=await player.chooseTarget('將【永恆樂章】轉移給我方一名角色面前',true,function(card,player,target){
                         var targetx=_status.event.targetx;
                         return target.side==player.side&&targetx!=target;
                     }).set('targetx',players[0]).forResultTargets();
@@ -824,7 +824,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             },
             san_lingGan:{
                 intro:{
-                    name:'灵感',
+                    name:'靈感',
                     markcount:'mark',
                     max:4,
                     content:'mark',
@@ -835,8 +835,8 @@ game.import('character',function(lib,game,ui,get,ai,_status){
             san_yongHengYueZhangX:{},
             san_yongHengYueZhang:{
                 intro:{
-                    name:'(专)永恒乐章',
-                    content:"[响应]激昂狂想曲：<span class='tiaoJian'>(回合开始时若你拥有【永恒乐章】，移除我方【战绩区】的2星石或将【永恒乐章】转移给吟游诗人)</span>选择以下一项执行：<br>·对2名目标对手各造成1点法术伤害③。 <br>·你弃2张牌。<br>[响应]胜利交响诗：<span class='tiaoJian'>(回合结束时若你拥有【永恒乐章】，对吟游诗人造成3点法术伤害③或将【永恒乐章】转移给吟游诗人)</span>选择以下一项执行<br>·将我方【战绩区】的1个星石提炼成为你的能量。<br>·为我方【战绩区】+1[宝石]，你+1[治疗]。",
+                    name:'(專)永恆樂章',
+                    content:"[響應]激昂狂想曲：<span class='tiaoJian'>(回合開始時若你擁有【永恆樂章】，移除我方【戰績區】的2星石或將【永恆樂章】轉移給吟遊詩人)</span>選擇以下一項執行：<br>·對2名目標對手各造成1點法術傷害③。 <br>·你棄2張牌。<br>[響應]勝利交響詩：<span class='tiaoJian'>(回合結束時若你擁有【永恆樂章】，對吟遊詩人造成3點法術傷害③或將【永恆樂章】轉移給吟遊詩人)</span>選擇以下一項執行<br>·將我方【戰績區】的1個星石提煉成為你的能量。<br>·為我方【戰績區】+1[寶石]，你+1[治療]。",
                     nocount:true,
                 },
                 group:['san_yongHengYueZhang_jiAngKuangXiangQu','san_yongHengYueZhang_shengLiJiaoXiangShi'],
@@ -855,7 +855,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             }  
                         },
                         content:async function(event,trigger,player){
-                            //条件
+                            //條件
                             var zhanJi=get.zhanJi(player.side);
                             if(zhanJi.length>=2){
                                 var list=[];
@@ -864,12 +864,12 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                 }
                                 if(player.storage.yongHengYueZhang_player==player){
                                     var result=await player.chooseButton([
-                                        '移除我方【战绩区】的2星石或者将【永恒乐章】转移给吟游诗人',
+                                        '移除我方【戰績區】的2星石或者將【永恆樂章】轉移給吟遊詩人',
                                         [list,'tdnodes'],
                                     ]).set('selectButton',[2,2]).set('forced',true).forResult();
                                 }else{
                                     var result=await player.chooseButton([
-                                        '移除我方【战绩区】的2星石或者将【永恒乐章】转移给吟游诗人',
+                                        '移除我方【戰績區】的2星石或者將【永恆樂章】轉移給吟遊詩人',
                                         [list,'tdnodes'],
                                     ]).set('selectButton',[2,2]).forResult();
                                 }
@@ -896,15 +896,15 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             }
 
                             //效果
-                            var choiceList=['对2名目标对手各造成1点法术伤害③','弃2张牌'];
+                            var choiceList=['對2名目標對手各造成1點法術傷害③','棄2張牌'];
                             var control=await player.chooseControl().set('choiceList',choiceList).set('ai',function(){
                                 var player=_status.event.player;
-                                if(player.storage.yongHengYueZhang_player.countCards('h')>2) return '选项一';
-                                else return '选项二';
+                                if(player.storage.yongHengYueZhang_player.countCards('h')>2) return '選項一';
+                                else return '選項二';
                             }).forResultControl();
                             
-                            if(control=='选项一'){
-                                var targets=await player.chooseTarget(2,'对2名目标对手各造成1点法术伤害③',true,function(card,player,target){
+                            if(control=='選項一'){
+                                var targets=await player.chooseTarget(2,'對2名目標對手各造成1點法術傷害③',true,function(card,player,target){
                                     return target.side!=player.side;
                                 }).forResultTargets();
                                 for(var i=0;i<targets.length;i++){
@@ -928,17 +928,17 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                             return player.hasZhiShiWu('san_yongHengYueZhang');
                         },
                         content:async function(event,trigger,player){
-                            //条件
+                            //條件
                             if(player.storage.yongHengYueZhang_player!=player){
-                                var choiceList=['对吟游诗人造成3点法术伤害③','将【永恒乐章】转移给吟游诗人'];
+                                var choiceList=['對吟遊詩人造成3點法術傷害③','將【永恆樂章】轉移給吟遊詩人'];
                                 var control=await player.chooseControl().set('choiceList',choiceList).set('ai',function(){
                                     var target=_status.event.player.storage.yongHengYueZhang_player;
-                                    if(target.countCards('h')+4>target.getHandcardLimit()) return '选项二';
-                                    else return '选项一';
+                                    if(target.countCards('h')+4>target.getHandcardLimit()) return '選項二';
+                                    else return '選項一';
                                 }).forResultControl();
-                            }else var control='选项一';
+                            }else var control='選項一';
 
-                            if(control=='选项一'){
+                            if(control=='選項一'){
                                 await player.storage.yongHengYueZhang_player.faShuDamage(3,player);
                             }else{
                                 await player.removeZhiShiWu('san_yongHengYueZhang');
@@ -953,7 +953,7 @@ game.import('character',function(lib,game,ui,get,ai,_status){
                                     list.push([zhanJi[i],get.translation(zhanJi[i])]);
                                 }
                                 var result=await player.chooseButton([
-                                    '提炼我方【战绩区】的1个星石或者为我方【战绩区】+1[宝石]、你+1[治疗]',
+                                    '提煉我方【戰績區】的1個星石或者為我方【戰績區】+1[寶石]、你+1[治療]',
                                     [list,'tdnodes'],
                                 ]).set('selectButton',[1,1]).set('ai',function(button){
                                     var player=_status.event.player;
@@ -1040,109 +1040,109 @@ game.import('character',function(lib,game,ui,get,ai,_status){
 		
 		translate:{
             //角色名字
-			san_fengZhiJianSheng:"三版风之剑圣",
+			san_fengZhiJianSheng:"三版風之劍聖",
             san_fengZhiJianSheng_prefix: "三版",
-            san_kuangZhanShi:"三版狂战士",
+            san_kuangZhanShi:"三版狂戰士",
             san_kuangZhanShi_prefix: "三版",
-            san_anShaZhe:"三版暗杀者",
+            san_anShaZhe:"三版暗殺者",
             san_anShaZhe_prefix: "三版",
-            san_shengNv:"三版圣女",
+            san_shengNv:"三版聖女",
             san_shengNv_prefix: "三版",
-            san_shengQiangQiShi:"三版圣枪骑士",
+            san_shengQiangQiShi:"三版聖槍騎士",
             san_shengQiangQiShi_prefix: "三版",
-            san_maoXianJia:"三版冒险家",
+            san_maoXianJia:"三版冒險家",
             san_maoXianJia_prefix: "三版",
-            san_xianZhe:"三版贤者",
+            san_xianZhe:"三版賢者",
             san_xianZhe_prefix: "三版",
-            san_lingHunShuShi:"三版灵魂术士",
+            san_lingHunShuShi:"三版靈魂術士",
             san_lingHunShuShi_prefix: "三版",
             san_nvWuShen:"三版女武神",
             san_nvWuShen_prefix: "三版",
-            san_yingLingRenXing:"三版英灵人形",
+            san_yingLingRenXing:"三版英靈人形",
             san_yingLingRenXing_prefix: "三版",
-            san_moQiang:"三版魔枪",
+            san_moQiang:"三版魔槍",
             san_moQiang_prefix: "三版",
-            san_yinYouShiRen:"三版吟游诗人",
+            san_yinYouShiRen:"三版吟遊詩人",
             san_yinYouShiRen_prefix: "三版",
             san_yongZhe:"三版勇者",
             san_yongZhe_prefix: "三版",
-            san_wenYiFaShi:"三版瘟疫法师",
+            san_wenYiFaShi:"三版瘟疫法師",
             san_wenYiFaShi_prefix: "三版",
 
-            san_shengJian:'[被动]圣剑',
-            san_shengJian_info:"若你的主动攻击为本次行动阶段的第3次[攻击行动]，则此攻击强制命中。",
+            san_shengJian:'[被動]聖劍',
+            san_shengJian_info:"若你的主動攻擊為本次行動階段的第3次[攻擊行動]，則此攻擊強制命中。",
 
-            san_shuiYing:"[响应]水影",
-            san_shuiYing_info:"<span class='tiaoJian'>(目标角色对你造成伤害时③发动)</span>弃X张水系牌[展示]。",
-            san_qianXing:"[启动]潜行",
-            san_qianXing_info:"[宝石][横置]持续到你的下个行动阶段开始，你的手牌上限-1；你不能成为主动攻击的目标；你的主动攻击对手无法应战且伤害额外+X，X为你剩余的【能量】数。【潜行】的效果结束时[重置]。",
+            san_shuiYing:"[響應]水影",
+            san_shuiYing_info:"<span class='tiaoJian'>(目標角色對你造成傷害時③發動)</span>棄X張水系牌[展示]。",
+            san_qianXing:"[啟動]潛行",
+            san_qianXing_info:"[寶石][橫置]持續到你的下個行動階段開始，你的手牌上限-1；你不能成為主動攻擊的目標；你的主動攻擊對手無法應戰且傷害額外+X，X為你剩餘的【能量】數。【潛行】的效果結束時[重置]。",
 
-            san_kuangHua:"[被动]狂化",
-            san_kuangHua_info:"你发动的所有攻击伤害额外+1。",
+            san_kuangHua:"[被動]狂化",
+            san_kuangHua_info:"你發動的所有攻擊傷害額外+1。",
 
-            san_nuHou:"[响应]怒吼",
-            san_nuHou_info:"<span class='tiaoJian'>(主动攻击前发动①，移除1点</span><span class='hong'>【怒气】</span><span class='tiaoJian'>)</span>本次攻击伤害额外+2；<span class='tiaoJian'>(若未命中②)</span>你+1<span class='lan'>【知性】</span>。",
-            san_mingJingZhiShui:"[响应]明镜止水",
-            san_mingJingZhiShui_info:"<span class='tiaoJian'>(主动攻击前发动①，移除4点</span><span class='lan'>【知性】</span><span class='tiaoJian'>)</span>本次攻击对手无法应战。",
-            san_siDou:"[响应]死斗",
-            san_siDou_info:"[宝石](每当你承受法术伤害时发动⑥)你+3<span class='hong'>【怒气】</span>。",
+            san_nuHou:"[響應]怒吼",
+            san_nuHou_info:"<span class='tiaoJian'>(主動攻擊前發動①，移除1點</span><span class='hong'>【怒氣】</span><span class='tiaoJian'>)</span>本次攻擊傷害額外+2；<span class='tiaoJian'>(若未命中②)</span>你+1<span class='lan'>【知性】</span>。",
+            san_mingJingZhiShui:"[響應]明鏡止水",
+            san_mingJingZhiShui_info:"<span class='tiaoJian'>(主動攻擊前發動①，移除4點</span><span class='lan'>【知性】</span><span class='tiaoJian'>)</span>本次攻擊對手無法應戰。",
+            san_siDou:"[響應]死鬥",
+            san_siDou_info:"[寶石](每當你承受法術傷害時發動⑥)你+3<span class='hong'>【怒氣】</span>。",
 
-            san_bingShuangDaoYan:"[被动]冰霜祷言",
-            san_bingShuangDaoYan_info:"<span class='tiaoJian'>(每当你使用水系攻击时发动)</span>目标角色+1[治疗]。",
-            san_lianMin:"[启动]怜悯[持续]",
-            san_lianMin_info:"[宝石][横置]你的手牌上限恒定为7[恒定]。",
+            san_bingShuangDaoYan:"[被動]冰霜禱言",
+            san_bingShuangDaoYan_info:"<span class='tiaoJian'>(每當你使用水系攻擊時發動)</span>目標角色+1[治療]。",
+            san_lianMin:"[啟動]憐憫[持續]",
+            san_lianMin_info:"[寶石][橫置]你的手牌上限恆定為7[恆定]。",
 
-            san_hePingXingZhe:"[被动]和平行者",
-            san_hePingXingZhe_info:"<span class='tiaoJian'>(发动【英灵召唤】后强制触发[强制])</span>[横置]，转入【英灵形态】；<span class='tiaoJian'>(每当你执行主动攻击时发动①)</span>[重置]脱离【英灵形态】。",
-            san_junShenWeiGuang:"[被动]军神威光",
-            san_junShenWeiGuang_info:"<span class='tiaoJian'>(回合开始时，若你处于【英灵形态】)</span>选择以下1项发动：<br>·你+1[治疗]；<br>·<span class='tiaoJian'>(移除我方【战绩区】2星石)</span>你无视上限+2[治疗]。",
-            san_yingLingZhaoHuan:"[响应]英灵召唤",
-            san_yingLingZhaoHuan_info:"[水晶]<span class='tiaoJian'>(攻击命中时发动②)</span>本次攻击伤害额外+1，<span class='tiaoJian'>(若你额外弃置1张法术牌[展示])</span>本次攻击伤害额外+1。",
+            san_hePingXingZhe:"[被動]和平行者",
+            san_hePingXingZhe_info:"<span class='tiaoJian'>(發動【英靈召喚】後強制觸發[強制])</span>[橫置]，轉入【英靈形態】；<span class='tiaoJian'>(每當你執行主動攻擊時發動①)</span>[重置]脫離【英靈形態】。",
+            san_junShenWeiGuang:"[被動]軍神威光",
+            san_junShenWeiGuang_info:"<span class='tiaoJian'>(回合開始時，若你處於【英靈形態】)</span>選擇以下1項發動：<br>·你+1[治療]；<br>·<span class='tiaoJian'>(移除我方【戰績區】2星石)</span>你無視上限+2[治療]。",
+            san_yingLingZhaoHuan:"[響應]英靈召喚",
+            san_yingLingZhaoHuan_info:"[水晶]<span class='tiaoJian'>(攻擊命中時發動②)</span>本次攻擊傷害額外+1，<span class='tiaoJian'>(若你額外棄置1張法術牌[展示])</span>本次攻擊傷害額外+1。",
 		
-            san_shenShengXinYang:"[被动]神圣信仰",
-            san_shenShengXinYang_info:"你的[治疗]上限+1。",
+            san_shenShengXinYang:"[被動]神聖信仰",
+            san_shenShengXinYang_info:"你的[治療]上限+1。",
 
-            san_zhiHuiFaDian:"[被动]智慧法典",
-            san_zhiHuiFaDian_info:"你的【能量】上限+1；<span class='tiaoJian'>(你每次承受法术伤害后⑥，若该伤害>3)</span>你+2[宝石]。",
+            san_zhiHuiFaDian:"[被動]智慧法典",
+            san_zhiHuiFaDian_info:"你的【能量】上限+1；<span class='tiaoJian'>(你每次承受法術傷害後⑥，若該傷害>3)</span>你+2[寶石]。",
 
-            san_fuWenGaiZao:"[启动]符文改造",
-            san_fuWenGaiZao_info:"[宝石][横置]转为【蓄势迸发形态】，在此形态下你的手牌上限+2；摸2张牌[强制]并任意调整你的【战纹】和【魔纹】，在你回合结束阶段，[重置]并脱离此形态。",
+            san_fuWenGaiZao:"[啟動]符文改造",
+            san_fuWenGaiZao_info:"[寶石][橫置]轉為【蓄勢迸發形態】，在此形態下你的手牌上限+2；摸2張牌[強制]並任意調整你的【戰紋】和【魔紋】，在你回合結束階段，[重置]並脫離此形態。",
 
-            san_maoXianJiaTianTang:"[响应]冒险者天堂",
-            san_maoXianJiaTianTang_info:"<span class='tiaoJian'>(你执行【提炼】时)</span>可将提炼出的[宝石]和[水晶]交给一名目标队友。",
+            san_maoXianJiaTianTang:"[響應]冒險者天堂",
+            san_maoXianJiaTianTang_info:"<span class='tiaoJian'>(你執行【提煉】時)</span>可將提煉出的[寶石]和[水晶]交給一名目標隊友。",
 
-            san_anZhiJieFang:"[启动]暗之解放",
-            san_anZhiJieFang_info:"[横置]转为【幻影形态】，你的手牌上限恒定为5[恒定]；本回合你的下次主动攻击伤害额外+2，但不能发动【漆黑之枪】和【充盈】。",
+            san_anZhiJieFang:"[啟動]暗之解放",
+            san_anZhiJieFang_info:"[橫置]轉為【幻影形態】，你的手牌上限恆定為5[恆定]；本回合你的下次主動攻擊傷害額外+2，但不能發動【漆黑之槍】和【充盈】。",
 
-            san_lingHunZhaoHuan:"[法术]灵魂召还",
-            san_lingHunZhaoHuan_info:"<span class='tiaoJian'>(弃X张法术牌[展示])</span>你+(X+1)点<span class='lan'>【蓝色灵魂】</span>。",
-            san_lingHunJingXiang:"[法术]灵魂镜像",
-            san_lingHunJingXiang_info:"<span class='tiaoJian'>(移除2点</span><span class='hong'>【黄色灵魂】</span><span class='tiaoJian'>)</span>你弃3张牌，目标角色摸3张牌[强制]，但最多补到其手牌上限。",
+            san_lingHunZhaoHuan:"[法術]靈魂召還",
+            san_lingHunZhaoHuan_info:"<span class='tiaoJian'>(棄X張法術牌[展示])</span>你+(X+1)點<span class='lan'>【藍色靈魂】</span>。",
+            san_lingHunJingXiang:"[法術]靈魂鏡像",
+            san_lingHunJingXiang_info:"<span class='tiaoJian'>(移除2點</span><span class='hong'>【黃色靈魂】</span><span class='tiaoJian'>)</span>你棄3張牌，目標角色摸3張牌[強制]，但最多補到其手牌上限。",
 
-            san_chenLunXieZouQu:"[响应]沉沦协奏曲[回合限定]",
-            san_chenLunXieZouQu_info:"<span class='tiaoJian'>(一回合内我方对至少2名对手造成法术伤害③且结算之后，弃2张同系牌[展示])</span>对目标对手造成1点法术伤害③。",
-            san_buXieHeXian:"[法术]不谐和弦",
-            san_buXieHeXian_backup:"[法术]不谐和弦",
-            san_buXieHeXian_info:"<span class='tiaoJian'>(移除X点</span><span class='hong'>【灵感】</span><span class='tiaoJian'>，X>1)</span>你和目标角色各摸(X-1)张牌[强制]或各弃X张牌[强制]。",
-            san_yongHengYueZhangX:"(专)永恒乐章",
+            san_chenLunXieZouQu:"[響應]沉淪協奏曲[回合限定]",
+            san_chenLunXieZouQu_info:"<span class='tiaoJian'>(一回合內我方對至少2名對手造成法術傷害③且結算之後，棄2張同系牌[展示])</span>對目標對手造成1點法術傷害③。",
+            san_buXieHeXian:"[法術]不諧和絃",
+            san_buXieHeXian_backup:"[法術]不諧和絃",
+            san_buXieHeXian_info:"<span class='tiaoJian'>(移除X點</span><span class='hong'>【靈感】</span><span class='tiaoJian'>，X>1)</span>你和目標角色各摸(X-1)張牌[強制]或各棄X張牌[強制]。",
+            san_yongHengYueZhangX:"(專)永恆樂章",
             san_yongHengYueZhangX_info:`
-            <span class="greentext">[响应]激昂狂想曲</span><br>
-            <span class='tiaoJian'>(回合开始时若你拥有【永恒乐章】，移除我方【战绩区】的2星石或将【永恒乐章】转移给吟游诗人)</span>选择以下一项执行：<br>·对2名目标对手各造成1点法术伤害③。 <br>·你弃2张牌。<br>
-            <span class="greentext">[响应]胜利交响诗</span><br>
-            <span class='tiaoJian'>(回合结束时若你拥有【永恒乐章】，对吟游诗人造成3点法术伤害③或将【永恒乐章】转移给吟游诗人)</span>选择以下一项执行<br>·将我方【战绩区】的1个星石提炼成为你的能量。<br>·为我方【战绩区】+1[宝石]，你+1[治疗]。
+            <span class="greentext">[響應]激昂狂想曲</span><br>
+            <span class='tiaoJian'>(回合開始時若你擁有【永恆樂章】，移除我方【戰績區】的2星石或將【永恆樂章】轉移給吟遊詩人)</span>選擇以下一項執行：<br>·對2名目標對手各造成1點法術傷害③。 <br>·你棄2張牌。<br>
+            <span class="greentext">[響應]勝利交響詩</span><br>
+            <span class='tiaoJian'>(回合結束時若你擁有【永恆樂章】，對吟遊詩人造成3點法術傷害③或將【永恆樂章】轉移給吟遊詩人)</span>選擇以下一項執行<br>·將我方【戰績區】的1個星石提煉成為你的能量。<br>·為我方【戰績區】+1[寶石]，你+1[治療]。
             `,
-            san_yongHengYueZhang_jiAngKuangXiangQu:"[响应]激昂狂想曲",
-            san_yongHengYueZhang_shengLiJiaoXiangShi:"[响应]胜利交响诗",
-            san_xiWangFuGeQu:"[启动]希望赋格曲",
-            san_xiWangFuGeQu_info:"[宝石]将【永恒乐章】转移到一名我方角色面前。",
-            san_lingGan:"灵感",
-            san_lingGan_info:"<span class='hong'>【灵感】</span>为吟游诗人的专有指示物，上限为4。",
-            geYongTianFu:"[被动]歌咏天赋",
-            geYongTianFu_info:"游戏开始时你拥有【永恒乐章】。<span class='tiaoJian'>(每当【永恒乐章】被触发时)</span>你+1<span class='hong'>【灵感】</span>。吟游诗人不会触发【永恒乐章】的效果。",
-            baoFengQianZouQu:"[响应]暴风前奏曲",
-            baoFengQianZouQu_info:"<span class='tiaoJian'>(回合开始前，你移除1点</span><span class='hong'>【灵感】</span><span class='tiaoJian'>)</span>本回合无视你的【歌咏天赋】",
+            san_yongHengYueZhang_jiAngKuangXiangQu:"[響應]激昂狂想曲",
+            san_yongHengYueZhang_shengLiJiaoXiangShi:"[響應]勝利交響詩",
+            san_xiWangFuGeQu:"[啟動]希望賦格曲",
+            san_xiWangFuGeQu_info:"[寶石]將【永恆樂章】轉移到一名我方角色面前。",
+            san_lingGan:"靈感",
+            san_lingGan_info:"<span class='hong'>【靈感】</span>為吟遊詩人的專有指示物，上限為4。",
+            geYongTianFu:"[被動]歌詠天賦",
+            geYongTianFu_info:"遊戲開始時你擁有【永恆樂章】。<span class='tiaoJian'>(每當【永恆樂章】被觸發時)</span>你+1<span class='hong'>【靈感】</span>。吟遊詩人不會觸發【永恆樂章】的效果。",
+            baoFengQianZouQu:"[響應]暴風前奏曲",
+            baoFengQianZouQu_info:"<span class='tiaoJian'>(回合開始前，你移除1點</span><span class='hong'>【靈感】</span><span class='tiaoJian'>)</span>本回合無視你的【歌詠天賦】",
 
-            san_wenYi_info:"<span class='tiaoJian'>(弃1张地系牌[展示])</span>对所有其他角色各造成1点法术伤害③。",
+            san_wenYi_info:"<span class='tiaoJian'>(棄1張地系牌[展示])</span>對所有其他角色各造成1點法術傷害③。",
         },
 	};
 });

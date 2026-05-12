@@ -2871,6 +2871,13 @@ export class Click {
 		if (_status.dragged) return;
 		if (_status.clicked) return;
 		if (ui.intro) return;
+		// Touch devices fire touchend then a synthetic click; ignore the duplicate click.
+		if (e && e.type === "click" && lib.config.touchscreen && _status._connectroomTouchTs && Date.now() - _status._connectroomTouchTs < 800) {
+			return;
+		}
+		if (e && e.type === "touchend") {
+			_status._connectroomTouchTs = Date.now();
+		}
 		if (!game.ws) {
 			alert("未连接到大厅，请返回后重新进入联机。");
 			return;

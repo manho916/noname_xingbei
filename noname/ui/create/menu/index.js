@@ -100,6 +100,7 @@ export function clickContainer(connectMenu) {
 	this.classList.add("hidden");
 	if (connectMenu) {
 		if (_status.enteringroom) {
+			clearTimeout(_status.enteringroomTimeout);
 			_status.enteringroom = false;
 		}
 		if (_status.creatingroom) {

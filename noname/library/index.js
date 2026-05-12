@@ -11417,6 +11417,8 @@ export class Library {
 				}
 			},
 			createroom: function (index, config, mode) {
+				clearTimeout(_status.enteringroomTimeout);
+				_status.enteringroom = false;
 				game.online = false;
 				game.onlineroom = true;
 				game.roomId = index;
@@ -11795,6 +11797,8 @@ export class Library {
 				ui.auto.show();
 				ui.pause.show();
 				game.clearConnect();
+				clearTimeout(_status.enteringroomTimeout);
+				_status.enteringroom = false;
 				clearTimeout(_status.createNodeTimeout);
 				game.online = true;
 				game.ip = ip;

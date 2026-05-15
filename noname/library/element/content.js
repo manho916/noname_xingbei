@@ -2743,6 +2743,9 @@ export const Content = {
 				}
 				player.phaseNumber = num;
 				if (popup && lib.config.show_phase_prompt) player.popup("回合開始", null, false);
+				if (typeof game.syncTurnUiHints === "function") {
+					game.syncTurnUiHints();
+				}
 			},
 			player,
 			_status.currentPhase,
@@ -4017,6 +4020,9 @@ export const Content = {
 				player.phaseNumber = num;
 				_status.currentPhase = player;
 				if (popup && lib.config.show_phase_prompt) player.popup("回合開始", null, false);
+				if (typeof game.syncTurnUiHints === "function") {
+					game.syncTurnUiHints();
+				}
 			},
 			player,
 			player.phaseNumber,
@@ -4233,6 +4239,9 @@ export const Content = {
 				player.phaseNumber = num;
 				_status.currentPhase = player;
 				if (popup && lib.config.show_phase_prompt) player.popup("回合開始", null, false);
+				if (typeof game.syncTurnUiHints === "function") {
+					game.syncTurnUiHints();
+				}
 			},
 			player,
 			player.phaseNumber,
@@ -4273,6 +4282,9 @@ export const Content = {
 		game.broadcastAll(function (player) {
 			player.classList.remove("glow_phase");
 			delete _status.currentPhase;
+			if (typeof game.syncTurnUiHints === "function") {
+				game.syncTurnUiHints();
+			}
 		}, player);
 	},
 	/**

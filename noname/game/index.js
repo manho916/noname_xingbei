@@ -39,6 +39,9 @@ export class Game extends GameCompatible {
 
 	moDan=2;
 	moDanFangXiang='you';
+	/** @type { HTMLDivElement[] } */
+	_reservedTargetLineNodes = [];
+	_reservedLinesResizeBound = false;
 	jiChuXiaoGuo={
 		all:['diZhiFengYin','shuiZhiFengYin','huoZhiFengYin','fengZhiFengYin','leiZhiFengYin','weiLiCiFu','xunJieCiFu','shengDun','xuRuo','zhongDu','tricky'],
 		all_xiaoGuo:['diZhiFengYin_xiaoGuo','shuiZhiFengYin_xiaoGuo','huoZhiFengYin_xiaoGuo','fengZhiFengYin_xiaoGuo','leiZhiFengYin_xiaoGuo','weiLiCiFu_xiaoGuo','xunJieCiFu_xiaoGuo','_shengDun','_xuRuo','_zhongDu','tricky_xiaoGuo'],
@@ -2920,6 +2923,9 @@ export class Game extends GameCompatible {
 				if (lib.config.glow_phase) {
 					player.classList.add("glow_phase");
 					// player.dataset.glow_phase=lib.config.glow_phase;
+				}
+				if (typeof game.syncTurnUiHints === "function") {
+					game.syncTurnUiHints();
 				}
 			} else {
 				console.log(player);
@@ -6335,6 +6341,9 @@ export class Game extends GameCompatible {
 	}
 	pause() {
 		_status.paused = true;
+		if (typeof game.syncTurnUiHints === "function") {
+			game.syncTurnUiHints();
+		}
 		return _status.pauseManager.pause;
 	}
 	pause2() {
@@ -6346,6 +6355,9 @@ export class Game extends GameCompatible {
 		if (!_status.noclearcountdown) game.stopCountChoose();
 		_status.paused = false;
 		delete _status.waitingForTransition;
+		if (typeof game.syncTurnUiHints === "function") {
+			game.syncTurnUiHints();
+		}
 	}
 	resume2() {
 		if (_status.connectMode) return;
@@ -6563,6 +6575,140 @@ export class Game extends GameCompatible {
 		ui.arena.classList.remove("dragging");
 
 		game.callHook("uncheckEnd", [event, args]);
+	}
+	clearReservedTargetLines() {
+		if (!this._reservedTargetLineNodes) this._reservedTargetLineNodes = [];
+		const nodes = this._reservedTargetLineNodes;
+		if (!nodes || !nodes.length) return;
+		for (let i = 0; i < nodes.length; i++) {
+			const n = nodes[i];
+			if (n && n.parentNode) n.remove();
+		}
+		nodes.length = 0;
+	}
+	_repositionReservedTargetLines() {
+		const nodes = this._reservedTargetLineNodes;
+		if (!nodes || !nodes.length) return;
+		for (const node of nodes) {
+			const player = node._lineFromPlayer,
+				target = node._lineToPlayer;
+			if (!player || !target || !player.parentNode || !target.parentNode) continue;
+			const from = [player.getLeft() + player.offsetWidth / 2, player.getTop() + player.offsetHeight / 2];
+			const to = [target.getLeft() + target.offsetWidth / 2, target.getTop() + target.offsetHeight / 2];
+			const dx = to[0] - from[0],
+				dy = to[1] - from[1];
+			let deg = (Math.atan(Math.abs(dy) / Math.abs(dx)) / Math.PI) * 180;
+			if (dx >= 0) {
+				if (dy <= 0) deg += 90;
+				else deg = 90 - deg;
+			} else if (dy <= 0) deg = 270 - deg;
+			else deg += 270;
+			node.style.left = `${from[0]}px`;
+			node.style.top = `${from[1]}px`;
+			node.style.height = `${get.xyDistance(from, to)}px`;
+			node.style.transform = `rotate(${-deg}deg) scaleY(1)`;
+		}
+	}
+	_bindReservedTargetLinesResizeOnce() {
+		if (this._reservedLinesResizeBound) return;
+		this._reservedLinesResizeBound = true;
+		if (Array.isArray(lib.onresize)) {
+			lib.onresize.push(() => {
+				if (game._reservedTargetLineNodes?.length) {
+					game._repositionReservedTargetLines();
+				}
+			});
+		}
+	}
+	_appendPersistentLinexy(player, target, colorRgb) {
+		if (!player || !target || player === target) return null;
+		const from = [player.getLeft() + player.offsetWidth / 2, player.getTop() + player.offsetHeight / 2];
+		const to = [target.getLeft() + target.offsetWidth / 2, target.getTop() + target.offsetHeight / 2];
+		const dx = to[0] - from[0],
+			dy = to[1] - from[1];
+		let deg = (Math.atan(Math.abs(dy) / Math.abs(dx)) / Math.PI) * 180;
+		if (dx >= 0) {
+			if (dy <= 0) deg += 90;
+			else deg = 90 - deg;
+		} else if (dy <= 0) deg = 270 - deg;
+		else deg += 270;
+		const c = colorRgb || [255, 190, 120];
+		const node = ui.create.div(".linexy.reserved_target_line");
+		node.style.left = `${from[0]}px`;
+		node.style.top = `${from[1]}px`;
+		node.style.background = `linear-gradient(transparent,rgba(${c[0]},${c[1]},${c[2]},0.92),rgba(${c[0]},${c[1]},${c[2]},0.92))`;
+		node.style.transition = "none";
+		node.style.transformOrigin = "top center";
+		node.style.height = `${get.xyDistance(from, to)}px`;
+		node.style.transform = `rotate(${-deg}deg) scaleY(1)`;
+		node._lineFromPlayer = player;
+		node._lineToPlayer = target;
+		if (game.chess) ui.chess.appendChild(node);
+		else ui.arena.appendChild(node);
+		ui.refresh(node);
+		return node;
+	}
+	refreshReservedTargetLines() {
+		this.clearReservedTargetLines();
+		const event = _status.event;
+		if (!event || !event.filterTarget || !event.player) return;
+		const evtName = event.name;
+		if (evtName !== "chooseTarget" && evtName !== "chooseCardTarget" && evtName !== "chooseToUse") return;
+		if (typeof event.isMine === "function" && !event.isMine()) return;
+		const targets = ui.selected && ui.selected.targets;
+		if (!targets || !targets.length) return;
+		this._bindReservedTargetLinesResizeOnce();
+		const src = event.player;
+		const color = [255, 190, 120];
+		for (let i = 0; i < targets.length; i++) {
+			const node = this._appendPersistentLinexy(src, targets[i], color);
+			if (node) this._reservedTargetLineNodes.push(node);
+		}
+	}
+	syncTurnUiHints() {
+		const list = [];
+		if (game.players) list.push(...game.players);
+		if (game.dead) list.push(...game.dead);
+		const ACTIVE_CHOOSER_EVENTS = new Set([
+			"chooseTarget",
+			"chooseCardTarget",
+			"chooseToUse",
+			"chooseToRespond",
+			"chooseToDiscard",
+			"chooseControl",
+			"chooseCard",
+			"chooseBool",
+			"chooseButton",
+			"choosePlayerCard",
+			"discardPlayerCard",
+			"gainPlayerCard",
+			"chooseToMove",
+			"chooseToGive",
+		]);
+		for (const p of list) {
+			if (!p || !p.classList) continue;
+			p.classList.remove("glow_action_player");
+			const ph = p.querySelector(".xb_phase_hint");
+			if (ph) ph.remove();
+			const ah = p.querySelector(".xb_action_hint");
+			if (ah) ah.remove();
+		}
+		if (lib.config.glow_phase) {
+			for (const p of list) {
+				if (!p || !p.classList || !p.classList.contains("glow_phase")) continue;
+				const el = ui.create.div(".xb_phase_hint", p);
+				el.innerHTML = "當前回合";
+			}
+		}
+		const event = _status.event;
+		if (_status.paused && event && event.player && event.player.classList && ACTIVE_CHOOSER_EVENTS.has(event.name)) {
+			event.player.classList.add("glow_action_player");
+			const el = ui.create.div(".xb_action_hint", event.player);
+			el.innerHTML = "操作中";
+			if (lib.config.glow_phase && event.player.classList.contains("glow_phase")) {
+				el.style.bottom = "46px";
+			}
+		}
 	}
 	/**
 	 * @param { Player } player1

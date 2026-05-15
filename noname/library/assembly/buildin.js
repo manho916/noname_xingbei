@@ -2,6 +2,7 @@ import { lib } from "../index.js";
 import { ui } from "../../ui/index.js";
 import { get } from "../../get/index.js";
 import { _status } from "../../status/index.js";
+import { game } from "../../game/index.js";
 
 /**
  * @type {(NonameAssemblyType["checkBegin"])}
@@ -64,6 +65,12 @@ export const checkButton = {};
  * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
 export const checkEnd = {
+	reservedTargetLines() {
+		game.refreshReservedTargetLines();
+	},
+	turnUiHints() {
+		game.syncTurnUiHints();
+	},
 	autoConfirm(event, { ok, auto, autoConfirm }) {
 		if (!event.isMine()) return;
 		const skillinfo = get.info(event.skill) || {};
@@ -136,7 +143,16 @@ export const uncheckButton = {};
  * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  * 要加接口去node_modules/@types/noname-typings/NonameAssemblyType.d.ts裡把類型補了
  */
-export const uncheckEnd = {};
+export const uncheckEnd = {
+	clearReservedLines(event, args) {
+		if (args.includes("target")) {
+			game.clearReservedTargetLines();
+		}
+	},
+	turnUiHintsAfterUncheck() {
+		game.syncTurnUiHints();
+	},
+};
 
 /**
  * @type {(NonameAssemblyType["checkOverflow"])}

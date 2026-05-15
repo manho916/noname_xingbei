@@ -4436,7 +4436,7 @@ export class Library {
 						}
 					},
 					name: "背景音樂",
-					init: true,
+					init: "music_off",
 					item: {
 						music_default: "默認",
 					},
@@ -4451,11 +4451,11 @@ export class Library {
 				},
 				background_audio: {
 					name: "遊戲音效",
-					init: true,
+					init: false,
 				},
 				background_speak: {
 					name: "人物配音",
-					init: true,
+					init: false,
 				},
 				/*
 				equip_audio: {
@@ -4468,7 +4468,7 @@ export class Library {
 				},
 				volumn_audio: {
 					name: "音效音量",
-					init: 1,
+					init: 0,
 					item: {
 						0: "〇",
 						1: "一",
@@ -4486,7 +4486,7 @@ export class Library {
 				},
 				volumn_background: {
 					name: "背景音樂",
-					init: 1,
+					init: 0,
 					item: {
 						0: "〇",
 						1: "一",

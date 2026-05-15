@@ -11341,6 +11341,26 @@ export class Library {
 					}, player);
 				}
 			},
+			/**
+			 * @this {import("./element/client.js").Client}
+			 * 聯機選目標預覽：僅允許本人上報；主機更新本機後轉發其餘客戶端與觀戰。
+			 * @param { string } sourcePlayerid
+			 * @param { string[] } targetPlayerids
+			 */
+			targetPreviewOL(sourcePlayerid, targetPlayerids) {
+				if (lib.node.observing.includes(this)) return;
+				if (sourcePlayerid !== this.id) return;
+				if (!Array.isArray(targetPlayerids)) targetPlayerids = [];
+				if (typeof game.applyRemoteTargetPreviewOL === "function") {
+					game.applyRemoteTargetPreviewOL(sourcePlayerid, targetPlayerids, this.id);
+				}
+				game.broadcast(function (sourcePlayerid, targetPlayerids, fromId) {
+					if (!game.online) return;
+					if (typeof game.applyRemoteTargetPreviewOL === "function") {
+						game.applyRemoteTargetPreviewOL(sourcePlayerid, targetPlayerids, fromId);
+					}
+				}, sourcePlayerid, targetPlayerids, this.id);
+			},
 			exec(func) {
 				// if(typeof func=='function'){
 				//     var args=Array.from(arguments);

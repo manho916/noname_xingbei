@@ -41,6 +41,8 @@ export class Game extends GameCompatible {
 	moDanFangXiang='you';
 	/** @type { HTMLDivElement[] } */
 	_reservedTargetLineNodes = [];
+	/** @type { HTMLDivElement[] } */
+	_remoteTargetPreviewNodes = [];
 	_reservedLinesResizeBound = false;
 	jiChuXiaoGuo={
 		all:['diZhiFengYin','shuiZhiFengYin','huoZhiFengYin','fengZhiFengYin','leiZhiFengYin','weiLiCiFu','xunJieCiFu','shengDun','xuRuo','zhongDu','tricky'],
@@ -6586,8 +6588,16 @@ export class Game extends GameCompatible {
 		}
 		nodes.length = 0;
 	}
-	_repositionReservedTargetLines() {
-		const nodes = this._reservedTargetLineNodes;
+	clearRemoteTargetPreviewLines() {
+		if (!this._remoteTargetPreviewNodes) this._remoteTargetPreviewNodes = [];
+		const nodes = this._remoteTargetPreviewNodes;
+		for (let i = 0; i < nodes.length; i++) {
+			const n = nodes[i];
+			if (n && n.parentNode) n.remove();
+		}
+		nodes.length = 0;
+	}
+	_repositionLineNodes(nodes) {
 		if (!nodes || !nodes.length) return;
 		for (const node of nodes) {
 			const player = node._lineFromPlayer,
@@ -6609,12 +6619,16 @@ export class Game extends GameCompatible {
 			node.style.transform = `rotate(${-deg}deg) scaleY(1)`;
 		}
 	}
+	_repositionReservedTargetLines() {
+		this._repositionLineNodes(this._reservedTargetLineNodes);
+		this._repositionLineNodes(this._remoteTargetPreviewNodes);
+	}
 	_bindReservedTargetLinesResizeOnce() {
 		if (this._reservedLinesResizeBound) return;
 		this._reservedLinesResizeBound = true;
 		if (Array.isArray(lib.onresize)) {
 			lib.onresize.push(() => {
-				if (game._reservedTargetLineNodes?.length) {
+				if (game._reservedTargetLineNodes?.length || game._remoteTargetPreviewNodes?.length) {
 					game._repositionReservedTargetLines();
 				}
 			});
@@ -6648,6 +6662,52 @@ export class Game extends GameCompatible {
 		ui.refresh(node);
 		return node;
 	}
+	/**
+	 * 聯機：主機轉發的選目標預覽（淺藍線）；選將方本機已畫橘線時跳過。
+	 * @param { string } sourcePlayerid
+	 * @param { string[] } targetPlayerids
+	 * @param { string } fromClientId
+	 */
+	applyRemoteTargetPreviewOL(sourcePlayerid, targetPlayerids, fromClientId) {
+		if (game.online && game.onlineID != null && fromClientId != null && game.onlineID === fromClientId) {
+			return;
+		}
+		this.clearRemoteTargetPreviewLines();
+		if (!targetPlayerids || !targetPlayerids.length) return;
+		const resolve = pid => {
+			if (!pid) return null;
+			if (lib.playerOL && lib.playerOL[pid]) return lib.playerOL[pid];
+			const pool = (game.players || []).concat(game.dead || []);
+			for (const p of pool) {
+				if (p && p.playerid === pid) return p;
+			}
+			return null;
+		};
+		const src = resolve(sourcePlayerid);
+		if (!src) return;
+		this._bindReservedTargetLinesResizeOnce();
+		if (!this._remoteTargetPreviewNodes) this._remoteTargetPreviewNodes = [];
+		const color = [160, 210, 255];
+		for (let i = 0; i < targetPlayerids.length; i++) {
+			const tgt = resolve(targetPlayerids[i]);
+			const node = this._appendPersistentLinexy(src, tgt, color);
+			if (node) {
+				node.classList.add("remote_ol_target_line");
+				this._remoteTargetPreviewNodes.push(node);
+			}
+		}
+	}
+	/** 聯機選將方上報當前已選目標（空數組＝清除他人畫面上的預覽線） */
+	publishTargetPreviewOnline(event, targets) {
+		if (!_status.connectMode || !game.online || !game.ws || game.ws.closed) return;
+		if (!event || typeof event.isMine !== "function" || !event.isMine()) return;
+		const evtName = event.name;
+		if (evtName !== "chooseTarget" && evtName !== "chooseCardTarget" && evtName !== "chooseToUse") return;
+		const pid = event.player && event.player.playerid;
+		if (!pid) return;
+		const ids = (targets || []).map(t => (t && t.playerid ? t.playerid : null)).filter(Boolean);
+		game.send("targetPreviewOL", pid, ids);
+	}
 	refreshReservedTargetLines() {
 		this.clearReservedTargetLines();
 		const event = _status.event;
@@ -6655,8 +6715,12 @@ export class Game extends GameCompatible {
 		const evtName = event.name;
 		if (evtName !== "chooseTarget" && evtName !== "chooseCardTarget" && evtName !== "chooseToUse") return;
 		if (typeof event.isMine === "function" && !event.isMine()) return;
-		const targets = ui.selected && ui.selected.targets;
-		if (!targets || !targets.length) return;
+		const targets = (ui.selected && ui.selected.targets) || [];
+		if (!targets.length) {
+			this.publishTargetPreviewOnline(event, []);
+			return;
+		}
+		this.publishTargetPreviewOnline(event, targets);
 		this._bindReservedTargetLinesResizeOnce();
 		const src = event.player;
 		const color = [255, 190, 120];

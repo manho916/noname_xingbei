@@ -147,6 +147,18 @@ export const uncheckEnd = {
 	clearReservedLines(event, args) {
 		if (args.includes("target")) {
 			game.clearReservedTargetLines();
+			if (
+				_status.connectMode &&
+				game.online &&
+				event &&
+				typeof event.isMine === "function" &&
+				event.isMine() &&
+				event.player &&
+				event.player.playerid &&
+				(event.name === "chooseTarget" || event.name === "chooseCardTarget" || event.name === "chooseToUse")
+			) {
+				game.send("targetPreviewOL", event.player.playerid, []);
+			}
 		}
 	},
 	turnUiHintsAfterUncheck() {

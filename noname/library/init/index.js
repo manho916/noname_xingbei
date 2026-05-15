@@ -461,6 +461,10 @@ export class LibInit {
 			0
 		);
 		ui.css.styles.sheet.insertRule(
+			"#arena .linexy.reserved_target_line.remote_ol_target_line { opacity: 0.92; }",
+			0
+		);
+		ui.css.styles.sheet.insertRule(
 			"#arena .player .xb_phase_hint { position: absolute; left: 4px; bottom: 24px; z-index: 8; padding: 2px 6px; font-size: 12px; line-height: 1.15; border-radius: 3px; background: rgba(217, 152, 62, 0.95); color: #1a1a1a; pointer-events: none; white-space: nowrap; text-shadow: none; }",
 			0
 		);

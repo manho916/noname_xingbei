@@ -2,38 +2,73 @@
 #arena.phone .dialog.nobutton:not(.fullheight):not(.gameover) {
 	top: 52px !important;
 	width: calc(100% - 24px) !important;
-	max-width: 600px;
-	left: 12px !important;
+	max-width: 520px;
+	left: 50% !important;
+	right: auto !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
 	bottom: auto !important;
-	height: 220px !important;
-	min-height: 220px !important;
-	max-height: 220px !important;
-	overflow: hidden;
+	display: flex !important;
+	flex-direction: column !important;
+	height: auto !important;
+	min-height: 64px !important;
+	max-height: calc(100% - 160px) !important;
+	overflow: hidden !important;
+	z-index: 20 !important;
 	background: rgba(0, 0, 0, 0.92) !important;
 	color: #fff;
 }
 
-/* Game text / prompt dialogs — top, fixed height, dark panel, vertical drag on caption */
+/* Game text / prompt dialogs — centered, height fits content, scroll if needed */
+#arena.phone > .dialog.phone-dialog,
 #arena.phone > .dialog:not(.popped):not(.gameover) {
+	display: flex !important;
+	flex-direction: column !important;
+	align-items: stretch !important;
 	width: calc(100% - 24px) !important;
-	left: 12px !important;
+	max-width: 520px;
+	left: 50% !important;
 	right: auto !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
 	top: 52px !important;
 	bottom: auto !important;
-	height: 220px !important;
-	min-height: 220px !important;
-	max-height: 220px !important;
-	overflow: hidden;
+	height: auto !important;
+	min-height: 64px !important;
+	max-height: calc(100% - 160px) !important;
+	overflow: hidden !important;
+	z-index: 20 !important;
 	background: rgba(0, 0, 0, 0.92) !important;
 	color: #fff;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
 	border-radius: 10px;
 	border: 1px solid rgba(255, 255, 255, 0.12);
 }
-#arena.phone > .dialog:not(.popped):not(.gameover) .content-container {
-	height: calc(220px - 44px) !important;
-	max-height: calc(220px - 44px) !important;
-	overflow-y: auto;
+#arena.phone .dialog.phone-dialog > .content-container,
+#arena.phone .dialog:not(.popped):not(.gameover) > .content-container {
+	position: relative !important;
+	top: auto !important;
+	left: auto !important;
+	width: 100% !important;
+	flex: 0 1 auto !important;
+	height: auto !important;
+	min-height: 32px !important;
+	max-height: calc(100vh - 220px) !important;
+	overflow-x: hidden !important;
+	overflow-y: auto !important;
+	-webkit-overflow-scrolling: touch;
+}
+#arena.phone .dialog.phone-dialog .content,
+#arena.phone .dialog:not(.popped):not(.gameover) .content {
+	display: block !important;
+	position: relative !important;
+	width: 100% !important;
+	min-height: 24px !important;
+	overflow: visible !important;
+}
+#arena.phone .dialog.phone-dialog .content > *,
+#arena.phone .dialog:not(.popped):not(.gameover) .content > * {
+	font-size: 20px !important;
 }
 #arena.phone > .dialog:not(.popped):not(.gameover) .caption {
 	cursor: grab;
@@ -226,13 +261,14 @@ div.finish_game {
 	color: #222;
 }
 
-#arena.phone #me .sortcard-btn {
+/* 整理手牌 — bottom-right, stacked above 星石/星杯 table */
+#window > .sortcard-btn {
 	position: absolute;
-	left: 4px;
-	right: auto;
+	right: 8px;
+	bottom: 118px;
+	left: auto;
 	top: auto;
-	bottom: 10px;
-	z-index: 12;
+	z-index: 13;
 	min-width: 80px;
 	height: 36px;
 	font-size: 20px;
@@ -242,17 +278,16 @@ div.finish_game {
 	font-family: "xinwei";
 	text-align: center;
 	cursor: pointer;
-	background: rgba(0, 0, 0, 0.65);
+	background: rgba(0, 0, 0, 0.75);
 	color: #fff;
 	border-radius: 8px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
 }
-/* Keep 星石/星杯 table above hand strip without covering sort button */
 #arena.phone .touchinfo.bottom-right {
 	bottom: 8px;
 	right: 8px;
-	z-index: 8;
-	max-width: calc(100% - 120px);
+	z-index: 9;
+	max-width: calc(100% - 16px);
 }
 #arena.phone #me .handcards > .card > .info {
 	font-size: 28px;

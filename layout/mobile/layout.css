@@ -313,6 +313,10 @@
 	transform-origin: left center;
 }
 
+#arena.phone > .dialog:not(.popped):not(.gameover) {
+	bottom: auto !important;
+	height: auto !important;
+}
 .dialog {
 	height: calc(100% - 370px);
 	bottom: 170px;

@@ -1991,6 +1991,27 @@ export class Click {
 		}
 		ui.roundmenu.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
 	}
+	applyPhoneDialogLayout(dialog, translate) {
+		dialog.style.left = "50%";
+		dialog.style.right = "auto";
+		dialog.style.marginLeft = "0";
+		dialog.style.marginRight = "0";
+		dialog.style.transform = "translate(-50%, " + translate[1] + "px)";
+	}
+	refreshPhoneDialogLayout(dialog) {
+		if (!dialog || !get.is.phoneLayout() || dialog.classList.contains("gameover") || dialog.classList.contains("popped")) {
+			return;
+		}
+		var cc = dialog.contentContainer;
+		if (!cc) return;
+		cc.style.setProperty("position", "relative", "important");
+		cc.style.setProperty("top", "auto", "important");
+		cc.style.setProperty("left", "auto", "important");
+		cc.style.setProperty("height", "auto", "important");
+		cc.style.setProperty("max-height", "calc(100vh - 220px)", "important");
+		cc.style.setProperty("overflow-y", "auto", "important");
+		cc.style.setProperty("overflow-x", "hidden", "important");
+	}
 	clampDialogTranslate(translate, dialog) {
 		if (!translate) return translate;
 		if (get.is.phoneLayout()) {
@@ -2001,7 +2022,11 @@ export class Click {
 			translate[1] = 0;
 		}
 		if (dialog) {
-			dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
+			if (get.is.phoneLayout() && !dialog.classList.contains("gameover")) {
+				this.applyPhoneDialogLayout(dialog, translate);
+			} else {
+				dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
+			}
 			var rect = dialog.getBoundingClientRect();
 			var win = ui.window.getBoundingClientRect();
 			var zoom = game.documentZoom || 1;
@@ -2010,9 +2035,16 @@ export class Click {
 			else if (rect.bottom > win.bottom) dy = (win.bottom - rect.bottom) / zoom;
 			if (dy) {
 				translate[1] += dy;
-				dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
+				if (get.is.phoneLayout() && !dialog.classList.contains("gameover")) {
+					this.applyPhoneDialogLayout(dialog, translate);
+				} else {
+					dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
+				}
 			}
 			dialog._dragtransform = translate.slice(0);
+			if (get.is.phoneLayout() && !dialog.classList.contains("gameover")) {
+				this.refreshPhoneDialogLayout(dialog);
+			}
 		}
 		return translate;
 	}

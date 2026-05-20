@@ -2364,6 +2364,7 @@ export class Create {
 					ui.sortCard.classList.remove("pressdown");
 				});
 			}
+			ui.window.appendChild(ui.sortCard);
 		} else {
 			ui.sortCard = ui.create.system("整理手牌", sortCardFunc);
 		}
@@ -3302,9 +3303,6 @@ export class Create {
 	me(hasme) {
 		ui.mebg = ui.create.div("#mebg", ui.arena);
 		ui.me = ui.create.div("#me", ui.arena).addTempClass("start");
-		if (get.is.phoneLayout() && ui.sortCard && ui.sortCard.classList.contains("sortcard-btn")) {
-			ui.me.appendChild(ui.sortCard);
-		}
 		ui.handcards1Container = ui.create.div("#handcards1", ui.me);
 		ui.handcards2Container = ui.create.div("#handcards2", ui.me);
 		ui.arena.classList.remove("nome");

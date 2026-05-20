@@ -342,7 +342,15 @@ export class Dialog extends HTMLDivElement {
 		}
 		ui.dialog = this;
 		let translate;
-		if (get.is.phoneLayout() && !this.classList.contains("gameover")) {
+		if (get.is.phoneLayout() && this.classList.contains("gameover")) {
+			translate = [0, 0];
+			this._dragtransform = translate.slice(0);
+			this.style.left = "50%";
+			this.style.right = "auto";
+			this.style.marginLeft = "0";
+			this.style.marginRight = "0";
+			this.style.transform = "translate(-50%, 0px) scale(0.8)";
+		} else if (get.is.phoneLayout() && !this.classList.contains("gameover")) {
 			this.classList.add("phone-dialog");
 			translate = [0, 0];
 			this._dragtransform = translate.slice(0);
@@ -364,7 +372,10 @@ export class Dialog extends HTMLDivElement {
 		ui.dialogs.unshift(this);
 		ui.update();
 		ui.refresh(this);
-		if (get.is.phoneLayout() && !this.classList.contains("gameover")) {
+		if (get.is.phoneLayout() && this.classList.contains("gameover")) {
+			translate = this._dragtransform || [0, 0];
+			this.style.transform = "translate(-50%, 0px) scale(1)";
+		} else if (get.is.phoneLayout() && !this.classList.contains("gameover")) {
 			translate = this._dragtransform || [0, 0];
 			this.style.transform = "translate(-50%, " + translate[1] + "px) scale(1)";
 		} else if (lib.config.remember_dialog && lib.config.dialog_transform && !this.classList.contains("fixed")) {
@@ -378,8 +389,12 @@ export class Dialog extends HTMLDivElement {
 			this.style.transitionProperty = "";
 			if (get.is.phoneLayout() && !this.classList.contains("fixed") && ui.click.clampDialogTranslate) {
 				if (!this._dragtransform) this._dragtransform = [0, 0];
-				if (ui.click.refreshPhoneDialogLayout) ui.click.refreshPhoneDialogLayout(this);
-				ui.click.clampDialogTranslate(this._dragtransform, this);
+				if (this.classList.contains("gameover")) {
+					ui.click.clampDialogTranslate(this._dragtransform, this);
+				} else {
+					if (ui.click.refreshPhoneDialogLayout) ui.click.refreshPhoneDialogLayout(this);
+					ui.click.clampDialogTranslate(this._dragtransform, this);
+				}
 			}
 		}, 500);
 		return this;

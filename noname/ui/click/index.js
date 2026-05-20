@@ -1996,7 +1996,13 @@ export class Click {
 		dialog.style.right = "auto";
 		dialog.style.marginLeft = "0";
 		dialog.style.marginRight = "0";
-		dialog.style.transform = "translate(-50%, " + translate[1] + "px)";
+		if (dialog.classList.contains("gameover")) {
+			translate[0] = 0;
+			translate[1] = 0;
+			dialog.style.transform = "translate(-50%, 0px)";
+		} else {
+			dialog.style.transform = "translate(-50%, " + translate[1] + "px)";
+		}
 	}
 	refreshPhoneDialogLayout(dialog) {
 		if (!dialog || !get.is.phoneLayout() || dialog.classList.contains("gameover") || dialog.classList.contains("popped")) {
@@ -2022,7 +2028,7 @@ export class Click {
 			translate[1] = 0;
 		}
 		if (dialog) {
-			if (get.is.phoneLayout() && !dialog.classList.contains("gameover")) {
+			if (get.is.phoneLayout()) {
 				this.applyPhoneDialogLayout(dialog, translate);
 			} else {
 				dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
@@ -2033,9 +2039,9 @@ export class Click {
 			var dy = 0;
 			if (rect.top < win.top) dy = (win.top - rect.top) / zoom;
 			else if (rect.bottom > win.bottom) dy = (win.bottom - rect.bottom) / zoom;
-			if (dy) {
+			if (dy && !dialog.classList.contains("gameover")) {
 				translate[1] += dy;
-				if (get.is.phoneLayout() && !dialog.classList.contains("gameover")) {
+				if (get.is.phoneLayout()) {
 					this.applyPhoneDialogLayout(dialog, translate);
 				} else {
 					dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";

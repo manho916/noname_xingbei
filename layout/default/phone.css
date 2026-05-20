@@ -242,23 +242,67 @@ div.finish_game {
 	transition: all 0.2s !important;
 }
 
-/* End-game score summary — top, white background */
+/* End-game score summary — top, centered, same style as game text dialog */
 #arena.phone .dialog.gameover {
+	width: calc(100% - 24px) !important;
+	max-width: 520px;
+	left: 50% !important;
+	right: auto !important;
+	margin-left: 0 !important;
+	margin-right: 0 !important;
 	top: 12px !important;
 	bottom: auto !important;
 	height: auto !important;
 	max-height: 45vh;
 	overflow-y: auto;
-	background: #fff !important;
-	color: #222;
-	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-	border-radius: 8px;
+	overflow-x: hidden;
+	z-index: 20 !important;
+	background: rgba(0, 0, 0, 0.92) !important;
+	color: #fff;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+}
+#arena.phone .dialog.gameover.forcebutton,
+#arena.phone .dialog.gameover.forcebutton-auto {
+	width: calc(100% - 24px) !important;
+	max-width: 520px;
+	left: 50% !important;
+	right: auto !important;
+}
+#arena.phone .dialog.gameover > .content-container {
+	position: relative !important;
+	top: auto !important;
+	left: auto !important;
+	height: auto !important;
+	max-height: calc(45vh - 40px) !important;
+	overflow-y: auto !important;
+}
+#arena.phone .dialog.gameover .caption {
+	background: rgba(255, 255, 255, 0.08);
+	border-radius: 10px 10px 0 0;
+	padding: 10px 12px 6px;
+}
+#arena.phone .dialog.gameover .caption > .text,
+#arena.phone .dialog.gameover .content > .text,
+#arena.phone .dialog.gameover .content > div {
+	font-size: 20px;
+	line-height: 1.55;
+	color: #fff;
+	text-shadow: black 0 0 2px;
+}
+#arena.phone .dialog.gameover table {
+	width: 100%;
+	color: #fff;
 }
 #arena.phone .dialog.gameover table td {
-	color: #222;
+	color: #fff;
+	border-color: rgba(255, 255, 255, 0.15);
+	padding: 6px 4px;
+	font-size: 18px;
 }
-#arena.phone .dialog.gameover .caption > .text {
-	color: #222;
+#arena.phone .dialog.gameover table tr.highlight {
+	background-color: rgba(255, 255, 255, 0.12);
 }
 
 /* 整理手牌 — bottom-right, stacked above 星石/星杯 table */

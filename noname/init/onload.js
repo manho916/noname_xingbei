@@ -233,6 +233,7 @@ async function createBackground() {
 	document.documentElement.style.backgroundPosition = "";
 	document.body.insertBefore(ui.background, document.body.firstChild);
 	document.body.onresize = ui.updatexr;
+	window.addEventListener("orientationchange", ui.updatexr);
 
 	if (!lib.config.image_background) return;
 	if (lib.config.image_background === "default") return;

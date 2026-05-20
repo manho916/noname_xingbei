@@ -5785,6 +5785,7 @@ export class Game extends GameCompatible {
 			dialog.noforcebutton = true;
 			dialog.content.innerHTML = result;
 			dialog.forcebutton = true;
+			dialog.classList.add("gameover");
 			let result2 = arguments[1];
 			if (result2 == true) {
 				dialog.content.firstChild.innerHTML = "戰鬥勝利";
@@ -5867,6 +5868,7 @@ export class Game extends GameCompatible {
 		dialog = ui.create.dialog(result);
 		dialog.noforcebutton = true;
 		dialog.forcebutton = true;
+		dialog.classList.add("gameover");
 		if (game.addOverDialog) {
 			game.addOverDialog(dialog, result);
 		}

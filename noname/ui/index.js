@@ -408,6 +408,9 @@ export class UI {
 		ui.updated();
 		game.documentZoom = cfg * game.deviceZoom;
 		ui.updatez();
+		if (get.is.phoneLayout() && ui.click.refreshDialogTransforms) {
+			ui.click.refreshDialogTransforms();
+		}
 		delete ui._updatexr;
 	}
 	updatexr() {

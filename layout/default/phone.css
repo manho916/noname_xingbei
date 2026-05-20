@@ -15,7 +15,27 @@
 	top: 3%;
 }
 #arena.mobile > #control {
-	top: calc(100% - 205px);
+	top: calc(100% - 220px);
+}
+#arena.phone #control > div {
+	min-width: 52px;
+	height: 52px;
+	font-size: 36px;
+	line-height: 48px;
+	padding: 4px 12px;
+	border-radius: 10px;
+	background: rgba(0, 0, 0, 0.35);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+#arena.phone .dialog .dialogcontrol,
+#arena.phone .dialog .pointerdiv.dialogcontrol {
+	min-height: 48px;
+	font-size: 32px;
+	line-height: 44px;
+	padding: 10px 16px;
+	margin: 6px 4px;
+	border-radius: 8px;
+	justify-content: center;
 }
 #arena.chess.mobile > #control {
 	top: calc(100% - 175px);
@@ -126,6 +146,49 @@ div:not(.shown) > div.finish_game {
 }
 div.finish_game {
 	transition: all 0.2s !important;
+}
+
+/* End-game score summary — top, white background */
+#arena.phone .dialog.gameover {
+	top: 12px !important;
+	bottom: auto !important;
+	height: auto !important;
+	max-height: 45vh;
+	overflow-y: auto;
+	background: #fff !important;
+	color: #222;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+	border-radius: 8px;
+}
+#arena.phone .dialog.gameover table td {
+	color: #222;
+}
+#arena.phone .dialog.gameover .caption > .text {
+	color: #222;
+}
+
+#arena.phone #me .sortcard-btn {
+	position: absolute;
+	top: 4px;
+	right: 8px;
+	z-index: 3;
+	min-width: 88px;
+	height: 36px;
+	font-size: 22px;
+	line-height: 32px;
+	padding: 0 10px;
+	pointer-events: auto;
+	font-family: "xinwei";
+	text-align: center;
+	cursor: pointer;
+}
+#arena.phone #me .handcards > .card > .info {
+	font-size: 28px;
+	top: 4px;
+	right: 5px;
+}
+#arena.phone #me .handcards > .card > .range {
+	font-size: 22px;
 }
 
 @media screen and (orientation: portrait) {

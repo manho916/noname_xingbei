@@ -1997,13 +1997,52 @@ export class Click {
 		}
 		ui.roundmenu.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
 	}
-	checkdialogtranslate(translate, dialog) {
-		var translate = translate || dialog._dragtransform;
+	clampDialogTranslate(translate, dialog) {
+		if (!translate) return translate;
+		if (get.is.phoneLayout()) {
+			translate[0] = 0;
+		}
 		if (Math.sqrt(translate[0] * translate[0] + translate[1] * translate[1]) < 10) {
 			translate[0] = 0;
 			translate[1] = 0;
 		}
-		dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
+		if (dialog) {
+			var scale = "";
+			var m = dialog.style.transform.match(/scale\([^)]+\)/);
+			if (m) scale = m[0] + " ";
+			dialog.style.transform = scale + "translate(" + translate[0] + "px," + translate[1] + "px)";
+			var rect = dialog.getBoundingClientRect();
+			var win = ui.window.getBoundingClientRect();
+			var zoom = game.documentZoom || 1;
+			var dy = 0;
+			if (rect.top < win.top) dy = (win.top - rect.top) / zoom;
+			else if (rect.bottom > win.bottom) dy = (win.bottom - rect.bottom) / zoom;
+			if (dy) {
+				translate[1] += dy;
+				dialog.style.transform = scale + "translate(" + translate[0] + "px," + translate[1] + "px)";
+			}
+			dialog._dragtransform = translate;
+		}
+		return translate;
+	}
+	refreshDialogTransforms() {
+		if (!get.is.phoneLayout()) return;
+		var dialogs = document.querySelectorAll("#window>.dialog");
+		var last;
+		for (var i = 0; i < dialogs.length; i++) {
+			var d = dialogs[i];
+			if (d.classList.contains("fixed") || d.classList.contains("popped")) continue;
+			var t = (d._dragtransform || lib.config.dialog_transform || [0, 0]).slice(0);
+			t = this.clampDialogTranslate(t, d);
+			last = t;
+		}
+		if (lib.config.remember_dialog && last) {
+			game.saveConfig("dialog_transform", last);
+		}
+	}
+	checkdialogtranslate(translate, dialog) {
+		translate = translate || dialog._dragtransform;
+		this.clampDialogTranslate(translate, dialog);
 	}
 	windowmousewheel(e) {
 		_status.tempunpopup = e;

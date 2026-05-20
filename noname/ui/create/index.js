@@ -2327,7 +2327,7 @@ export class Create {
 		// 	ui.cardPileButton.style.display='none';
 		// }
 
-		ui.sortCard = ui.create.system("整理手牌", function () {
+		var sortCardFunc = function () {
 			if (!game.me || game.me.hasSkillTag("noSortCard")) return;
 			var hs = game.me.getCards("h");
 			if (!hs.length) return;
@@ -2338,7 +2338,6 @@ export class Create {
 			if (game.me.hasSkillTag("sortCardByNum")) {
 				var getn = function (card) {
 					var mingGe = get.mingGe(card, game.me);
-					//if (num < 3) return 13 + num;
 					return mingGe;
 				};
 				hs.sort((a, b) => getn(b) - getn(a));
@@ -2349,7 +2348,25 @@ export class Create {
 					else return lib.mingGe.indexOf(a.mingGe) - lib.mingGe.indexOf(b.mingGe);
 				});
 			game.me.directgain(hs, false);
-		});
+		};
+		if (get.is.phoneLayout()) {
+			ui.sortCard = ui.create.div(".sortcard-btn");
+			ui.sortCard.innerHTML = "整理手牌";
+			ui.sortCard.listen(sortCardFunc);
+			if (lib.config.button_press) {
+				ui.sortCard.addEventListener(lib.config.touchscreen ? "touchstart" : "mousedown", function () {
+					if (!ui.sortCard.classList.contains("hidden")) ui.sortCard.classList.add("pressdown");
+				});
+				ui.sortCard.addEventListener(lib.config.touchscreen ? "touchend" : "mouseup", function () {
+					ui.sortCard.classList.remove("pressdown");
+				});
+				ui.sortCard.addEventListener(lib.config.touchscreen ? "touchmove" : "mousemove", function () {
+					ui.sortCard.classList.remove("pressdown");
+				});
+			}
+		} else {
+			ui.sortCard = ui.create.system("整理手牌", sortCardFunc);
+		}
 		if (!lib.config.show_sortcard) {
 			ui.sortCard.style.display = "none";
 		}
@@ -3285,6 +3302,9 @@ export class Create {
 	me(hasme) {
 		ui.mebg = ui.create.div("#mebg", ui.arena);
 		ui.me = ui.create.div("#me", ui.arena).addTempClass("start");
+		if (get.is.phoneLayout() && ui.sortCard && ui.sortCard.classList.contains("sortcard-btn")) {
+			ui.me.appendChild(ui.sortCard);
+		}
 		ui.handcards1Container = ui.create.div("#handcards1", ui.me);
 		ui.handcards2Container = ui.create.div("#handcards2", ui.me);
 		ui.arena.classList.remove("nome");

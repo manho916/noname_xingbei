@@ -339,7 +339,11 @@ export class Dialog extends HTMLDivElement {
 		}
 		ui.dialog = this;
 		let translate;
-		if (lib.config.remember_dialog && lib.config.dialog_transform && !this.classList.contains("fixed")) {
+		if (get.is.phoneLayout() && !this.classList.contains("gameover")) {
+			translate = [0, 0];
+			this._dragtransform = translate.slice(0);
+			this.style.transform = "translate(0px,0px) scale(0.8)";
+		} else if (lib.config.remember_dialog && lib.config.dialog_transform && !this.classList.contains("fixed")) {
 			translate = lib.config.dialog_transform;
 			this._dragtransform = translate;
 			this.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px) scale(0.8)";
@@ -352,7 +356,11 @@ export class Dialog extends HTMLDivElement {
 		ui.dialogs.unshift(this);
 		ui.update();
 		ui.refresh(this);
-		if (lib.config.remember_dialog && lib.config.dialog_transform && !this.classList.contains("fixed")) {
+		if (
+			(get.is.phoneLayout() && !this.classList.contains("gameover")) ||
+			(lib.config.remember_dialog && lib.config.dialog_transform && !this.classList.contains("fixed"))
+		) {
+			translate = this._dragtransform || [0, 0];
 			this.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px) scale(1)";
 		} else {
 			this.style.transform = "scale(1)";

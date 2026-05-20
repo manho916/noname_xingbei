@@ -1,12 +1,61 @@
 /*調整詢問彈窗寬度，因為手機比較窄，內容多時會蓋住卡牌導致無法選擇*/
 .dialog.nobutton:not(.fullheight) {
 	top: 130px !important;
-	width: 600px;
-	left: calc(50% - 300px);
+	width: calc(100% - 24px) !important;
+	max-width: 600px;
+	left: 12px !important;
 	bottom: auto !important;
 	min-height: 0px !important;
 	max-height: calc(100% - 200px);
 	overflow-y: auto;
+}
+
+/* Game text / prompt dialogs — readable panel, vertical drag on caption */
+#arena.phone > .dialog:not(.popped):not(.gameover) {
+	width: calc(100% - 24px) !important;
+	left: 12px !important;
+	right: auto !important;
+	top: auto !important;
+	bottom: 150px !important;
+	height: auto !important;
+	max-height: 42vh;
+	min-height: 80px;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.97) !important;
+	color: #1a1a1a;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+	border-radius: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.08);
+}
+#arena.phone > .dialog:not(.popped):not(.gameover) .content-container {
+	max-height: calc(42vh - 48px);
+}
+#arena.phone > .dialog:not(.popped):not(.gameover) .caption {
+	cursor: grab;
+	touch-action: none;
+	background: linear-gradient(180deg, rgba(240, 244, 248, 1) 0%, rgba(255, 255, 255, 0) 100%);
+	border-radius: 12px 12px 0 0;
+	padding: 10px 12px 6px;
+}
+#arena.phone > .dialog:not(.popped):not(.gameover) .caption:active {
+	cursor: grabbing;
+}
+#arena.phone > .dialog:not(.popped):not(.gameover) .caption > .text,
+#arena.phone > .dialog:not(.popped):not(.gameover) .content > .text,
+#arena.phone > .dialog:not(.popped):not(.gameover) .content > div:not(.buttons):not(.dialogcontrol) {
+	font-size: 20px;
+	line-height: 1.55;
+	color: #1a1a1a;
+	text-shadow: none;
+	text-align: left;
+	word-break: break-word;
+}
+#arena.phone > .dialog:not(.popped):not(.gameover) .caption > .text.center,
+#arena.phone > .dialog:not(.popped):not(.gameover) .content > .text.center {
+	text-align: center;
+}
+#arena.phone > .dialog:not(.popped):not(.gameover) .content > div {
+	color: #333;
 }
 
 
@@ -169,9 +218,11 @@ div.finish_game {
 
 #arena.phone #me .sortcard-btn {
 	position: absolute;
-	top: 4px;
-	right: 8px;
-	z-index: 3;
+	left: 12px;
+	right: auto;
+	top: auto;
+	bottom: calc(100% + 8px);
+	z-index: 12;
 	min-width: 88px;
 	height: 36px;
 	font-size: 22px;
@@ -181,6 +232,17 @@ div.finish_game {
 	font-family: "xinwei";
 	text-align: center;
 	cursor: pointer;
+	background: rgba(0, 0, 0, 0.55);
+	color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+/* Keep 星石/星杯 table above hand strip without covering sort button */
+#arena.phone .touchinfo.bottom-right {
+	bottom: 8px;
+	right: 8px;
+	z-index: 8;
+	max-width: calc(100% - 120px);
 }
 #arena.phone #me .handcards > .card > .info {
 	font-size: 28px;

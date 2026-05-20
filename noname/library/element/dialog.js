@@ -360,6 +360,10 @@ export class Dialog extends HTMLDivElement {
 		this.style.opacity = "1";
 		setTimeout(() => {
 			this.style.transitionProperty = "";
+			if (get.is.phoneLayout() && !this.classList.contains("fixed") && ui.click.clampDialogTranslate) {
+				if (!this._dragtransform) this._dragtransform = [0, 0];
+				ui.click.clampDialogTranslate(this._dragtransform, this);
+			}
 		}, 500);
 		return this;
 	}

@@ -702,19 +702,26 @@ export class Click {
 		}
 	}
 	dragtouchdialog(e) {
-		if (e.touches.length > 1 && !this.classList.contains("popped") && !this.classList.contains("fixed")) {
-			_status.draggingtouchdialog = this;
-			this._dragorigin = {
-				clientX: e.touches[0].clientX,
-				clientY: e.touches[0].clientY,
-			};
-			if (!this._dragtransform) {
-				this._dragtransform = [0, 0];
-			}
-			this._dragorigintransform = this._dragtransform.slice(0);
-			e.preventDefault();
-			e.stopPropagation();
+		if (!e.touches.length || this.classList.contains("popped") || this.classList.contains("fixed")) return;
+		var canDrag = e.touches.length > 1;
+		if (!canDrag && get.is.phoneLayout()) {
+			var target = e.target;
+			canDrag =
+				target === this ||
+				(target.closest && (target.closest(".caption") || target.closest(".bar")));
 		}
+		if (!canDrag) return;
+		_status.draggingtouchdialog = this;
+		this._dragorigin = {
+			clientX: e.touches[0].clientX,
+			clientY: e.touches[0].clientY,
+		};
+		if (!this._dragtransform) {
+			this._dragtransform = [0, 0];
+		}
+		this._dragorigintransform = this._dragtransform.slice(0);
+		e.preventDefault();
+		e.stopPropagation();
 	}
 	identity(e) {
 		if (_status.dragged) return;
@@ -1603,7 +1610,7 @@ export class Click {
 				_status.draggingtouchdialog._dragtransform &&
 				e.touches.length
 			) {
-				var translate = _status.draggingtouchdialog._dragtransform.slice(0);
+				var translate = _status.draggingtouchdialog._dragorigintransform.slice(0);
 				var dx =
 					e.touches[0].clientX / game.documentZoom -
 					_status.draggingtouchdialog._dragorigin.clientX / game.documentZoom;
@@ -1863,26 +1870,13 @@ export class Click {
 		} else if (_status.draggingtouchdialog) {
 			delete _status._swipeorigin;
 			var translate;
-			if (
-				_status.draggingtouchdialog._dragorigin &&
-				_status.draggingtouchdialog._dragtransform &&
-				_status.draggingtouchdialog._dragtouches
-			) {
-				var dx =
-					_status.draggingtouchdialog._dragtouches.clientX / game.documentZoom -
-					_status.draggingtouchdialog._dragorigin.clientX / game.documentZoom;
-				var dy =
-					_status.draggingtouchdialog._dragtouches.clientY / game.documentZoom -
-					_status.draggingtouchdialog._dragorigin.clientY / game.documentZoom;
-				translate = _status.draggingtouchdialog._dragtransform;
-				translate[0] += dx;
-				translate[1] += dy;
+			if (_status.draggingtouchdialog._dragtransform) {
 				ui.click.checkdialogtranslate(null, _status.draggingtouchdialog);
-
+				translate = _status.draggingtouchdialog._dragtransform;
 				delete _status.draggingtouchdialog._dragorigin;
 			}
 			_status.clicked = false;
-			game.saveConfig("dialog_transform", translate);
+			if (translate) game.saveConfig("dialog_transform", translate);
 			delete _status.draggingtouchdialog;
 			_status.justdragged = true;
 			setTimeout(function () {
@@ -2007,10 +2001,7 @@ export class Click {
 			translate[1] = 0;
 		}
 		if (dialog) {
-			var scale = "";
-			var m = dialog.style.transform.match(/scale\([^)]+\)/);
-			if (m) scale = m[0] + " ";
-			dialog.style.transform = scale + "translate(" + translate[0] + "px," + translate[1] + "px)";
+			dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
 			var rect = dialog.getBoundingClientRect();
 			var win = ui.window.getBoundingClientRect();
 			var zoom = game.documentZoom || 1;
@@ -2019,15 +2010,15 @@ export class Click {
 			else if (rect.bottom > win.bottom) dy = (win.bottom - rect.bottom) / zoom;
 			if (dy) {
 				translate[1] += dy;
-				dialog.style.transform = scale + "translate(" + translate[0] + "px," + translate[1] + "px)";
+				dialog.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
 			}
-			dialog._dragtransform = translate;
+			dialog._dragtransform = translate.slice(0);
 		}
 		return translate;
 	}
 	refreshDialogTransforms() {
 		if (!get.is.phoneLayout()) return;
-		var dialogs = document.querySelectorAll("#window>.dialog");
+		var dialogs = ui.arena ? ui.arena.querySelectorAll(".dialog") : document.querySelectorAll("#arena .dialog");
 		var last;
 		for (var i = 0; i < dialogs.length; i++) {
 			var d = dialogs[i];
@@ -2294,8 +2285,8 @@ export class Click {
 			}
 			if (_status.draggingdialog) {
 				var ddialog = _status.draggingdialog;
-				if (ddialog._dragorigin && ddialog._dragtransform) {
-					var translate = ddialog._dragtransform.slice(0);
+				if (ddialog._dragorigin && ddialog._dragorigintransform) {
+					var translate = ddialog._dragorigintransform.slice(0);
 					translate[0] +=
 						e.clientX / game.documentZoom - ddialog._dragorigin.clientX / game.documentZoom;
 					translate[1] +=
@@ -2342,6 +2333,7 @@ export class Click {
 				if (!ddialog._dragtransform) {
 					ddialog._dragtransform = [0, 0];
 				}
+				ddialog._dragorigintransform = ddialog._dragtransform.slice(0);
 				return;
 			}
 			if (item == ui.roundmenu) {
@@ -2432,16 +2424,12 @@ export class Click {
 		if (_status.draggingdialog) {
 			var ddialog = _status.draggingdialog;
 			var translate;
-			if (ddialog._dragorigin && ddialog._dragtransform) {
-				translate = ddialog._dragtransform;
-				translate[0] +=
-					e.clientX / game.documentZoom - ddialog._dragorigin.clientX / game.documentZoom;
-				translate[1] +=
-					e.clientY / game.documentZoom - ddialog._dragorigin.clientY / game.documentZoom;
+			if (ddialog._dragtransform) {
 				ui.click.checkdialogtranslate(null, ddialog);
+				translate = ddialog._dragtransform;
 				delete ddialog._dragorigin;
 			}
-			game.saveConfig("dialog_transform", translate);
+			if (translate) game.saveConfig("dialog_transform", translate);
 			delete _status.draggingdialog;
 		}
 		if (_status.draggingroundmenu) {

@@ -4817,7 +4817,7 @@ export class Library {
 				},*/
 				connect_versus_mode:{
 					name:'遊戲模式',
-					init:'2v2',
+					init:'3v3',
 					item:{
 						//'1v1':'1v1',
 						'2v2':'2v2',
@@ -4842,7 +4842,7 @@ export class Library {
 				},
 				connect_team_sequence:{
 					name:"隊伍順序",
-					init:"random",
+					init:"CM",
 					item:{
 						'random':'隨機',
 						'crossed':'交叉',
@@ -4975,7 +4975,7 @@ export class Library {
 				},
 				versus_mode:{
 					name:'遊戲模式',
-					init:'two',
+					init:'three',
 					item:{
 						three:'3v3',
 						two:'2v2',
@@ -4995,7 +4995,7 @@ export class Library {
 				},
 				team_sequence:{
 					name:"隊伍順序",
-					init:"random",
+					init:"CM",
 					item:{
 						random:'隨機',
 						crossed:'交叉',
@@ -5399,7 +5399,7 @@ export class Library {
 				},
 				team_sequence:{
 					name:"隊伍順序",
-					init:"random",
+					init:"CM",
 					item:{
 						random:'隨機',
 						crossed:'交叉',

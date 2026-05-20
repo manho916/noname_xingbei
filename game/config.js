@@ -37,7 +37,7 @@ window.config = {
 	volumn_audio: 1,
 
 	connect_avatar: "fengZhiJianSheng",
-	connect_nickname: "無名玩家",
+	connect_nickname: "無",
 	config_menu: true,
 	auto_popped_config: true,
 	auto_popped_history: false,
@@ -51,9 +51,9 @@ window.config = {
 	right_info: true,
 	longpress_info: true,
 	long_info: true,
-	background_music: "music_default",
-	background_audio: true,
-	background_speak: true,
+	background_music: "music_off",
+	background_audio: false,
+	background_speak: false,
 	glow_phase: "yellow",
 	die_move: "flip",
 	link_style2:'rotate',
@@ -149,6 +149,10 @@ window.config = {
 
 	mode: "tutorial",
 	mode_config: {
+		xingBei: {
+			versus_mode: "three",
+			team_sequence: "CM",
+		},
 	},
 	current_mode: {},
 	customforbid: [],

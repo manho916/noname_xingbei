@@ -465,7 +465,7 @@ export class LibInit {
 			0
 		);
 		ui.css.styles.sheet.insertRule(
-			"#arena .player .xb_phase_hint { position: absolute; left: 4px; bottom: 24px; z-index: 8; padding: 2px 6px; font-size: 12px; line-height: 1.15; border-radius: 3px; background: rgba(217, 152, 62, 0.95); color: #1a1a1a; pointer-events: none; white-space: nowrap; text-shadow: none; }",
+			"#arena .player .xb_phase_hint { position: absolute; left: 4px; top: 4px; bottom: auto; z-index: 8; padding: 2px 6px; font-size: 12px; line-height: 1.15; border-radius: 3px; background: rgba(217, 152, 62, 0.95); color: #1a1a1a; pointer-events: none; white-space: nowrap; text-shadow: none; }",
 			0
 		);
 		ui.css.styles.sheet.insertRule(
@@ -474,6 +474,22 @@ export class LibInit {
 		);
 		ui.css.styles.sheet.insertRule(
 			"#arena .player.glow_action_player:not(.selectable):not(.selected) { outline: 3px solid rgba(55, 160, 240, 0.95); outline-offset: 2px; }",
+			0
+		);
+		ui.css.styles.sheet.insertRule(
+			"#arena .player .xb_attack_hint { position: absolute; left: 4px; bottom: 24px; z-index: 8; padding: 2px 6px; font-size: 12px; line-height: 1.15; border-radius: 3px; background: rgba(220, 90, 50, 0.95); color: #fff; pointer-events: none; white-space: nowrap; text-shadow: 0 0 2px rgba(0,0,0,0.35); }",
+			0
+		);
+		ui.css.styles.sheet.insertRule(
+			"#arena .player .xb_target_hint { position: absolute; right: 4px; top: 4px; z-index: 8; padding: 2px 6px; font-size: 12px; line-height: 1.15; border-radius: 3px; background: rgba(210, 50, 55, 0.95); color: #fff; pointer-events: none; white-space: nowrap; text-shadow: 0 0 2px rgba(0,0,0,0.35); }",
+			0
+		);
+		ui.css.styles.sheet.insertRule(
+			"#arena .player.glow_attack_source { outline: 3px solid rgba(220, 90, 50, 0.95); outline-offset: 2px; }",
+			0
+		);
+		ui.css.styles.sheet.insertRule(
+			"#arena .player.glow_attack_target { box-shadow: rgba(0, 0, 0, 0.3) 0 0 0 1px, rgba(210, 50, 55, 0.85) 0 0 12px, rgba(210, 50, 55, 0.85) 0 0 15px !important; }",
 			0
 		);
 	}

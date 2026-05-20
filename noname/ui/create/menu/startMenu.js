@@ -80,7 +80,7 @@ export const startMenuData = {
 				};
 				if (!infoconfig.connect_choose_timeout) infoconfig.connect_choose_timeout = {
 					name: "出牌時限",
-					init: "30",
+					init: "60",
 					item: {
 						10: "10秒",
 						15: "15秒",

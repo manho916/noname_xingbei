@@ -3849,6 +3849,11 @@ export class Player extends HTMLDivElement {
 			);
 			game.addVideo("line", this, [target.dataset.position, config]);
 			game.linexy([this.getLeft() + this.offsetWidth / 2, this.getTop() + this.offsetHeight / 2, target.getLeft() + target.offsetWidth / 2, target.getTop() + target.offsetHeight / 2], config, true);
+			if (!(typeof config == "object" && config.noCombatUi) && typeof game.showCombatPair == "function") {
+				var ms = lib.config.duration * 2;
+				if (typeof config == "object" && config.duration) ms = config.duration;
+				game.showCombatPair(this, target, ms);
+			}
 		}
 	}
 	line2(targets, config) {
@@ -3857,7 +3862,11 @@ export class Player extends HTMLDivElement {
 		for (var i = 1; i < targets.length; i++) {
 			(function (j) {
 				setTimeout(function () {
-					targets[j - 1].line(targets[j], config);
+					var chainConfig =
+						typeof config == "object" && config != null
+							? Object.assign({}, config, { noCombatUi: true })
+							: { noCombatUi: true };
+					targets[j - 1].line(targets[j], chainConfig);
 				}, lib.config.duration * i);
 			})(i);
 		}

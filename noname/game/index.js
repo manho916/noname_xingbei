@@ -44,6 +44,8 @@ export class Game extends GameCompatible {
 	/** @type { HTMLDivElement[] } */
 	_remoteTargetPreviewNodes = [];
 	_reservedLinesResizeBound = false;
+	_combatUiTimer = null;
+	_combatUiSelection = false;
 	jiChuXiaoGuo={
 		all:['diZhiFengYin','shuiZhiFengYin','huoZhiFengYin','fengZhiFengYin','leiZhiFengYin','weiLiCiFu','xunJieCiFu','shengDun','xuRuo','zhongDu','tricky'],
 		all_xiaoGuo:['diZhiFengYin_xiaoGuo','shuiZhiFengYin_xiaoGuo','huoZhiFengYin_xiaoGuo','fengZhiFengYin_xiaoGuo','leiZhiFengYin_xiaoGuo','weiLiCiFu_xiaoGuo','xunJieCiFu_xiaoGuo','_shengDun','_xuRuo','_zhongDu','tricky_xiaoGuo'],
@@ -6587,6 +6589,7 @@ export class Game extends GameCompatible {
 			if (n && n.parentNode) n.remove();
 		}
 		nodes.length = 0;
+		if (this._combatUiSelection) this.clearCombatUiHints();
 	}
 	clearRemoteTargetPreviewLines() {
 		if (!this._remoteTargetPreviewNodes) this._remoteTargetPreviewNodes = [];
@@ -6718,6 +6721,7 @@ export class Game extends GameCompatible {
 		const targets = (ui.selected && ui.selected.targets) || [];
 		if (!targets.length) {
 			this.publishTargetPreviewOnline(event, []);
+			this.clearCombatUiHints();
 			return;
 		}
 		this.publishTargetPreviewOnline(event, targets);
@@ -6728,6 +6732,73 @@ export class Game extends GameCompatible {
 			const node = this._appendPersistentLinexy(src, targets[i], color);
 			if (node) this._reservedTargetLineNodes.push(node);
 		}
+		this.applyCombatUiHints(src, targets, { selection: true });
+	}
+	clearCombatUiHints() {
+		if (this._combatUiTimer) {
+			clearTimeout(this._combatUiTimer);
+			this._combatUiTimer = null;
+		}
+		this._combatUiSelection = false;
+		const list = [];
+		if (game.players) list.push(...game.players);
+		if (game.dead) list.push(...game.dead);
+		for (const p of list) {
+			if (!p || !p.classList) continue;
+			p.classList.remove("glow_attack_source", "glow_attack_target");
+			const ah = p.querySelector(".xb_attack_hint");
+			if (ah) ah.remove();
+			const th = p.querySelector(".xb_target_hint");
+			if (th) th.remove();
+		}
+	}
+	/**
+	 * @param { Player } source
+	 * @param { Player | Player[] } targets
+	 * @param {{ selection?: boolean, timed?: boolean, duration?: number }} [options]
+	 */
+	applyCombatUiHints(source, targets, options = {}) {
+		if (!source || !targets) return;
+		const list = Array.isArray(targets) ? targets : [targets];
+		const tgts = [];
+		for (let i = 0; i < list.length; i++) {
+			const t = list[i];
+			if (t && get.itemtype(t) == "player" && t !== source && !tgts.includes(t)) tgts.push(t);
+		}
+		if (!tgts.length) return;
+		if (options.timed) this.clearCombatUiHints();
+		else if (options.selection) {
+			this.clearCombatUiHints();
+			this._combatUiSelection = true;
+		}
+		source.classList.add("glow_attack_source");
+		if (!source.querySelector(".xb_attack_hint")) {
+			const el = ui.create.div(".xb_attack_hint", source);
+			el.innerHTML = "出擊";
+		}
+		for (let i = 0; i < tgts.length; i++) {
+			const t = tgts[i];
+			t.classList.add("glow_attack_target");
+			if (!t.querySelector(".xb_target_hint")) {
+				const el = ui.create.div(".xb_target_hint", t);
+				el.innerHTML = "目標";
+			}
+		}
+		if (options.timed) {
+			const duration = options.duration > 0 ? options.duration : lib.config.duration * 2;
+			this._combatUiTimer = setTimeout(() => this.clearCombatUiHints(), duration);
+		}
+	}
+	/**
+	 * @param { Player } source
+	 * @param { Player | Player[] } targets
+	 * @param { number } [duration]
+	 */
+	showCombatPair(source, targets, duration) {
+		this.applyCombatUiHints(source, targets, {
+			timed: true,
+			duration: duration > 0 ? duration : lib.config.duration * 2,
+		});
 	}
 	syncTurnUiHints() {
 		const list = [];
@@ -6769,9 +6840,6 @@ export class Game extends GameCompatible {
 			event.player.classList.add("glow_action_player");
 			const el = ui.create.div(".xb_action_hint", event.player);
 			el.innerHTML = "操作中";
-			if (lib.config.glow_phase && event.player.classList.contains("glow_phase")) {
-				el.style.bottom = "46px";
-			}
 		}
 	}
 	/**

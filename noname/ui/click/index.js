@@ -1461,9 +1461,11 @@ export class Click {
 		} else {
 			uiintro.style.top = "50px";
 		}
-		var left = this.parentNode.offsetLeft + this.offsetLeft + this.offsetWidth / 2 - width / 2;
-		if (left < 10) {
-			left = 10;
+		var buttonRect = this.getBoundingClientRect();
+		var left = buttonRect.left / game.documentZoom + buttonRect.width / game.documentZoom / 2 - width / 2;
+		var minLeft = (ui.historypanel && ui.historypanel.style.display !== 'none') ? 230 : 10;
+		if (left < minLeft) {
+			left = minLeft;
 		} else if (left + width > ui.window.offsetWidth - 10) {
 			left = ui.window.offsetWidth - width - 10;
 		}

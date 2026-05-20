@@ -2088,6 +2088,16 @@ export class Create {
 		ui.historybar = ui.create.div("#historybar.shadowed", ui.window);
 		lib.setScroll(ui.historybar);
 
+		// Persistent history side panel
+		ui.historypanel = ui.create.div("#historypanel", ui.window);
+		ui.create.div(".historypanel-title", "出牌記錄", ui.historypanel);
+		lib.setScroll(ui.historypanel);
+		if (lib.config.show_historypanel && !get.is.phoneLayout()) {
+			ui.window.classList.add("historypanel");
+		} else {
+			ui.historypanel.style.display = "none";
+		}
+
 		ui.roundmenu = ui.create.div("#roundmenu.roundarenabutton.menubutton.round", ui.arena);
 		ui.roundmenu._position = [180, 210];
 		ui.create.div(ui.roundmenu);

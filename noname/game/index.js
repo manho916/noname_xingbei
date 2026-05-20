@@ -8179,6 +8179,12 @@ export class Game extends GameCompatible {
 			value.remove();
 		});
 		ui.sidebar.innerHTML = "";
+		// Clear persistent history panel but keep the title
+		if (ui.historypanel) {
+			const title = ui.historypanel.querySelector('.historypanel-title');
+			ui.historypanel.innerHTML = '';
+			if (title) ui.historypanel.appendChild(title);
+		}
 		ui.cardPile.innerHTML = "";
 		ui.discardPile.innerHTML = "";
 		ui.special.innerHTML = "";
@@ -8312,6 +8318,21 @@ export class Game extends GameCompatible {
 		const node = ui.create.div();
 		node.innerHTML = lib.config.log_highlight ? str : str2;
 		ui.sidebar.insertBefore(node, ui.sidebar.firstChild);
+		// Mirror entry to persistent history panel
+		if (ui.historypanel && ui.historypanel.style.display !== 'none') {
+			const panelNode = node.cloneNode(true);
+			const titleEl = ui.historypanel.querySelector('.historypanel-title');
+			if (titleEl && titleEl.nextSibling) {
+				ui.historypanel.insertBefore(panelNode, titleEl.nextSibling);
+			} else {
+				ui.historypanel.appendChild(panelNode);
+			}
+			// Cap at 100 entries to prevent memory bloat
+			const entries = ui.historypanel.querySelectorAll('div:not(.historypanel-title)');
+			if (entries.length > 100) {
+				entries[entries.length - 1].remove();
+			}
+		}
 		game.addVideo("log", null, lib.config.log_highlight ? str : str2);
 		game.broadcast((str, str2) => game.log(lib.config.log_highlight ? str : str2), str, str2);
 		if (!_status.video && !game.online) {

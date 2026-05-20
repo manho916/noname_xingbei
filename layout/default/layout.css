@@ -1086,6 +1086,87 @@ tr.highlight {
 	transition: all 0.1s;
 }
 
+/* ===== Persistent History Side Panel ===== */
+#historypanel {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 220px;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.55);
+	border-right: 1px solid rgba(255, 255, 255, 0.08);
+	z-index: 3;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 12px 10px;
+	box-sizing: border-box;
+	transition: opacity 0.3s, transform 0.3s;
+	scrollbar-width: thin;
+	scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+#historypanel::-webkit-scrollbar {
+	width: 4px;
+}
+#historypanel::-webkit-scrollbar-thumb {
+	background: rgba(255,255,255,0.2);
+	border-radius: 2px;
+}
+#historypanel::-webkit-scrollbar-track {
+	background: transparent;
+}
+#historypanel > .historypanel-title {
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.5);
+	letter-spacing: 2px;
+	margin-bottom: 8px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	text-align: center;
+	user-select: none;
+	font-family: "xinwei";
+}
+#historypanel > div:not(.historypanel-title) {
+	position: relative;
+	display: block;
+	margin: 0;
+	padding: 5px 6px;
+	line-height: 18px;
+	font-size: 13px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+	animation: historypanel_entry 0.3s ease-out;
+}
+#historypanel > div:not(.historypanel-title):hover {
+	background: rgba(255, 255, 255, 0.06);
+}
+@keyframes historypanel_entry {
+	from {
+		opacity: 0;
+		transform: translateX(-12px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+#window.historypanel #arena:not(.chess) {
+	left: calc(3% + 220px);
+	width: calc(94% - 220px);
+}
+#window.historypanel #historybar {
+	left: calc(1.5% + 220px);
+}
+#window.historypanel .touchinfo.left {
+	left: 224px;
+}
+#window.historypanel #system {
+	margin-left: 220px;
+	width: calc(100% - 220px - 12px);
+}
+#window.historypanel #time {
+	left: 220px;
+}
+/* ===== End Persistent History Side Panel ===== */
+
 .pausedbg {
 	left: 0;
 	top: 0;

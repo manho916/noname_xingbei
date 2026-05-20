@@ -1876,7 +1876,7 @@ export class Click {
 				delete _status.draggingtouchdialog._dragorigin;
 			}
 			_status.clicked = false;
-			if (translate) game.saveConfig("dialog_transform", translate);
+			if (translate) ui.click.savePhoneDialogTransform(translate);
 			delete _status.draggingtouchdialog;
 			_status.justdragged = true;
 			setTimeout(function () {
@@ -1991,6 +1991,14 @@ export class Click {
 		}
 		ui.roundmenu.style.transform = "translate(" + translate[0] + "px," + translate[1] + "px)";
 	}
+	savePhoneDialogTransform(translate) {
+		if (!translate) return;
+		if (get.is.phoneLayout()) {
+			game.saveConfig(get.is.phoneDialogTransformKey(), [0, translate[1] || 0]);
+		} else {
+			game.saveConfig("dialog_transform", translate);
+		}
+	}
 	applyPhoneDialogLayout(dialog, translate) {
 		dialog.style.left = "50%";
 		dialog.style.right = "auto";
@@ -2057,16 +2065,18 @@ export class Click {
 	refreshDialogTransforms() {
 		if (!get.is.phoneLayout()) return;
 		var dialogs = ui.arena ? ui.arena.querySelectorAll(".dialog") : document.querySelectorAll("#arena .dialog");
-		var last;
 		for (var i = 0; i < dialogs.length; i++) {
 			var d = dialogs[i];
 			if (d.classList.contains("fixed") || d.classList.contains("popped")) continue;
-			var t = (d._dragtransform || lib.config.dialog_transform || [0, 0]).slice(0);
+			var t;
+			if (d.classList.contains("gameover")) {
+				t = [0, 0];
+			} else if (d.classList.contains("phone-dialog")) {
+				t = get.is.phoneDialogTransform().slice(0);
+			} else {
+				t = (d._dragtransform || lib.config.dialog_transform || [0, 0]).slice(0);
+			}
 			t = this.clampDialogTranslate(t, d);
-			last = t;
-		}
-		if (lib.config.remember_dialog && last) {
-			game.saveConfig("dialog_transform", last);
 		}
 	}
 	checkdialogtranslate(translate, dialog) {
@@ -2467,7 +2477,7 @@ export class Click {
 				translate = ddialog._dragtransform;
 				delete ddialog._dragorigin;
 			}
-			if (translate) game.saveConfig("dialog_transform", translate);
+			if (translate) ui.click.savePhoneDialogTransform(translate);
 			delete _status.draggingdialog;
 		}
 		if (_status.draggingroundmenu) {

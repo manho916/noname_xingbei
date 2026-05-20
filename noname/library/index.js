@@ -3966,6 +3966,8 @@ export class Library {
 								}, 500);
 							}
 							game.saveConfig("dialog_transform", [0, 0]);
+							game.saveConfig("dialog_transform_portrait", [0, 0]);
+							game.saveConfig("dialog_transform_landscape", [0, 0]);
 						}
 					},
 				},

@@ -468,6 +468,24 @@ export class Is {
 		if (!lib.config.phonelayout) return false;
 		return game.layout == "mobile" || game.layout == "long" || game.layout == "long2" || game.layout == "nova";
 	}
+	phoneDialogPortrait() {
+		if (typeof window.matchMedia == "function") {
+			return window.matchMedia("(orientation: portrait)").matches;
+		}
+		return window.innerHeight >= window.innerWidth;
+	}
+	phoneDialogTransformKey() {
+		return get.is.phoneDialogPortrait() ? "dialog_transform_portrait" : "dialog_transform_landscape";
+	}
+	phoneDialogTransform() {
+		var key = get.is.phoneDialogTransformKey();
+		var t = lib.config[key];
+		if ((!t || !Array.isArray(t)) && lib.config.dialog_transform && Array.isArray(lib.config.dialog_transform)) {
+			t = lib.config.dialog_transform;
+		}
+		if (!t || !Array.isArray(t)) return [0, 0];
+		return [0, t[1] || 0];
+	}
 	singleHandcard() {
 		return game.singleHandcard || game.layout == "mobile" || game.layout == "long" || game.layout == "long2" || game.layout == "nova";
 	}

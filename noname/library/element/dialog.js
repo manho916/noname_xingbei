@@ -352,13 +352,13 @@ export class Dialog extends HTMLDivElement {
 			this.style.transform = "translate(-50%, 0px) scale(0.8)";
 		} else if (get.is.phoneLayout() && !this.classList.contains("gameover")) {
 			this.classList.add("phone-dialog");
-			translate = [0, 0];
-			this._dragtransform = translate.slice(0);
+			translate = get.is.phoneDialogTransform().slice(0);
+			this._dragtransform = translate;
 			this.style.left = "50%";
 			this.style.right = "auto";
 			this.style.marginLeft = "0";
 			this.style.marginRight = "0";
-			this.style.transform = "translate(-50%, 0px) scale(0.8)";
+			this.style.transform = "translate(-50%, " + translate[1] + "px) scale(0.8)";
 		} else if (lib.config.remember_dialog && lib.config.dialog_transform && !this.classList.contains("fixed")) {
 			translate = lib.config.dialog_transform;
 			this._dragtransform = translate;

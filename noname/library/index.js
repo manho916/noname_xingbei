@@ -3670,6 +3670,7 @@ export class Library {
 						map.show_auto.hide();
 						map.show_replay.hide();
 						map.show_round_menu.show();
+						map.show_historypanel.hide();
 					} else {
 						map.show_pause.show();
 						map.show_auto.show();
@@ -3678,6 +3679,7 @@ export class Library {
 						map.remember_round_button.hide();
 						//map.popequip.hide();
 						map.filternode_button.hide();
+						map.show_historypanel.show();
 					}
 					/*
 					if (lib.config.show_card_prompt) {
@@ -3716,6 +3718,22 @@ export class Library {
 					} else {
 						map.show_extensionshare.hide();
 					}
+				},
+				show_historypanel: {
+					name: "左側歷史面板",
+					intro: "在屏幕左側顯示持續可見的出牌記錄面板",
+					init: "off",
+					unfrequent: true,
+					onclick(bool) {
+						game.saveConfig("show_historypanel", bool);
+						if (bool) {
+							ui.historypanel.style.display = "";
+							ui.window.classList.add("historypanel");
+						} else {
+							ui.historypanel.style.display = "none";
+							ui.window.classList.remove("historypanel");
+						}
+					},
 				},
 				show_history: {
 					name: "出牌記錄欄",

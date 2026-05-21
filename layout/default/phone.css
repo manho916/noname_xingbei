@@ -251,7 +251,7 @@ div.finish_game {
 	right: auto !important;
 	margin-left: 0 !important;
 	margin-right: 0 !important;
-	top: 12px !important;
+	top: 50% !important;
 	bottom: auto !important;
 	height: auto !important;
 	max-height: 45vh;

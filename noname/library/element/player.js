@@ -3849,9 +3849,9 @@ export class Player extends HTMLDivElement {
 			);
 			game.addVideo("line", this, [target.dataset.position, config]);
 			game.linexy([this.getLeft() + this.offsetWidth / 2, this.getTop() + this.offsetHeight / 2, target.getLeft() + target.offsetWidth / 2, target.getTop() + target.offsetHeight / 2], config, true);
-			if (!(typeof config == "object" && config.noCombatUi) && typeof game.showCombatPair == "function") {
+			if (!(typeof config == "object" && config != null && config.noCombatUi) && typeof game.showCombatPair == "function") {
 				var ms = lib.config.duration * 2;
-				if (typeof config == "object" && config.duration) ms = config.duration;
+				if (typeof config == "object" && config != null && config.duration) ms = config.duration;
 				game.showCombatPair(this, target, ms);
 			}
 		}

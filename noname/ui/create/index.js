@@ -2378,9 +2378,7 @@ export class Create {
 		} else {
 			ui.sortCard = ui.create.system("整理手牌", sortCardFunc);
 		}
-		if (!lib.config.show_sortcard) {
-			ui.sortCard.style.display = "none";
-		}
+		ui.updateSortCardButton();
 		//------添加記牌器 by Curpond-------
 		ui.deckMonitor = ui.create.system(
 			"記牌器",
@@ -3341,6 +3339,7 @@ export class Create {
 			ui.handcards2Container.appendChild(ui.handcards2);
 			// ui.updatehl();
 		}
+		ui.updateSortCardButton();
 	}
 	card(position, info, noclick) {
 		return new lib.element.Card(position).build(info, noclick);

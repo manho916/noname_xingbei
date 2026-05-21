@@ -3812,6 +3812,7 @@ export const Content = {
 			game.onlinezhu = "1";
 		}
 		_status.waitingForPlayer = true;
+		ui.updateSortCardButton();
 		if (window.isNonameServer) {
 			document.querySelector("#server_status").innerHTML = "等待中";
 		}
@@ -3819,6 +3820,7 @@ export const Content = {
 		"step 1";
 		_status.waitingForPlayer = false;
 		lib.configOL.gameStarted = true;
+		ui.updateSortCardButton();
 		if (window.isNonameServer) {
 			document.querySelector("#server_status").innerHTML = "遊戲中";
 		}

@@ -8195,18 +8195,18 @@ export class Game extends GameCompatible {
 		game.me = null;
 	}
 	clearConnect() {
-		if (ui.ipnode) {
-			ui.ipnode.remove();
-			delete ui.ipnode;
-		}
-		if (ui.iptext) {
-			ui.iptext.remove();
-			delete ui.iptext;
-		}
-		if (ui.ipbutton) {
+		if (ui.connectLandingStack) {
+			ui.connectLandingStack.remove();
+			delete ui.connectLandingStack;
+		} else if (ui.ipbutton) {
 			ui.ipbutton.remove();
-			delete ui.ipbutton;
 		}
+		if (ui.ipnode && ui.ipnode.parentNode) ui.ipnode.remove();
+		delete ui.ipnode;
+		delete ui.iptext;
+		delete ui.ipbutton;
+		delete ui.connectProfile;
+		ui.updateSortCardButton();
 		if (ui.recentIP) {
 			ui.recentIP.remove();
 			delete ui.recentIP;

@@ -38,6 +38,7 @@ window.config = {
 
 	connect_avatar: "fengZhiJianSheng",
 	connect_nickname: "無",
+	connect_profile_initialized: false,
 	config_menu: true,
 	auto_popped_config: true,
 	auto_popped_history: false,

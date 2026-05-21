@@ -9,7 +9,6 @@ export default () => {
 		start() {
 			var directstartmode = lib.config.directstartmode;
 			ui.create.menu(true);
-			event.textnode = ui.create.div("", "輸入聯機地址");
 			var createNode = function () {
 				if (event.created) return;
 				if (directstartmode && lib.node) {
@@ -37,27 +36,24 @@ export default () => {
 				}
 
 				event.created = true;
-				var node = ui.create.div(".shadowed");
-				node.style.width = "400px";
-				node.style.height = "30px";
-				node.style.lineHeight = "30px";
-				node.style.fontFamily = "xinwei";
-				node.style.fontSize = "30px";
-				node.style.padding = "10px";
-				node.style.left = "calc(50% - 210px)";
-				node.style.top = "calc(50% - 20px)";
-				node.style.whiteSpace = "nowrap";
+
+				var stack = ui.create.div(".connect-landing-stack", ui.window);
+				ui.connectLandingStack = stack;
+
+				var ipBlock = ui.create.div(".shadowed.connect-landing-ip-block", stack);
+				ui.create.div(".connect-landing-field-label", "聯機地址", ipBlock);
+				var node = ui.create.div(".shadowed.connect-landing-ip", ipBlock);
 				node.textContent = lib.config.last_ip || lib.hallURL;
 				node.contentEditable = true;
 				node.style.webkitUserSelect = "text";
-				node.style.textAlign = "center";
-				node.style.overflow = "hidden";
+				ui.ipnode = node;
 
+				var button;
 				var connect = function (e) {
-					event.textnode.textContent = "正在連接...";
+					button.textContent = "正在連接...";
 					clearTimeout(event.timeout);
 					if (e) e.preventDefault();
-					const ip = node.textContent;
+					const ip = node.textContent.replace(/<br>/g, "").trim();
 					game.saveConfig("last_ip", ip);
 					game.connect(ip, function (success) {
 						if (success) {
@@ -69,39 +65,114 @@ export default () => {
 							}
 							return;
 						}
-						if (event.textnode) {
+						if (button) {
 							alert("連接失敗");
-							event.textnode.textContent = "輸入聯機地址";
+							button.textContent = "連接";
 						}
 					});
 				};
 				node.addEventListener("keydown", function (e) {
+					if (e.keyCode == 13) connect(e);
+				});
+
+				var markConnectProfileSet = function () {
+					if (lib.config.connect_profile_initialized) return;
+					game.saveConfig("connect_profile_initialized", true);
+					game.saveConfig("connect_profile_initialized", true, "connect");
+				};
+				var ensureConnectProfile = function () {
+					if (lib.config.connect_profile_initialized) return;
+					var defaultAvatar = lib.mode.connect.config.connect_avatar.init || "fengZhiJianSheng";
+					var nick = lib.config.connect_nickname;
+					var customized =
+						(typeof nick == "string" && nick != "無" && nick != "無名玩家") ||
+						(typeof lib.config.connect_avatar == "string" && lib.config.connect_avatar != defaultAvatar);
+					if (customized) {
+						markConnectProfileSet();
+						return;
+					}
+					var items = lib.mode.connect.config.connect_avatar.item;
+					var keys = Object.keys(items);
+					if (!keys.length) keys = Object.keys(lib.character);
+					if (keys.length) {
+						var pick = keys[Math.floor(Math.random() * keys.length)];
+						game.saveConfig("connect_avatar", pick);
+						game.saveConfig("connect_avatar", pick, "connect");
+					}
+					markConnectProfileSet();
+				};
+				ensureConnectProfile();
+
+				var profile = ui.create.div(".shadowed.connect-landing-profile", stack);
+				var avatarNode = ui.create.div(".connect-landing-avatar.pointerdiv", profile);
+				avatarNode.setBackground(lib.config.connect_avatar || "fengZhiJianSheng", "character");
+				var refreshConnectAvatar = function (id) {
+					avatarNode.setBackground(id || lib.config.connect_avatar || "fengZhiJianSheng", "character");
+				};
+				ui.create.div(".connect-landing-field-label", "暱稱", profile);
+				var nameNode = ui.create.div(".connect-landing-nickname", profile);
+				nameNode.contentEditable = true;
+				nameNode.textContent = get.connectNickname();
+				var saveConnectNickname = function () {
+					var text = nameNode.textContent.replace(/<br>/g, "").trim();
+					if (!text || get.is.banWords(text)) text = "無名玩家";
+					text = text.slice(0, 12);
+					nameNode.textContent = text;
+					game.saveConfig("connect_nickname", text);
+					game.saveConfig("connect_nickname", text, "connect");
+					markConnectProfileSet();
+				};
+				nameNode.addEventListener("blur", saveConnectNickname);
+				nameNode.addEventListener("keydown", function (e) {
 					if (e.keyCode == 13) {
-						connect(e);
+						e.preventDefault();
+						nameNode.blur();
 					}
 				});
-				ui.window.appendChild(node);
-				ui.ipnode = node;
+				lib.setPopped(
+					avatarNode,
+					function () {
+						var uiintro = ui.create.dialog("hidden", "notouchscroll");
+						uiintro.classList.add("connect-landing-avatar-popup");
+						uiintro.listen(function (e) {
+							e.stopPropagation();
+						});
+						var list = ui.create.div(".caption");
+						var items = lib.mode.connect.config.connect_avatar.item;
+						var pickAvatar = function () {
+							var id = this.link;
+							game.saveConfig("connect_avatar", id);
+							game.saveConfig("connect_avatar", id, "connect");
+							refreshConnectAvatar(id);
+							markConnectProfileSet();
+						};
+						var randomRow = ui.create.div(".text.textlink", list, function () {
+							var keys = Object.keys(items);
+							if (!keys.length) return;
+							var id = keys[Math.floor(Math.random() * keys.length)];
+							game.saveConfig("connect_avatar", id);
+							game.saveConfig("connect_avatar", id, "connect");
+							refreshConnectAvatar(id);
+							markConnectProfileSet();
+						});
+						randomRow.textContent = "隨機頭像";
+						for (var id in items) {
+							var row = ui.create.div(".text.textlink", list, pickAvatar);
+							row.link = id;
+							row.textContent = items[id] || lib.translate[id] || id;
+						}
+						uiintro.add(list);
+						if (lib.config.touchscreen) lib.setScroll(uiintro.contentContainer);
+						return uiintro;
+					},
+					220
+				);
+				ui.connectProfile = profile;
 
-				var text = event.textnode;
-				text.style.width = "400px";
-				text.style.height = "30px";
-				text.style.lineHeight = "30px";
-				text.style.fontFamily = "xinwei";
-				text.style.fontSize = "30px";
-				text.style.padding = "10px";
-				text.style.left = "calc(50% - 200px)";
-				text.style.top = "calc(50% - 80px)";
-				text.style.textAlign = "center";
-				ui.window.appendChild(text);
-				ui.iptext = text;
-
-				var button = ui.create.div(".menubutton.highlight.large.pointerdiv", "連接", connect);
-				button.style.width = "70px";
-				button.style.left = "calc(50% - 35px)";
-				button.style.top = "calc(50% + 60px)";
-				ui.window.appendChild(button);
+				button = ui.create.div(".menubutton.highlight.large.pointerdiv.connect-landing-connect-btn", stack);
+				button.textContent = "連接";
 				ui.ipbutton = button;
+				button.listen(connect);
 
 				ui.hall_button = ui.create.system(
 					"聯機大廳",
@@ -151,14 +222,14 @@ export default () => {
 							var text2 = text.split("\n")[2];
 							var ip = text2.slice(5);
 							if (ip.length > 0 && text2.startsWith("聯機地址:") && (ced || confirm("是否根據剪貼板的邀請鏈接以進入聯機地址和房間？"))) {
-								node.innerHTML = ip;
-								event.textnode.innerHTML = "正在連接...";
+								node.textContent = ip;
+								button.textContent = "正在連接...";
 								clearTimeout(event.timeout);
-								game.saveConfig("last_ip", node.innerHTML);
-								game.connect(node.innerHTML, function (success) {
-									if (!success && event.textnode) {
+								game.saveConfig("last_ip", ip);
+								game.connect(ip, function (success) {
+									if (!success && button) {
 										alert("邀請鏈接解析失敗");
-										event.textnode.innerHTML = "輸入聯機地址";
+										button.textContent = "連接";
 									}
 									if (success) _status.read_clipboard_text = text;
 								});
@@ -187,6 +258,7 @@ export default () => {
 						}
 					}
 				}
+				ui.updateSortCardButton();
 				lib.init.onfree();
 			};
 			if (window.isNonameServer) {
@@ -201,7 +273,10 @@ export default () => {
 					localStorage.setItem(lib.configprefix + "key", game.onlineKey);
 				}
 			}
-			_status.connectDenied = createNode;
+			_status.connectDenied = function () {
+				event.created = false;
+				createNode();
+			};
 			setTimeout(lib.init.onfree, 1000);
 		},
 	};

@@ -4185,11 +4185,7 @@ export class Library {
 					unfrequent: true,
 					onclick(bool) {
 						game.saveConfig("show_sortcard", bool);
-						if (lib.config.show_sortcard) {
-							ui.sortCard.style.display = "";
-						} else {
-							ui.sortCard.style.display = "none";
-						}
+						ui.updateSortCardButton();
 					},
 				},
 				show_pause: {
@@ -5308,6 +5304,8 @@ export class Library {
 					onclick(item) {
 						game.saveConfig("connect_nickname", item);
 						game.saveConfig("connect_avatar", item, "connect");
+						game.saveConfig("connect_profile_initialized", true);
+						game.saveConfig("connect_profile_initialized", true, "connect");
 					},
 				},
 				connect_avatar: {
@@ -5318,7 +5316,14 @@ export class Library {
 					onclick(item) {
 						game.saveConfig("connect_avatar", item);
 						game.saveConfig("connect_avatar", item, "connect");
+						game.saveConfig("connect_profile_initialized", true);
+						game.saveConfig("connect_profile_initialized", true, "connect");
 					},
+				},
+				connect_profile_initialized: {
+					name: "聯機資料已初始化",
+					init: false,
+					unfrequent: true,
 				},
 				hall_ip: {
 					name: "聯機大廳",

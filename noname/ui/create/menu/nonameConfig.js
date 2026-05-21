@@ -158,6 +158,8 @@ export const NonameConfig = {
 						input.innerHTML = input.innerHTML.slice(0, 12);
 						game.saveConfig("connect_nickname", input.innerHTML);
 						game.saveConfig("connect_nickname", input.innerHTML, "connect");
+						game.saveConfig("connect_profile_initialized", true);
+						game.saveConfig("connect_profile_initialized", true, "connect");
 					};
 				} 
 				else if (config.name == "聯機大廳") {

@@ -853,6 +853,19 @@ export class UI {
 	updateRoundNumber(roundNumber, cardPileNumber) {
 		if (ui.cardPileNumber) ui.cardPileNumber.innerHTML = `${roundNumber}輪 剩餘牌: ${cardPileNumber}`;
 	}
+	/** 整理手牌：僅在對局進行中顯示，不在菜單與聯機大廳/等待頁顯示 */
+	updateSortCardButton() {
+		if (!ui.sortCard) return;
+		let show =
+			!!lib.config.show_sortcard &&
+			!!game.me &&
+			game.players.length > 0 &&
+			!_status.waitingForPlayer &&
+			!ui.connectLandingStack;
+		if (show && ui.arena?.classList.contains("menupaused")) show = false;
+		if (show && ui.connectMenuContainer && !ui.connectMenuContainer.classList.contains("hidden")) show = false;
+		ui.sortCard.style.display = show ? "" : "none";
+	}
 }
 
 export let ui = new UI();

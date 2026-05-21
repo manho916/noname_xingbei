@@ -118,6 +118,7 @@ export function clickContainer(connectMenu) {
 		ui.window.classList.remove("touchinfohidden");
 		ui.config2.classList.remove("pressdown2");
 	}
+	ui.updateSortCardButton();
 }
 export function clickMenuItem() {
 	var node = this.parentNode._link;
@@ -329,6 +330,8 @@ export function createConfig(config, position) {
 				input.innerHTML = input.innerHTML.slice(0, 12);
 				game.saveConfig("connect_nickname", input.innerHTML);
 				game.saveConfig("connect_nickname", input.innerHTML, "connect");
+				game.saveConfig("connect_profile_initialized", true);
+				game.saveConfig("connect_profile_initialized", true, "connect");
 			};
 		} else if (config.name == "聯機大廳") {
 			input.innerHTML = config.init || lib.hallURL;
@@ -470,6 +473,7 @@ export function menu(connectMenu) {
 				for (var i = 0; i < menuUpdates.length; i++) {
 					menuUpdates[i]();
 				}
+				ui.updateSortCardButton();
 			} else {
 				clickContainer.call(cacheMenuContainer, connectMenu);
 			}
@@ -503,6 +507,7 @@ export function menu(connectMenu) {
 				for (var i = 0; i < menuUpdates.length; i++) {
 					menuUpdates[i]();
 				}
+				ui.updateSortCardButton();
 			} else {
 				clickContainer.call(cacheMenuContainer, connectMenu);
 			}

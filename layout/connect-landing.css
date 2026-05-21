@@ -1,0 +1,133 @@
+/* Connect mode landing — loaded for all layouts via newlayout/global.css */
+#window > .connect-landing-stack {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: min(420px, calc(100vw - 24px));
+	max-width: 420px;
+	display: grid;
+	flex-direction: column;
+	align-items: stretch;
+	gap: 16px;
+	box-sizing: border-box;
+	z-index: 1;
+	height: min(420px, calc(100vh - 24px));
+}
+#window > .connect-landing-stack > * {
+	position: relative !important;
+	left: auto !important;
+	top: auto !important;
+	right: auto !important;
+	bottom: auto !important;
+	float: none !important;
+	flex-shrink: 0;
+}
+#window > .connect-landing-stack .connect-landing-field-label {
+	font-family: "xinwei", STXinwei, serif;
+	font-size: 22px;
+	/* line-height: 26px; */
+	text-align: center;
+	color: rgba(255, 255, 255, 0.85);
+	/* margin-bottom: 6px; */
+	width: 100%;
+	/* display: contents; */
+	position: relative;
+	display: inline-block;
+	padding: 10px;
+}
+#window > .connect-landing-stack > .connect-landing-ip-block,
+#window > .connect-landing-stack > .connect-landing-profile {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 12px 14px;
+	color: white !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	/* grid-column: auto; */
+	/* grid-row: auto; */
+	/* grid-template-rows: auto auto; */
+	/* grid-template-columns: auto auto; */
+	justify-content: center;
+}
+#window > .connect-landing-stack .connect-landing-ip {
+	width: 100%;
+	box-sizing: border-box;
+	min-height: 44px;
+	line-height: 32px;
+	font-family: "xinwei", STXinwei, serif;
+	font-size: 26px;
+	padding: 8px 10px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	-webkit-user-select: text;
+	user-select: text;
+	position: relative;
+}
+#window > .connect-landing-stack .connect-landing-avatar {
+	display: block;
+	width: 64px !important;
+	height: 64px !important;
+	margin: 4px auto 10px;
+	border-radius: 8px;
+	overflow: hidden;
+	cursor: pointer;
+	background-size: cover !important;
+	background-position: 50% 50% !important;
+	box-shadow: rgba(0, 0, 0, 0.5) inset 0 0 0 1px, rgba(0, 0, 0, 0.35) 0 2px 8px;
+	position: relative;
+}
+#window > .connect-landing-stack .connect-landing-nickname {
+	width: 100%;
+	box-sizing: border-box;
+	min-height: 44px;
+	line-height: 32px;
+	font-family: "xinwei", STXinwei, serif;
+	font-size: 26px;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: text;
+	-webkit-user-select: text;
+	user-select: text;
+	padding: 6px 10px;
+	border-radius: 6px;
+	background: rgba(0, 0, 0, 0.18);
+	box-shadow: rgba(0, 0, 0, 0.35) inset 0 0 0 1px;
+	/* display: contents; */
+	position: relative;
+}
+#window > .connect-landing-stack .connect-landing-nickname:focus {
+	outline: none;
+	background: rgba(0, 0, 0, 0.28);
+}
+#window > .connect-landing-stack > .connect-landing-connect-btn {
+	align-self: center;
+	width: auto;
+	min-width: 88px;
+	display: block;
+	margin-top: 4px;
+}
+#window > .dialog.connect-landing-avatar-popup.popped{
+	max-height: min(50vh, 280px) !important;
+	overflow-y: auto !important;
+	-webkit-overflow-scrolling: touch;
+	position: absolute;
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate(-50%, -50%) !important;
+}
+#window > .dialog.connect-landing-avatar-popup.popped .content-container {
+	max-height: min(50vh, 280px) !important;
+	overflow-y: auto !important;
+	-webkit-overflow-scrolling: touch;
+}
+#window > .dialog.connect-landing-avatar-popup.popped .content {
+	max-height: min(50vh, 280px);
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}

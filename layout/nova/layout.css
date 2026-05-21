@@ -210,7 +210,7 @@
 	bottom: 45px;
 }
 .dialog.fullheight {
-	height: calc(100% - 123px) !important;
+	height: 50% !important;
 	top: 40px !important;
 }
 

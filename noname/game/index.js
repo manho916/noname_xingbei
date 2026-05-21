@@ -8319,7 +8319,7 @@ export class Game extends GameCompatible {
 		node.innerHTML = lib.config.log_highlight ? str : str2;
 		ui.sidebar.insertBefore(node, ui.sidebar.firstChild);
 		// Mirror entry to persistent history panel
-		if (ui.historypanel && ui.historypanel.style.display !== 'none') {
+		if (lib.config.show_historypanel && ui.historypanel) {
 			const panelNode = node.cloneNode(true);
 			const titleEl = ui.historypanel.querySelector('.historypanel-title');
 			if (titleEl && titleEl.nextSibling) {

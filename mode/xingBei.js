@@ -1418,7 +1418,40 @@ export default () => {
 						var ref=game.getFirstRed();
 						game.moveSeat(ref);
 					}else{
-						var ref=game.assignPlayerSides();
+						// 隨機打亂座位順序
+						var positions=[];
+						for(var i=0;i<game.players.length;i++){
+							positions.push(game.players[i].dataset.position);
+						}
+						// Fisher-Yates 洗牌
+						for(var i=positions.length-1;i>0;i--){
+							var j=Math.floor(Math.random()*(i+1));
+							var temp=positions[i];
+							positions[i]=positions[j];
+							positions[j]=temp;
+						}
+						game.broadcastAll(function(positions){
+							for(var i=0;i<game.players.length;i++){
+								game.players[i].dataset.position=positions[i];
+							}
+							game.arrangePlayers();
+						},positions);
+						// 找到位置最小的玩家作為起點
+						var ref=game.players[0];
+						var minPos=Infinity;
+						for(var i=0;i<game.players.length;i++){
+							var pos=parseInt(game.players[i].dataset.position);
+							if(pos<minPos){
+								minPos=pos;
+								ref=game.players[i];
+							}
+						}
+						// 按固定紅藍藍紅紅藍順序分配隊伍
+						var list=game.teamSequenceList();
+						for(var i=0;i<game.players.length;i++){
+							ref.side=list[i];
+							ref=ref.next;
+						}
 					}
 					var mode=lib.configOL.choose_mode;
 					//console.log('mode',mode);

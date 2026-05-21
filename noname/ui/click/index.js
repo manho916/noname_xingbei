@@ -885,6 +885,8 @@ export class Click {
 	}
 	pausehistory() {
 		if (!lib.config.auto_popped_history) return;
+		// Skip popup when persistent history panel is visible
+		if (lib.config.show_historypanel && ui.historypanel) return;
 		if (!ui.sidebar.childNodes.length) return;
 		var uiintro = ui.create.dialog("hidden");
 		uiintro.style.maxHeight = "400px";
@@ -4606,7 +4608,10 @@ export class Click {
 				ui.sidebar3.insertBefore(div, ui.sidebar3.firstChild);
 			}
 		}
-		node.appendChild(ui.sidebar);
+		// Skip showing sidebar history in pause overlay when persistent panel is active
+		if (!lib.config.show_historypanel) {
+			node.appendChild(ui.sidebar);
+		}
 		node.appendChild(ui.sidebar3);
 		ui.historybar.classList.add("paused");
 		ui.arena.classList.add("paused");

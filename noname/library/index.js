@@ -3722,7 +3722,7 @@ export class Library {
 				show_historypanel: {
 					name: "左側歷史面板",
 					intro: "在屏幕左側顯示持續可見的出牌記錄面板",
-					init: "off",
+					init: false,
 					unfrequent: true,
 					onclick(bool) {
 						game.saveConfig("show_historypanel", bool);

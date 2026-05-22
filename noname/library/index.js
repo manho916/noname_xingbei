@@ -7678,9 +7678,20 @@ export class Library {
 				if (game.online || game.onlineroom) {
 					if ((game.servermode || game.onlinehall) && _status.over) {
 						void 0;
+					} else if (_status.skipReconnect) {
+						delete _status.skipReconnect;
+						localStorage.setItem(lib.configprefix + "directstart", true);
+						game.reload();
+						return;
+					} else if (typeof game.reconnectOnline === "function") {
+						game.ws = null;
+						game.sandbox = null;
+						game.reconnectOnline();
+						return;
 					} else {
 						localStorage.setItem(lib.configprefix + "directstart", true);
 						game.reload();
+						return;
 					}
 				} else {
 					// game.saveConfig('reconnect_info');
@@ -11455,6 +11466,7 @@ export class Library {
 						game.saveConfig("tmp_user_roomId");
 					}
 				}
+				_status.skipReconnect = true;
 				game.ws.close();
 			},
 			reloadroom: function (forced) {
@@ -11484,6 +11496,13 @@ export class Library {
 				clearTimeout(_status.enteringroomTimeout);
 				delete _status._enteringRoomSince;
 				_status.enteringroom = false;
+				if (_status.reconnectSnapshot || _status.reconnectAttempts) {
+					_status.reconnecting = false;
+					setTimeout(function () {
+						game.reconnectOnline();
+					}, 2000);
+					return;
+				}
 				alert("請稍後再試");
 				ui.create.connecting(true);
 			},
@@ -11499,6 +11518,28 @@ export class Library {
 				}
 				game.saveConfig("recentIP", lib.config.recentIP);
 				_status.connectMode = true;
+
+				if (_status.reconnectPreserveGame) {
+					const snap = _status.reconnectSnapshot;
+					if (snap) {
+						if (snap.onlineID) game.onlineID = snap.onlineID;
+						if (typeof snap.roomId == "string") game.roomId = snap.roomId;
+					}
+					game.roomIdServer = true;
+					_status.reconnecting = false;
+					delete _status.reconnectPreserveGame;
+					ui.create.connecting();
+					if (typeof game.roomId == "string") {
+						game.send(
+							"server",
+							game.roomId == game.onlineKey ? "create" : "enter",
+							game.roomId,
+							get.connectNickname(),
+							lib.config.connect_avatar
+						);
+					}
+					return;
+				}
 
 				game.clearArena();
 				game.clearConnect();
@@ -11842,6 +11883,10 @@ export class Library {
 				}
 			},
 			reinit: function (config, state, state2, ip, observe, onreconnect, cardtag, postReconnect) {
+				_status.reconnecting = false;
+				_status.reconnectAttempts = 0;
+				delete _status.reconnectSnapshot;
+				delete _status.reconnectPreserveGame;
 				ui.auto.show();
 				ui.pause.show();
 				game.clearConnect();
@@ -12225,6 +12270,20 @@ export class Library {
 						break;
 					default:
 						alert(reason); //其它原因直接彈窗顯示
+				}
+				if (_status.reconnectSnapshot || _status.reconnecting || _status.reconnectAttempts) {
+					_status.reconnecting = false;
+					if (["version", "key", "banned", "extension"].includes(reason)) {
+						delete _status.reconnectSnapshot;
+						delete _status.reconnectPreserveGame;
+						localStorage.setItem(lib.configprefix + "directstart", true);
+						game.reload();
+						return;
+					}
+					setTimeout(function () {
+						game.reconnectOnline();
+					}, 2000);
+					return;
 				}
 				game.ws.close();
 				if (_status.connectDenied) {

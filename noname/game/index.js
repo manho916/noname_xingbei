@@ -1505,7 +1505,7 @@ export class Game extends GameCompatible {
 	 * @param { (result: boolean) => any } callback
 	 */
 	connect(ip, callback) {
-		if (game.online) return;
+		if (game.online && !_status.reconnecting) return;
 		const trimmed = (ip || "").trim();
 		let body = trimmed;
 		let userScheme = null;
@@ -1569,6 +1569,71 @@ export class Game extends GameCompatible {
 		game.ws.onerror = lib.element.ws.onerror;
 		game.ws.onclose = lib.element.ws.onclose;
 		_status.ip = ip;
+	}
+	/** Host string for game.connect() from a stored ws URL or reconnect_info. */
+	getReconnectHost() {
+		let raw = _status.ip || lib.config.reconnect_info?.[0] || lib.config.last_ip || lib.hallURL;
+		if (!raw) return "";
+		raw = String(raw);
+		const lower = raw.toLowerCase();
+		if (lower.startsWith("wss://")) raw = raw.slice(6);
+		else if (lower.startsWith("ws://")) raw = raw.slice(5);
+		return get.trimip(raw);
+	}
+	/**
+	 * Reconnect to the online hall after an unexpected disconnect (e.g. app backgrounded).
+	 * Preserves in-progress games and uses the host's reinit flow when possible.
+	 */
+	reconnectOnline() {
+		if (_status.reconnecting) return;
+		const host = game.getReconnectHost();
+		if (!host) {
+			localStorage.setItem(lib.configprefix + "directstart", true);
+			game.reload();
+			return;
+		}
+		_status.reconnectSnapshot = {
+			onlineID: game.onlineID,
+			roomId: game.roomId,
+			onlinehall: game.onlinehall,
+			onlineroom: game.onlineroom,
+			servermode: game.servermode,
+			gameStarted: _status.gameStarted,
+			roomIdServer: game.roomIdServer,
+		};
+		_status.reconnecting = true;
+		_status.reconnectPreserveGame =
+			!!_status.gameStarted || game.players.length > 0 || (_status.waitingForPlayer && !!game.roomId);
+		_status.reconnectAttempts = (_status.reconnectAttempts || 0) + 1;
+		if (_status.reconnectAttempts > 8) {
+			_status.reconnecting = false;
+			delete _status.reconnectSnapshot;
+			delete _status.reconnectPreserveGame;
+			localStorage.setItem(lib.configprefix + "directstart", true);
+			game.reload();
+			return;
+		}
+		ui.create.connecting();
+		game.online = false;
+		game.connect(host, function (success) {
+			if (!success) {
+				_status.reconnecting = false;
+				const delay = Math.min(30000, 1000 * _status.reconnectAttempts);
+				setTimeout(function () {
+					game.reconnectOnline();
+				}, delay);
+				return;
+			}
+			game.requireSandboxOn(_status.ip || host);
+			const snap = _status.reconnectSnapshot;
+			if (snap) {
+				if (snap.onlineID) game.onlineID = snap.onlineID;
+				if (typeof snap.roomId == "string") {
+					game.roomId = snap.roomId;
+					if (snap.gameStarted || snap.roomIdServer) game.roomIdServer = true;
+				}
+			}
+		});
 	}
 	send() {
 		if (game.observe && arguments[0] != "reinited") return;
